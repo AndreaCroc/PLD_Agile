@@ -1,5 +1,5 @@
 /*
- * AffichageTournee
+ * AffichageCarte
  *
  * Version 1
  *
@@ -8,6 +8,8 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class AffichageTournee {
+package Vue;
+
+public class AffichageCarte {
     
 }

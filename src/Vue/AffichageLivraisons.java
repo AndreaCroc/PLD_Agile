@@ -1,5 +1,5 @@
 /*
- * Livraison
+ * AffichageLivraisons
  *
  * Version 1
  *
@@ -8,6 +8,8 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class Livraison {
+package Vue;
+
+public class AffichageLivraisons {
     
 }

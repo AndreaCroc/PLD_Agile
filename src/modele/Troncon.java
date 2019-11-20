@@ -1,5 +1,7 @@
+package modele;
+
 /*
- * Intersection
+ * Troncon
  *
  * Version 1
  *
@@ -8,6 +10,6 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class Intersection {
+public class Troncon {
     
 }

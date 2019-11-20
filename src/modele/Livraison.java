@@ -1,5 +1,7 @@
+package modele;
+
 /*
- * Troncon
+ * Livraison
  *
  * Version 1
  *
@@ -8,6 +10,6 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class Troncon {
+public class Livraison {
     
 }
