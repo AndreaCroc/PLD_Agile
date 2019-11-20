@@ -19,6 +19,7 @@ public class Application {
      */
     public static void main(String[] args) {
         Fenetre fenetre = new Fenetre();
+        System.out.println("testSophie");
     }
     
 }
