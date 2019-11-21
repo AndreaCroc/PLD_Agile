@@ -10,6 +10,7 @@
  */
 package Vue;
 
+import controleur.Controleur;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -21,6 +22,8 @@ import javax.swing.JTextField;
 
 public class Fenetre extends JFrame {
 
+    private Controleur controleur;
+    
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
@@ -53,7 +56,10 @@ public class Fenetre extends JFrame {
     
     private JPanel panneauGlobal1, panneauGlobal2, panneauGauche, panneauDroite, panneauLivraisons, panneauEtape, panneauLegende, panneauCarte, panneauTournee;
     
-    public Fenetre() {
+    private EcouteurBoutons ecouteurBoutons;
+    
+    public Fenetre(Controleur controleur) {
+        
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
         Toolkit outil = getToolkit();
@@ -61,6 +67,9 @@ public class Fenetre extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        this.controleur = controleur;
+        this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
         
         panneauGauche = new JPanel();
         panneauGauche.setLayout(null);
@@ -76,6 +85,7 @@ public class Fenetre extends JFrame {
         boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 16));
         boutonChargerLivraisons.setForeground(Color.white);
         boutonChargerLivraisons.setBackground(new Color(50,70,120));
+        boutonChargerLivraisons.addActionListener(ecouteurBoutons);
         
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
         repChargeLiv.setFont(new Font("Arial", Font.BOLD, 16));
@@ -85,6 +95,7 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setFont(new Font("Arial", Font.BOLD, 16));
         boutonCalculerTournee.setForeground(Color.white);
         boutonCalculerTournee.setBackground(new Color(50,70,120));
+        boutonCalculerTournee.addActionListener(ecouteurBoutons);
         
         livraisons = new JLabel("Livraisons");
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
@@ -165,6 +176,7 @@ public class Fenetre extends JFrame {
         boutonChargerCarte.setFont(new Font("Arial", Font.BOLD, 16));
         boutonChargerCarte.setForeground(Color.white);
         boutonChargerCarte.setBackground(new Color(50,70,120));
+        boutonChargerCarte.addActionListener(ecouteurBoutons);
         
         panneauGlobal1 = new JPanel();
         panneauGlobal1.setLayout(null);
