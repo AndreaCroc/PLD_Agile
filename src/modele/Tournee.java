@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.ArrayList;
+
 /*
  * Tournee
  *
@@ -11,5 +13,27 @@ package modele;
  *
  */
 public class Tournee {
+    private int duree;
+    private ArrayList<PointInteret> successionPointsInteret;
+
+    public Tournee() {
+    }
+
+    public int getDuree() {
+        return duree;
+    }
+
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
+
+    public ArrayList<PointInteret> getSuccessionPointsInteret() {
+        return successionPointsInteret;
+    }
+
+    public void ajouterPointInteret(PointInteret pI) {
+        this.successionPointsInteret.add(pI);
+    }
+    
     
 }
