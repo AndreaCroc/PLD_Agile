@@ -11,6 +11,7 @@
 package application;
 
 import Vue.Fenetre;
+import controleur.Controleur;
 
 public class Application {
 
@@ -18,8 +19,9 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Fenetre fenetre = new Fenetre();
-        //System.out.println("testSophie");
+        //Fenetre fenetre = new Fenetre();
+        System.out.println("testSophie");
+        new Controleur();
     }
     
 }
