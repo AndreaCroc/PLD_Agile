@@ -18,7 +18,7 @@ public class Controleur {
 
     public Controleur() {
         //etatCourant = etatInit;
-        fenetre = new Fenetre(); //lui passer this
+        fenetre = new Fenetre(this); //lui passer this
     }
 
     /**

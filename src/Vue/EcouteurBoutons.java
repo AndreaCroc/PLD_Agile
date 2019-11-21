@@ -28,12 +28,15 @@ public class EcouteurBoutons implements ActionListener {
         switch (e.getActionCommand()) {
             case Fenetre.CHARGER_CARTE:
                 controleur.chargerCarte();
+                System.out.println("CHARGER CARTE ECOUTEUR BOUTONS");
                 break;
             case Fenetre.CHARGER_LIVRAISONS:
                 controleur.chargerLivraison();
+                System.out.println("CHARGER LIVRAISON ECOUTEUR BOUTONS");
                 break;
             case Fenetre.CALCULER_TOURNEE:
                 controleur.calculerTournee();
+                System.out.println("CHARGER CARTE CALCULER TROUNEE");
                 break;
         }
 
