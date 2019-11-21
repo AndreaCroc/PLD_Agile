@@ -30,6 +30,7 @@ public class Fenetre extends JFrame {
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
     
+    protected final static String ETAPE = "Etape";
     protected final static String TYPE = "Type : ";
     protected final static String ADRESSE = "Adresse : ";
     protected final static String HEURE_ARRIVEE = "Heure d'arrivée prévue : ";
@@ -43,6 +44,9 @@ public class Fenetre extends JFrame {
     private JLabel legende;
     private JLabel repChargCarte;
     private JLabel repChargeLiv;
+    private JLabel heureDeb;
+    private JLabel heureFin;
+    private JLabel duree;
     
     private JTextField inputChargeCarte;
     private JTextField inputChargeLiv;
@@ -93,9 +97,29 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
         
+        tournee = new JLabel("Tournee");
+        tournee.setFont(new Font("Arial", Font.BOLD, 18));
+        tournee.setForeground(Color.white);
+        
+        heureDeb = new JLabel(HEURE_DEBUT);
+        heureDeb.setFont(new Font("Arial", Font.BOLD, 16));
+        heureDeb.setForeground(Color.white);
+        
+        heureFin = new JLabel(HEURE_FIN);
+        heureFin.setFont(new Font("Arial", Font.BOLD, 16));
+        heureFin.setForeground(Color.white);
+        
+        duree = new JLabel(DUREE);
+        duree.setFont(new Font("Arial", Font.BOLD, 16));
+        duree.setForeground(Color.white);
+        
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(Color.cyan);
+        panneauTournee.add(tournee);
+        panneauTournee.add(heureDeb);
+        panneauTournee.add(heureFin);
+        panneauTournee.add(duree);
         panneauGauche.add(panneauTournee);
         
         panneauEtape = new JPanel();
@@ -133,8 +157,8 @@ public class Fenetre extends JFrame {
         // Conteneur 1
         inputChargeCarte = new JTextField();
    
-        repChargCarte = new JLabel("Coucou");
-        repChargCarte.setFont(new Font("Arial", Font.BOLD, 18));
+        repChargCarte = new JLabel("Erreur dans le chargement du fichier");
+        repChargCarte.setFont(new Font("Arial", Font.BOLD, 16));
         repChargCarte.setForeground(Color.white);
         
         boutonChargerCarte = new JButton(CHARGER_CARTE);
@@ -180,5 +204,10 @@ public class Fenetre extends JFrame {
         boutonChargerLivraisons.setBounds(55 * ((int) panneauLivraisons.getWidth()/100), 1 * (int) panneauLivraisons.getHeight()/4, 1 * (int) panneauLivraisons.getWidth()/3, 1 * (int) panneauLivraisons.getHeight()/6);
         boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth()/3), 2 * (int) panneauLivraisons.getHeight()/3, 1 * (int) panneauLivraisons.getWidth()/3, 1 * (int) panneauLivraisons.getHeight()/6);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth()/4, 4 * (int) panneauLivraisons.getHeight()/10, 1 * (int) panneauLivraisons.getWidth()/2, 1 * (int) panneauLivraisons.getHeight()/6);
+        
+        tournee.setBounds(4 * (int) panneauTournee.getWidth()/10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight()/10);
+        heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight()/5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight()/10);
+        heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight()/5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight()/10);
+        duree.setBounds(0, 3 * (int) panneauTournee.getHeight()/5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight()/10);
      }
 }
