@@ -1,7 +1,7 @@
 package modele;
 
 /*
- * Carte
+ * Livraison
  *
  * Version 1
  *
@@ -10,6 +10,6 @@ package modele;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class Carte {
+public class Livraison {
     
 }
