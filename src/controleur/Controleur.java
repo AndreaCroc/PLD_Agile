@@ -1,3 +1,7 @@
+package controleur;
+
+import Vue.Fenetre;
+
 /*
  * Controleur
  *
@@ -8,9 +12,6 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
-
-import Vue.Fenetre;
 
 public class Controleur {
 
@@ -31,36 +32,26 @@ public class Controleur {
         etatCourant = etat;
     }
 
-    /**
-     * Charge une carte donnee et l'affiche dans la fnetre
-     *
-     * @param etat le nouvel etat courant
-     */
     public void chargerCarte() {
-
+        //Appeler methode affichage carte + ...
+        boolean chargerCarte = true;
+        fenetre.afficherConteneur2(chargerCarte);
         System.out.println("Je lance le chargement d'une carte");
 
     }
 
-    /**
-     * Change un livraison donnee
-     *
-     * @param etat le nouvel etat courant
-     */
     public void chargerLivraison() {
 
+        boolean chargerLivraison = true;
+        fenetre.afficherBoutonCalcul(chargerLivraison);
         System.out.println("Je lance le chargement d'une livraison");
 
     }
 
-    /**
-     * Calcul une tournee et affiche les informations correspondantes
-     * dans la fenetre
-     *
-     * @param etat le nouvel etat courant
-     */
     public void calculerTournee() {
 
+        boolean calculTournee = true;
+        fenetre.afficherEtapesTour(calculTournee);
         System.out.println("Je lance le calcul d'une tournee");
 
     }
