@@ -13,7 +13,11 @@ package Vue;
 import controleur.Controleur;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,11 +29,11 @@ import javax.swing.JTextField;
 public class Fenetre extends JFrame {
 
     private Controleur controleur;
-    
+
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
-    protected final static String CALCULER_TOURNEE = "Calculer tournee";
+    protected final static String CALCULER_TOURNEE = "Calculer tournée";
 
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -53,12 +57,22 @@ public class Fenetre extends JFrame {
     private JLabel heureFin;
     private JLabel dureeTournee;
     private JLabel etapesTitre;
-
+    private JLabel labelRond;
+    private JLabel legendeRond;
+    private JLabel labelCarre;
+    private JLabel legendeCarre;
+    private JLabel labelTriangle;
+    private JLabel legendeTriangle;
+    
     private JTextArea etape;
     private JScrollPane scrollEtapes;
 
     private JTextField inputChargeCarte;
     private JTextField inputChargeLiv;
+
+    private ImageIcon rond;
+    private ImageIcon carre;
+    private ImageIcon triangle;
 
     private JPanel panneauGlobal1;
     private JPanel panneauGlobal2;
@@ -69,7 +83,7 @@ public class Fenetre extends JFrame {
     private JPanel panneauCarte;
     private JPanel panneauTournee;
     private JPanel panneauGauche;
-    
+
     private EcouteurBoutons ecouteurBoutons;
 
     public Fenetre(Controleur controleur) {
@@ -103,7 +117,7 @@ public class Fenetre extends JFrame {
 
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
         repChargeLiv.setFont(new Font("Arial", Font.BOLD, 16));
-        repChargeLiv.setForeground(new Color(254,79,65));
+        repChargeLiv.setForeground(new Color(254, 79, 65));
         repChargeLiv.setVisible(false);
 
         boutonCalculerTournee = new JButton(CALCULER_TOURNEE);
@@ -160,13 +174,13 @@ public class Fenetre extends JFrame {
         etape.setEditable(false);
         etape.setOpaque(false);
         etape.setLineWrap(true);
-        
+
         panneauEtape = new JPanel();
         panneauEtape.setLayout(null);
         panneauEtape.setBackground(Color.green);
         panneauEtape.add(etapesTitre);
         panneauEtape.add(etape);
-        
+
         scrollEtapes = new JScrollPane(panneauEtape, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollEtapes.setVisible(false);
         panneauGauche.add(scrollEtapes);
@@ -175,8 +189,47 @@ public class Fenetre extends JFrame {
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(Color.blue);
 
+        rond = new ImageIcon("rond-noir.jpg");
+        Image imgR = rond.getImage();
+        Image newimgR = imgR.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        rond = new ImageIcon(newimgR);
+        
+        labelRond = new JLabel(rond);
+        
+        legendeRond = new JLabel(": Point de livraison");
+        legendeRond.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeRond.setForeground(Color.white);
+        
+        carre = new ImageIcon("carre-noir.png");
+        Image imgC = carre.getImage();
+        Image newimgC = imgC.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        carre = new ImageIcon(newimgC);
+        
+        labelCarre = new JLabel(carre);
+        
+        legendeCarre = new JLabel(": Point d'enlèvement");
+        legendeCarre.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeCarre.setForeground(Color.white);
+        
+        triangle = new ImageIcon("triangle-noir.png");
+        Image imgT = triangle.getImage();
+        Image newimgT = imgT.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        triangle = new ImageIcon(newimgT);
+        
+        labelTriangle = new JLabel(triangle);
+        
+        legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de tous les livreurs");
+        legendeTriangle.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeTriangle.setForeground(Color.white);
+
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
+        panneauLegende.add(labelRond);
+        panneauLegende.add(legendeRond);
+        panneauLegende.add(labelCarre);
+        panneauLegende.add(legendeCarre);
+        panneauLegende.add(labelTriangle);
+        panneauLegende.add(legendeTriangle);
         panneauLegende.setBackground(Color.ORANGE);
 
         legende = new JLabel("Légende");
@@ -201,7 +254,7 @@ public class Fenetre extends JFrame {
 
         repChargCarte = new JLabel("Erreur dans le chargement du fichier");
         repChargCarte.setFont(new Font("Arial", Font.BOLD, 16));
-        repChargCarte.setForeground(new Color(254,79,65));
+        repChargCarte.setForeground(new Color(254, 79, 65));
         repChargCarte.setVisible(false);
 
         boutonChargerCarte = new JButton(CHARGER_CARTE);
@@ -212,7 +265,7 @@ public class Fenetre extends JFrame {
 
         panneauGlobal1 = new JPanel();
         panneauGlobal1.setLayout(null);
-        panneauGlobal1.setBackground(new Color(186,228,255));
+        panneauGlobal1.setBackground(new Color(186, 228, 255));
         panneauGlobal1.add(inputChargeCarte);
         panneauGlobal1.add(boutonChargerCarte);
         panneauGlobal1.add(repChargCarte);
@@ -246,40 +299,47 @@ public class Fenetre extends JFrame {
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
         inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 4, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(55 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 4, 1 * (int) panneauLivraisons.getWidth() / 3, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 2 * (int) panneauLivraisons.getHeight() / 3, 1 * (int) panneauLivraisons.getWidth() / 3, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonChargerLivraisons.setBounds(55 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 4, 4 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 2 * (int) panneauLivraisons.getHeight() / 3, 4 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 4, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
 
-        tournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 10);
-        heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 10);
-        heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 10);
-        dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 10);
+        tournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
+        heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
+        heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
+        dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
 
         etapesTitre.setBounds(4 * (int) panneauEtape.getWidth() / 10, 0, 1 * (int) panneauEtape.getWidth(), 1 * (int) panneauEtape.getHeight() / 20);
-        etape.setBounds(0, 0, 1 * (int) panneauEtape.getWidth(), 1 * (int) panneauEtape.getHeight()/5);
+        etape.setBounds(0, 0, 1 * (int) panneauEtape.getWidth(), 1 * (int) panneauEtape.getHeight() / 5);
         scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        
+        labelRond.setBounds(0,(int)panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/25,(int)panneauLegende.getHeight()/5);
+        legendeRond.setBounds((int)panneauLegende.getWidth()/25,(int)panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/5,(int)panneauLegende.getHeight()/5);
+        labelCarre.setBounds(0,(int)2*panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/25,(int)panneauLegende.getHeight()/5);
+        legendeCarre.setBounds((int)panneauLegende.getWidth()/25,(int)2*panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/5,(int)panneauLegende.getHeight()/5);
+        labelTriangle.setBounds(0,(int)3*panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/25,(int)panneauLegende.getHeight()/5);
+        legendeTriangle.setBounds((int)panneauLegende.getWidth()/25,(int)3*panneauLegende.getHeight()/5,(int)panneauLegende.getWidth()/2,(int)panneauLegende.getHeight()/5);
     }
-    
-    public void afficherConteneur2(boolean chargerCarte){
-        if(chargerCarte){
-           this.setContentPane(panneauGlobal2);
-            panneauGlobal1.setVisible(false); 
-            panneauGlobal2.setVisible(true); 
-        }else{
+
+    public void afficherConteneur2(boolean chargerCarte) {
+        if (chargerCarte) {
+            this.setContentPane(panneauGlobal2);
+            panneauGlobal1.setVisible(false);
+            panneauGlobal2.setVisible(true);
+        } else {
             repChargCarte.setVisible(true);
         }
     }
-    
-    public void afficherBoutonCalcul(boolean chargerLivraison){
-        if(chargerLivraison){
+
+    public void afficherBoutonCalcul(boolean chargerLivraison) {
+        if (chargerLivraison) {
             boutonCalculerTournee.setEnabled(true);
-        }else{
+        } else {
             repChargeLiv.setVisible(true);
         }
-        
+
     }
-    
-    public void afficherEtapesTour(boolean calculTournee){
+
+    public void afficherEtapesTour(boolean calculTournee) {
         scrollEtapes.setVisible(true);
         panneauTournee.setVisible(true);
     }
