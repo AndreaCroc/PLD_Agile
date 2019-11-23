@@ -18,8 +18,14 @@ public class Chemin {
     private ArrayList<Troncon> successionTroncons;
 
     public Chemin() {
+        this.successionTroncons = new ArrayList<Troncon>();
     }
 
+    public Chemin(ArrayList<Troncon> successionTroncons) {
+        this.successionTroncons = successionTroncons;
+    }
+    
+    
     public int getDureeTrajet() {
         return dureeTrajet;
     }
@@ -32,8 +38,8 @@ public class Chemin {
         return successionTroncons;
     }
 
-    public void ajouterTroncon(Troncon t) {
-        this.successionTroncons.add(t);
+    public void ajouterTroncon(Troncon troncon) {
+        this.successionTroncons.add(troncon);
     }
 
     

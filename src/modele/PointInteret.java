@@ -26,6 +26,7 @@ public class PointInteret {
     public PointInteret(Intersection intersection, int duree) {
         this.intersection = intersection;
         this.duree = duree;
+        this.cheminDepart = new Chemin();
     }
 
     public Intersection getIntersection() {
@@ -83,6 +84,7 @@ public class PointInteret {
     public void setCheminDepart(Chemin cheminDepart) {
         this.cheminDepart = cheminDepart;
     }
+
     
     
     

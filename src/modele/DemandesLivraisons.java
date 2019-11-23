@@ -15,8 +15,15 @@ import java.util.ArrayList;
 
 public class DemandesLivraisons {
     private int heureDepart;
-    private Intersection adresseDepart;
-    private ArrayList<PointInteret> listePointsInterets;
+    private PointInteret adresseDepart;
+    private ArrayList<PointInteret> listePointsInteret;
+
+    public DemandesLivraisons(PointInteret aD) {
+        this.adresseDepart = aD;
+        this.listePointsInteret = new ArrayList<PointInteret>();
+    }
+    
+    
 
     public int getHeureDepart() {
         return heureDepart;
@@ -26,20 +33,22 @@ public class DemandesLivraisons {
         this.heureDepart = heureDepart;
     }
 
-    public Intersection getAdresseDepart() {
+    public PointInteret getAdresseDepart() {
         return adresseDepart;
     }
 
-    public void setAdresseDepart(Intersection adresseDepart) {
+    public void setAdresseDepart(PointInteret aD) {
         this.adresseDepart = adresseDepart;
     }
 
-    public ArrayList<PointInteret> getListePointsInterets() {
-        return listePointsInterets;
+    public ArrayList<PointInteret> getListePointsInteret() {
+        return listePointsInteret;
     }
     
     public void ajouterPointInteret(PointInteret pI) {
-        this.listePointsInterets.add(pI);
+        this.listePointsInteret.add(pI);
     }
 
+ 
+    
 }
