@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  */
 public class Intersection {
-    private Integer id;
+    private String id;
     private Double latitude;
     private Double longitude;
     private ArrayList<Troncon> tronconsDepart;
@@ -29,7 +29,7 @@ public class Intersection {
 
 
     
-    public Intersection(Integer id, Double latitude, Double longitude) {
+    public Intersection(String id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -37,11 +37,11 @@ public class Intersection {
         this.tronconsDepart = new ArrayList<Troncon>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

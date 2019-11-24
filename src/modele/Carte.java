@@ -1,7 +1,17 @@
 package modele;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
 
 /*
  * Carte
@@ -171,6 +181,165 @@ public class Carte {
         }
 
         return chemin;
+    }
+
+  // Lecture des fichier XML
+  // FileFilter pour les fichiers Xml
+    FileFilter fileFilter = new FileFilter() {
+        @Override
+        public boolean accept(File f) {
+            if (f == null) {
+                return false;
+            }
+            if (f.isDirectory()) {
+                return true;
+            }
+            String extension = getExtension(f);
+            if (extension == null) {
+                return false;
+            }
+            return extension.contentEquals("xml");
+        }
+
+        @Override
+        public String getDescription() {
+            return "Fichier XML";
+        }
+
+        private String getExtension(File f) {
+            String filename = f.getName();
+            int i = filename.lastIndexOf('.');
+            if (i > 0 && i < filename.length() - 1) {
+                return filename.substring(i + 1).toLowerCase();
+            }
+            return null;
+        }
+    };
+
+    // Permettant de selectionner un fichier XML dans une fenetre
+    public File ouvre(boolean lecture) throws Exception {
+        int returnVal;
+        JFileChooser jFileChooserXML = new JFileChooser();
+        jFileChooserXML.setFileFilter(fileFilter);
+        jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        if (lecture) {
+            returnVal = jFileChooserXML.showOpenDialog(null);
+        } else {
+            returnVal = jFileChooserXML.showSaveDialog(null);
+        }
+        if (returnVal != JFileChooser.APPROVE_OPTION) {
+            throw new Exception("Probleme a l'ouverture du fichier");
+        }
+        return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
+    }
+
+    //charger les donnees dans la liste des intersections
+    public void construireCarteAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException {
+        NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
+        for (int i = 0; i < listeNoeuds.getLength(); i++) {
+            String id = listeNoeuds.item(i).getAttributes().item(0).getNodeValue();
+            String latitude = listeNoeuds.item(i).getAttributes().item(1).getNodeValue();
+            String longitude = listeNoeuds.item(i).getAttributes().item(2).getNodeValue();
+            this.ajouterIntersection(new Intersection(id, Double.parseDouble(latitude), Double.parseDouble(longitude)));
+        }
+
+        NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
+        for (int i = 0; i < listeTroncons.getLength(); i++) {
+            String destination = listeTroncons.item(i).getAttributes().item(0).getNodeValue();
+            String longueur = listeTroncons.item(i).getAttributes().item(1).getNodeValue();
+            String nomRue = listeTroncons.item(i).getAttributes().item(2).getNodeValue();
+            String origine = listeTroncons.item(i).getAttributes().item(3).getNodeValue();
+
+            for (Intersection interDep : listeIntersections) {
+                if (interDep.getId().equals(origine)) {
+                    for (Intersection interArr : listeIntersections) {
+                        if (interArr.getId().equals(destination)) {
+                            //System.out.println("Ajout d'un troncon " + nomRue + longueur + interDep +interArr);
+                            interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //charger les donnees dans demandesLivraisons
+    public void construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException,Exception {
+        if(listeIntersections.isEmpty()){
+            throw new Exception("Infos cartes non chargées");
+        }
+        NodeList entrepot = noeudDOMRacine.getElementsByTagName("entrepot");
+        String adresse = entrepot.item(0).getAttributes().item(0).getNodeValue();
+        String heureDepart = entrepot.item(0).getAttributes().item(1).getNodeValue();
+        for (Intersection i : listeIntersections) {
+            if (i.getId().equals(adresse)) { 
+                this.demandesLivraisons = new DemandesLivraisons(new PointInteret(i,0));
+            }
+        }
+        this.demandesLivraisons.setHeureDepart(heureDepart);
+        
+        NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
+        for (int i = 0; i < listeLivraisons.getLength(); i++) {
+           
+            String adresseEnlevement = listeLivraisons.item(i).getAttributes().item(0).getNodeValue();
+            String adresseLivraison = listeLivraisons.item(i).getAttributes().item(1).getNodeValue();
+            String dureeEnlevement = listeLivraisons.item(i).getAttributes().item(2).getNodeValue();
+            String dureeLivraison = listeLivraisons.item(i).getAttributes().item(3).getNodeValue();
+            
+            for (Intersection j : listeIntersections) {
+                for (Intersection k : listeIntersections) {
+                    if ((j.getId().equals(adresseEnlevement)) && (k.getId().equals(adresseLivraison))) {
+                        
+                        PointInteret pe = new PointInteret(j, Integer.parseInt(dureeEnlevement));
+                        pe.setEstEnlevement(true);
+
+                        PointInteret pl = new PointInteret(k, Integer.parseInt(dureeLivraison));
+                        pl.setEstEnlevement(false);
+                        
+                        pe.setPointDependance(pl);
+                        pl.setPointDependance(pe);
+                        
+                        this.demandesLivraisons.ajouterPointInteret(pe);
+                        this.demandesLivraisons.ajouterPointInteret(pl);
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
+    public void charger() throws Exception, ParserConfigurationException, SAXException, IOException {
+       
+        File xml = ouvre(true);
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document document = docBuilder.parse(xml);
+        Element racine = document.getDocumentElement();
+        
+        if (racine.getNodeName().equals("reseau")) {
+            construireCarteAPartirDeDOMXML(racine);
+        } else if (racine.getNodeName().equals("demandeDeLivraisons")) {
+            construireLivraisonAPartirDeDOMXML(racine);
+        } else {
+            throw new Exception("Document non conforme");
+        }
+    }
+
+    // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
+    public void AfficherIntersections() {
+        for (Intersection i : listeIntersections) {
+            System.out.println("id:" + i.getId() + " latitude:" + i.getLatitude() + " longitude:" + i.getLongitude());
+            System.out.println("listeTronconDepart:" + i.getTronconsDepart());
+            System.out.println();
+        }
+    }
+
+    public void AfficherLivraisons() {
+        DemandesLivraisons dl = this.demandesLivraisons;
+        System.out.println("adresseDepart:"+dl.getAdresseDepart()+" heureDepart:"+dl.getHeureDepart());
+        for(PointInteret pI:dl.getListePointsInteret()){
+            System.out.println("adresse:"+pI.getIntersection().getId()+" duree:"+pI.getDuree()+((pI.isEstEnlevement())?" estEnlevement":" estLivraison"));
+        }
     }
 
 }

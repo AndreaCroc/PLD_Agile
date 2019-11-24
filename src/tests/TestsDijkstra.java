@@ -26,14 +26,14 @@ public class TestsDijkstra {
         System.out.println("Test Dijkstra");
         Carte carte = new Carte();
         //Création des intersections
-        Intersection a = new Intersection(1,0.0,0.0);
-        Intersection b = new Intersection(2,0.0,0.0);
-        Intersection c = new Intersection(3,0.0,0.0);
-        Intersection d = new Intersection(4,0.0,0.0);
-        Intersection e = new Intersection(5,0.0,0.0);
-        Intersection f = new Intersection(6,0.0,0.0);
-        Intersection g = new Intersection(7,0.0,0.0);
-        Intersection h = new Intersection(8,0.0,0.0);
+        Intersection a = new Intersection("1",0.0,0.0);
+        Intersection b = new Intersection("2",0.0,0.0);
+        Intersection c = new Intersection("3",0.0,0.0);
+        Intersection d = new Intersection("4",0.0,0.0);
+        Intersection e = new Intersection("5",0.0,0.0);
+        Intersection f = new Intersection("6",0.0,0.0);
+        Intersection g = new Intersection("7",0.0,0.0);
+        Intersection h = new Intersection("8",0.0,0.0);
         
         
         //Ajout des troncons de départ aux differentes intersections
