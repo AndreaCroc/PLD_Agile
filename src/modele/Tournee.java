@@ -13,17 +13,17 @@ import java.util.ArrayList;
  *
  */
 public class Tournee {
-    private int duree;
+    private Integer duree;
     private ArrayList<PointInteret> successionPointsInteret;
 
     public Tournee() {
     }
 
-    public int getDuree() {
+    public Integer getDuree() {
         return duree;
     }
 
-    public void setDuree(int duree) {
+    public void setDuree(Integer duree) {
         this.duree = duree;
     }
 

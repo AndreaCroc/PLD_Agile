@@ -13,15 +13,15 @@ import java.util.ArrayList;
  *
  */
 public class Intersection {
-    private int id;
-    private float latitude;
-    private float longitude;
+    private Integer id;
+    private Double latitude;
+    private Double longitude;
     private ArrayList<Troncon> tronconsDepart;
     
     
     //Pour dijkstra
     private Intersection predecesseur;
-    private float distance;
+    private Double distance;
 
     public Intersection() {
         tronconsDepart = new ArrayList<Troncon>();
@@ -29,7 +29,7 @@ public class Intersection {
 
 
     
-    public Intersection(int id, float latitude, float longitude) {
+    public Intersection(Integer id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -45,19 +45,19 @@ public class Intersection {
         this.id = id;
     }
 
-    public float getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -77,11 +77,11 @@ public class Intersection {
         this.predecesseur = predecesseur;
     }
 
-    public float getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(float dist) {
+    public void setDistance(Double dist) {
         this.distance = dist;
     }
 

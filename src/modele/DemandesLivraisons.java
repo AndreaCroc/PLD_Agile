@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class DemandesLivraisons {
-    private int heureDepart;
+    private Integer heureDepart;
     private PointInteret adresseDepart;
     private ArrayList<PointInteret> listePointsInteret;
 
@@ -25,11 +25,11 @@ public class DemandesLivraisons {
     
     
 
-    public int getHeureDepart() {
+    public Integer getHeureDepart() {
         return heureDepart;
     }
 
-    public void setHeureDepart(int heureDepart) {
+    public void setHeureDepart(Integer heureDepart) {
         this.heureDepart = heureDepart;
     }
 

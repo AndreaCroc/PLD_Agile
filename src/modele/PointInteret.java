@@ -13,10 +13,10 @@ package modele;
  */
 public class PointInteret {
     private Intersection intersection;
-    private int duree;
+    private Integer duree;
     private boolean estEnlevement;
-    private int heureDepart;
-    private int heureArrivee;
+    private Integer heureDepart;
+    private Integer heureArrivee;
     private PointInteret pointDependance;
     private Chemin cheminDepart;
 
@@ -37,11 +37,11 @@ public class PointInteret {
         this.intersection = intersection;
     }
 
-    public int getDuree() {
+    public Integer getDuree() {
         return duree;
     }
 
-    public void setDuree(int duree) {
+    public void setDuree(Integer duree) {
         this.duree = duree;
     }
 
@@ -53,7 +53,7 @@ public class PointInteret {
         this.estEnlevement = estEnlevement;
     }
 
-    public int getHeureDepart() {
+    public Integer getHeureDepart() {
         return heureDepart;
     }
 
@@ -61,7 +61,7 @@ public class PointInteret {
         this.heureDepart = heureDepart;
     }
 
-    public int getHeureArrivee() {
+    public Integer getHeureArrivee() {
         return heureArrivee;
     }
 
