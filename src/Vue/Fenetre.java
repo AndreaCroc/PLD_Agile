@@ -35,7 +35,7 @@ import modele.Troncon;
 public class Fenetre extends JFrame {
 
     private Controleur controleur;
-    private Carte carte;
+  
 
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -93,7 +93,7 @@ public class Fenetre extends JFrame {
 
     private EcouteurBoutons ecouteurBoutons;
 
-    public Fenetre(Controleur controleur, boolean livraisonChargee) {
+    public Fenetre(Controleur controleur) {
 
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
@@ -247,13 +247,17 @@ public class Fenetre extends JFrame {
         
         
         /*TEST GRAZIA*/
-        carte=new Carte();
-        if(livraisonChargee==false){
+        panneauCarte=new JCarte(controleur);
+        /*if(livraisonChargee==false){
+            if(controleur.getCarte()!=null){
+                panneauCarte = new JCarte(controleur);
+            }else{
+                panneauCarte=new JCarte(controleur);
+            }
             
-            panneauCarte = new JCarte(carte.getListeIntersections());
         }else{
             panneauCarte = new JCarte(initTestCarte(),initTestLivraisons());
-        }
+        }*/
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauDroite.add(panneauCarte);
@@ -373,73 +377,10 @@ public class Fenetre extends JFrame {
         
     }
     
-    public ArrayList<Intersection> initTestCarte(){
-        /*Intersection a = new Intersection("1",45.75964,4.872506);
-        Intersection b = new Intersection("2",45.758717,4.8737717);
-        Intersection c = new Intersection("3",45.750614,4.8792905);
-        Intersection d = new Intersection("4",45.759357,4.8678627);
-        Intersection e = new Intersection("5",45.759993,4.876936);
-        Intersection f = new Intersection("6",45.759444,4.876111);
-        Intersection g = new Intersection("7",45.759555,4.876222);
-        Intersection h = new Intersection("8",45.758804,4.878655);        
-        
-        Troncon t1=new Troncon(); 
-        t1.setOrigine(a);
-        t1.setDestination(b);
-        Troncon t2=new Troncon(); t2.setOrigine(a);t2.setDestination(c);  
-        a.ajouterTronconDepart(t1);a.ajouterTronconDepart(t2);
-        
-        Troncon t3=new Troncon(); t3.setOrigine(f);t3.setDestination(h);
-        Troncon t4=new Troncon(); t4.setOrigine(f);t4.setDestination(b);
-        f.ajouterTronconDepart(t3);f.ajouterTronconDepart(t4);
-        
-        Troncon t5=new Troncon(); t5.setOrigine(d);t5.setDestination(c);
-        Troncon t6=new Troncon(); t6.setOrigine(d);t6.setDestination(b);
-        d.ajouterTronconDepart(t5);d.ajouterTronconDepart(t6);
-        
-        Troncon t7=new Troncon(); t7.setOrigine(g);t7.setDestination(h);
-        Troncon t8=new Troncon(); t8.setOrigine(g);t8.setDestination(e);
-        g.ajouterTronconDepart(t7);g.ajouterTronconDepart(t8);
-        
-        ArrayList<Intersection> intersections=new ArrayList<Intersection>();
-        
-        intersections.add(a);intersections.add(b);intersections.add(c);intersections.add(d);intersections.add(e);
-        intersections.add(f);intersections.add(g);intersections.add(h);
-        */
-        //return intersections;
-        ArrayList<Intersection> res=new ArrayList<Intersection>();
-        if(carte.getListeIntersections()!=null){
-            res=carte.getListeIntersections();
-        }
-     
-        return res;
-    }  
-    
-    public ArrayList<PointInteret> initTestLivraisons(){
-        
-        ArrayList<Intersection> intersections=initTestCarte();
-
-        PointInteret piA=new PointInteret();piA.setIntersection(intersections.get(0));piA.setEstEnlevement(true);
-        PointInteret piB=new PointInteret();piB.setIntersection(intersections.get(1));piB.setEstEnlevement(false);
-        PointInteret piD=new PointInteret();piD.setIntersection(intersections.get(3));piD.setEstEnlevement(true);
-        PointInteret piE=new PointInteret();piE.setIntersection(intersections.get(4));piE.setEstEnlevement(false);
-        
-        piA.setPointDependance(piE);piE.setPointDependance(piA);
-        piB.setPointDependance(piD);piD.setPointDependance(piB);
-        
-        ArrayList<PointInteret> PIs=new ArrayList<PointInteret>();
-        
-        PIs.add(piA);PIs.add(piB);PIs.add(piD);PIs.add(piE);
- 
-        
-        return PIs;
-    }
     
     public void setCarte(Carte nCarte){
-         this.carte=nCarte;
+         controleur.setCarte(nCarte);
     }
     
-    public Carte getCarte(){
-        return this.carte;
-    }
+   
 }

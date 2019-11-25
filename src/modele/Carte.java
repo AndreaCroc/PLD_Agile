@@ -263,7 +263,7 @@ public class Carte {
         }
     }
 
-    //charger les donnees dans demandesLivraisons
+    // les donnees dans demandesLivraisons
     public void construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException,Exception {
         if(listeIntersections.isEmpty()){
             throw new Exception("Infos cartes non chargées");
@@ -309,7 +309,7 @@ public class Carte {
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
-    public void charger() throws Exception, ParserConfigurationException, SAXException, IOException {
+    public void chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
        
         File xml = ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -319,12 +319,25 @@ public class Carte {
         if (racine.getNodeName().equals("reseau")) { 
             construireCarteAPartirDeDOMXML(racine);
             //System.out.println(this.getListeIntersections().toString());
-        } else if (racine.getNodeName().equals("demandeDeLivraisons")) {
+        }else {
+            throw new Exception("Document non conforme");
+        }
+    }
+    
+    public void chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
+       
+        File xml = ouvre(true);
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document document = docBuilder.parse(xml);
+        Element racine = document.getDocumentElement();
+        
+        if (racine.getNodeName().equals("demandeDeLivraisons")) {
             construireLivraisonAPartirDeDOMXML(racine);
         } else {
             throw new Exception("Document non conforme");
         }
     }
+    
 
     // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
     public void AfficherIntersections() {

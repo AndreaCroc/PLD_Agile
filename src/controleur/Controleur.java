@@ -2,7 +2,9 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import java.util.ArrayList;
 import modele.Carte;
+import modele.Intersection;
 
 /*
  * Controleur
@@ -19,10 +21,12 @@ public class Controleur {
 
     private Etat etatCourant;
     private Fenetre fenetre;
+    private Carte carte;
 
     public Controleur() {
         //etatCourant = etatInit;
-        fenetre = new Fenetre(this,false); //lui passer this
+        fenetre = new Fenetre(this); //lui passer this
+        carte=new Carte();
     }
 
     /**
@@ -34,20 +38,29 @@ public class Controleur {
         etatCourant = etat;
     }
 
+    public Carte getCarte(){
+        return this.carte;
+    }
+    
+    public void setCarte(Carte nCarte){
+        this.carte=nCarte;
+    }
+    
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
-        fenetre.setCarte(new Carte());
-        try{
-            System.out.println("dans le try");
-            fenetre.getCarte().charger();
-            fenetre.setPanneauCarte(new JCarte(fenetre.getCarte().getListeIntersections()));
 
+        try{
+            
+            carte.chargerCarte();
+            fenetre.setPanneauCarte(new JCarte(this));
+            fenetre.repaint();
+            fenetre.afficherConteneur2(chargerCarte);
             
         }catch(Exception e){
             e.printStackTrace();
         }
-        fenetre.afficherConteneur2(chargerCarte);
+        
         System.out.println("Je lance le chargement d'une carte");
         
     }
@@ -56,10 +69,20 @@ public class Controleur {
 
         boolean chargerLivraison = true;
         
-        //JCarte nouvelleCarte=new JCarte(fenetre.initTestCarte(),fenetre.initTestLivraisons());
-        fenetre.dispose();
-        fenetre=new Fenetre(this, true);
-        chargerCarte();
+        try{
+            
+            carte.chargerLivraison();
+
+            fenetre.setPanneauCarte(new JCarte(this));
+            fenetre.repaint();
+
+            fenetre.afficherConteneur2(true);
+
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
 
         fenetre.afficherBoutonCalcul(chargerLivraison);
         
