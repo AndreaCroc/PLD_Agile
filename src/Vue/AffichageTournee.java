@@ -31,7 +31,7 @@ public class AffichageTournee {
     }
 
     public void afficherTournee() {
-        System.out.println("AfficherTournee dans AffichageTournee");
+        System.out.println("laaaaaa");
         //ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
         Intersection inter = new Intersection();
         PointInteret p1 = new PointInteret(inter, 10);

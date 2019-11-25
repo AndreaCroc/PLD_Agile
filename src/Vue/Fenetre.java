@@ -34,6 +34,7 @@ public class Fenetre extends JFrame {
     private AffichageTournee vueTournee;
     private JCarte panneauCarte;
 
+    //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
@@ -48,10 +49,12 @@ public class Fenetre extends JFrame {
     protected final static String ADRESSE = "Adresse : ";
     protected final static String HEURE_ARRIVEE = "Heure d'arrivée prévue : ";
 
+    //Boutons sur lesquels l utilisateur peut cliquer
     private JButton boutonChargerCarte;
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
 
+    //Labels pour afficher les donnees
     private JLabel livraisons;
     private JLabel labelTournee;
     private JLabel legende;
@@ -68,16 +71,20 @@ public class Fenetre extends JFrame {
     private JLabel labelTriangle;
     private JLabel legendeTriangle;
 
+    //Pour afficher les details d une tournee
     private JTextArea etape;
     private JScrollPane scrollEtapes;
 
+    //Pour ecrire en dur le fichier XML souhaite
     private JTextField inputChargeCarte;
     private JTextField inputChargeLiv;
 
+    //Les 3 types d icones qui sont affichees sur la carte
     private ImageIcon rond;
     private ImageIcon carre;
     private ImageIcon triangle;
 
+    //Les differents panneaux d affichage
     private JPanel panneauGlobal1;
     private JPanel panneauGlobal2;
     private JPanel panneauDroite;
@@ -87,10 +94,12 @@ public class Fenetre extends JFrame {
     private JPanel panneauTournee;
     private JPanel panneauGauche;
 
+    //Pour reagir aux actions de l utilisateur
     private EcouteurBoutons ecouteurBoutons;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
 
+        //Mise en place des caracteristiques de la fenetre
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
         Toolkit outil = getToolkit();
@@ -107,27 +116,33 @@ public class Fenetre extends JFrame {
         
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
+        //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
         panneauGauche.setLayout(null);
         panneauGauche.setBackground(new Color(186, 228, 255));
 
+        /* PanneauLivraison (haut gauche)*/
         panneauLivraisons = new JPanel();
         panneauLivraisons.setLayout(null);
         panneauLivraisons.setBackground(new Color(186, 228, 255));
 
+        //Input pour ecrire le nom du fichier XML souhaite
         inputChargeLiv = new JTextField();
 
+        //Bouton pour demander a charger un fichier XML contenant des livraisons
         boutonChargerLivraisons = new JButton(CHARGER_LIVRAISONS);
         boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 16));
         boutonChargerLivraisons.setForeground(Color.white);
         boutonChargerLivraisons.setBackground(new Color(50, 70, 120));
         boutonChargerLivraisons.addActionListener(ecouteurBoutons);
 
+        //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
         repChargeLiv.setFont(new Font("Arial", Font.BOLD, 16));
         repChargeLiv.setForeground(new Color(254, 79, 65));
         repChargeLiv.setVisible(false);
 
+        //Bouton pour calculer une tournee
         boutonCalculerTournee = new JButton(CALCULER_TOURNEE);
         boutonCalculerTournee.setFont(new Font("Arial", Font.BOLD, 16));
         boutonCalculerTournee.setForeground(Color.white);
@@ -139,6 +154,7 @@ public class Fenetre extends JFrame {
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
         livraisons.setForeground(Color.white);
 
+        //Remplissage du panneauLivraison et ajout de ce dernier au panneauGauche
         panneauLivraisons.add(livraisons);
         panneauLivraisons.add(inputChargeLiv);
         panneauLivraisons.add(boutonChargerLivraisons);
@@ -146,22 +162,31 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
+        /* Fin PanneauLivraison */
+        
+        /* PanneauTournee (milieu gauche) */
+        
+        //Titre de panneauTournee
         labelTournee = new JLabel("Tournée");
         labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
         labelTournee.setForeground(Color.white);
 
+        //Heure de debut de la tournee
         heureDeb = new JLabel(HEURE_DEBUT);
         heureDeb.setFont(new Font("Arial", Font.BOLD, 16));
         heureDeb.setForeground(Color.white);
 
+        //Heure de fin de la tournee
         heureFin = new JLabel(HEURE_FIN);
         heureFin.setFont(new Font("Arial", Font.BOLD, 16));
         heureFin.setForeground(Color.white);
 
+        //Duree de la tournee
         dureeTournee = new JLabel(DUREE);
         dureeTournee.setFont(new Font("Arial", Font.BOLD, 16));
         dureeTournee.setForeground(Color.white);
 
+        //Ajout des elements a panneauTournee et ajout de ce dernier a panneauGauche
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(new Color(186, 228, 255));
@@ -172,10 +197,16 @@ public class Fenetre extends JFrame {
         panneauTournee.setVisible(false);
         panneauGauche.add(panneauTournee);
 
+        /* Fin PanneauTournee*/
+        
+        /* PanneauEtape (bas gauche)*/
+        
+        //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
         etapesTitre.setForeground(Color.white);
 
+        //Espace contenant les etapes intermediaires d une tournee
         etape = new JTextArea();
         etape.setFont(new Font("Arial", Font.BOLD, 16));
         etape.setForeground(Color.gray);
@@ -186,6 +217,7 @@ public class Fenetre extends JFrame {
         scrollEtapes = new JScrollPane(etape, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         //panneauGauche.add(scrollEtapes);
         
+        //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
         panneauEtapes.setBackground(new Color(186, 228, 255));
@@ -198,6 +230,7 @@ public class Fenetre extends JFrame {
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(Color.blue);
 
+        //Logo rond de la legende
         rond = new ImageIcon("rond-noir.jpg");
         Image imgR = rond.getImage();
         Image newimgR = imgR.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -209,6 +242,7 @@ public class Fenetre extends JFrame {
         legendeRond.setFont(new Font("Arial", Font.BOLD, 16));
         legendeRond.setForeground(Color.white);
 
+        //Logo carre de la legende
         carre = new ImageIcon("carre-noir.png");
         Image imgC = carre.getImage();
         Image newimgC = imgC.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -220,6 +254,7 @@ public class Fenetre extends JFrame {
         legendeCarre.setFont(new Font("Arial", Font.BOLD, 16));
         legendeCarre.setForeground(Color.white);
 
+        //Logo triangle de la legende
         triangle = new ImageIcon("triangle-noir.png");
         Image imgT = triangle.getImage();
         Image newimgT = imgT.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -231,6 +266,9 @@ public class Fenetre extends JFrame {
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 16));
         legendeTriangle.setForeground(Color.white);
 
+        /* PanneauLegende(haut droit)*/
+        
+        //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
         panneauLegende.add(labelRond);
@@ -247,6 +285,7 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legende);
         panneauDroite.add(panneauLegende);
 
+        /* Fin PanneauLegende */
         
         panneauCarte = new JCarte(carte);
         
