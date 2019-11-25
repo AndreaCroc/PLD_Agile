@@ -109,11 +109,11 @@ public class Fenetre extends JFrame {
 
         panneauGauche = new JPanel();
         panneauGauche.setLayout(null);
-        panneauGauche.setBackground(Color.yellow);
+        panneauGauche.setBackground(new Color(186, 228, 255));
 
         panneauLivraisons = new JPanel();
         panneauLivraisons.setLayout(null);
-        panneauLivraisons.setBackground(Color.red);
+        panneauLivraisons.setBackground(new Color(186, 228, 255));
 
         inputChargeLiv = new JTextField();
 
@@ -164,7 +164,7 @@ public class Fenetre extends JFrame {
 
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
-        panneauTournee.setBackground(Color.cyan);
+        panneauTournee.setBackground(new Color(186, 228, 255));
         panneauTournee.add(labelTournee);
         panneauTournee.add(heureDeb);
         panneauTournee.add(heureFin);
@@ -188,7 +188,7 @@ public class Fenetre extends JFrame {
         
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
-        panneauEtapes.setBackground(Color.green);
+        panneauEtapes.setBackground(new Color(186, 228, 255));
         panneauEtapes.add(etapesTitre);
         panneauEtapes.add(scrollEtapes);
         panneauEtapes.setVisible(false);
@@ -239,7 +239,7 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legendeCarre);
         panneauLegende.add(labelTriangle);
         panneauLegende.add(legendeTriangle);
-        panneauLegende.setBackground(Color.ORANGE);
+        panneauLegende.setBackground(new Color(186, 228, 255));
 
         legende = new JLabel("Légende");
         legende.setFont(new Font("Arial", Font.BOLD, 18));
@@ -256,7 +256,7 @@ public class Fenetre extends JFrame {
 
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
-        panneauGlobal2.setBackground(Color.BLACK);
+        panneauGlobal2.setBackground(new Color(186, 228, 255));
         panneauGlobal2.add(panneauGauche);
         panneauGlobal2.add(panneauDroite);
 
