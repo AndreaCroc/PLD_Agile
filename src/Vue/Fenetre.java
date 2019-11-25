@@ -411,6 +411,7 @@ public class Fenetre extends JFrame {
         //scrollEtapes.setVisible(true);
         panneauEtapes.setVisible(true);
         panneauTournee.setVisible(true);
+        vueTournee.setTournee(tournee);
         vueTournee.afficherTournee();
     }
 
@@ -468,5 +469,10 @@ public class Fenetre extends JFrame {
         this.etape.append(DUREE + duree + "\r\n\r\n");
     }
 
+    public void setTournee(Tournee tournee) {
+        this.tournee = tournee;
+    }
 
+
+    
 }
