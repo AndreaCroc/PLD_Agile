@@ -25,7 +25,6 @@ public class Controleur {
         carte = new Carte();
         tournee = new Tournee();
         fenetre = new Fenetre(this, carte, tournee); //lui passer this
-
     }
 
     /**
@@ -37,52 +36,62 @@ public class Controleur {
         boolean chargerCarte = true;
 
         try {
-
+            //Choix du fichier XML
             carte.chargerCarte();
+
+            //Si le chargement de la carte s est bien passe,
+            // on change de fenetre et un affiche la carte
             if (chargerCarte) {
                 fenetre.setPanneauCarte(new JCarte(carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
+                //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
             }
 
         } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
-
-        System.out.println("Je lance le chargement d'une carte");
 
     }
 
     /**
-     * Charge une livraison
-     *
-     */
+    * Charge une livraison
+    *
+    */
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
 
         try {
-
+            //Choix du fichier XML
             carte.chargerLivraison();
+
+            //Si le chargement des livraisons s est bien passe,
+            // on affiche les livraisons
             if (chargerLivraison) {
                 fenetre.setPanneauCarte(new JCarte(carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
             } else {
+                //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
             }
 
         } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
 
-        System.out.println("Je lance le chargement d'une livraison");
-
     }
 
+    /**
+    * Calculer une tournee
+    *
+    */
     public void calculerTournee() {
 
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
