@@ -34,7 +34,17 @@ public class Tournee {
 
     public void ajouterPointInteret(PointInteret pI) {
         this.successionPointsInteret.add(pI);
+        //calculerDuree();
     }
+//    
+//    public Integer calculerDuree() {
+//        PointInteret entrepot = this.successionPointsInteret.get(0);
+//        Integer heureArr = entrepot.heureToInt(entrepot.getHeureArrivee());
+//        Integer heureDep = entrepot.heureToInt(entrepot.getHeureDepart());
+//        Integer duree = heureArr-heureDep;
+//        this.duree = duree;
+//        return duree;
+//    }
 
     @Override
     public String toString() {
@@ -44,6 +54,8 @@ public class Tournee {
         }
         return tournee;
     }
+    
+    
     
     
 }

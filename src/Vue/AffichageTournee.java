@@ -106,10 +106,11 @@ public class AffichageTournee {
         
         String nomRue = "";
         String heureArrivee = "";
+        String heureDepart="";
         String type = "";
         int duree = 0;
         int dureeTotPrevue = 0;
-        DateFormat format = new SimpleDateFormat("HH:mm");
+        DateFormat format = new SimpleDateFormat("HH:mm:ss");
         String heureDeb = "";
         heureDeb = format.format(new Date());
         heureDeb = heureDeb.replace(":", "h");
@@ -119,7 +120,6 @@ public class AffichageTournee {
             PointInteret pti = successionPointsInteret.get(successionPointsInteret.size() - 1);
             heureFin = pti.getHeureArrivee().toString();
             for (PointInteret pt : successionPointsInteret) {
-                System.out.println("boucle for");
                 int index = successionPointsInteret.indexOf(pt)+1;
                 Chemin c = pt.getCheminDepart();
                 Troncon t = c.getSuccessionTroncons().get(0);
@@ -135,9 +135,9 @@ public class AffichageTournee {
                 dureeTotPrevue += duree;
                 
                 heureArrivee = pt.getHeureArrivee().toString();
-
+                heureDepart = pt.getHeureDepart().toString();
                 System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + duree);
-                fenetre.setPanneauEtapes(index,type,nomRue,heureArrivee, duree);
+                fenetre.setPanneauEtapes(index,type,nomRue,heureDepart,heureArrivee, duree);
                 
             }
             fenetre.setPanneauTournee(heureDeb,heureFin,dureeTotPrevue);

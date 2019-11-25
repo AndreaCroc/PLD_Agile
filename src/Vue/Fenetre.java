@@ -48,7 +48,9 @@ public class Fenetre extends JFrame {
     protected final static String ETAPE = "Etape ";
     protected final static String TYPE = "Type : ";
     protected final static String ADRESSE = "Adresse : ";
+    protected final static String HEURE_DEPART = "Heure de départ prévue : ";
     protected final static String HEURE_ARRIVEE = "Heure d'arrivée prévue : ";
+    
 
     //Boutons sur lesquels l utilisateur peut cliquer
     private JButton boutonChargerCarte;
@@ -456,7 +458,7 @@ public class Fenetre extends JFrame {
     public void setPanneauTournee(String heureDeb, String heureFin, int duree){
         this.heureDeb.setText(HEURE_DEBUT + heureDeb);
         this.heureFin.setText(HEURE_FIN + heureFin);
-        this.dureeTournee.setText(DUREE + duree + " minutes");
+        this.dureeTournee.setText(DUREE + duree + " secondes");
     }
     /**
      * Afficher le detail de chaque etape de la tournee
@@ -466,10 +468,11 @@ public class Fenetre extends JFrame {
      * @param heureArr l heure d arrivee de l etape
      * @param duree duree de l etape
      */
-    public void setPanneauEtapes(int numEtape,String type, String adresse, String heureArr, int duree){
+    public void setPanneauEtapes(int numEtape,String type, String adresse, String heureDep, String heureArr, int duree){
         this.etape.append(ETAPE + numEtape + "\r\n");
         this.etape.append(TYPE + type + "\r\n");
         this.etape.append(ADRESSE + adresse + "\r\n");
+        this.etape.append(HEURE_DEPART + heureDep + "\r\n");
         this.etape.append(HEURE_ARRIVEE + heureArr + "\r\n");
         this.etape.append(DUREE + duree + "\r\n\r\n");
     }

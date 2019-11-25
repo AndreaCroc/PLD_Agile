@@ -247,7 +247,12 @@ public class Carte {
         Tournee tournee = new Tournee();
         Integer currentPoint=0;
         PointInteret pointCourant = new PointInteret();
-        
+        String heureDepart = demandesLivraisons.getHeureDepart();
+        Integer heureD = heureToInt(heureDepart);
+        Integer heureDepPrec = heureD; //heure depart du points précédents à tout moment
+        Integer heureDepCourant;
+        Integer heureArrCourant;
+        Integer dureeChemin;
         for (int i = 1; i < nbSommets; i++) {
             currentPoint = unTSP.getMeilleureSolution(i);
             System.out.println("lastpoint "+lastPoint);
@@ -255,12 +260,24 @@ public class Carte {
             Chemin chemin = chemins[lastPoint][currentPoint];
             pointCourant = listePointsInteret.get(lastPoint);
             pointCourant.setCheminDepart(chemin);
-//            if (lastPoint == 0) {
-//                pointCourant.setHeureDepart(demandesLivraisons.getHeureDepart());
-//            }
-//            else {
-//                
-//            }
+            System.out.println(" heure dep : " + intToHeure(heureDepPrec));
+            if (lastPoint==0) {
+                pointCourant.setHeureDepart(heureDepart);
+                heureDepPrec = heureD;
+                
+            }
+            //Calcul de l'heure d'arrivee et de l'heure de depart
+            dureeChemin = pointCourant.getCheminDepart().getDureeTrajet();
+            System.out.println("duree chem : "+dureeChemin);
+            heureArrCourant = heureDepPrec+dureeChemin;
+            heureDepCourant = heureArrCourant+pointCourant.getDuree();
+            
+            pointCourant.setHeureDepart(intToHeure(heureDepCourant));
+            pointCourant.setHeureArrivee(intToHeure(heureArrCourant));
+            
+            //Mise a jour des heures du points precedemment visités
+            heureDepPrec = heureDepCourant;
+            
             System.out.println("pt Couran"+pointCourant);
             System.out.println(chemin);
             tournee.ajouterPointInteret(pointCourant);
@@ -272,6 +289,14 @@ public class Carte {
         pointCourant.setCheminDepart(chemin);
         System.out.println("pt Couran" + pointCourant);
         System.out.println(chemin);
+        //Calcul de l'heure d'arrivee et de l'heure de depart
+        dureeChemin = pointCourant.getCheminDepart().getDureeTrajet();
+        heureArrCourant = heureDepPrec + dureeChemin;
+        heureDepCourant = heureArrCourant + pointCourant.getDuree();
+
+        pointCourant.setHeureDepart(intToHeure(heureDepCourant));
+        pointCourant.setHeureArrivee(intToHeure(heureArrCourant));
+
         tournee.ajouterPointInteret(pointCourant);
         return tournee;
         
