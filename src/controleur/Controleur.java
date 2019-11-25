@@ -25,15 +25,13 @@ public class Controleur {
         carte = new Carte();
         tournee = new Tournee();
         fenetre = new Fenetre(this, carte, tournee); //lui passer this
-        
+
     }
 
     /**
-     * Change l'etat courant du controleur
+     * Charge une nouvelle carte
      *
-     * le nouvel etat courant
      */
-
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
@@ -45,7 +43,7 @@ public class Controleur {
                 fenetre.setPanneauCarte(new JCarte(this, carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
-            }else{
+            } else {
                 fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
             }
 
@@ -57,6 +55,10 @@ public class Controleur {
 
     }
 
+    /**
+     * Charge une livraison
+     *
+     */
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
@@ -69,13 +71,13 @@ public class Controleur {
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
-            }else{
+            } else {
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
             }
 
         } catch (Exception e) {
             fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
-        }    
+        }
 
         System.out.println("Je lance le chargement d'une livraison");
 
