@@ -371,14 +371,14 @@ public class Fenetre extends JFrame {
     }
     
     public ArrayList<Intersection> initTestCarte(){
-        Intersection a = new Intersection(1,45.75964,4.872506);
-        Intersection b = new Intersection(2,45.758717,4.8737717);
-        Intersection c = new Intersection(3,45.750614,4.8792905);
-        Intersection d = new Intersection(4,45.759357,4.8678627);
-        Intersection e = new Intersection(5,45.759993,4.876936);
-        Intersection f = new Intersection(6,45.759444,4.876111);
-        Intersection g = new Intersection(7,45.759555,4.876222);
-        Intersection h = new Intersection(8,45.758804,4.878655);        
+        Intersection a = new Intersection("1",45.75964,4.872506);
+        Intersection b = new Intersection("2",45.758717,4.8737717);
+        Intersection c = new Intersection("3",45.750614,4.8792905);
+        Intersection d = new Intersection("4",45.759357,4.8678627);
+        Intersection e = new Intersection("5",45.759993,4.876936);
+        Intersection f = new Intersection("6",45.759444,4.876111);
+        Intersection g = new Intersection("7",45.759555,4.876222);
+        Intersection h = new Intersection("8",45.758804,4.878655);        
         
         Troncon t1=new Troncon(); 
         t1.setOrigine(a);
