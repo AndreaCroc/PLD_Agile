@@ -69,17 +69,30 @@ public class Chemin {
 
     public void ajouterTroncon(Troncon troncon) {
         this.successionTroncons.add(troncon);
+        //mise a jour du depart et de l'arrivee
+        this.depart = this.successionTroncons.get(0).getOrigine();
+        int nbTroncons = this.successionTroncons.size();
+        this.arrivee=this.successionTroncons.get(nbTroncons-1).getDestination();
     }
     
     public Double calculerLongueur() {
         Double longueur = 0.0;
         for (Troncon troncon : this.successionTroncons) {
-            System.out.println(troncon.getLongueur());
             longueur=longueur+troncon.getLongueur();
         }
         this.longueur = longueur;
         return longueur;
     }
+
+    @Override
+    public String toString() {
+        String chemin = "longueur : "+this.longueur+ " \n";
+        for (Troncon troncon : this.successionTroncons) {
+            chemin = chemin + troncon.getOrigine().getId()+" à "+troncon.getDestination().getId()+" \n";
+        }
+        return chemin; 
+    }
+    
     
     
 }

@@ -55,7 +55,7 @@ public class Carte {
     }
 
     public void relacherArc(Intersection depart, Intersection arrivee) {
-        //System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
+        System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
         Double coutArc = INFINI;
         ArrayList<Troncon> listeTronconsDepart = depart.getTronconsDepart();
         Troncon arc = new Troncon();
@@ -127,7 +127,21 @@ public class Carte {
 
     }
 
+    public PointInteret trouverPointInteret(Intersection intersection) {
+        /*Méthode permettant de trouver le point d'interet correspondant à 
+        l'intersection intersection. Celui-ci est null si intersection n'est pas
+        un point d'interet.
+         */
+        PointInteret pI = null;
+        ArrayList<PointInteret> pointsInteret = this.demandesLivraisons.getListePointsInteret();
+        for (int i = 0; i < pointsInteret.size(); i++) {
+            if (pointsInteret.get(i).getIntersection() == intersection) {
+                pI = pointsInteret.get(i);
+            }
+        }
+        return pI;
     
+    }
 
     public Chemin plusCourtChemin(Intersection depart, Intersection arrivee) {
         /*Méthode permettant de retrouver le chemin allant de l'intersection
