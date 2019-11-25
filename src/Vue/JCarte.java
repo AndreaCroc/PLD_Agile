@@ -23,11 +23,9 @@ import modele.Troncon;
  */
 public class JCarte extends JPanel{
 
-    private Controleur controleur;
     private Carte carte;
     
-    public JCarte(Controleur controleur, Carte carte) {
-        this.controleur=controleur;
+    public JCarte(Carte carte) {
         this.carte = carte;
     }
     

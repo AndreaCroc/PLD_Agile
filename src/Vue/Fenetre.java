@@ -32,6 +32,7 @@ public class Fenetre extends JFrame {
     private Carte carte;
     private Tournee tournee;
     private AffichageTournee vueTournee;
+    private JCarte panneauCarte;
 
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -42,7 +43,7 @@ public class Fenetre extends JFrame {
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
 
-    protected final static String ETAPE = "Etape";
+    protected final static String ETAPE = "Etape ";
     protected final static String TYPE = "Type : ";
     protected final static String ADRESSE = "Adresse : ";
     protected final static String HEURE_ARRIVEE = "Heure d'arrivée prévue : ";
@@ -81,9 +82,8 @@ public class Fenetre extends JFrame {
     private JPanel panneauGlobal2;
     private JPanel panneauDroite;
     private JPanel panneauLivraisons;
-    private JPanel panneauEtape;
+    private JPanel panneauEtapes;
     private JPanel panneauLegende;
-    private JCarte panneauCarte;
     private JPanel panneauTournee;
     private JPanel panneauGauche;
 
@@ -183,13 +183,13 @@ public class Fenetre extends JFrame {
         etape.setOpaque(false);
         etape.setLineWrap(true);
 
-        panneauEtape = new JPanel();
-        panneauEtape.setLayout(null);
-        panneauEtape.setBackground(Color.green);
-        panneauEtape.add(etapesTitre);
-        panneauEtape.add(etape);
+        panneauEtapes = new JPanel();
+        panneauEtapes.setLayout(null);
+        panneauEtapes.setBackground(Color.green);
+        panneauEtapes.add(etapesTitre);
+        panneauEtapes.add(etape);
 
-        scrollEtapes = new JScrollPane(panneauEtape, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollEtapes = new JScrollPane(panneauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollEtapes.setVisible(false);
         panneauGauche.add(scrollEtapes);
 
@@ -247,7 +247,7 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         
-        panneauCarte = new JCarte(controleur,carte);
+        panneauCarte = new JCarte(carte);
         
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
@@ -301,7 +301,7 @@ public class Fenetre extends JFrame {
         panneauDroite.setBounds(1 * (int) panneauGlobal2.getWidth() / 3, 0, 2 * (int) panneauGlobal2.getWidth() / 3, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
-        panneauEtape.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 4);
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 4, 1 * (int) panneauDroite.getWidth(), 3 * (int) panneauDroite.getHeight() / 4);
 
@@ -318,8 +318,8 @@ public class Fenetre extends JFrame {
         heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
 
-        etapesTitre.setBounds(4 * (int) panneauEtape.getWidth() / 10, 0, 1 * (int) panneauEtape.getWidth(), 1 * (int) panneauEtape.getHeight() / 20);
-        etape.setBounds(0, 0, 1 * (int) panneauEtape.getWidth(), 1 * (int) panneauEtape.getHeight() / 5);
+        etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
+        etape.setBounds(0, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight());
         scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
 
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
@@ -336,7 +336,6 @@ public class Fenetre extends JFrame {
         this.setContentPane(panneauGlobal2);
         panneauGlobal1.setVisible(false);
         panneauGlobal2.setVisible(true);
-        //panneauCarte.repaint();
 
     }
 
@@ -369,6 +368,20 @@ public class Fenetre extends JFrame {
         this.panneauCarte = nouvelleCarte;
         this.panneauCarte.updateUI();
 
+    }
+    
+    public void setPanneauTournee(String heureDeb, String heureFin, int duree){
+        this.heureDeb.setText(HEURE_DEBUT + heureDeb);
+        this.heureFin.setText(HEURE_FIN + heureFin);
+        this.dureeTournee.setText(DUREE + duree + " minutes");
+    }
+    
+    public void setPanneauEtapes(int numEtape,String type, String adresse, String heureArr, int duree){
+        this.etape.append(ETAPE + numEtape + "\r\n");
+        this.etape.append(TYPE + type + "\r\n");
+        this.etape.append(ADRESSE + adresse + "\r\n");
+        this.etape.append(HEURE_ARRIVEE + heureArr + "\r\n");
+        this.etape.append(DUREE + duree + "\r\n\r\n");
     }
 
 

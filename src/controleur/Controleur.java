@@ -40,7 +40,7 @@ public class Controleur {
 
             carte.chargerCarte();
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(this, carte));
+                fenetre.setPanneauCarte(new JCarte(carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -67,7 +67,7 @@ public class Controleur {
 
             carte.chargerLivraison();
             if (chargerLivraison) {
-                fenetre.setPanneauCarte(new JCarte(this, carte));
+                fenetre.setPanneauCarte(new JCarte(carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
