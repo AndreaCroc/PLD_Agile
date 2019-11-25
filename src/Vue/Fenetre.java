@@ -287,21 +287,26 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
         
+        /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(carte);
         
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauDroite.add(panneauCarte);
+        
+        /* Fin panneauCarte */
 
+        /* PanneauGlobal2 : pour la deuxieme fenetre*/
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(new Color(186, 228, 255));
         panneauGlobal2.add(panneauGauche);
         panneauGlobal2.add(panneauDroite);
 
-        // Conteneur 1
+        /* PanneauGlobal : pour la premiere fenetre*/
         inputChargeCarte = new JTextField();
 
+        //Pour afficher une erreur en cas de probleme lors du chargement du fichier
         repChargeCarte = new JLabel("Erreur dans le chargement du fichier");
         repChargeCarte.setFont(new Font("Arial", Font.BOLD, 16));
         repChargeCarte.setForeground(new Color(254, 79, 65));
@@ -313,6 +318,7 @@ public class Fenetre extends JFrame {
         boutonChargerCarte.setBackground(new Color(50, 70, 120));
         boutonChargerCarte.addActionListener(ecouteurBoutons);
 
+        //On ajoute tout au panneauGlobal1
         panneauGlobal1 = new JPanel();
         panneauGlobal1.setLayout(null);
         panneauGlobal1.setBackground(new Color(186, 228, 255));
@@ -322,11 +328,15 @@ public class Fenetre extends JFrame {
         this.setContentPane(panneauGlobal1);
         panneauGlobal1.setVisible(true);
 
+        //On place les elements
         placeObjet1();
         placeObjet2();
 
     }
 
+    /**
+     * Placement des elements de la premiere fenetre
+     */
     public void placeObjet1() {
         panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
 
@@ -335,6 +345,9 @@ public class Fenetre extends JFrame {
         repChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
     }
 
+    /**
+    * Placement des elements de la deuxieme fenetre
+    */
     public void placeObjet2() {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
         panneauGauche.setBounds(0, 0, (int) panneauGlobal2.getWidth() / 3, (int) panneauGlobal2.getHeight());
@@ -371,6 +384,9 @@ public class Fenetre extends JFrame {
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 5);
     }
 
+    /**
+     * Pour passer de la premiere fenetre a la deuxieme fenetre
+     */
     public void afficherConteneur2() {
         repChargeCarte.setVisible(false);
         repChargeLiv.setVisible(false);
@@ -380,10 +396,16 @@ public class Fenetre extends JFrame {
 
     }
 
+    /**
+     * Pour afficher le bouton pour calculer une tournee
+     */
     public void afficherBoutonCalcul() {
         boutonCalculerTournee.setEnabled(true);
     }
 
+    /**
+     * Pour afficher les details d une tournee
+     */
     public void afficherEtapesTour() {
         
         //scrollEtapes.setVisible(true);
@@ -392,11 +414,19 @@ public class Fenetre extends JFrame {
         vueTournee.afficherTournee();
     }
 
+    /**
+     * Afficher un message d erreur lors d un chargement d une carte
+     * @param message qui est le contenu du message d erreur
+     */
     public void afficherMessageErreur1(String message) {
         repChargeCarte.setText(message);
         repChargeCarte.setVisible(true);
     }
 
+    /**
+     * Afficher un message d erreur lors d un chargement des livraisons
+     * @param message qui est le contenu du message d erreur
+     */
     public void afficherMessageErreur2(String message) {
         repChargeLiv.setText(message);
         repChargeLiv.setVisible(true);
@@ -411,13 +441,25 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
-    
+    /**
+     * Pour afficher des donnees globales liees a une tournee
+     * @param heureDeb heure de debut de la tournee
+     * @param heureFin heure de fin de la tournee
+     * @param duree duree de la tournee
+     */
     public void setPanneauTournee(String heureDeb, String heureFin, int duree){
         this.heureDeb.setText(HEURE_DEBUT + heureDeb);
         this.heureFin.setText(HEURE_FIN + heureFin);
         this.dureeTournee.setText(DUREE + duree + " minutes");
     }
-    
+    /**
+     * Afficher le detail de chaque etape de la tournee
+     * @param numEtape numero de l etape
+     * @param type le type de l etape
+     * @param adresse l adresse de l etape
+     * @param heureArr l heure d arrivee de l etape
+     * @param duree duree de l etape
+     */
     public void setPanneauEtapes(int numEtape,String type, String adresse, String heureArr, int duree){
         this.etape.append(ETAPE + numEtape + "\r\n");
         this.etape.append(TYPE + type + "\r\n");
