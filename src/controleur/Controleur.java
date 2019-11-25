@@ -2,9 +2,7 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
-import java.util.ArrayList;
 import modele.Carte;
-import modele.Intersection;
 import modele.Tournee;
 
 /*
@@ -85,8 +83,8 @@ public class Controleur {
 
     public void calculerTournee() {
 
-        boolean calculTournee = true;
-        fenetre.afficherEtapesTour(calculTournee);
+        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
+        fenetre.afficherEtapesTour();
         System.out.println("Je lance le calcul d'une tournee");
 
     }

@@ -13,12 +13,8 @@ package Vue;
 import controleur.Controleur;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,16 +24,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import modele.Carte;
-import modele.Intersection;
-import modele.PointInteret;
 import modele.Tournee;
-import modele.Troncon;
 
 public class Fenetre extends JFrame {
 
     private Controleur controleur;
     private Carte carte;
     private Tournee tournee;
+    private AffichageTournee vueTournee;
 
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -108,6 +102,8 @@ public class Fenetre extends JFrame {
         this.controleur = controleur;
         this.carte = carte;
         this.tournee = tournee;
+        
+        this.vueTournee = new AffichageTournee(tournee, this);
         
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
@@ -348,9 +344,11 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setEnabled(true);
     }
 
-    public void afficherEtapesTour(boolean calculTournee) {
+    public void afficherEtapesTour() {
+        
         scrollEtapes.setVisible(true);
         panneauTournee.setVisible(true);
+        vueTournee.afficherTournee();
     }
 
     public void afficherMessageErreur1(String message) {
