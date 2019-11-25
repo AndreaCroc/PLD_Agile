@@ -130,6 +130,9 @@ public class TestsDijkstra {
 //              System.out.println(pI.getCheminDepart());
 //          }
 //        
+         System.out.println(carte.heureToInt("9:55:40"));
+         System.out.println(carte.intToHeure(5564));
+        
         
         
 

@@ -95,6 +95,8 @@ public class Controleur {
     public void calculerTournee() {
 
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
+        this.tournee = carte.calculerTournee();
+        fenetre.setTournee(tournee);
         fenetre.afficherEtapesTour();
         System.out.println("Je lance le calcul d'une tournee");
 

@@ -30,7 +30,7 @@ public class Carte {
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
     private TSP1 unTSP;
-    public static final Double INFINI = 1000.0; //Valeur max 
+    public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
 
     public Carte() {
@@ -63,7 +63,8 @@ public class Carte {
         for (int i = 0; i < listeTronconsDepart.size(); i++) {
             if (listeTronconsDepart.get(i).getDestination() == arrivee) {
                 arc = listeTronconsDepart.get(i);
-                coutArc = arc.getLongueur();
+                //Recuperation du cout de l'arc (en secondes)
+                coutArc = (arc.getLongueur()*15)/3.6;
             }
         }
         if (arrivee.getDistance() > depart.getDistance() + coutArc) {
@@ -126,23 +127,7 @@ public class Carte {
         }
 
     }
-
-    public PointInteret trouverPointInteret(Intersection intersection) {
-        /*Méthode permettant de trouver le point d'interet correspondant à 
-        l'intersection intersection. Celui-ci est null si intersection n'est pas
-        un point d'interet.
-         */
-        PointInteret pI = null;
-        ArrayList<PointInteret> pointsInteret = this.demandesLivraisons.getListePointsInteret();
-        for (int i = 0; i < pointsInteret.size(); i++) {
-            if (pointsInteret.get(i).getIntersection() == intersection) {
-                pI = pointsInteret.get(i);
-            }
-        }
-        return pI;
     
-    }
-
     public Chemin plusCourtChemin(Intersection depart, Intersection arrivee) {
         /*Méthode permettant de retrouver le chemin allant de l'intersection
         de départ à une intersection d'arrivée passée en paramètre
@@ -222,7 +207,8 @@ public class Carte {
                          cout[i][j] = INFINI;
                          chemins[i][j] = null;
                      } else {
-                         cout[i][j] = plusCourtChemin.getLongueur();
+                         //Recuperation du cout en secondes
+                         cout[i][j] = (plusCourtChemin.getLongueur()*15)/3.6;
                          chemins[i][j] = plusCourtChemin;
             }
                 }
@@ -246,20 +232,22 @@ public class Carte {
         
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
+        
+        //Initialisation des durees
         Integer[] duree = new Integer[nbSommets];
         for (int i=0;i<nbSommets;i++) {
-            duree[i]=3;
+            duree[i]=listePointsInteret.get(i).getDuree();
         }
         
         unTSP.chercheSolution(1000000,nbSommets,cout,duree);
-        
-        
+
         
         Integer lastPoint = unTSP.getMeilleureSolution(0);
         //Creation de la tournée
         Tournee tournee = new Tournee();
         Integer currentPoint=0;
         PointInteret pointCourant = new PointInteret();
+        
         for (int i = 1; i < nbSommets; i++) {
             currentPoint = unTSP.getMeilleureSolution(i);
             System.out.println("lastpoint "+lastPoint);
@@ -267,6 +255,12 @@ public class Carte {
             Chemin chemin = chemins[lastPoint][currentPoint];
             pointCourant = listePointsInteret.get(lastPoint);
             pointCourant.setCheminDepart(chemin);
+//            if (lastPoint == 0) {
+//                pointCourant.setHeureDepart(demandesLivraisons.getHeureDepart());
+//            }
+//            else {
+//                
+//            }
             System.out.println("pt Couran"+pointCourant);
             System.out.println(chemin);
             tournee.ajouterPointInteret(pointCourant);
@@ -281,6 +275,28 @@ public class Carte {
         tournee.ajouterPointInteret(pointCourant);
         return tournee;
         
+    }
+    
+    public Integer heureToInt(String heureStr) {
+        Integer heureInt;
+        String[] elements = heureStr.split(":");
+        int nbHeure = Integer.parseInt(elements[0]);
+        int nbMinutes = Integer.parseInt(elements[1]);
+        int nbSecondes = Integer.parseInt(elements[2]);
+        heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
+        return heureInt;
+    }
+    
+    public String intToHeure (Integer heureInt) {
+        String heureStr;
+        int nbHeures = heureInt/3600;
+        int nbMinutes = (heureInt-(nbHeures*3600))/60;
+        int nbSecondes = heureInt-(nbHeures*3600)-(nbMinutes*60);
+        String nbH = Integer.toString(nbHeures);
+        String nbM = Integer.toString(nbMinutes); 
+        String nbS = Integer.toString(nbSecondes);
+        heureStr=nbH+":"+nbM+":"+nbS;
+        return heureStr;
     }
 
   // Lecture des fichier XML

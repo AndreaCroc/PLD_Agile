@@ -15,8 +15,8 @@ public class PointInteret {
     private Intersection intersection;
     private Integer duree;
     private boolean estEnlevement;
-    private Integer heureDepart;
-    private Integer heureArrivee;
+    private String heureDepart;
+    private String heureArrivee;
     private PointInteret pointDependance;
     private Chemin cheminDepart;
 
@@ -27,6 +27,8 @@ public class PointInteret {
         this.intersection = intersection;
         this.duree = duree;
         this.cheminDepart = new Chemin();
+        this.heureDepart="0";
+        this.heureArrivee="0";
     }
 
     public Intersection getIntersection() {
@@ -53,19 +55,19 @@ public class PointInteret {
         this.estEnlevement = estEnlevement;
     }
 
-    public Integer getHeureDepart() {
+    public String getHeureDepart() {
         return heureDepart;
     }
 
-    public void setHeureDepart(int heureDepart) {
+    public void setHeureDepart(String heureDepart) {
         this.heureDepart = heureDepart;
     }
 
-    public Integer getHeureArrivee() {
+    public String getHeureArrivee() {
         return heureArrivee;
     }
 
-    public void setHeureArrivee(int heureArrivee) {
+    public void setHeureArrivee(String heureArrivee) {
         this.heureArrivee = heureArrivee;
     }
 
