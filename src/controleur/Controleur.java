@@ -1,6 +1,9 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
 
 /*
  * Controleur
@@ -12,46 +15,87 @@ import Vue.Fenetre;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class Controleur {
 
-    private Etat etatCourant;
     private Fenetre fenetre;
+    private Carte carte;
+    private Tournee tournee;
 
     public Controleur() {
-        //etatCourant = etatInit;
-        fenetre = new Fenetre(this); //lui passer this
+        carte = new Carte();
+        tournee = new Tournee();
+        fenetre = new Fenetre(this, carte, tournee); //lui passer this
     }
 
     /**
-     * Change l'etat courant du controleur
+     * Charge une nouvelle carte
      *
-     * @param etat le nouvel etat courant
      */
-    protected void setEtatCourant(Etat etat) {
-        etatCourant = etat;
-    }
-
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
-        fenetre.afficherConteneur2(chargerCarte);
-        System.out.println("Je lance le chargement d'une carte");
+
+        try {
+            //Choix du fichier XML
+            carte.chargerCarte();
+
+            //Si le chargement de la carte s est bien passe,
+            // on change de fenetre et un affiche la carte
+            if (chargerCarte) {
+                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+            } else {
+                //Sinon, on affiche un message d erreur
+                fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
+        }
 
     }
 
+    /**
+    * Charge une livraison
+    *
+    */
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
-        fenetre.afficherBoutonCalcul(chargerLivraison);
-        System.out.println("Je lance le chargement d'une livraison");
+
+        try {
+            //Choix du fichier XML
+            carte.chargerLivraison();
+
+            //Si le chargement des livraisons s est bien passe,
+            // on affiche les livraisons
+            if (chargerLivraison) {
+                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+                fenetre.afficherBoutonCalcul();
+            } else {
+                //Sinon, on affiche un message d erreur
+                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+        }
 
     }
 
+    /**
+    * Calculer une tournee
+    *
+    */
     public void calculerTournee() {
 
-        boolean calculTournee = true;
-        fenetre.afficherEtapesTour(calculTournee);
+        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
+        fenetre.afficherEtapesTour();
         System.out.println("Je lance le calcul d'une tournee");
 
     }

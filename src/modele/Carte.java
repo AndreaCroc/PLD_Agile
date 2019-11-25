@@ -362,7 +362,7 @@ public class Carte {
         }
     }
 
-    //charger les donnees dans demandesLivraisons
+    // les donnees dans demandesLivraisons
     public void construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException,Exception {
         if(listeIntersections.isEmpty()){
             throw new Exception("Infos cartes non chargées");
@@ -415,7 +415,7 @@ public class Carte {
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
         
-        if (racine.getNodeName().equals("reseau")) {
+        if (racine.getNodeName().equals("reseau")) { 
             construireCarteAPartirDeDOMXML(racine);
             //System.out.println(this.getListeIntersections().toString());
         }else {
@@ -436,6 +436,7 @@ public class Carte {
             throw new Exception("Document non conforme");
         }
     }
+    
 
     // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
     public void AfficherIntersections() {
