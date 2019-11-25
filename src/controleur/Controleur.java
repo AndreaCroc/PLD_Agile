@@ -2,9 +2,8 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
-import java.util.ArrayList;
 import modele.Carte;
-import modele.Intersection;
+import modele.Tournee;
 
 /*
  * Controleur
@@ -16,84 +15,89 @@ import modele.Intersection;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class Controleur {
 
-    private Etat etatCourant;
     private Fenetre fenetre;
     private Carte carte;
+    private Tournee tournee;
 
     public Controleur() {
-        //etatCourant = etatInit;
-        fenetre = new Fenetre(this); //lui passer this
-        carte=new Carte();
+        carte = new Carte();
+        tournee = new Tournee();
+        fenetre = new Fenetre(this, carte, tournee); //lui passer this
     }
 
     /**
-     * Change l'etat courant du controleur
+     * Charge une nouvelle carte
      *
-     * @param etat le nouvel etat courant
      */
-    protected void setEtatCourant(Etat etat) {
-        etatCourant = etat;
-    }
-
-    public Carte getCarte(){
-        return this.carte;
-    }
-    
-    public void setCarte(Carte nCarte){
-        this.carte=nCarte;
-    }
-    
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
 
-        try{
-            
+        try {
+            //Choix du fichier XML
             carte.chargerCarte();
-            fenetre.setPanneauCarte(new JCarte(this));
-            fenetre.repaint();
-            fenetre.afficherConteneur2(chargerCarte);
-            
-        }catch(Exception e){
-            e.printStackTrace();
+
+            //Si le chargement de la carte s est bien passe,
+            // on change de fenetre et un affiche la carte
+            if (chargerCarte) {
+                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+            } else {
+                //Sinon, on affiche un message d erreur
+                fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
-        
-        System.out.println("Je lance le chargement d'une carte");
-        
+
     }
 
+    /**
+    * Charge une livraison
+    *
+    */
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
-        
-        try{
-            
+
+        try {
+            //Choix du fichier XML
             carte.chargerLivraison();
 
-            fenetre.setPanneauCarte(new JCarte(this));
-            fenetre.repaint();
+            //Si le chargement des livraisons s est bien passe,
+            // on affiche les livraisons
+            if (chargerLivraison) {
+                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+                fenetre.afficherBoutonCalcul();
+            } else {
+                //Sinon, on affiche un message d erreur
+                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+            }
 
-            fenetre.afficherConteneur2(true);
-
-            
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
-        
-
-        fenetre.afficherBoutonCalcul(chargerLivraison);
-        
-        System.out.println("Je lance le chargement d'une livraison");
 
     }
 
+    /**
+    * Calculer une tournee
+    *
+    */
     public void calculerTournee() {
 
-        boolean calculTournee = true;
-        fenetre.afficherEtapesTour(calculTournee);
+        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
+        this.tournee = carte.calculerTournee();
+        fenetre.setTournee(tournee);
+        fenetre.afficherEtapesTour();
         System.out.println("Je lance le calcul d'une tournee");
 
     }

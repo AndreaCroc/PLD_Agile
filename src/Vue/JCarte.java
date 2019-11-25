@@ -8,11 +8,10 @@ package Vue;
 import controleur.Controleur;
 import java.awt.Color;
 import java.awt.Graphics;
-import static java.awt.PageAttributes.ColorType.COLOR;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import javax.swing.JPanel;
+import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
@@ -24,10 +23,10 @@ import modele.Troncon;
  */
 public class JCarte extends JPanel{
 
-    Controleur controleur;
+    private Carte carte;
     
-    public JCarte(Controleur controleur) {
-        this.controleur=controleur;
+    public JCarte(Carte carte) {
+        this.carte = carte;
     }
     
     /*Recupère la latitude maximale présente sur la carte*/
@@ -243,7 +242,7 @@ public class JCarte extends JPanel{
     protected void paintComponent(Graphics g) {
         
         super.paintComponent(g);
-        ArrayList<Intersection> intersections=controleur.getCarte().getListeIntersections();
+        ArrayList<Intersection> intersections=carte.getListeIntersections();
         for (Intersection i : intersections) {
             
             //System.out.println("Le point " + i.getId()/*+" "+i.getLatitude()+ " "+i.getLongitude()*/);
@@ -262,9 +261,9 @@ public class JCarte extends JPanel{
             
             
 	}
-        if(controleur.getCarte().getDemandesLivraisons()!=null)
+        if(carte.getDemandesLivraisons()!=null)
         {
-            ArrayList<PointInteret> PIs=controleur.getCarte().getDemandesLivraisons().getListePointsInteret();
+            ArrayList<PointInteret> PIs=carte.getDemandesLivraisons().getListePointsInteret();
             if(PIs!=null){
                 for(PointInteret i : PIs) {
                     g.setColor(Color.BLACK);

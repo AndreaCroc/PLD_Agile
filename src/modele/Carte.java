@@ -1,8 +1,10 @@
 package modele;
 
+import tsp.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -27,12 +29,13 @@ public class Carte {
 
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
-
-    public static final Double INFINI = 1000.0; //Valeur max 
+    private TSP1 unTSP;
+    public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
 
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
+        this.unTSP = new TSP1();
     }
 
     public ArrayList<Intersection> getListeIntersections() {
@@ -60,7 +63,8 @@ public class Carte {
         for (int i = 0; i < listeTronconsDepart.size(); i++) {
             if (listeTronconsDepart.get(i).getDestination() == arrivee) {
                 arc = listeTronconsDepart.get(i);
-                coutArc = arc.getLongueur();
+                //Recuperation du cout de l'arc (en secondes)
+                coutArc = (arc.getLongueur()*15)/3.6;
             }
         }
         if (arrivee.getDistance() > depart.getDistance() + coutArc) {
@@ -123,28 +127,11 @@ public class Carte {
         }
 
     }
-
-    public PointInteret trouverPointInteret(Intersection intersection) {
-        /*Méthode permettant de trouver le point d'interet correspondant à 
-        l'intersection intersection. Celui-ci est null si intersection n'est pas
-        un point d'interet.
-         */
-        PointInteret pI = null;
-        ArrayList<PointInteret> pointsInteret = this.demandesLivraisons.getListePointsInteret();
-        for (int i = 0; i < pointsInteret.size(); i++) {
-            if (pointsInteret.get(i).getIntersection() == intersection) {
-                pI = pointsInteret.get(i);
-            }
-        }
-        return pI;
-
-    }
-
+    
     public Chemin plusCourtChemin(Intersection depart, Intersection arrivee) {
         /*Méthode permettant de retrouver le chemin allant de l'intersection
         de départ à une intersection d'arrivée passée en paramètre
          */
-
         Chemin chemin = null;
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
@@ -182,6 +169,160 @@ public class Carte {
 
         return chemin;
     }
+    
+    //méthode permettant de créer le graphe des plus courts chemins
+    public Pair creerGraphePCC() {
+        //recuperation du nombre de sommets (en tenant compte de l'entrepot)
+        int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
+        //Initialisation de la matrice des couts
+        Double[][] cout = new Double[nbSommets][nbSommets]; 
+        for (int i=0; i<nbSommets;i++) {
+                cout[i] = new Double[nbSommets];
+        }
+        //Initialisation de la matrice des plus courts chemins
+        Chemin[][] chemins = new Chemin[nbSommets][nbSommets];
+        for (int i=0; i<nbSommets;i++) {
+            chemins[i] = new Chemin[nbSommets];
+        }
+        //Remplissage de la matrice
+        //plus courts chemins de l'entrepot vers tous les autres points d'intérêt
+        ArrayList<PointInteret> listePointsInteret= this.demandesLivraisons.getListePointsInteret();
+        Intersection intersectionCourante;
+        Intersection intersectionArrivee;
+        Chemin plusCourtChemin = new Chemin();
+        
+        //plus court chemin de chaque point d'intérêt vers tous les autres 
+        //(y compris l'entrepot)
+        
+        for (int i=0; i<nbSommets; i++) {
+            intersectionCourante = listePointsInteret.get(i).getIntersection();
+            dijkstra(intersectionCourante);
+            
+            //plus courts chemins vers les autres points d'intérêt
+            for (int j=0;j<nbSommets;j++) {
+                if (i != j) {
+                    intersectionArrivee = listePointsInteret.get(j).getIntersection();
+                    plusCourtChemin = plusCourtChemin(intersectionCourante,intersectionArrivee);
+                     if (plusCourtChemin == null) {
+                         cout[i][j] = INFINI;
+                         chemins[i][j] = null;
+                     } else {
+                         //Recuperation du cout en secondes
+                         cout[i][j] = (plusCourtChemin.getLongueur()*15)/3.6;
+                         chemins[i][j] = plusCourtChemin;
+            }
+                }
+                else if (i==j) {
+                    cout[i][j]=0.0;
+                    chemins[i][j]=null;
+                }
+                
+            }
+        }
+        Pair coutEtChemins = new Pair<>(cout,chemins);
+        return coutEtChemins;
+        
+    }
+    
+    public Tournee calculerTournee() {
+        
+        Pair coutEtChemin = creerGraphePCC();
+        Double[][] cout = (Double[][]) coutEtChemin.getKey();
+        Chemin[][] chemins = (Chemin[][]) coutEtChemin.getValue();
+        
+        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        int nbSommets = listePointsInteret.size();
+        
+        //Initialisation des durees
+        Integer[] duree = new Integer[nbSommets];
+        for (int i=0;i<nbSommets;i++) {
+            duree[i]=listePointsInteret.get(i).getDuree();
+        }
+        
+        unTSP.chercheSolution(1000000,nbSommets,cout,duree);
+
+        
+        Integer lastPoint = unTSP.getMeilleureSolution(0);
+        //Creation de la tournée
+        Tournee tournee = new Tournee();
+        Integer currentPoint=0;
+        PointInteret pointCourant = new PointInteret();
+        String heureDepart = demandesLivraisons.getHeureDepart();
+        Integer heureD = heureToInt(heureDepart);
+        Integer heureDepPrec = heureD; //heure depart du points précédents à tout moment
+        Integer heureDepCourant;
+        Integer heureArrCourant;
+        Integer dureeChemin;
+        for (int i = 1; i < nbSommets; i++) {
+            currentPoint = unTSP.getMeilleureSolution(i);
+            System.out.println("lastpoint "+lastPoint);
+            System.out.println("currentpoint "+currentPoint);
+            Chemin chemin = chemins[lastPoint][currentPoint];
+            pointCourant = listePointsInteret.get(lastPoint);
+            pointCourant.setCheminDepart(chemin);
+            System.out.println(" heure dep : " + intToHeure(heureDepPrec));
+            if (lastPoint==0) {
+                pointCourant.setHeureDepart(heureDepart);
+                heureDepPrec = heureD;
+                
+            }
+            //Calcul de l'heure d'arrivee et de l'heure de depart
+            dureeChemin = pointCourant.getCheminDepart().getDureeTrajet();
+            System.out.println("duree chem : "+dureeChemin);
+            heureArrCourant = heureDepPrec+dureeChemin;
+            heureDepCourant = heureArrCourant+pointCourant.getDuree();
+            
+            pointCourant.setHeureDepart(intToHeure(heureDepCourant));
+            pointCourant.setHeureArrivee(intToHeure(heureArrCourant));
+            
+            //Mise a jour des heures du points precedemment visités
+            heureDepPrec = heureDepCourant;
+            
+            System.out.println("pt Couran"+pointCourant);
+            System.out.println(chemin);
+            tournee.ajouterPointInteret(pointCourant);
+            lastPoint = currentPoint;
+        }
+        
+        Chemin chemin = chemins[currentPoint][0];
+        pointCourant = listePointsInteret.get(lastPoint);
+        pointCourant.setCheminDepart(chemin);
+        System.out.println("pt Couran" + pointCourant);
+        System.out.println(chemin);
+        //Calcul de l'heure d'arrivee et de l'heure de depart
+        dureeChemin = pointCourant.getCheminDepart().getDureeTrajet();
+        heureArrCourant = heureDepPrec + dureeChemin;
+        heureDepCourant = heureArrCourant + pointCourant.getDuree();
+
+        pointCourant.setHeureDepart(intToHeure(heureDepCourant));
+        pointCourant.setHeureArrivee(intToHeure(heureArrCourant));
+
+        tournee.ajouterPointInteret(pointCourant);
+        return tournee;
+        
+    }
+    
+    public Integer heureToInt(String heureStr) {
+        Integer heureInt;
+        String[] elements = heureStr.split(":");
+        int nbHeure = Integer.parseInt(elements[0]);
+        int nbMinutes = Integer.parseInt(elements[1]);
+        int nbSecondes = Integer.parseInt(elements[2]);
+        heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
+        return heureInt;
+    }
+    
+    public String intToHeure (Integer heureInt) {
+        String heureStr;
+        int nbHeures = heureInt/3600;
+        int nbMinutes = (heureInt-(nbHeures*3600))/60;
+        int nbSecondes = heureInt-(nbHeures*3600)-(nbMinutes*60);
+        String nbH = Integer.toString(nbHeures);
+        String nbM = Integer.toString(nbMinutes); 
+        String nbS = Integer.toString(nbSecondes);
+        heureStr=nbH+":"+nbM+":"+nbS;
+        return heureStr;
+    }
 
   // Lecture des fichier XML
   // FileFilter pour les fichiers Xml
@@ -217,7 +358,7 @@ public class Carte {
     };
 
     // Permettant de selectionner un fichier XML dans une fenetre
-    public File ouvre(boolean lecture) throws Exception {
+    public File choisirFichierXML(boolean lecture) throws Exception {
         int returnVal;
         JFileChooser jFileChooserXML = new JFileChooser();
         jFileChooserXML.setFileFilter(fileFilter);
@@ -254,7 +395,6 @@ public class Carte {
                 if (interDep.getId().equals(origine)) {
                     for (Intersection interArr : listeIntersections) {
                         if (interArr.getId().equals(destination)) {
-                            //System.out.println("Ajout d'un troncon " + nomRue + longueur + interDep +interArr);
                             interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
                         }
                     }
@@ -310,8 +450,8 @@ public class Carte {
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
     public void chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
-       
-        File xml = ouvre(true);
+      
+        File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
@@ -325,8 +465,8 @@ public class Carte {
     }
     
     public void chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
-       
-        File xml = ouvre(true);
+      
+        File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
