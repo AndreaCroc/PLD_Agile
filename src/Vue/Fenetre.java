@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -111,9 +112,9 @@ public class Fenetre extends JFrame {
         this.controleur = controleur;
         this.carte = carte;
         this.tournee = tournee;
-        
+
         this.vueTournee = new AffichageTournee(tournee, this);
-        
+
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
@@ -125,6 +126,7 @@ public class Fenetre extends JFrame {
         panneauLivraisons = new JPanel();
         panneauLivraisons.setLayout(null);
         panneauLivraisons.setBackground(new Color(186, 228, 255));
+        panneauLivraisons.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
 
         //Input pour ecrire le nom du fichier XML souhaite
         inputChargeLiv = new JTextField();
@@ -190,6 +192,7 @@ public class Fenetre extends JFrame {
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(new Color(186, 228, 255));
+        panneauTournee.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
         panneauTournee.add(labelTournee);
         panneauTournee.add(heureDeb);
         panneauTournee.add(heureFin);
@@ -225,10 +228,11 @@ public class Fenetre extends JFrame {
         panneauEtapes.add(scrollEtapes);
         panneauEtapes.setVisible(false);
         panneauGauche.add(panneauEtapes);
-        
+
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(Color.blue);
+        panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
 
         //Logo rond de la legende
         rond = new ImageIcon("rond-noir.jpg");
@@ -271,6 +275,7 @@ public class Fenetre extends JFrame {
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
+        panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, new Color(50, 70, 120)));
         panneauLegende.add(labelRond);
         panneauLegende.add(legendeRond);
         panneauLegende.add(labelCarre);
@@ -289,9 +294,9 @@ public class Fenetre extends JFrame {
         
         /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(carte);
-        
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
+        panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
         panneauDroite.add(panneauCarte);
         
         /* Fin panneauCarte */
@@ -372,9 +377,9 @@ public class Fenetre extends JFrame {
         dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
 
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
-        etape.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight()/10);
+        etape.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
         //scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
-        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight()/10);
+        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
 
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
         legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 5);
@@ -407,7 +412,7 @@ public class Fenetre extends JFrame {
      * Pour afficher les details d une tournee
      */
     public void afficherEtapesTour() {
-        
+
         //scrollEtapes.setVisible(true);
         panneauEtapes.setVisible(true);
         panneauTournee.setVisible(true);
