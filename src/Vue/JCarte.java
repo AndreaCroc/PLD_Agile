@@ -122,27 +122,27 @@ public class JCarte extends JPanel{
         Double maxLatitude=this.maxLatitude(intersections);
         Double minLatitude=this.minLatitude(intersections);
         
-        /*on multiplie pour réduire la différence d'échelle*/
-        Double hauteurCarte=(maxLatitude-minLatitude)*100000000;
-        //System.out.println("HauteurCarte : "+hauteurCarte);
+         /*on multiplie pour réduire la différence d'échelle*/
+        Double hauteurCarte=(maxLatitude-minLatitude);
+        System.out.println("HauteurCarte : "+hauteurCarte);
         
-        Double distMinLatitude=(i.getLatitude()-minLatitude)*100000000;
+        Double distMinLatitude=(i.getLatitude()-minLatitude);
         
         /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
-        int pourcentageLatitude=(int)((distMinLatitude*100)/hauteurCarte);
-        //System.out.println("PourcentageLatitude : "+pourcentageLatitude);
+        int pourcentageLatitude=(int)((hauteurCarte/distMinLatitude));
+        System.out.println("PourcentageLatitude : "+pourcentageLatitude);
         
         int hauteurPanel=this.getHeight();
-        //System.out.println("hauteurPanel : "+hauteurPanel);
+        System.out.println("hauteurPanel : "+hauteurPanel);
         
         /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
-        int proportionalY=(int)22*(((pourcentageLatitude)*100)/hauteurPanel);
+        int proportionalY=(int)(hauteurPanel/pourcentageLatitude);
         if(proportionalY==0){
-            proportionalY=5;
-        }else if(proportionalY==hauteurPanel){
-            proportionalY=hauteurPanel-5;
+            proportionalY=15;
+        }else if(proportionalY>=hauteurPanel){
+            proportionalY=hauteurPanel-15;
         }
-       // System.out.println("proportionalY : "+proportionalY);
+        System.out.println("proportionalY : "+proportionalY);
         return proportionalY;
     }
     
@@ -167,7 +167,7 @@ public class JCarte extends JPanel{
         //System.out.println("hauteurPanel : "+hauteurPanel);
         
         /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
-        int proportionalY=(int)22*(((pourcentageLatitude)*100)/hauteurPanel);
+        int proportionalY=(int)(((pourcentageLatitude)*100)/hauteurPanel);
         if(proportionalY==0){
             proportionalY=5;
         }else if(proportionalY==hauteurPanel){
@@ -184,27 +184,27 @@ public class JCarte extends JPanel{
         Double minLongitude=this.minLongitude(intersections);
         //System.out.println("MLo : "+maxLongitude+" mLo : "+minLongitude);
         
-        Double largeurCarte=(maxLongitude-minLongitude)*100000000;
+        Double largeurCarte=(maxLongitude-minLongitude);
         //System.out.println("largeurCarte : "+largeurCarte);
         
-        Double distMinLongitude=(i.getLongitude()-minLongitude)*100000000;
+        Double distMinLongitude=(i.getLongitude()-minLongitude);
         
         /*A quel pourcentage de longitude se trouve l'intersection par rapport à la carte*/
-        int pourcentageLongitude=(int)((distMinLongitude*100)/largeurCarte);
+        int pourcentageLongitude=(int)(largeurCarte/distMinLongitude);
         //System.out.println("pourcentageLongitude : "+pourcentageLongitude);
         
         int largeurPanel=this.getWidth();
         //System.out.println("largeurPanel : "+largeurPanel);
         
         /*Reporter ce pourcentage sur le panel.*/
-        int proportionalX=(int)22*(((pourcentageLongitude)*100)/largeurPanel);
+        int proportionalX=(int)(largeurPanel/pourcentageLongitude);
         if(proportionalX==0){
-            proportionalX=5;
-        }else if(proportionalX==largeurPanel){
-            proportionalX=largeurPanel-5;
+            proportionalX=15;
+        }else if(proportionalX>=largeurPanel){
+            proportionalX=largeurPanel-15;
         }
         //System.out.println("proportionalX : "+proportionalX);
-        
+        //System.out.println(proportionalX);
         return proportionalX;
     }
     
@@ -228,7 +228,7 @@ public class JCarte extends JPanel{
         //System.out.println("largeurPanel : "+largeurPanel);
         
         /*Reporter ce pourcentage sur le panel.*/
-        int proportionalX=(int)22*(((pourcentageLongitude)*100)/largeurPanel);
+        int proportionalX=(int)(((pourcentageLongitude)*100)/largeurPanel);
         if(proportionalX==0){
             proportionalX=5;
         }else if(proportionalX==largeurPanel){
