@@ -1,6 +1,7 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
 
 /*
  * Controleur
@@ -20,7 +21,7 @@ public class Controleur {
 
     public Controleur() {
         //etatCourant = etatInit;
-        fenetre = new Fenetre(this); //lui passer this
+        fenetre = new Fenetre(this,false); //lui passer this
     }
 
     /**
@@ -37,13 +38,20 @@ public class Controleur {
         boolean chargerCarte = true;
         fenetre.afficherConteneur2(chargerCarte);
         System.out.println("Je lance le chargement d'une carte");
-
+        
     }
 
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
+        
+        //JCarte nouvelleCarte=new JCarte(fenetre.initTestCarte(),fenetre.initTestLivraisons());
+        fenetre.dispose();
+        fenetre=new Fenetre(this, true);
+        chargerCarte();
+
         fenetre.afficherBoutonCalcul(chargerLivraison);
+        
         System.out.println("Je lance le chargement d'une livraison");
 
     }

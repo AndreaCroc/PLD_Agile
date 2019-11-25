@@ -17,6 +17,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +27,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import modele.Intersection;
+import modele.PointInteret;
+import modele.Troncon;
 
 public class Fenetre extends JFrame {
 
@@ -80,13 +85,13 @@ public class Fenetre extends JFrame {
     private JPanel panneauLivraisons;
     private JPanel panneauEtape;
     private JPanel panneauLegende;
-    private JPanel panneauCarte;
+    private JCarte panneauCarte;
     private JPanel panneauTournee;
     private JPanel panneauGauche;
 
     private EcouteurBoutons ecouteurBoutons;
 
-    public Fenetre(Controleur controleur) {
+    public Fenetre(Controleur controleur, boolean livraisonChargee) {
 
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
@@ -237,12 +242,20 @@ public class Fenetre extends JFrame {
         legende.setForeground(Color.white);
         panneauLegende.add(legende);
         panneauDroite.add(panneauLegende);
-
-        panneauCarte = new JPanel();
+        
+        
+        /*TEST GRAZIA*/
+        
+        if(livraisonChargee==false){
+            panneauCarte = new JCarte(initTestCarte());
+        }else{
+            panneauCarte = new JCarte(initTestCarte(),initTestLivraisons());
+        }
         panneauCarte.setLayout(null);
-        panneauCarte.setBackground(Color.pink);
+        panneauCarte.setBackground(Color.white);
         panneauDroite.add(panneauCarte);
-
+        
+        
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(Color.BLACK);
@@ -325,6 +338,7 @@ public class Fenetre extends JFrame {
             this.setContentPane(panneauGlobal2);
             panneauGlobal1.setVisible(false);
             panneauGlobal2.setVisible(true);
+            //panneauCarte.repaint();
         } else {
             repChargCarte.setVisible(true);
         }
@@ -342,5 +356,73 @@ public class Fenetre extends JFrame {
     public void afficherEtapesTour(boolean calculTournee) {
         scrollEtapes.setVisible(true);
         panneauTournee.setVisible(true);
+    }
+    
+    public JCarte getPanneauCarte(){
+        return this.panneauCarte;
+    }
+    
+    
+    public void setPanneauCarte(JCarte nouvelleCarte){
+        this.panneauCarte=nouvelleCarte;
+        this.panneauCarte.updateUI();
+
+        
+    }
+    
+    public ArrayList<Intersection> initTestCarte(){
+        Intersection a = new Intersection(1,45.75964,4.872506);
+        Intersection b = new Intersection(2,45.758717,4.8737717);
+        Intersection c = new Intersection(3,45.750614,4.8792905);
+        Intersection d = new Intersection(4,45.759357,4.8678627);
+        Intersection e = new Intersection(5,45.759993,4.876936);
+        Intersection f = new Intersection(6,45.759444,4.876111);
+        Intersection g = new Intersection(7,45.759555,4.876222);
+        Intersection h = new Intersection(8,45.758804,4.878655);        
+        
+        Troncon t1=new Troncon(); 
+        t1.setOrigine(a);
+        t1.setDestination(b);
+        Troncon t2=new Troncon(); t2.setOrigine(a);t2.setDestination(c);  
+        a.ajouterTronconDepart(t1);a.ajouterTronconDepart(t2);
+        
+        Troncon t3=new Troncon(); t3.setOrigine(f);t3.setDestination(h);
+        Troncon t4=new Troncon(); t4.setOrigine(f);t4.setDestination(b);
+        f.ajouterTronconDepart(t3);f.ajouterTronconDepart(t4);
+        
+        Troncon t5=new Troncon(); t5.setOrigine(d);t5.setDestination(c);
+        Troncon t6=new Troncon(); t6.setOrigine(d);t6.setDestination(b);
+        d.ajouterTronconDepart(t5);d.ajouterTronconDepart(t6);
+        
+        Troncon t7=new Troncon(); t7.setOrigine(g);t7.setDestination(h);
+        Troncon t8=new Troncon(); t8.setOrigine(g);t8.setDestination(e);
+        g.ajouterTronconDepart(t7);g.ajouterTronconDepart(t8);
+        
+        ArrayList<Intersection> intersections=new ArrayList<Intersection>();
+        
+        intersections.add(a);intersections.add(b);intersections.add(c);intersections.add(d);intersections.add(e);
+        intersections.add(f);intersections.add(g);intersections.add(h);
+        
+        return intersections;
+    }  
+    
+    public ArrayList<PointInteret> initTestLivraisons(){
+        
+        ArrayList<Intersection> intersections=initTestCarte();
+
+        PointInteret piA=new PointInteret();piA.setIntersection(intersections.get(0));piA.setEstEnlevement(true);
+        PointInteret piB=new PointInteret();piB.setIntersection(intersections.get(1));piB.setEstEnlevement(false);
+        PointInteret piD=new PointInteret();piD.setIntersection(intersections.get(3));piD.setEstEnlevement(true);
+        PointInteret piE=new PointInteret();piE.setIntersection(intersections.get(4));piE.setEstEnlevement(false);
+        
+        piA.setPointDependance(piE);piE.setPointDependance(piA);
+        piB.setPointDependance(piD);piD.setPointDependance(piB);
+        
+        ArrayList<PointInteret> PIs=new ArrayList<PointInteret>();
+        
+        PIs.add(piA);PIs.add(piB);PIs.add(piD);PIs.add(piE);
+ 
+        
+        return PIs;
     }
 }
