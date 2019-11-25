@@ -183,16 +183,17 @@ public class Fenetre extends JFrame {
         etape.setOpaque(false);
         etape.setLineWrap(true);
 
+        scrollEtapes = new JScrollPane(etape, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        //panneauGauche.add(scrollEtapes);
+        
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
         panneauEtapes.setBackground(Color.green);
         panneauEtapes.add(etapesTitre);
-        panneauEtapes.add(etape);
-
-        scrollEtapes = new JScrollPane(panneauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollEtapes.setVisible(false);
-        panneauGauche.add(scrollEtapes);
-
+        panneauEtapes.add(scrollEtapes);
+        panneauEtapes.setVisible(false);
+        panneauGauche.add(panneauEtapes);
+        
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(Color.blue);
@@ -319,8 +320,9 @@ public class Fenetre extends JFrame {
         dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
 
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
-        etape.setBounds(0, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight());
-        scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        etape.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight()/10);
+        //scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight()/10);
 
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
         legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 5);
@@ -345,7 +347,8 @@ public class Fenetre extends JFrame {
 
     public void afficherEtapesTour() {
         
-        scrollEtapes.setVisible(true);
+        //scrollEtapes.setVisible(true);
+        panneauEtapes.setVisible(true);
         panneauTournee.setVisible(true);
         vueTournee.afficherTournee();
     }
