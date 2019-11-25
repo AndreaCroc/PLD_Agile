@@ -5,6 +5,7 @@ import Vue.JCarte;
 import java.util.ArrayList;
 import modele.Carte;
 import modele.Intersection;
+import modele.Tournee;
 
 /*
  * Controleur
@@ -20,11 +21,13 @@ public class Controleur {
 
     private Fenetre fenetre;
     private Carte carte;
+    private Tournee tournee;
 
     public Controleur() {
-        //etatCourant = etatInit;
-        fenetre = new Fenetre(this); //lui passer this
         carte = new Carte();
+        tournee = new Tournee();
+        fenetre = new Fenetre(this, carte, tournee); //lui passer this
+        
     }
 
     /**
@@ -32,13 +35,6 @@ public class Controleur {
      *
      * le nouvel etat courant
      */
-    public Carte getCarte() {
-        return this.carte;
-    }
-
-    public void setCarte(Carte nCarte) {
-        this.carte = nCarte;
-    }
 
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
@@ -48,7 +44,7 @@ public class Controleur {
 
             carte.chargerCarte();
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(this));
+                fenetre.setPanneauCarte(new JCarte(this, carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             }else{
@@ -71,7 +67,7 @@ public class Controleur {
 
             carte.chargerLivraison();
             if (chargerLivraison) {
-                fenetre.setPanneauCarte(new JCarte(this));
+                fenetre.setPanneauCarte(new JCarte(this, carte));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();

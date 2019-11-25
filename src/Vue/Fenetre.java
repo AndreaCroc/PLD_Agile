@@ -30,11 +30,14 @@ import javax.swing.JTextField;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
+import modele.Tournee;
 import modele.Troncon;
 
 public class Fenetre extends JFrame {
 
     private Controleur controleur;
+    private Carte carte;
+    private Tournee tournee;
 
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -55,7 +58,7 @@ public class Fenetre extends JFrame {
     private JButton boutonCalculerTournee;
 
     private JLabel livraisons;
-    private JLabel tournee;
+    private JLabel labelTournee;
     private JLabel legende;
     private JLabel repChargeCarte;
     private JLabel repChargeLiv;
@@ -92,7 +95,7 @@ public class Fenetre extends JFrame {
 
     private EcouteurBoutons ecouteurBoutons;
 
-    public Fenetre(Controleur controleur) {
+    public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
 
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
@@ -103,6 +106,9 @@ public class Fenetre extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.controleur = controleur;
+        this.carte = carte;
+        this.tournee = tournee;
+        
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
         panneauGauche = new JPanel();
@@ -144,9 +150,9 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
-        tournee = new JLabel("Tournée");
-        tournee.setFont(new Font("Arial", Font.BOLD, 18));
-        tournee.setForeground(Color.white);
+        labelTournee = new JLabel("Tournée");
+        labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
+        labelTournee.setForeground(Color.white);
 
         heureDeb = new JLabel(HEURE_DEBUT);
         heureDeb.setFont(new Font("Arial", Font.BOLD, 16));
@@ -163,7 +169,7 @@ public class Fenetre extends JFrame {
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(Color.cyan);
-        panneauTournee.add(tournee);
+        panneauTournee.add(labelTournee);
         panneauTournee.add(heureDeb);
         panneauTournee.add(heureFin);
         panneauTournee.add(dureeTournee);
@@ -244,18 +250,9 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legende);
         panneauDroite.add(panneauLegende);
 
-        /*TEST GRAZIA*/
-        panneauCarte = new JCarte(controleur);
-        /*if(livraisonChargee==false){
-            if(controleur.getCarte()!=null){
-                panneauCarte = new JCarte(controleur);
-            }else{
-                panneauCarte=new JCarte(controleur);
-            }
-            
-        }else{
-            panneauCarte = new JCarte(initTestCarte(),initTestLivraisons());
-        }*/
+        
+        panneauCarte = new JCarte(controleur,carte);
+        
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauDroite.add(panneauCarte);
@@ -320,7 +317,7 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 2 * (int) panneauLivraisons.getHeight() / 3, 4 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 5, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
 
-        tournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
+        labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
@@ -360,7 +357,7 @@ public class Fenetre extends JFrame {
         repChargeCarte.setText(message);
         repChargeCarte.setVisible(true);
     }
-    
+
     public void afficherMessageErreur2(String message) {
         repChargeLiv.setText(message);
         repChargeLiv.setVisible(true);
@@ -376,8 +373,5 @@ public class Fenetre extends JFrame {
 
     }
 
-    public void setCarte(Carte nCarte) {
-        controleur.setCarte(nCarte);
-    }
 
 }
