@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
@@ -34,6 +35,7 @@ import modele.Troncon;
 public class Fenetre extends JFrame {
 
     private Controleur controleur;
+    private Carte carte;
 
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -245,9 +247,10 @@ public class Fenetre extends JFrame {
         
         
         /*TEST GRAZIA*/
-        
+        carte=new Carte();
         if(livraisonChargee==false){
-            panneauCarte = new JCarte(initTestCarte());
+            
+            panneauCarte = new JCarte(carte.getListeIntersections());
         }else{
             panneauCarte = new JCarte(initTestCarte(),initTestLivraisons());
         }
@@ -371,7 +374,7 @@ public class Fenetre extends JFrame {
     }
     
     public ArrayList<Intersection> initTestCarte(){
-        Intersection a = new Intersection("1",45.75964,4.872506);
+        /*Intersection a = new Intersection("1",45.75964,4.872506);
         Intersection b = new Intersection("2",45.758717,4.8737717);
         Intersection c = new Intersection("3",45.750614,4.8792905);
         Intersection d = new Intersection("4",45.759357,4.8678627);
@@ -402,8 +405,14 @@ public class Fenetre extends JFrame {
         
         intersections.add(a);intersections.add(b);intersections.add(c);intersections.add(d);intersections.add(e);
         intersections.add(f);intersections.add(g);intersections.add(h);
-        
-        return intersections;
+        */
+        //return intersections;
+        ArrayList<Intersection> res=new ArrayList<Intersection>();
+        if(carte.getListeIntersections()!=null){
+            res=carte.getListeIntersections();
+        }
+     
+        return res;
     }  
     
     public ArrayList<PointInteret> initTestLivraisons(){
@@ -424,5 +433,13 @@ public class Fenetre extends JFrame {
  
         
         return PIs;
+    }
+    
+    public void setCarte(Carte nCarte){
+         this.carte=nCarte;
+    }
+    
+    public Carte getCarte(){
+        return this.carte;
     }
 }

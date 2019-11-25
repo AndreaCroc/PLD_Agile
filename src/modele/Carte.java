@@ -316,8 +316,9 @@ public class Carte {
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
         
-        if (racine.getNodeName().equals("reseau")) {
+        if (racine.getNodeName().equals("reseau")) { 
             construireCarteAPartirDeDOMXML(racine);
+            //System.out.println(this.getListeIntersections().toString());
         } else if (racine.getNodeName().equals("demandeDeLivraisons")) {
             construireLivraisonAPartirDeDOMXML(racine);
         } else {

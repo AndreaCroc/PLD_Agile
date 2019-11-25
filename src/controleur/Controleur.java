@@ -2,6 +2,7 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import modele.Carte;
 
 /*
  * Controleur
@@ -36,6 +37,16 @@ public class Controleur {
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
+        fenetre.setCarte(new Carte());
+        try{
+            System.out.println("dans le try");
+            fenetre.getCarte().charger();
+            fenetre.setPanneauCarte(new JCarte(fenetre.getCarte().getListeIntersections()));
+
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         fenetre.afficherConteneur2(chargerCarte);
         System.out.println("Je lance le chargement d'une carte");
         
