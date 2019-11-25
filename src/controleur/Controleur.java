@@ -16,76 +16,73 @@ import modele.Intersection;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class Controleur {
 
-    private Etat etatCourant;
     private Fenetre fenetre;
     private Carte carte;
 
     public Controleur() {
         //etatCourant = etatInit;
         fenetre = new Fenetre(this); //lui passer this
-        carte=new Carte();
+        carte = new Carte();
     }
 
     /**
      * Change l'etat courant du controleur
      *
-     * @param etat le nouvel etat courant
+     * le nouvel etat courant
      */
-    protected void setEtatCourant(Etat etat) {
-        etatCourant = etat;
-    }
-
-    public Carte getCarte(){
+    public Carte getCarte() {
         return this.carte;
     }
-    
-    public void setCarte(Carte nCarte){
-        this.carte=nCarte;
+
+    public void setCarte(Carte nCarte) {
+        this.carte = nCarte;
     }
-    
+
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
         boolean chargerCarte = true;
 
-        try{
-            
+        try {
+
             carte.chargerCarte();
-            fenetre.setPanneauCarte(new JCarte(this));
-            fenetre.repaint();
-            fenetre.afficherConteneur2(chargerCarte);
-            
-        }catch(Exception e){
-            e.printStackTrace();
+            if (chargerCarte) {
+                fenetre.setPanneauCarte(new JCarte(this));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+            }else{
+                fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
-        
+
         System.out.println("Je lance le chargement d'une carte");
-        
+
     }
 
     public void chargerLivraison() {
 
         boolean chargerLivraison = true;
-        
-        try{
-            
+
+        try {
+
             carte.chargerLivraison();
+            if (chargerLivraison) {
+                fenetre.setPanneauCarte(new JCarte(this));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+                fenetre.afficherBoutonCalcul();
+            }else{
+                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+            }
 
-            fenetre.setPanneauCarte(new JCarte(this));
-            fenetre.repaint();
+        } catch (Exception e) {
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+        }    
 
-            fenetre.afficherConteneur2(true);
-
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-
-        fenetre.afficherBoutonCalcul(chargerLivraison);
-        
         System.out.println("Je lance le chargement d'une livraison");
 
     }
