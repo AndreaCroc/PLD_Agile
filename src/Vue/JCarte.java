@@ -31,12 +31,21 @@ public class JCarte extends JPanel{
     
     public JCarte(Carte carte,Tournee tournee) {
         this.carte = carte;
-        this.tournee=tournee;
+        this.tournee = tournee;
+        System.out.println("CONSTRUCTEUR "+tournee);
+        this.repaint();
     }
     public void setTournee(Tournee nouvelleTournee){
-        this.tournee=nouvelleTournee;
-        //this.repaint();
+        this.tournee = nouvelleTournee;
+        System.out.println("dans le setTournee JCarte  "+this.tournee.getSuccessionPointsInteret());
+        this.repaint();
     }
+    
+    public Tournee getTournee(){
+        return this.tournee;
+        
+    }
+    
     /*Recupère la latitude maximale présente sur la carte*/
     public Double maxLatitude(ArrayList<Intersection> intersections){
         
@@ -146,7 +155,7 @@ public class JCarte extends JPanel{
         int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
         //System.out.println("proportionalY : "+proportionalY);
         if(proportionalY==0){
-            proportionalY=5;
+            proportionalY=2;
         }else if(proportionalY>=hauteurPanel){
             proportionalY=hauteurPanel-12;
         }
@@ -179,7 +188,7 @@ public class JCarte extends JPanel{
         int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
         //System.out.println("proportionalY : "+proportionalY);
         if(proportionalY==0){
-            proportionalY=5;
+            proportionalY=2;
         }else if(proportionalY>=hauteurPanel){
             proportionalY=hauteurPanel-12;
         }
@@ -209,7 +218,7 @@ public class JCarte extends JPanel{
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
         if(proportionalX==0){
-            proportionalX=5;
+            proportionalX=2;
         }else if(proportionalX>=largeurPanel){
             proportionalX=largeurPanel-12;
         }
@@ -242,7 +251,7 @@ public class JCarte extends JPanel{
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
         if(proportionalX==0){
-            proportionalX=5;
+            proportionalX=2;
         }else if(proportionalX>=largeurPanel){
             proportionalX=largeurPanel-12;
         }
@@ -311,8 +320,12 @@ public class JCarte extends JPanel{
         }
         
         /*faire un autre liste avec la tournée et du coup l'avoir dans la classe carte*/
-        //if(this.tournee.getDuree()!=null){
+        if(this.tournee!=null){
             System.out.println("ICIIII");
+            
+            System.out.println("La tourneee  "+this.tournee);
+            System.out.println("La listeee  "+this.tournee.getSuccessionPointsInteret());
+            
             ArrayList<PointInteret> PIs=this.tournee.getSuccessionPointsInteret();
             System.out.println("AAAAAAAA  "+PIs);
             //if(PIs!=null){
@@ -327,6 +340,6 @@ public class JCarte extends JPanel{
                     }
                 }       
             //}
-       // }
+        }
     }
 }

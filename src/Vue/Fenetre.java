@@ -298,7 +298,7 @@ public class Fenetre extends JFrame {
         /* Fin PanneauLegende */
         
         /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(carte, controleur.getTournee());
+        panneauCarte = new JCarte(this.carte, this.tournee);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
@@ -518,10 +518,12 @@ public class Fenetre extends JFrame {
     }
 
     public void setTournee(Tournee tournee) {
+        //System.out.println("AVANT   "+this.tournee.getSuccessionPointsInteret());
         this.tournee = tournee;
-        System.out.println(tournee.getSuccessionPointsInteret());
+        //System.out.println("Dans setTournee FENETRE"+this.tournee.getSuccessionPointsInteret());
         //this.panneauCarte.setTournee(tournee);
         this.panneauCarte.updateUI();
+        
     }
 
 }

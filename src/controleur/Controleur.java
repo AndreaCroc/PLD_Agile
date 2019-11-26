@@ -97,17 +97,21 @@ public class Controleur {
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
         
-        System.out.println(tournee.getSuccessionPointsInteret());
+        System.out.println(this.tournee);
         
         //fenetre.setPanneauCarte(new JCarte(carte,tournee));
-        fenetre.setTournee(this.tournee);
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
-        System.out.println(tournee.getSuccessionPointsInteret());
-        //fenetre.getPanneauCarte().setTournee(tournee);
         
-        System.out.println(tournee.getSuccessionPointsInteret());
-
-        fenetre.repaint();
+        
+        
+        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
+        System.out.println("Après le set  "+fenetre.getPanneauCarte().getTournee());
+        //fenetre.getPanneauCarte().setTournee(this.tournee);
+        //System.out.println(tournee.getSuccessionPointsInteret());
+        //fenetre.getPanneauCarte().setTournee(tournee);
+        fenetre.setTournee(this.tournee);
+        //System.out.println(tournee.getSuccessionPointsInteret());
+        //fenetre.validate();
+        //fenetre.repaint();
         fenetre.afficherEtapesTour();
 
         
