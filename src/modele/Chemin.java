@@ -47,14 +47,14 @@ public class Chemin {
     public void setArrivee(Intersection arrivee) {
         this.arrivee = arrivee;
     }
-
+//
     public Double getLongueur() {
         return longueur;
     }
-
-    public void setLongueur(Double longueur) {
-        this.longueur = longueur;
-    }
+//
+//    public void setLongueur(Double longueur) {
+//        this.longueur = longueur;
+//    }
 
     public Integer getDureeTrajet() {
         return dureeTrajet;
@@ -75,11 +75,13 @@ public class Chemin {
         int nbTroncons = this.successionTroncons.size();
         this.arrivee=this.successionTroncons.get(nbTroncons-1).getDestination();
         //mise a jour de la longueur
-        calculerLongueur();
+        //calculerLongueur();
         //mise a jour de la duree
         calculerDureeTrajet();
     }
     
+    //Méthode permettant de calculer mettre à jour la longueur du chemin à partir
+    //des troncons qui le composent
     public Double calculerLongueur() {
         Double longueur = 0.0;
         for (Troncon troncon : this.successionTroncons) {
@@ -88,24 +90,28 @@ public class Chemin {
         this.longueur = longueur;
         return longueur;
     }
-
-    public Integer calculerDureeTrajet() {
-        Integer duree = 0;
-        for (Troncon troncon : this.successionTroncons) {
-            duree=duree+(int)((troncon.getLongueur()*15)/3.6);
-        }
-        this.dureeTrajet = duree;
-        return duree;
-    }
-    @Override
-    public String toString() {
-        String chemin = "longueur : "+this.longueur+ " \n";
-        for (Troncon troncon : this.successionTroncons) {
-            chemin = chemin + troncon.getOrigine().getId()+" à "+troncon.getDestination().getId()+" \n";
-        }
-        return chemin; 
-    }
     
+    //Méthode permettant de calculer mettre à jour la durée du trajet pour un 
+    //chemin à partir des troncons qui le composent
+    public Integer calculerDureeTrajet() {
+        Integer dureeChemin = 0;
+        Double dureeTroncon;
+        for (Troncon troncon : this.successionTroncons) {
+            dureeTroncon = ((troncon.getLongueur()*15)/3.6);
+            dureeChemin=dureeChemin+dureeTroncon.intValue();
+        }
+        this.dureeTrajet = dureeChemin;
+        return dureeChemin;
+    }
+//    @Override
+//    public String toString() {
+//        String chemin = "longueur : "+this.longueur+ " \n";
+//        for (Troncon troncon : this.successionTroncons) {
+//            chemin = chemin + troncon.getOrigine().getId()+" à "+troncon.getDestination().getId()+" \n";
+//        }
+//        return chemin; 
+//    }
+//    
     
     
 }

@@ -97,27 +97,5 @@ public class PointInteret {
         this.cheminDepart = cheminDepart;
     }
 
-    public String intToHeure (Integer heureInt) {
-        String heureStr;
-        int nbHeures = heureInt/3600;
-        int nbMinutes = (heureInt-(nbHeures*3600))/60;
-        int nbSecondes = heureInt-(nbHeures*3600)-(nbMinutes*60);
-        String nbH = Integer.toString(nbHeures);
-        String nbM = Integer.toString(nbMinutes); 
-        String nbS = Integer.toString(nbSecondes);
-        heureStr=nbH+":"+nbM+":"+nbS;
-        return heureStr;
-    }
-    
-    public Integer heureToInt(String heureStr) {
-        Integer heureInt;
-        String[] elements = heureStr.split(":");
-        int nbHeure = Integer.parseInt(elements[0]);
-        int nbMinutes = Integer.parseInt(elements[1]);
-        int nbSecondes = Integer.parseInt(elements[2]);
-        heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
-        return heureInt;
-    }
-    
 
 }

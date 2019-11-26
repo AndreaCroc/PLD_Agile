@@ -105,7 +105,6 @@ public class Carte {
         Intersection sMin; //sommet de la liste de sommets gris ayant la distance minimale
         ArrayList<Intersection> sommetsBlancs = new ArrayList<Intersection>();
         ArrayList<Intersection> sommetsGris = new ArrayList<Intersection>();
-        ArrayList<PointInteret> pointsInteret = this.demandesLivraisons.getListePointsInteret();
         ArrayList<Intersection> successeursMin; //liste des successeurs du sommet
         //gris ayant la distance minimale
 
@@ -246,7 +245,7 @@ public class Carte {
                         chemins[i][j] = null;
                     } else {
                         //Recuperation du cout en secondes
-                        cout[i][j] = (plusCourtChemin.getLongueur() * 15) / 3.6;
+                        cout[i][j] = plusCourtChemin.getLongueur();
                         chemins[i][j] = plusCourtChemin;
                     }
                 } else if (i == j) {
@@ -377,16 +376,11 @@ public class Carte {
         heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
         return heureInt;
     }
-    /**
-     * Méthode permettant de convertir une heure donnée (en nombre de secondes,
-     * donc int) en string (hh:mm:ss)
-     * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
-     * de la tournée
-     * 
-     * @param heureInt l'heure en int
-     * 
-     * @return l'heure en String
-     */
+    
+    //Méthode permettant de convertir une heure donnée (en nombre de secondes,
+    //donc int) en string (hh:mm:ss)
+    //Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
+    //de la tournée
     public String intToHeure (Integer heureInt) {
         String heureStr;
         int nbHeures = heureInt/3600;
