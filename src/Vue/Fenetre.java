@@ -77,6 +77,7 @@ public class Fenetre extends JFrame {
     private JLabel legendeCarre;
     private JLabel labelTriangle;
     private JLabel legendeTriangle;
+    private JLabel titreAppli;
 
     //Pour afficher les details d une tournee
     private JTextArea etape;
@@ -141,20 +142,20 @@ public class Fenetre extends JFrame {
 
         //Bouton pour demander a charger un fichier XML contenant des livraisons
         boutonChargerLivraisons = new JButton(CHARGER_LIVRAISONS);
-        boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 14));
         boutonChargerLivraisons.setForeground(Color.white);
         boutonChargerLivraisons.setBackground(new Color(50, 70, 120));
         boutonChargerLivraisons.addActionListener(ecouteurBoutons);
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
-        repChargeLiv.setFont(new Font("Arial", Font.BOLD, 16));
+        repChargeLiv.setFont(new Font("Arial", Font.BOLD, 14));
         repChargeLiv.setForeground(new Color(254, 79, 65));
         repChargeLiv.setVisible(false);
 
         //Bouton pour calculer une tournee
         boutonCalculerTournee = new JButton(CALCULER_TOURNEE);
-        boutonCalculerTournee.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonCalculerTournee.setFont(new Font("Arial", Font.BOLD, 14));
         boutonCalculerTournee.setForeground(Color.white);
         boutonCalculerTournee.setBackground(new Color(50, 70, 120));
         boutonCalculerTournee.setEnabled(false);
@@ -217,7 +218,7 @@ public class Fenetre extends JFrame {
 
         //Espace contenant les etapes intermediaires d une tournee
         etape = new JTextArea();
-        etape.setFont(new Font("Arial", Font.BOLD, 16));
+        etape.setFont(new Font("Arial", Font.BOLD, 14));
         etape.setForeground(Color.gray);
         etape.setEditable(false);
         etape.setOpaque(false);
@@ -240,43 +241,44 @@ public class Fenetre extends JFrame {
         panneauDroite.setBackground(Color.blue);
         panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
 
+        /* PanneauLegende(haut droit)*/
+        
         //Logo rond de la legende
         rond = new ImageIcon("rond-noir.jpg");
         Image imgR = rond.getImage();
-        Image newimgR = imgR.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        Image newimgR = imgR.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         rond = new ImageIcon(newimgR);
 
         labelRond = new JLabel(rond);
 
         legendeRond = new JLabel(": Point de livraison");
-        legendeRond.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeRond.setFont(new Font("Arial", Font.BOLD, 14));
         legendeRond.setForeground(Color.white);
 
         //Logo carre de la legende
         carre = new ImageIcon("carre-noir.png");
         Image imgC = carre.getImage();
-        Image newimgC = imgC.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image newimgC = imgC.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         carre = new ImageIcon(newimgC);
 
         labelCarre = new JLabel(carre);
 
         legendeCarre = new JLabel(": Point d'enlèvement");
-        legendeCarre.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeCarre.setFont(new Font("Arial", Font.BOLD, 14));
         legendeCarre.setForeground(Color.white);
 
         //Logo triangle de la legende
         triangle = new ImageIcon("triangle-noir.png");
         Image imgT = triangle.getImage();
-        Image newimgT = imgT.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        Image newimgT = imgT.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         triangle = new ImageIcon(newimgT);
 
         labelTriangle = new JLabel(triangle);
 
         legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de tous les livreurs");
-        legendeTriangle.setFont(new Font("Arial", Font.BOLD, 16));
+        legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
         legendeTriangle.setForeground(Color.white);
 
-        /* PanneauLegende(haut droit)*/
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
@@ -314,16 +316,26 @@ public class Fenetre extends JFrame {
         panneauGlobal2.setBackground(new Color(186, 228, 255));
         panneauGlobal2.add(panneauGauche);
         panneauGlobal2.add(panneauDroite);
+        
+        /* Fin PanneauGlobal2 */
 
-        /* PanneauGlobal : pour la premiere fenetre*/
+        /* PanneauGlobal1 : pour la premiere fenetre*/
+        
+        //Pour afficher le titre de l application
+        titreAppli = new JLabel("Bienvenue sur OptIFmodLyon");
+        titreAppli.setFont(new Font("Arial", Font.BOLD, 20));
+        titreAppli.setForeground(Color.white);
+        
+        //Pour entrer le chemin vers un fichier XML
         inputChargeCarte = new JTextField();
 
         //Pour afficher une erreur en cas de probleme lors du chargement du fichier
         repChargeCarte = new JLabel("Erreur dans le chargement du fichier");
-        repChargeCarte.setFont(new Font("Arial", Font.BOLD, 16));
+        repChargeCarte.setFont(new Font("Arial", Font.BOLD, 24));
         repChargeCarte.setForeground(new Color(254, 79, 65));
         repChargeCarte.setVisible(false);
 
+        //Bouton pour lancer le chargement d une carte, fichier XML
         boutonChargerCarte = new JButton(CHARGER_CARTE);
         boutonChargerCarte.setFont(new Font("Arial", Font.BOLD, 16));
         boutonChargerCarte.setForeground(Color.white);
@@ -334,11 +346,14 @@ public class Fenetre extends JFrame {
         panneauGlobal1 = new JPanel();
         panneauGlobal1.setLayout(null);
         panneauGlobal1.setBackground(new Color(186, 228, 255));
+        panneauGlobal1.add(titreAppli);
         panneauGlobal1.add(inputChargeCarte);
         panneauGlobal1.add(boutonChargerCarte);
         panneauGlobal1.add(repChargeCarte);
         this.setContentPane(panneauGlobal1);
         panneauGlobal1.setVisible(true);
+        
+        /* Fin PanneauGlobal1 */
 
         //On place les elements
         placeObjet1();
@@ -352,6 +367,7 @@ public class Fenetre extends JFrame {
     public void placeObjet1() {
         panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
 
+        titreAppli.setBounds(4 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
         inputChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
         boutonChargerCarte.setBounds(52 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
         repChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
@@ -370,13 +386,19 @@ public class Fenetre extends JFrame {
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 1 * (int) panneauDroite.getWidth(), 9 * (int) panneauDroite.getHeight() / 10);
 
-        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 10);
+        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 4);
+        labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
+        legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
+        labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
+        legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
+        labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
+        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 5, 1 * (int) panneauLivraisons.getHeight() / 4, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(55 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 4, 4 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 4, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonChargerLivraisons.setBounds(55 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 4, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
         boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 2 * (int) panneauLivraisons.getHeight() / 3, 4 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 5, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /10, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
@@ -387,13 +409,7 @@ public class Fenetre extends JFrame {
         etape.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
         //scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-
-        labelRond.setBounds(0, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
-        legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 5);
-        labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
-        legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, (int) 2 * panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 5);
-        labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 5);
-        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 5, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 5);
+    
     }
 
     /**
