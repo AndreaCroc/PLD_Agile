@@ -111,7 +111,7 @@ public class Controleur {
         fenetre.setTournee(this.tournee);
         //System.out.println(tournee.getSuccessionPointsInteret());
         //fenetre.validate();
-        //fenetre.repaint();
+        fenetre.repaint();
         fenetre.afficherEtapesTour();
 
         

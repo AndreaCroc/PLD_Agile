@@ -320,6 +320,10 @@ public class JCarte extends JPanel{
         }
         
         /*faire un autre liste avec la tournée et du coup l'avoir dans la classe carte*/
+         System.out.println("ICkkkkIIII");
+        tournee=carte.getTournee();
+        System.out.println("ICIkkkkkIII");
+         System.out.println(tournee);
         if(this.tournee!=null){
             System.out.println("ICIIII");
             

@@ -100,9 +100,9 @@ public abstract class TemplateTSP implements TSP {
         } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
             Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree);
             while (it.hasNext()) {
-                System.out.println("boucle while");
                 Integer prochainSommet = it.next();
                 vus.add(prochainSommet);
+                System.out.println(" sommetCrt : " + sommetCrt);
                 System.out.println(" prochain sommet : " + prochainSommet);
                 nonVus.remove(prochainSommet);
               

@@ -30,12 +30,14 @@ public class Carte {
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
     private TSP1 unTSP;
+    private Tournee tournee1;
     public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
 
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.unTSP = new TSP1();
+        this.tournee1 = new Tournee();
     }
 
     public ArrayList<Intersection> getListeIntersections() {
@@ -50,6 +52,11 @@ public class Carte {
         return demandesLivraisons;
     }
 
+    public Tournee getTournee() {
+        return tournee1;
+    }
+
+    
     public void setDemandesLivraisons(DemandesLivraisons dL) {
         this.demandesLivraisons = dL;
     }
@@ -218,7 +225,24 @@ public class Carte {
                 }
                 
             }
+            
+            PointInteret PointI = listePointsInteret.get(i);
+            if (!(PointI.isEstEnlevement()))
+            {
+                int k=0;
+                String IdI = PointI.getPointDependance().getIntersection().getId();
+                for (int j=0;j<nbSommets;j++) {
+                    String IdJ= listePointsInteret.get(j).getIntersection().getId();
+                    
+                    if (IdJ==IdI) 
+                    {
+                        cout[i][i] =(double) j;
+                    }
+                    
+                }
+            }
         }
+
         Pair coutEtChemins = new Pair<>(cout,chemins);
         return coutEtChemins;
         
@@ -298,6 +322,7 @@ public class Carte {
         pointCourant.setHeureArrivee(intToHeure(heureArrCourant));
 
         tournee.ajouterPointInteret(pointCourant);
+        tournee1 = tournee;
         return tournee;
         
     }
