@@ -42,7 +42,7 @@ public class Controleur {
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.setPanneauCarte(new JCarte(carte,tournee));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -72,7 +72,7 @@ public class Controleur {
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
-                fenetre.setPanneauCarte(new JCarte(carte));
+                fenetre.setPanneauCarte(new JCarte(carte,tournee));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -96,10 +96,31 @@ public class Controleur {
 
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
-        fenetre.setTournee(tournee);
+        
+        System.out.println(tournee.getSuccessionPointsInteret());
+        
+        //fenetre.setPanneauCarte(new JCarte(carte,tournee));
+        fenetre.setTournee(this.tournee);
+        
+        System.out.println(tournee.getSuccessionPointsInteret());
+        //fenetre.getPanneauCarte().setTournee(tournee);
+        
+        System.out.println(tournee.getSuccessionPointsInteret());
+        
+        fenetre.repaint();
         fenetre.afficherEtapesTour();
-        System.out.println("Je lance le calcul d'une tournee");
 
+        
+        System.out.println("Je lance le calcul d'une tournee");
+        
     }
+    
+    public Tournee getTournee(){
+        return this.tournee;
+    }
+            
+            
+            
+            
 
 }
