@@ -106,7 +106,8 @@ public class Fenetre extends JFrame {
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
         Toolkit outil = getToolkit();
-        this.setSize(outil.getScreenSize());
+        //this.setSize(outil.getScreenSize());
+        this.setSize(1350,690);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -299,6 +300,8 @@ public class Fenetre extends JFrame {
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
+        panneauCarte.setSize((int)(this.getWidth()*0.95), (int)(this.getHeight()*0.2));
+        //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
         panneauDroite.add(panneauCarte);
         
         /* Fin panneauCarte */
@@ -400,7 +403,8 @@ public class Fenetre extends JFrame {
         this.setContentPane(panneauGlobal2);
         panneauGlobal1.setVisible(false);
         panneauGlobal2.setVisible(true);
-
+        Toolkit outil = getToolkit();
+        this.setSize(outil.getScreenSize());
     }
 
     /**
