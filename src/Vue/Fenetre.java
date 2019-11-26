@@ -61,6 +61,7 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
 
+    
     //Labels pour afficher les donnees
     private JLabel livraisons;
     private JLabel labelTournee;
