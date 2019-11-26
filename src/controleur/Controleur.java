@@ -106,7 +106,7 @@ public class Controleur {
         //fenetre.getPanneauCarte().setTournee(tournee);
         
         System.out.println(tournee.getSuccessionPointsInteret());
-        
+
         fenetre.repaint();
         fenetre.afficherEtapesTour();
 

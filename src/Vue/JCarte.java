@@ -143,12 +143,12 @@ public class JCarte extends JPanel{
         //System.out.println("hauteurPanel : "+hauteurPanel);
         
         /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
-        int proportionalY=(int)(pourcentageLatitude*hauteurPanel/100);
+        int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
         //System.out.println("proportionalY : "+proportionalY);
         if(proportionalY==0){
-            proportionalY=15;
+            proportionalY=5;
         }else if(proportionalY>=hauteurPanel){
-            proportionalY=hauteurPanel-35;
+            proportionalY=hauteurPanel-12;
         }
         //System.out.println("proportionalY : "+proportionalY);
         return proportionalY;
@@ -176,12 +176,12 @@ public class JCarte extends JPanel{
         //System.out.println("hauteurPanel : "+hauteurPanel);
         
         /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
-        int proportionalY=(int)(pourcentageLatitude*hauteurPanel/100);
+        int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
         //System.out.println("proportionalY : "+proportionalY);
         if(proportionalY==0){
-            proportionalY=15;
+            proportionalY=5;
         }else if(proportionalY>=hauteurPanel){
-            proportionalY=hauteurPanel-35;
+            proportionalY=hauteurPanel-12;
         }
         //System.out.println("proportionalY : "+proportionalY);
         return proportionalY;
@@ -209,9 +209,9 @@ public class JCarte extends JPanel{
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
         if(proportionalX==0){
-            proportionalX=15;
+            proportionalX=5;
         }else if(proportionalX>=largeurPanel){
-            proportionalX=largeurPanel-25;
+            proportionalX=largeurPanel-12;
         }
         //System.out.println("proportionalX : "+proportionalX);
         //System.out.println(proportionalX);
@@ -242,9 +242,9 @@ public class JCarte extends JPanel{
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
         if(proportionalX==0){
-            proportionalX=15;
+            proportionalX=5;
         }else if(proportionalX>=largeurPanel){
-            proportionalX=largeurPanel-25;
+            proportionalX=largeurPanel-12;
         }
         //System.out.println("proportionalX : "+proportionalX);
         //System.out.println(proportionalX);
@@ -266,12 +266,12 @@ public class JCarte extends JPanel{
             
             g.setColor(Color.BLACK);
             //-3 pour centrer le symbole sur le point
-            g.fillOval(this.getProportionalX(i,intersections)-2,this.getProportionalY(i,intersections)-2,6,6);
+            g.fillOval(this.getProportionalX(i,intersections)-1,this.getProportionalY(i,intersections)-1,2,2);
             
             ArrayList<Troncon> iTroncons=i.getTronconsDepart();
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
-                g.drawLine(this.getProportionalX(i,intersections)+2, this.getProportionalY(i,intersections)+2,this.getProportionalX(t.getDestination(),intersections)+2,this.getProportionalY(t.getDestination(),intersections)+2);
+                g.drawLine(this.getProportionalX(i,intersections)+1, this.getProportionalY(i,intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);
                 
             }
             
