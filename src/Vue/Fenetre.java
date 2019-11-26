@@ -362,13 +362,13 @@ public class Fenetre extends JFrame {
      */
     public void placeObjet2() {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
-        panneauGauche.setBounds(0, 0, (int) panneauGlobal2.getWidth() / 3, (int) panneauGlobal2.getHeight());
-        panneauDroite.setBounds(1 * (int) panneauGlobal2.getWidth() / 3, 0, 2 * (int) panneauGlobal2.getWidth() / 3, 1 * (int) panneauGlobal2.getHeight());
+        panneauGauche.setBounds(0, 0, (int) panneauGlobal2.getWidth() / 5, (int) panneauGlobal2.getHeight());
+        panneauDroite.setBounds(1 * (int) panneauGlobal2.getWidth() / 5, 0, 4 * (int) panneauGlobal2.getWidth() / 5, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
         panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
-        panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 4);
-        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 4, 1 * (int) panneauDroite.getWidth(), 3 * (int) panneauDroite.getHeight() / 4);
+        panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
+        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 1 * (int) panneauDroite.getWidth(), 9 * (int) panneauDroite.getHeight() / 10);
 
         legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 10);
 
