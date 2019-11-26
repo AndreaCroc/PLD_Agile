@@ -485,7 +485,7 @@ public class Fenetre extends JFrame {
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
         System.out.println(tournee.getSuccessionPointsInteret());
-        this.panneauCarte.setTournee(tournee);
+        //this.panneauCarte.setTournee(tournee);
         this.panneauCarte.updateUI();
     }
 

@@ -101,7 +101,7 @@ public class Controleur {
         
         //fenetre.setPanneauCarte(new JCarte(carte,tournee));
         fenetre.setTournee(this.tournee);
-        
+        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
         System.out.println(tournee.getSuccessionPointsInteret());
         //fenetre.getPanneauCarte().setTournee(tournee);
         

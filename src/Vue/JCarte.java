@@ -314,7 +314,7 @@ public class JCarte extends JPanel{
         //if(this.tournee.getDuree()!=null){
             System.out.println("ICIIII");
             ArrayList<PointInteret> PIs=this.tournee.getSuccessionPointsInteret();
-            System.out.println("AAAAAAAA  "+tournee.getSuccessionPointsInteret());
+            System.out.println("AAAAAAAA  "+PIs);
             //if(PIs!=null){
                 //System.out.println("LAAA");
                 for(PointInteret i : PIs) {
