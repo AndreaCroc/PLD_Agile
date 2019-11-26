@@ -105,7 +105,6 @@ public abstract class TemplateTSP implements TSP {
                 System.out.println(" sommetCrt : " + sommetCrt);
                 System.out.println(" prochain sommet : " + prochainSommet);
                 nonVus.remove(prochainSommet);
-              
                 System.out.println(cout[sommetCrt][prochainSommet]);
                 System.out.println(duree[prochainSommet]);
                 branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite);

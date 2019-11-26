@@ -112,7 +112,7 @@ public class AffichageTournee {
         String heureDepart = "";
         String type = "";
         int duree = 0;
-        int dureeTotPrevue = 0;
+        String dureeTotPrevue;
         String heureDeb = "";
         String heureFin = "";
         int index = 0;
@@ -120,7 +120,7 @@ public class AffichageTournee {
         //S'assurer que la liste contient des points d'interet
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
             fenetre.viderPanneauEtapes();
-            //dureeTotPrevue = tournee.getDuree();
+            dureeTotPrevue = tournee.getDuree();
             for (PointInteret pt : successionPointsInteret) {
                 //Recuperer le numero de l etape
                 index = successionPointsInteret.indexOf(pt);
@@ -136,7 +136,7 @@ public class AffichageTournee {
                     //Afficher le depart de l'entrepot
                     fenetre.setPanneauEtapesEntrepot(index,nomRue,heureDeb,duree);
                 } else {
-                    if (pt.isEstEnlevement()) {
+                    if (pt.isEnlevement()) {
                         type = "Enlèvement";
                     } else {
                         type = "Livraison";
@@ -152,7 +152,6 @@ public class AffichageTournee {
                     //Afficher les etapes dans la fenetre
                     fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, duree);
                 }
-
             }
             //Afficher le retour a l'entrepot
             fenetre.setPanneauEtapesEntrepot(index+1,nomRue,heureFin,duree);

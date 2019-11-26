@@ -302,7 +302,7 @@ public class JCarte extends JPanel{
             if(PIs!=null){
                 for(PointInteret i : PIs) {
                     g.setColor(Color.BLACK);
-                    System.out.println(i.isEstEnlevement());
+                    System.out.println(i.isEnlevement());
                     Random rand = new Random();
                     float r = rand.nextFloat();
                     float gg = rand.nextFloat();
@@ -310,7 +310,7 @@ public class JCarte extends JPanel{
                     Color randomColor = new Color(r, gg, b);
                     g.setColor(randomColor);
 
-                    if(i.isEstEnlevement()){
+                    if(i.isEnlevement()){
                         g.fillRect(this.getProportionalXPIs(i.getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getIntersection(),PIs, intersections)-2,8,8);
                         g.fillOval(this.getProportionalXPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,8,8);
 

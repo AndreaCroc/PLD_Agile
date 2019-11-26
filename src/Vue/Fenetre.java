@@ -482,10 +482,10 @@ public class Fenetre extends JFrame {
      * @param heureFin heure de fin de la tournee
      * @param duree duree de la tournee
      */
-    public void setPanneauTournee(String heureDeb, String heureFin, int duree) {
+    public void setPanneauTournee(String heureDeb, String heureFin, String duree) {
         this.heureDeb.setText(HEURE_DEBUT + heureDeb);
         this.heureFin.setText(HEURE_FIN + heureFin);
-        this.dureeTournee.setText(DUREE + duree + " secondes");
+        this.dureeTournee.setText(DUREE + duree);
     }
 
     /**
@@ -504,7 +504,7 @@ public class Fenetre extends JFrame {
         this.etape.append(ADRESSE + adresse + "\r\n");
         this.etape.append(HEURE_ARRIVEE + heureArr + "\r\n");
         this.etape.append(HEURE_DEPART + heureDep + "\r\n");
-        this.etape.append(DUREE + duree + " secondes\r\n\r\n");
+        this.etape.append(DUREE + duree + " secondes \r\n\r\n");
     }
     /**
      * Afficher le detail de chaque etape de la tournee
@@ -523,7 +523,7 @@ public class Fenetre extends JFrame {
         } else {
             this.etape.append(HEURE_ARRIVEE + heure + "\r\n");
         }
-        this.etape.append(DUREE + duree + " secondes\r\n\r\n");
+        this.etape.append(DUREE + duree +" secondes \r\n\r\n");
     }
 
     /**

@@ -14,7 +14,8 @@ package modele;
 public class PointInteret {
     private Intersection intersection;
     private Integer duree;
-    private boolean estEnlevement;
+    private boolean enlevement;
+    private boolean entrepot;
     private String heureDepart;
     private String heureArrivee;
     private PointInteret pointDependance;
@@ -47,18 +48,27 @@ public class PointInteret {
         this.duree = duree;
     }
 
-    public boolean isEstEnlevement() {
-        return estEnlevement;
+    public boolean isEnlevement() {
+        return enlevement;
     }
 
     public void setEstEnlevement(boolean estEnlevement) {
-        this.estEnlevement = estEnlevement;
+        this.enlevement = estEnlevement;
     }
 
     public String getHeureDepart() {
         return heureDepart;
     }
 
+    public boolean isEntrepot() {
+        return entrepot;
+    }
+
+    public void setEntrepot(boolean entrepot) {
+        this.entrepot = entrepot;
+    }
+
+    
     public void setHeureDepart(String heureDepart) {
         this.heureDepart = heureDepart;
     }
@@ -109,5 +119,5 @@ public class PointInteret {
         return heureInt;
     }
     
-    
+
 }

@@ -13,18 +13,18 @@ import java.util.ArrayList;
  *
  */
 public class Tournee {
-    private Integer duree;
+    private String duree;
     private ArrayList<PointInteret> successionPointsInteret;
 
     public Tournee() {
         successionPointsInteret=new ArrayList<PointInteret>();
     }
 
-    public Integer getDuree() {
+    public String getDuree() {
         return duree;
     }
 
-    public void setDuree(Integer duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
 

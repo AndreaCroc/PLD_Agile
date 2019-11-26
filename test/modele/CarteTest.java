@@ -116,12 +116,12 @@ public class CarteTest {
         
         assertEquals("25175791", pi.get(0).getIntersection().getId());
         assertEquals(180, (int)pi.get(0).getDuree());
-        assertEquals(true, pi.get(0).isEstEnlevement());
+        assertEquals(true, pi.get(0).isEnlevement());
         assertEquals("26086130", pi.get(0).getPointDependance().getIntersection().getId());
         
         assertEquals("26086130", pi.get(1).getIntersection().getId());
         assertEquals(240, (int)pi.get(1).getDuree());
-        assertEquals(false, pi.get(1).isEstEnlevement());
+        assertEquals(false, pi.get(1).isEnlevement());
         assertEquals("25175791", pi.get(1).getPointDependance().getIntersection().getId());
 
     }
