@@ -32,23 +32,20 @@ public class JCarte extends JPanel{
     public JCarte(Carte carte,Tournee tournee) {
         this.carte = carte;
         this.tournee = tournee;
-        System.out.println("CONSTRUCTEUR "+tournee);
         this.repaint();
     }
     public void setTournee(Tournee nouvelleTournee){
         this.tournee = nouvelleTournee;
-        System.out.println("dans le setTournee JCarte  "+this.tournee.getSuccessionPointsInteret());
         this.repaint();
     }
     
     public Tournee getTournee(){
-        return this.tournee;
-        
+        return this.tournee;  
     }
     
     /*Recupère la latitude maximale présente sur la carte*/
     public Double maxLatitude(ArrayList<Intersection> intersections){
-        
+    
         Double res=intersections.get(0).getLatitude();
         for (Intersection i : intersections) {
             if(i.getLatitude()>res){
@@ -70,6 +67,7 @@ public class JCarte extends JPanel{
     }
     
     public Double maxLongitude(ArrayList<Intersection> intersections){
+        
         Double res=intersections.get(0).getLongitude();
         for (Intersection i : intersections) {
             if(i.getLongitude()>res){
@@ -79,8 +77,8 @@ public class JCarte extends JPanel{
         return res;
     }
     
-    /*Recupère la Longitude maximale présente sur la carte*/
     public Double maxLongitudePIs(ArrayList<PointInteret> PIs){
+        
         Double res=PIs.get(0).getIntersection().getLongitude();
         for (PointInteret i : PIs) {
             if(i.getIntersection().getLongitude()>res){
@@ -138,83 +136,69 @@ public class JCarte extends JPanel{
         Double maxLatitude=this.maxLatitude(intersections);
         Double minLatitude=this.minLatitude(intersections);
         
-         /*on multiplie pour réduire la différence d'échelle*/
         Double hauteurCarte=(maxLatitude-minLatitude);
-        //System.out.println("HauteurCarte : "+hauteurCarte);
         
         Double distMinLatitude=(i.getLatitude()-minLatitude);
         
         /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
         Double pourcentageLatitude=((distMinLatitude*100/hauteurCarte));
-        //System.out.println("PourcentageLatitude : "+pourcentageLatitude);
-        
+
         int hauteurPanel=this.getHeight();
-        //System.out.println("hauteurPanel : "+hauteurPanel);
         
-        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
+        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java pour les y*/
         int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
-        //System.out.println("proportionalY : "+proportionalY);
+
         if(proportionalY==0){
             proportionalY=2;
         }else if(proportionalY>=hauteurPanel){
             proportionalY=hauteurPanel-12;
         }
-        //System.out.println("proportionalY : "+proportionalY);
+
         return proportionalY;
     }
     
     
     public int getProportionalYPIs(Intersection i,ArrayList<PointInteret> PIs,ArrayList<Intersection> intersections){
         
-        /*Double maxLatitude=this.maxLatitudePIs(PIs);
-        Double minLatitude=this.minLatitudePIs(PIs);*/
         Double maxLatitude=this.maxLatitude(intersections);
         Double minLatitude=this.minLatitude(intersections);
-        //System.out.println("ML : "+maxLatitude+" mL : "+minLatitude);
         
         Double hauteurCarte=(maxLatitude-minLatitude);
-        //System.out.println("HauteurCarte : "+hauteurCarte);
-        
+
         Double distMinLatitude=(i.getLatitude()-minLatitude);
         
         /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
         Double pourcentageLatitude=((distMinLatitude*100/hauteurCarte));
-        //System.out.println("PourcentageLatitude : "+pourcentageLatitude);
-        
+
         int hauteurPanel=this.getHeight();
-        //System.out.println("hauteurPanel : "+hauteurPanel);
-        
-        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java*/
+
+        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java pour les y*/
         int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
-        //System.out.println("proportionalY : "+proportionalY);
+
         if(proportionalY==0){
             proportionalY=2;
         }else if(proportionalY>=hauteurPanel){
             proportionalY=hauteurPanel-12;
         }
-        //System.out.println("proportionalY : "+proportionalY);
+
         return proportionalY;
     }
     
-    /*Recupère la position en Y de l'intersection sur le panel */
+    /*Recupère la position en X de l'intersection sur le panel */
     public int getProportionalX(Intersection i,ArrayList<Intersection> intersections){
         
         Double maxLongitude=this.maxLongitude(intersections);
         Double minLongitude=this.minLongitude(intersections);
-        //System.out.println("MLo : "+maxLongitude+" mLo : "+minLongitude);
         
         Double largeurCarte=(maxLongitude-minLongitude);
-        //System.out.println("largeurCarte : "+largeurCarte);
         
         Double distMinLongitude=(i.getLongitude()-minLongitude);
         
         /*A quel pourcentage de longitude se trouve l'intersection par rapport à la carte*/
         int pourcentageLongitude=(int)(distMinLongitude*100/largeurCarte);
-        //System.out.println("pourcentageLongitude : "+pourcentageLongitude);
-        
+
         int largeurPanel=this.getWidth();
-        //System.out.println("largeurPanel : "+largeurPanel);
-        
+
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
         if(proportionalX==0){
@@ -222,31 +206,24 @@ public class JCarte extends JPanel{
         }else if(proportionalX>=largeurPanel){
             proportionalX=largeurPanel-12;
         }
-        //System.out.println("proportionalX : "+proportionalX);
-        //System.out.println(proportionalX);
+
         return proportionalX;
     }
     
     
     public int getProportionalXPIs(Intersection i,ArrayList<PointInteret> PIs,ArrayList<Intersection> intersections){
         
-        /*Double maxLongitude=this.maxLongitudePIs(PIs);
-        Double minLongitude=this.minLongitudePIs(PIs);*/
         Double maxLongitude=this.maxLongitude(intersections);
         Double minLongitude=this.minLongitude(intersections);
-        //System.out.println("MLo : "+maxLongitude+" mLo : "+minLongitude);
-        
+
         Double largeurCarte=(maxLongitude-minLongitude);
-        //System.out.println("largeurCarte : "+largeurCarte);
-        
+
         Double distMinLongitude=(i.getLongitude()-minLongitude);
         
         /*A quel pourcentage de longitude se trouve l'intersection par rapport à la carte*/
         int pourcentageLongitude=(int)(distMinLongitude*100/largeurCarte);
-        //System.out.println("pourcentageLongitude : "+pourcentageLongitude);
         
         int largeurPanel=this.getWidth();
-        //System.out.println("largeurPanel : "+largeurPanel);
         
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX=(int)(pourcentageLongitude*largeurPanel/100);
@@ -255,8 +232,7 @@ public class JCarte extends JPanel{
         }else if(proportionalX>=largeurPanel){
             proportionalX=largeurPanel-12;
         }
-        //System.out.println("proportionalX : "+proportionalX);
-        //System.out.println(proportionalX);
+
         return proportionalX;
     }
     
@@ -265,13 +241,8 @@ public class JCarte extends JPanel{
         
         super.paintComponent(g);
         ArrayList<Intersection> intersections=carte.getListeIntersections();
-        
-        
-        //System.out.println("Taille : "+intersections.size());
+
         for (Intersection i : intersections) {
-            
-            //System.out.println("Le point " + i.getId()/*+" "+i.getLatitude()+ " "+i.getLongitude()*/);
-            //System.out.println(this.getProportionalX(i)+" : "+this.getProportionalY(i));
             
             g.setColor(Color.BLACK);
             //-3 pour centrer le symbole sur le point
@@ -283,8 +254,7 @@ public class JCarte extends JPanel{
                 g.drawLine(this.getProportionalX(i,intersections)+1, this.getProportionalY(i,intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);
                 
             }
-            
-            
+   
 	}
         if(carte.getDemandesLivraisons()!=null)
         {
@@ -318,32 +288,21 @@ public class JCarte extends JPanel{
                 }       
             }
         }
-        
-        /*faire un autre liste avec la tournée et du coup l'avoir dans la classe carte*/
-         System.out.println("ICkkkkIIII");
+
         tournee=carte.getTournee();
-        System.out.println("ICIkkkkkIII");
-         System.out.println(tournee);
         if(this.tournee!=null){
-            System.out.println("ICIIII");
-            
-            System.out.println("La tourneee  "+this.tournee);
-            System.out.println("La listeee  "+this.tournee.getSuccessionPointsInteret());
-            
+   
             ArrayList<PointInteret> PIs=this.tournee.getSuccessionPointsInteret();
-            System.out.println("AAAAAAAA  "+PIs);
-            //if(PIs!=null){
-                //System.out.println("LAAA");
-                for(PointInteret i : PIs) {
-                    System.out.println("LAAA-BAAAAS");
-                    ArrayList<Troncon> iTroncons=i.getCheminDepart().getSuccessionTroncons();
-                    for (Troncon t : iTroncons) {
-                        g.setColor(Color.RED);
-                        g.drawLine(this.getProportionalX(t.getOrigine(),intersections)+2, this.getProportionalY(t.getOrigine(),intersections)+2,this.getProportionalX(t.getDestination(),intersections)+2,this.getProportionalY(t.getDestination(),intersections)+2);
-                        
-                    }
-                }       
-            //}
+
+            for(PointInteret i : PIs) {
+
+                ArrayList<Troncon> iTroncons=i.getCheminDepart().getSuccessionTroncons();
+                for (Troncon t : iTroncons) {
+                    g.setColor(Color.RED);
+                    g.drawLine(this.getProportionalX(t.getOrigine(),intersections)+2, this.getProportionalY(t.getOrigine(),intersections)+2,this.getProportionalX(t.getDestination(),intersections)+2,this.getProportionalY(t.getDestination(),intersections)+2);
+
+                }
+            }        
         }
     }
 }

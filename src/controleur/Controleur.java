@@ -72,7 +72,8 @@ public class Controleur {
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee));
+                fenetre.setTournee(null);
+                fenetre.setPanneauCarte(new JCarte(carte,null));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -96,25 +97,11 @@ public class Controleur {
 
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
-        
-        System.out.println(this.tournee);
-        
-        //fenetre.setPanneauCarte(new JCarte(carte,tournee));
-        
-        
-        
         fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
-        System.out.println("Après le set  "+fenetre.getPanneauCarte().getTournee());
-        //fenetre.getPanneauCarte().setTournee(this.tournee);
-        //System.out.println(tournee.getSuccessionPointsInteret());
-        //fenetre.getPanneauCarte().setTournee(tournee);
         fenetre.setTournee(this.tournee);
-        //System.out.println(tournee.getSuccessionPointsInteret());
-        //fenetre.validate();
         fenetre.repaint();
         fenetre.afficherEtapesTour();
 
-        
         System.out.println("Je lance le calcul d'une tournee");
         
     }
