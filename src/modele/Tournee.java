@@ -36,24 +36,15 @@ public class Tournee {
         this.successionPointsInteret.add(pI);
         //calculerDuree();
     }
-//    
-//    public Integer calculerDuree() {
-//        PointInteret entrepot = this.successionPointsInteret.get(0);
-//        Integer heureArr = entrepot.heureToInt(entrepot.getHeureArrivee());
-//        Integer heureDep = entrepot.heureToInt(entrepot.getHeureDepart());
-//        Integer duree = heureArr-heureDep;
-//        this.duree = duree;
-//        return duree;
-//    }
 
-    @Override
-    public String toString() {
-        String tournee = "Tournee : duree = "+duree+" itineraire : ";
-        for (PointInteret pointInteret : successionPointsInteret) {
-            tournee+=pointInteret.getIntersection().getId()+" , ";
-        }
-        return tournee;
-    }
+//    @Override
+//    public String toString() {
+//        String tournee = "Tournee : duree = "+duree+" itineraire : ";
+//        for (PointInteret pointInteret : successionPointsInteret) {
+//            tournee+=pointInteret.getIntersection().getId()+" , ";
+//        }
+//        return tournee;
+//    }
     
     
     

@@ -65,7 +65,14 @@ public class Carte {
     public void setDemandesLivraisons(DemandesLivraisons dL) {
         this.demandesLivraisons = dL;
     }
-
+    
+    /**
+     * Relâchement d'un arc (troncon) reliant deux intersections
+     * Utilisée pour le calcul des plus courts chemins (Dijkstra)
+     * 
+     * @param depart origine du troncon
+     * @param arrivee destination du troncon
+     */
     public void relacherArc(Intersection depart, Intersection arrivee) {
         System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
         Double coutArc = INFINI;
@@ -86,6 +93,13 @@ public class Carte {
         }
     }
 
+    /**
+     * Implémentation de l'algorithme de Dijkstra permettant de déterminer les
+     * plus courts chemins à partir d'une source dans la carte donnée
+     * 
+     * @param depart intersection de départ pour laquelle nous souhaitons trouver
+     * les plus courts chemins vers les autres intersections
+     */
     public void dijkstra(Intersection depart) {
         Double dMin;
         Intersection sMin; //sommet de la liste de sommets gris ayant la distance minimale
@@ -140,10 +154,15 @@ public class Carte {
 
     }
     
+    /**
+     * Méthode permettant de trouver le plus court chemin partant d'une intersection
+     * et arrivant à une autre.
+     * Elle est appelée après une exécution de Dijkstra pour trouver le succession
+     * des points reliants ces deux intersections.
+     * @param depart intersection de départ
+     * @param arrivee intersection d'arrivée
+     */
     public Chemin plusCourtChemin(Intersection depart, Intersection arrivee) {
-        /*Méthode permettant de retrouver le chemin allant de l'intersection
-        de départ à une intersection d'arrivée passée en paramètre
-         */
         Chemin chemin = null;
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
@@ -182,8 +201,15 @@ public class Carte {
         return chemin;
     }
     
-    //méthode permettant de créer le graphe des plus courts chemins
-    //méthode permettant de créer le graphe des plus courts chemins
+    /**
+     * Méthode permettant de créer le graphe des plus courts chemins
+     * à partir des points d'intérêt de la carte (donc des demandes de livraisons 
+     * actuellement chargées)
+     * 
+     * @return la paire cout, chemin où cout[i][j] et la durée du trajet entre
+     * le point d'intérêt i et le point d'intérêt j; et chemins[i][j] et la liste
+     * ordonnées de tronçons représentant le plus court chemin de i à j. 
+    */
     public Pair creerGraphePCC() {
         //recuperation du nombre de sommets (en tenant compte de l'entrepot)
         int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
@@ -234,7 +260,13 @@ public class Carte {
         return coutEtChemins;
 
     }
-
+    
+    /**
+     * Méthode permettant de calculer une tournée pour répondre aux
+     * demandes de livraison
+     * 
+     * @return l'objet tournée créée
+     */
     public Tournee calculerTournee() {
 
         Pair coutEtChemin = creerGraphePCC();
@@ -326,6 +358,16 @@ public class Carte {
     }
 
     
+    /**
+     * Méthode permettant de convertir une heure donnée (en string hh:mm:ss) en 
+     * int (nombre de secondes)
+     * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
+     * de la tournée
+     * 
+     * @param heureStr l'heure en string
+     * 
+     * @return l'heure en int
+    */
     public Integer heureToInt(String heureStr) {
         Integer heureInt;
         String[] elements = heureStr.split(":");
@@ -335,15 +377,33 @@ public class Carte {
         heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
         return heureInt;
     }
-    
+    /**
+     * Méthode permettant de convertir une heure donnée (en nombre de secondes,
+     * donc int) en string (hh:mm:ss)
+     * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
+     * de la tournée
+     * 
+     * @param heureInt l'heure en int
+     * 
+     * @return l'heure en String
+     */
     public String intToHeure (Integer heureInt) {
         String heureStr;
         int nbHeures = heureInt/3600;
         int nbMinutes = (heureInt-(nbHeures*3600))/60;
         int nbSecondes = heureInt-(nbHeures*3600)-(nbMinutes*60);
         String nbH = Integer.toString(nbHeures);
+        if (nbHeures<10) {
+            nbH="0"+nbH;
+        }
         String nbM = Integer.toString(nbMinutes); 
+        if (nbMinutes<10) {
+            nbM="0"+nbM;
+        }
         String nbS = Integer.toString(nbSecondes);
+        if (nbSecondes<10) {
+            nbS="0"+nbS;
+        }
         heureStr=nbH+":"+nbM+":"+nbS;
         return heureStr;
     }
@@ -401,9 +461,12 @@ public class Carte {
     /**
      * Chargement des données de l'element racine d'un document xml contenant le plan de la ville
      * Complete l'attribut listeIntersections et leurs troncons avec les informations lues depuis le document
+     * 
      * @param noeudDOMRacine Noeud racine du fichier xml a lire
+     * 
      * @return true si la lecture s'est correctement passee
      * false s'il manque un element dans le fichier xml
+     * 
      * @throws NumberFormatException 
      */
 
@@ -438,11 +501,14 @@ public class Carte {
     
 
     /**
-     * Chargement des donnÃ©es de l'element racine d'un document xml contenant les demandes de livraisons
+     * Chargement des données de l'element racine d'un document xml contenant les demandes de livraisons
      * Complete l'attribut demandesLivraisons et la liste des points d'interet qui la composent
+     * 
      * @param noeudDOMRacine Noeud racine du fichier xml a lire
+     * 
      * @return true si la lecture s'est correctement passee
      * false s'il manque un element dans le fichier xml
+     * 
      * @throws NumberFormatException
      * @throws Exception 
      */
@@ -452,7 +518,7 @@ public class Carte {
         
         if(listeIntersections.isEmpty()){
             ok = false;
-            throw new Exception("Infos cartes non chargÃ©es");
+            throw new Exception("Infos cartes non chargées");
         }
         NodeList entrepot = noeudDOMRacine.getElementsByTagName("entrepot");
         
@@ -503,7 +569,7 @@ public class Carte {
                         this.demandesLivraisons.ajouterPointInteret(pe);
                         this.demandesLivraisons.ajouterPointInteret(pl);
                     }else{
-                        ok = false; // s'il y a un point non-trouvÃ© dans la liste
+                        ok = false; // s'il y a un point non-trouvé dans la liste
                     }
                     
                 }
