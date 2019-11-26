@@ -20,6 +20,10 @@ import modele.PointInteret;
 import modele.Tournee;
 import modele.Troncon;
 
+/**
+ * 
+ * Classe AffichageTournee permettant d'afficher les details d'une tournee
+ */
 public class AffichageTournee {
 
     private Tournee tournee;
@@ -34,6 +38,9 @@ public class AffichageTournee {
         this.tournee = tournee;
     }
 
+    /**
+     * Affichage des etapes de la tournee
+     */
     public void afficherTournee() {
         ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
 //        Intersection inter = new Intersection();
@@ -110,18 +117,23 @@ public class AffichageTournee {
         String heureFin = "";
         int index = 0;
 
+        //S'assurer que la liste contient des points d'interet
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
             fenetre.viderPanneauEtapes();
             //dureeTotPrevue = tournee.getDuree();
             for (PointInteret pt : successionPointsInteret) {
+                //Recuperer le numero de l etape
                 index = successionPointsInteret.indexOf(pt);
                 Chemin c = pt.getCheminDepart();
                 Troncon t = c.getSuccessionTroncons().get(0);
+                //Recuperer l adresse
                 nomRue = t.getNomRue();
 
+                //Recuperer le point d'interet correspondant a l'entrepot
                 if (index == 0) {
                     heureDeb = pt.getHeureDepart();
                     heureFin = pt.getHeureArrivee();
+                    //Afficher le depart de l'entrepot
                     fenetre.setPanneauEtapesEntrepot(index,nomRue,heureDeb,duree);
                 } else {
                     if (pt.isEstEnlevement()) {
@@ -129,17 +141,22 @@ public class AffichageTournee {
                     } else {
                         type = "Livraison";
                     }
-
+                    //Recuperer la duree de l etape
                     duree = pt.getDuree();
 
+                    //Recuperer l heure d arrivee au point d interet
                     heureArrivee = pt.getHeureArrivee();
+                    //Recuperer l heure de depart du point d interet
                     heureDepart = pt.getHeureDepart();
                     System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + duree);
+                    //Afficher les etapes dans la fenetre
                     fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, duree);
                 }
 
             }
+            //Afficher le retour a l'entrepot
             fenetre.setPanneauEtapesEntrepot(index+1,nomRue,heureFin,duree);
+            //Afficher le resume de la tournee
             fenetre.setPanneauTournee(heureDeb, heureFin, dureeTotPrevue);
 
         }
