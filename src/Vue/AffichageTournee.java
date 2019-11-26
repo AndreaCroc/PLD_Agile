@@ -111,6 +111,7 @@ public class AffichageTournee {
         String heureArrivee = "";
         String heureDepart = "";
         String type = "";
+        String nomRueEntrepot = "";
         int duree = 0;
         String dureeTotPrevue;
         String heureDeb = "";
@@ -131,10 +132,11 @@ public class AffichageTournee {
 
                 //Recuperer le point d'interet correspondant a l'entrepot
                 if (index == 0) {
+                    nomRueEntrepot = nomRue;
                     heureDeb = pt.getHeureDepart();
                     heureFin = pt.getHeureArrivee();
                     //Afficher le depart de l'entrepot
-                    fenetre.setPanneauEtapesEntrepot(index,nomRue,heureDeb,duree);
+                    fenetre.setPanneauEtapesEntrepot(index,nomRueEntrepot,heureDeb,duree);
                 } else {
                     if (pt.isEnlevement()) {
                         type = "Enlèvement";
@@ -154,7 +156,7 @@ public class AffichageTournee {
                 }
             }
             //Afficher le retour a l'entrepot
-            fenetre.setPanneauEtapesEntrepot(index+1,nomRue,heureFin,duree);
+            fenetre.setPanneauEtapesEntrepot(index+1,nomRueEntrepot,heureFin,duree);
             //Afficher le resume de la tournee
             fenetre.setPanneauTournee(heureDeb, heureFin, dureeTotPrevue);
 
