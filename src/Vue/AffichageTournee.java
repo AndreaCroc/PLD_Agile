@@ -33,12 +33,8 @@ public class AffichageTournee {
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }
-    
-    
 
-    
     public void afficherTournee() {
-        System.out.println("laaaaaa");
         ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
 //        Intersection inter = new Intersection();
 //        PointInteret p1 = new PointInteret(inter, 10);
@@ -103,44 +99,49 @@ public class AffichageTournee {
 //        successionPointsInteret.add(p4);
 //        successionPointsInteret.add(p5);
 //        successionPointsInteret.add(p6);
-        
+
         String nomRue = "";
         String heureArrivee = "";
-        String heureDepart="";
+        String heureDepart = "";
         String type = "";
         int duree = 0;
         int dureeTotPrevue = 0;
-        DateFormat format = new SimpleDateFormat("HH:mm:ss");
         String heureDeb = "";
-        heureDeb = format.format(new Date());
-        heureDeb = heureDeb.replace(":", "h");
         String heureFin = "";
-        
+        int index = 0;
+
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
-            PointInteret pti = successionPointsInteret.get(successionPointsInteret.size() - 1);
-            heureFin = pti.getHeureArrivee().toString();
+            fenetre.viderPanneauEtapes();
+            //dureeTotPrevue = tournee.getDuree();
             for (PointInteret pt : successionPointsInteret) {
-                int index = successionPointsInteret.indexOf(pt)+1;
+                index = successionPointsInteret.indexOf(pt);
                 Chemin c = pt.getCheminDepart();
                 Troncon t = c.getSuccessionTroncons().get(0);
                 nomRue = t.getNomRue();
 
-                if (pt.isEstEnlevement()) {
-                    type = "Enlèvement";
+                if (index == 0) {
+                    heureDeb = pt.getHeureDepart();
+                    heureFin = pt.getHeureArrivee();
+                    fenetre.setPanneauEtapesEntrepot(index,nomRue,heureDeb,duree);
                 } else {
-                    type = "Livraison";
+                    if (pt.isEstEnlevement()) {
+                        type = "Enlèvement";
+                    } else {
+                        type = "Livraison";
+                    }
+
+                    duree = pt.getDuree();
+
+                    heureArrivee = pt.getHeureArrivee();
+                    heureDepart = pt.getHeureDepart();
+                    System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + duree);
+                    fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, duree);
                 }
-                
-                duree = pt.getDuree();
-                dureeTotPrevue += duree;
-                
-                heureArrivee = pt.getHeureArrivee().toString();
-                heureDepart = pt.getHeureDepart().toString();
-                System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + duree);
-                fenetre.setPanneauEtapes(index,type,nomRue,heureDepart,heureArrivee, duree);
-                
+
             }
-            fenetre.setPanneauTournee(heureDeb,heureFin,dureeTotPrevue);
+            fenetre.setPanneauEtapesEntrepot(index+1,nomRue,heureFin,duree);
+            fenetre.setPanneauTournee(heureDeb, heureFin, dureeTotPrevue);
+
         }
 
     }
