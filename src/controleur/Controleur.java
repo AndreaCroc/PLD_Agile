@@ -33,11 +33,11 @@ public class Controleur {
      */
     public void chargerCarte() {
         //Appeler methode affichage carte + ...
-        boolean chargerCarte = true;
+        boolean chargerCarte = false;
 
         try {
             //Choix du fichier XML
-            carte.chargerCarte();
+            chargerCarte = carte.chargerCarte();
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
@@ -63,11 +63,11 @@ public class Controleur {
     */
     public void chargerLivraison() {
 
-        boolean chargerLivraison = true;
+        boolean chargerLivraison = false;
 
         try {
             //Choix du fichier XML
-            carte.chargerLivraison();
+            chargerLivraison = carte.chargerLivraison();
 
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons

@@ -121,6 +121,8 @@ public class AffichageTournee {
             DecimalFormat df = new DecimalFormat("0.00");
             fenetre.viderPanneauEtapes();
             dureeTotPrevue = tournee.getDuree();
+            dureeTotPrevue = dureeTotPrevue.substring(0,dureeTotPrevue.lastIndexOf(":"));
+            dureeTotPrevue = dureeTotPrevue.replace(":","h");
             for (PointInteret pt : successionPointsInteret) {
                 //Recuperer le numero de l etape
                 index = successionPointsInteret.indexOf(pt);
@@ -133,7 +135,11 @@ public class AffichageTournee {
                 if (index == 0) {
                     nomRueEntrepot = nomRue;
                     heureDeb = pt.getHeureDepart();
+                    heureDeb = heureDeb.substring(0,heureDeb.lastIndexOf(":"));
+                    heureDeb = heureDeb.replace(":","h");
                     heureFin = pt.getHeureArrivee();
+                    heureFin = heureFin.substring(0,heureFin.lastIndexOf(":"));
+                    heureFin = heureFin.replace(":","h");
                     //Afficher le depart de l'entrepot
                     fenetre.setPanneauEtapesEntrepot(index,nomRueEntrepot,heureDeb);
                 } else {
@@ -144,13 +150,16 @@ public class AffichageTournee {
                     }
                     //Recuperer la duree de l etape
                     duree = pt.getDuree();
-                     
                     dureeMin = df.format(duree/60);
-
+                    dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf(","));
                     //Recuperer l heure d arrivee au point d interet
                     heureArrivee = pt.getHeureArrivee();
+                    heureArrivee = heureArrivee.substring(0,heureArrivee.lastIndexOf(":"));
+                    heureArrivee = heureArrivee.replace(":","h");
                     //Recuperer l heure de depart du point d interet
                     heureDepart = pt.getHeureDepart();
+                    heureDepart = heureDepart.substring(0,heureDepart.lastIndexOf(":"));
+                    heureDepart = heureDepart.replace(":","h");
                     System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + dureeMin);
                     //Afficher les etapes dans la fenetre
                     fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, dureeMin);

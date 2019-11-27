@@ -379,13 +379,15 @@ public class Fenetre extends JFrame {
      */
     public void placeObjet2() {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
-        panneauGauche.setBounds(0, 0, (int) panneauGlobal2.getWidth() / 5, (int) panneauGlobal2.getHeight());
-        panneauDroite.setBounds(1 * (int) panneauGlobal2.getWidth() / 5, 0, 4 * (int) panneauGlobal2.getWidth() / 5, 1 * (int) panneauGlobal2.getHeight());
+        panneauGauche.setBounds(0, 0, 47*(int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
+        panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
         panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 13 * (int) panneauGauche.getHeight() / 24);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 1 * (int) panneauDroite.getWidth(), 81 * (int) panneauDroite.getHeight() / 100);
+        
+        int largeurCarte =  (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
+        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
 
         legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 4);
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
@@ -396,10 +398,10 @@ public class Fenetre extends JFrame {
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 30, 1 * (int) panneauLivraisons.getHeight() / 5, 92 * (int) panneauLivraisons.getWidth() / 100, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(19 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 2, 7 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonCalculerTournee.setBounds(2 * ((int) panneauLivraisons.getWidth() / 10), 3 * (int) panneauLivraisons.getHeight() / 4, 6 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /30, 1 * (int) panneauLivraisons.getHeight() / 3, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);

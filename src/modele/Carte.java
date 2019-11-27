@@ -646,33 +646,35 @@ public class Carte {
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
-    public void chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
-
+    public boolean chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
+        boolean result = false;
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("reseau")) {
-            construireCarteAPartirDeDOMXML(racine);
+             if(construireCarteAPartirDeDOMXML(racine)){
+                 result = true;
+             }
             //System.out.println(this.getListeIntersections().toString());
-        } else {
-            throw new Exception("Document non conforme");
-        }
+        } 
+        return result;
     }
 
-    public void chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
-
+    public boolean chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
+        boolean result = false;
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("demandeDeLivraisons")) {
-            construireLivraisonAPartirDeDOMXML(racine);
-        } else {
-            throw new Exception("Document non conforme");
-        }
+            if(construireLivraisonAPartirDeDOMXML(racine)){
+                result = true;
+            }
+        } 
+        return result;
     }
 
     // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
