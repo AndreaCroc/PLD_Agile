@@ -10,13 +10,9 @@
  */
 package Vue;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import modele.Chemin;
-import modele.Intersection;
 import modele.PointInteret;
 import modele.Tournee;
 import modele.Troncon;
