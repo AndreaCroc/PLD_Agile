@@ -47,14 +47,14 @@ public class Chemin {
     public void setArrivee(Intersection arrivee) {
         this.arrivee = arrivee;
     }
-//
+
     public Double getLongueur() {
         return longueur;
     }
-//
-//    public void setLongueur(Double longueur) {
-//        this.longueur = longueur;
-//    }
+
+    public void setLongueur(Double longueur) {
+        this.longueur = longueur;
+    }
 
     public Integer getDureeTrajet() {
         return dureeTrajet;
