@@ -153,15 +153,18 @@ public class CarteTest {
         assertEquals("8:0:0", dl.getHeureDepart());
         assertEquals("2129259178", pi.get(0).getIntersection().getId());
         
+        //demandes
         assertEquals("25175791", pi.get(1).getIntersection().getId());
         assertEquals(180, (int)pi.get(1).getDuree());
         assertEquals(true, pi.get(1).isEnlevement());
         assertEquals("26086130", pi.get(1).getPointDependance().getIntersection().getId());
+        assertEquals(1, (int)pi.get(1).getNumeroDemande());
         
         assertEquals("26086130", pi.get(2).getIntersection().getId());
         assertEquals(240, (int)pi.get(2).getDuree());
         assertEquals(false, pi.get(2).isEnlevement());
         assertEquals("25175791", pi.get(2).getPointDependance().getIntersection().getId());
+        assertEquals(1, (int)pi.get(2).getNumeroDemande());
 
         
         //Cas d'un fichier sans entrepot

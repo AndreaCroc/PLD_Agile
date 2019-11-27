@@ -20,6 +20,7 @@ public class PointInteret {
     private String heureArrivee;
     private PointInteret pointDependance;
     private Chemin cheminDepart;
+    private Integer numeroDemande;
 
     public PointInteret() {
     }
@@ -97,5 +98,12 @@ public class PointInteret {
         this.cheminDepart = cheminDepart;
     }
 
+    public Integer getNumeroDemande() {
+        return numeroDemande;
+    }
+
+    public void setNumeroDemande(Integer num) {
+        this.numeroDemande = num;
+    }
 
 }

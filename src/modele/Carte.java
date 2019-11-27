@@ -623,13 +623,16 @@ public class Carte {
                     if (pe != null && pl != null) {
                         pe.setPointDependance(pl);
                         pl.setPointDependance(pe);
+                        
+                        pe.setNumeroDemande(i+1);
+                        pl.setNumeroDemande(i+1);
 
                         this.demandesLivraisons.ajouterPointInteret(pe);
                         this.demandesLivraisons.ajouterPointInteret(pl);
                     } else {
                         ok = false; // s'il y a un point non-trouvé dans la liste
                     }
-
+                    
                 }
             } else {
                 ok = false;
