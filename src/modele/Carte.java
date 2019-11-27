@@ -294,9 +294,8 @@ public class Carte {
         Integer indPointCourant = 0;
         PointInteret pointCourant = new PointInteret();
 
-        //Recupération de l'heure de départ de l'entrepot
+        //Recupération de l'heure de début de la tournée
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
-
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
@@ -308,6 +307,7 @@ public class Carte {
             pointCourant.setCheminDepart(chemin);
             if (pointCourant.isEntrepot()) {
                 pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
+                System.out.println("entrepot : "+ pointCourant.getHeureDepart());
             }
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
@@ -388,10 +388,16 @@ public class Carte {
         int nbHeures = heureInt / 3600;
         int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
         int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
+        
+        if (nbHeures >= 24) {
+            nbHeures = nbHeures - 24;
+        }
         String nbH = Integer.toString(nbHeures);
         if (nbHeures < 10) {
             nbH = "0" + nbH;
         }
+        
+        
         String nbM = Integer.toString(nbMinutes);
         if (nbMinutes < 10) {
             nbM = "0" + nbM;
@@ -455,7 +461,7 @@ public class Carte {
     }
 
     /**
-     * Chargement des donnÃ©es de l'element racine d'un document xml contenant
+     * Chargement des donnees de l'element racine d'un document xml contenant
      * le plan de la ville Complete l'attribut listeIntersections et leurs
      * troncons avec les informations lues depuis le document
      *
@@ -569,6 +575,7 @@ public class Carte {
             }
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
+            pI.setEntrepot(true);
 
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
             if (listeLivraisons.getLength() > 0) {

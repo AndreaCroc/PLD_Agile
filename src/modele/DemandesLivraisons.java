@@ -39,6 +39,7 @@ public class DemandesLivraisons {
 
     public void setAdresseDepart(PointInteret aD) {
         this.adresseDepart = adresseDepart;
+        this.heureDepart = aD.getHeureDepart();
     }
 
     public ArrayList<PointInteret> getListePointsInteret() {
