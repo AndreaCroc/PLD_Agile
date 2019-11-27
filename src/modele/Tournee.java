@@ -31,20 +31,15 @@ public class Tournee {
     public ArrayList<PointInteret> getSuccessionPointsInteret() {
         return successionPointsInteret;
     }
-
-    public void ajouterPointInteret(PointInteret pI) {
-        this.successionPointsInteret.add(pI);
-        //calculerDuree();
+    /** Méthode permettant d'ajouter un point d'intérêt à une tournée
+     * 
+     * @param pointInteret : le point d'intérêt à ajouter 
+     */
+    public void ajouterPointInteret(PointInteret pointInteret) {
+        this.successionPointsInteret.add(pointInteret);
     }
 
-//    @Override
-//    public String toString() {
-//        String tournee = "Tournee : duree = "+duree+" itineraire : ";
-//        for (PointInteret pointInteret : successionPointsInteret) {
-//            tournee+=pointInteret.getIntersection().getId()+" , ";
-//        }
-//        return tournee;
-//    }
+
     
     
     

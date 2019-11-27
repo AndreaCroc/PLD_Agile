@@ -397,10 +397,16 @@ public class Carte {
         return heureInt;
     }
 
-    //Méthode permettant de convertir une heure donnée (en nombre de secondes,
-    //donc int) en string (hh:mm:ss)
-    //Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
-    //de la tournée
+    
+    /* Méthode permettant de convertir une heure donnée (en nombre de secondes,
+     * donc int) en string (hh:mm:ss)
+     * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
+     * de la tournée/**
+     *
+     * @param heureStr l'heure en int
+     *
+     * @return l'heure en string
+     */
     public String intToHeure(Integer heureInt) {
         String heureStr;
         int nbHeures = heureInt / 3600;

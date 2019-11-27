@@ -85,8 +85,10 @@ public class Intersection {
         this.distance = dist;
     }
 
-    //Méthode permettant de trouver tous les successeurs de l'intersection intersection
-    //donc toutes les intersections qu'on peut visiter à partir de celle-ci
+    /** Méthode permettant de trouver tous les successeurs de l'intersection 
+     * intersection donc toutes les intersections qu'on peut visiter à partir 
+     * de celle-ci
+    */
     public ArrayList<Intersection> retrouverSuccesseurs() {
         ArrayList<Intersection> listeSuccesseurs = new ArrayList<Intersection>();
         for (int i=0; i<this.tronconsDepart.size(); i++) {
