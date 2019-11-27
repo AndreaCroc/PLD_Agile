@@ -48,6 +48,11 @@ public class Carte {
         this.listeIntersections.add(i);
     }
 
+    public void setListeIntersections(ArrayList<Intersection> listeIntersections) {
+        this.listeIntersections = listeIntersections;
+    }
+    
+    
     public DemandesLivraisons getDemandesLivraisons() {
         return demandesLivraisons;
     }
@@ -59,17 +64,15 @@ public class Carte {
     public void setUneTournee(Tournee uneTournee) {
         this.uneTournee = uneTournee;
     }
-    
 
-    
     public void setDemandesLivraisons(DemandesLivraisons dL) {
         this.demandesLivraisons = dL;
     }
-    
+
     /**
-     * Relâchement d'un arc (troncon) reliant deux intersections
-     * Utilisée pour le calcul des plus courts chemins (Dijkstra)
-     * 
+     * Relâchement d'un arc (troncon) reliant deux intersections Utilisée pour
+     * le calcul des plus courts chemins (Dijkstra)
+     *
      * @param depart origine du troncon
      * @param arrivee destination du troncon
      */
@@ -83,7 +86,7 @@ public class Carte {
             if (listeTronconsDepart.get(i).getDestination() == arrivee) {
                 arc = listeTronconsDepart.get(i);
                 //Recuperation du cout de l'arc (en secondes)
-                coutArc = (arc.getLongueur()*15)/3.6;
+                coutArc = (arc.getLongueur() * 15) / 3.6;
             }
         }
         if (arrivee.getDistance() > depart.getDistance() + coutArc) {
@@ -96,9 +99,9 @@ public class Carte {
     /**
      * Implémentation de l'algorithme de Dijkstra permettant de déterminer les
      * plus courts chemins à partir d'une source dans la carte donnée
-     * 
-     * @param depart intersection de départ pour laquelle nous souhaitons trouver
-     * les plus courts chemins vers les autres intersections
+     *
+     * @param depart intersection de départ pour laquelle nous souhaitons
+     * trouver les plus courts chemins vers les autres intersections
      */
     public void dijkstra(Intersection depart) {
         Double dMin;
@@ -152,12 +155,13 @@ public class Carte {
         }
 
     }
-    
+
     /**
-     * Méthode permettant de trouver le plus court chemin partant d'une intersection
-     * et arrivant à une autre.
-     * Elle est appelée après une exécution de Dijkstra pour trouver le succession
-     * des points reliants ces deux intersections.
+     * Méthode permettant de trouver le plus court chemin partant d'une
+     * intersection et arrivant à une autre. Elle est appelée après une
+     * exécution de Dijkstra pour trouver le succession des points reliants ces
+     * deux intersections.
+     *
      * @param depart intersection de départ
      * @param arrivee intersection d'arrivée
      */
@@ -199,16 +203,16 @@ public class Carte {
 
         return chemin;
     }
-    
+
     /**
-     * Méthode permettant de créer le graphe des plus courts chemins
-     * à partir des points d'intérêt de la carte (donc des demandes de livraisons 
+     * Méthode permettant de créer le graphe des plus courts chemins à partir
+     * des points d'intérêt de la carte (donc des demandes de livraisons
      * actuellement chargées)
-     * 
+     *
      * @return la paire cout, chemin où cout[i][j] et la durée du trajet entre
-     * le point d'intérêt i et le point d'intérêt j; et chemins[i][j] et la liste
-     * ordonnées de tronçons représentant le plus court chemin de i à j. 
-    */
+     * le point d'intérêt i et le point d'intérêt j; et chemins[i][j] et la
+     * liste ordonnées de tronçons représentant le plus court chemin de i à j.
+     */
     public Pair creerGraphePCC() {
         //recuperation du nombre de sommets (en tenant compte de l'entrepot)
         int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
@@ -259,11 +263,11 @@ public class Carte {
         return coutEtChemins;
 
     }
-    
+
     /**
-     * Méthode permettant de calculer une tournée pour répondre aux
-     * demandes de livraison
-     * 
+     * Méthode permettant de calculer une tournée pour répondre aux demandes de
+     * livraison
+     *
      * @return l'objet tournée créée
      */
     public Tournee calculerTournee() {
@@ -350,60 +354,58 @@ public class Carte {
         Integer dureeTournee = heureArr - heureDep;
 
         tournee.setDuree(intToHeure(dureeTournee));
-        
+
         this.setUneTournee(tournee);
         return tournee;
 
     }
 
-    
     /**
-     * Méthode permettant de convertir une heure donnée (en string hh:mm:ss) en 
-     * int (nombre de secondes)
-     * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
-     * de la tournée
-     * 
+     * Méthode permettant de convertir une heure donnée (en string hh:mm:ss) en
+     * int (nombre de secondes) Utilisée pour les calculs des heures de départ
+     * et d'arrivée lors du calcul de la tournée
+     *
      * @param heureStr l'heure en string
-     * 
+     *
      * @return l'heure en int
-    */
+     */
     public Integer heureToInt(String heureStr) {
         Integer heureInt;
         String[] elements = heureStr.split(":");
         int nbHeure = Integer.parseInt(elements[0]);
         int nbMinutes = Integer.parseInt(elements[1]);
         int nbSecondes = Integer.parseInt(elements[2]);
-        heureInt = nbHeure*3600 + nbMinutes*60 + nbSecondes;
+        heureInt = nbHeure * 3600 + nbMinutes * 60 + nbSecondes;
         return heureInt;
     }
-    
+
     //Méthode permettant de convertir une heure donnée (en nombre de secondes,
     //donc int) en string (hh:mm:ss)
     //Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
     //de la tournée
-    public String intToHeure (Integer heureInt) {
+    public String intToHeure(Integer heureInt) {
         String heureStr;
-        int nbHeures = heureInt/3600;
-        int nbMinutes = (heureInt-(nbHeures*3600))/60;
-        int nbSecondes = heureInt-(nbHeures*3600)-(nbMinutes*60);
+        int nbHeures = heureInt / 3600;
+        int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
+        int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
         String nbH = Integer.toString(nbHeures);
-        if (nbHeures<10) {
-            nbH="0"+nbH;
+        if (nbHeures < 10) {
+            nbH = "0" + nbH;
         }
-        String nbM = Integer.toString(nbMinutes); 
-        if (nbMinutes<10) {
-            nbM="0"+nbM;
+        String nbM = Integer.toString(nbMinutes);
+        if (nbMinutes < 10) {
+            nbM = "0" + nbM;
         }
         String nbS = Integer.toString(nbSecondes);
-        if (nbSecondes<10) {
-            nbS="0"+nbS;
+        if (nbSecondes < 10) {
+            nbS = "0" + nbS;
         }
-        heureStr=nbH+":"+nbM+":"+nbS;
+        heureStr = nbH + ":" + nbM + ":" + nbS;
         return heureStr;
     }
 
-  // Lecture des fichier XML
-  // FileFilter pour les fichiers Xml
+    // Lecture des fichier XML
+    // FileFilter pour les fichiers Xml
     FileFilter fileFilter = new FileFilter() {
         @Override
         public boolean accept(File f) {
@@ -453,165 +455,193 @@ public class Carte {
     }
 
     /**
-     * Chargement des données de l'element racine d'un document xml contenant le plan de la ville
-     * Complete l'attribut listeIntersections et leurs troncons avec les informations lues depuis le document
-     * 
+     * Chargement des donnÃ©es de l'element racine d'un document xml contenant
+     * le plan de la ville Complete l'attribut listeIntersections et leurs
+     * troncons avec les informations lues depuis le document
+     *
      * @param noeudDOMRacine Noeud racine du fichier xml a lire
-     * 
-     * @return true si la lecture s'est correctement passee
-     * false s'il manque un element dans le fichier xml
-     * 
-     * @throws NumberFormatException 
+     * @return true si la lecture s'est correctement passee false s'il manque un
+     * element dans le fichier xml
+     * @throws NumberFormatException
      */
+    public boolean construireCarteAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException {
+        this.setListeIntersections(new ArrayList<Intersection>());
+        boolean ok = true;
 
-    public void construireCarteAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException {
+        //Lecture des intersections
         NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
-        for (int i = 0; i < listeNoeuds.getLength(); i++) {
-            String id = listeNoeuds.item(i).getAttributes().item(0).getNodeValue();
-            String latitude = listeNoeuds.item(i).getAttributes().item(1).getNodeValue();
-            String longitude = listeNoeuds.item(i).getAttributes().item(2).getNodeValue();
-            this.ajouterIntersection(new Intersection(id, Double.parseDouble(latitude), Double.parseDouble(longitude)));
-        }
 
-        NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
-        for (int i = 0; i < listeTroncons.getLength(); i++) {
-            String destination = listeTroncons.item(i).getAttributes().item(0).getNodeValue();
-            String longueur = listeTroncons.item(i).getAttributes().item(1).getNodeValue();
-            String nomRue = listeTroncons.item(i).getAttributes().item(2).getNodeValue();
-            String origine = listeTroncons.item(i).getAttributes().item(3).getNodeValue();
+        //Si aucune intersection n'a pu etre lu, la methode retourne false
+        if (listeNoeuds.getLength() > 0) {
+            //Ajout des intersections dans la liste des intersections
+            for (int i = 0; i < listeNoeuds.getLength(); i++) {
+                String id = listeNoeuds.item(i).getAttributes().item(0).getNodeValue();
+                String latitude = listeNoeuds.item(i).getAttributes().item(1).getNodeValue();
+                String longitude = listeNoeuds.item(i).getAttributes().item(2).getNodeValue();
+                this.ajouterIntersection(new Intersection(id, Double.parseDouble(latitude), Double.parseDouble(longitude)));
+            }
 
-            for (Intersection interDep : listeIntersections) {
-                if (interDep.getId().equals(origine)) {
-                    for (Intersection interArr : listeIntersections) {
-                        if (interArr.getId().equals(destination)) {
-                            interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
+            //Lecture des troncons
+            NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
+
+            //Si aucun troncon n'a pu etre lu, la methode retourne false
+            if (listeTroncons.getLength() > 0) {
+                // Ajout des troncons : ajout des troncons de depart correspondants a chaque intersection 
+                // selon les origines et destinations lues
+                for (int i = 0; i < listeTroncons.getLength(); i++) {
+                    String destination = listeTroncons.item(i).getAttributes().item(0).getNodeValue();
+                    String longueur = listeTroncons.item(i).getAttributes().item(1).getNodeValue();
+                    String nomRue = listeTroncons.item(i).getAttributes().item(2).getNodeValue();
+                    String origine = listeTroncons.item(i).getAttributes().item(3).getNodeValue();
+
+//                    for (Intersection interDep : listeIntersections) {
+//                        if (interDep.getId().equals(origine)) {
+//                            for (Intersection interArr : listeIntersections) {
+//                                if (interArr.getId().equals(destination)) {
+//                                    //System.out.println("Ajout d'un troncon " + nomRue + longueur + interDep +interArr);
+//                                    interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
+//                                }
+//                            }
+//                        }
+//                    }
+                    Intersection interDep = null;
+                    Intersection interArr = null;
+                    for (Intersection inter : listeIntersections) {
+                        if (inter.getId().equals(origine)) {
+                            interDep = inter;
+                        }
+                        if (inter.getId().equals(destination)) {
+                            interArr = inter;
                         }
                     }
+                    if (interDep != null && interArr != null) {
+                        interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
+                    } else {
+                        ok = false; // s'il y a un point non-trouvÃ© dans la liste
+                    }
                 }
+            } else {
+                ok = false;
             }
+        } else {
+            ok = false;
         }
+
+        return ok;
     }
 
-    
-
     /**
-     * Chargement des données de l'element racine d'un document xml contenant les demandes de livraisons
-     * Complete l'attribut demandesLivraisons et la liste des points d'interet qui la composent
-     * 
+     * Chargement des données de l'element racine d'un document xml contenant
+     * les demandes de livraisons Complete l'attribut demandesLivraisons et la
+     * liste des points d'interet qui la composent
+     *
      * @param noeudDOMRacine Noeud racine du fichier xml a lire
-     * 
-     * @return true si la lecture s'est correctement passee
-     * false s'il manque un element dans le fichier xml
-     * 
+     *
+     * @return true si la lecture s'est correctement passee false s'il manque un
+     * element dans le fichier xml
+     *
      * @throws NumberFormatException
-     * @throws Exception 
+     * @throws Exception
      */
-    public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException,Exception {
+    public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException, Exception {
         this.setDemandesLivraisons(null);
         boolean ok = true;
-        
-        if(listeIntersections.isEmpty()){
+
+        if (listeIntersections.isEmpty()) {
             ok = false;
             throw new Exception("Infos cartes non chargées");
         }
         NodeList entrepot = noeudDOMRacine.getElementsByTagName("entrepot");
-        
-        if(entrepot.getLength()>0)
-        {
+
+        if (entrepot.getLength() > 0) {
             String adresse = entrepot.item(0).getAttributes().item(0).getNodeValue();
             String heureDepart = entrepot.item(0).getAttributes().item(1).getNodeValue();
             PointInteret pI = null;
-            
+
             for (Intersection i : listeIntersections) {
-                if (i.getId().equals(adresse)) { 
-                    pI = new PointInteret(i,0);
+                if (i.getId().equals(adresse)) {
+                    pI = new PointInteret(i, 0);
                     this.demandesLivraisons = new DemandesLivraisons(pI);
                 }
             }
-            if(pI == null){
+            if (pI == null) {
                 ok = false;     // si on toruve pas d'intersection correspondant dans la liste
             }
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
-            
+
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
-            if(listeLivraisons.getLength()>0)
-            {
+            if (listeLivraisons.getLength() > 0) {
                 for (int i = 0; i < listeLivraisons.getLength(); i++) {
 
                     String adresseEnlevement = listeLivraisons.item(i).getAttributes().item(0).getNodeValue();
                     String adresseLivraison = listeLivraisons.item(i).getAttributes().item(1).getNodeValue();
                     String dureeEnlevement = listeLivraisons.item(i).getAttributes().item(2).getNodeValue();
                     String dureeLivraison = listeLivraisons.item(i).getAttributes().item(3).getNodeValue();
-                    
+
                     PointInteret pe = null;
                     PointInteret pl = null;
-                    for(Intersection j : listeIntersections){
-                         if ((j.getId().equals(adresseEnlevement))){
+                    for (Intersection j : listeIntersections) {
+                        if ((j.getId().equals(adresseEnlevement))) {
                             pe = new PointInteret(j, Integer.parseInt(dureeEnlevement));
                             pe.setEstEnlevement(true);
-                         }
-                         if ((j.getId().equals(adresseLivraison))){
+                        }
+                        if ((j.getId().equals(adresseLivraison))) {
                             pl = new PointInteret(j, Integer.parseInt(dureeLivraison));
                             pl.setEstEnlevement(false);
-                         }
+                        }
                     }
-                    if(pe!=null&&pl!=null){
+                    if (pe != null && pl != null) {
                         pe.setPointDependance(pl);
                         pl.setPointDependance(pe);
 
                         this.demandesLivraisons.ajouterPointInteret(pe);
                         this.demandesLivraisons.ajouterPointInteret(pl);
-                    }else{
+                    } else {
                         ok = false; // s'il y a un point non-trouvé dans la liste
                     }
-                    
+
                 }
             } else {
                 ok = false;
             }
-           
-        } else{
+
+        } else {
             ok = false;
         }
-        
-        
-        
+
         return ok;
     }
 
-
-
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
     public void chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
-      
+
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
-        
-        if (racine.getNodeName().equals("reseau")) { 
+
+        if (racine.getNodeName().equals("reseau")) {
             construireCarteAPartirDeDOMXML(racine);
             //System.out.println(this.getListeIntersections().toString());
-        }else {
+        } else {
             throw new Exception("Document non conforme");
         }
     }
-    
+
     public void chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
-      
+
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
-        
+
         if (racine.getNodeName().equals("demandeDeLivraisons")) {
             construireLivraisonAPartirDeDOMXML(racine);
         } else {
             throw new Exception("Document non conforme");
         }
     }
-    
 
     // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
     public void AfficherIntersections() {
@@ -624,9 +654,9 @@ public class Carte {
 
     public void AfficherLivraisons() {
         DemandesLivraisons dl = this.demandesLivraisons;
-        System.out.println("adresseDepart:"+dl.getAdresseDepart()+" heureDepart:"+dl.getHeureDepart());
-        for(PointInteret pI:dl.getListePointsInteret()){
-            System.out.println("adresse:"+pI.getIntersection().getId()+" duree:"+pI.getDuree()+((pI.isEnlevement())?" estEnlevement":" estLivraison"));
+        System.out.println("adresseDepart:" + dl.getAdresseDepart() + " heureDepart:" + dl.getHeureDepart());
+        for (PointInteret pI : dl.getListePointsInteret()) {
+            System.out.println("adresse:" + pI.getIntersection().getId() + " duree:" + pI.getDuree() + ((pI.isEnlevement()) ? " estEnlevement" : " estLivraison"));
         }
     }
 

@@ -81,6 +81,44 @@ public class CarteTest {
         assertEquals(136.00636, n.get(1).getTronconsDepart().get(0).getLongueur(), 0.000000);
         assertEquals("Rue de l'Abondance", n.get(1).getTronconsDepart().get(0).getNomRue());        
         assertEquals("2129259178", n.get(1).getTronconsDepart().get(0).getOrigine().getId());
+        
+        //Test fichier sans noeuds
+        xml = new File("test/modele/planTestSansNoeuds.xml");
+        docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        document = docBuilder.parse(xml);
+        racine = document.getDocumentElement();
+        
+        carte = new Carte();
+        
+        assertEquals(false, carte.construireCarteAPartirDeDOMXML(racine));
+        assertEquals(true, carte.getListeIntersections().isEmpty());
+        
+        //Test fichier sans troncons
+        xml = new File("test/modele/planTestSansTroncons.xml");
+        docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        document = docBuilder.parse(xml);
+        racine = document.getDocumentElement();
+        
+        carte = new Carte();
+        
+        assertEquals(false, carte.construireCarteAPartirDeDOMXML(racine));
+        assertEquals(false, carte.getListeIntersections().isEmpty());
+        for(Intersection i : carte.getListeIntersections())
+        {
+            assertEquals(true, i.getTronconsDepart().isEmpty());
+        }
+        
+        //Test intersection non-trouvée
+        xml = new File("test/modele/planPointNonTrouve.xml");
+        docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        document = docBuilder.parse(xml);
+        racine = document.getDocumentElement();
+
+        carte = new Carte();
+
+        assertEquals(false, carte.construireCarteAPartirDeDOMXML(racine));
+        assertEquals(3, carte.getListeIntersections().size());
+
     }
 
     /**
@@ -110,20 +148,62 @@ public class CarteTest {
         DemandesLivraisons dl = carte.getDemandesLivraisons();
         List<PointInteret> pi = dl.getListePointsInteret();
         
-        //recuperation de l'entrepot (attributs adresseDepart et heureDepart
+        //recuperation de l'entrepot (attributs adresseDepart et heureDep
         assertEquals("2129259178", dl.getAdresseDepart().getIntersection().getId());
         assertEquals("8:0:0", dl.getHeureDepart());
+        assertEquals("2129259178", pi.get(0).getIntersection().getId());
         
-        assertEquals("25175791", pi.get(0).getIntersection().getId());
-        assertEquals(180, (int)pi.get(0).getDuree());
-        assertEquals(true, pi.get(0).isEnlevement());
-        assertEquals("26086130", pi.get(0).getPointDependance().getIntersection().getId());
+        assertEquals("25175791", pi.get(1).getIntersection().getId());
+        assertEquals(180, (int)pi.get(1).getDuree());
+        assertEquals(true, pi.get(1).isEnlevement());
+        assertEquals("26086130", pi.get(1).getPointDependance().getIntersection().getId());
         
-        assertEquals("26086130", pi.get(1).getIntersection().getId());
-        assertEquals(240, (int)pi.get(1).getDuree());
-        assertEquals(false, pi.get(1).isEnlevement());
-        assertEquals("25175791", pi.get(1).getPointDependance().getIntersection().getId());
+        assertEquals("26086130", pi.get(2).getIntersection().getId());
+        assertEquals(240, (int)pi.get(2).getDuree());
+        assertEquals(false, pi.get(2).isEnlevement());
+        assertEquals("25175791", pi.get(2).getPointDependance().getIntersection().getId());
 
+        
+        //Cas d'un fichier sans entrepot
+        File xml3 = new File("test\\modele\\demandeTestSansEntrepot.xml");
+        DocumentBuilder docBuilder3 = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        Document document3 = docBuilder3.parse(xml3);
+        Element racine3 = document3.getDocumentElement();
+        //System.out.println(racine.toString());
+        Carte carte3 = new Carte();
+        
+        carte3.construireCarteAPartirDeDOMXML(racine2);
+        System.out.println(carte3.getListeIntersections());
+        
+        assertEquals(false, carte3.construireLivraisonAPartirDeDOMXML(racine3));
+        assertEquals(null, carte3.getDemandesLivraisons());
+        
+        //Fichier sans demandes
+        xml3 = new File("test\\modele\\demandeTestSansDemandeLivr.xml");
+        docBuilder3 = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        document3 = docBuilder3.parse(xml3);
+        racine3 = document3.getDocumentElement();
+        //System.out.println(racine.toString());
+        carte3 = new Carte();
+        
+        carte3.construireCarteAPartirDeDOMXML(racine2);
+        System.out.println(carte3.getListeIntersections());
+        
+        assertEquals(false, carte3.construireLivraisonAPartirDeDOMXML(racine3));
+        assertEquals(1, carte3.getDemandesLivraisons().getListePointsInteret().size());
+
+        //Fichier sans demandes
+        xml3 = new File("test\\modele\\demandeTestPointNonTrouve.xml");
+        docBuilder3 = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        document3 = docBuilder3.parse(xml3);
+        racine3 = document3.getDocumentElement();
+        carte3 = new Carte();
+
+        carte3.construireCarteAPartirDeDOMXML(racine2);
+        System.out.println(carte3.getListeIntersections());
+
+        assertEquals(false, carte3.construireLivraisonAPartirDeDOMXML(racine3));
+        assertEquals(1, carte3.getDemandesLivraisons().getListePointsInteret().size());
     }
     
 }
