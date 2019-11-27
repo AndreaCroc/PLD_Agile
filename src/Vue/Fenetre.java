@@ -113,7 +113,7 @@ public class Fenetre extends JFrame {
 
         //Mise en place des caracteristiques de la fenetre
         this.setLayout(null);
-        this.setTitle("OptIFmodLyon");
+        this.setTitle("Opt'IFmodLyon");
         this.setSize(width,height );
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -323,7 +323,7 @@ public class Fenetre extends JFrame {
         /* PanneauGlobal1 : pour la premiere fenetre*/
         
         //Pour afficher le titre de l application
-        titreAppli = new JLabel("Bienvenue sur OptIFmodLyon");
+        titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 40));
         titreAppli.setForeground(Color.white);
         
