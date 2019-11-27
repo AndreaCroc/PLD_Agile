@@ -13,7 +13,7 @@ public class TSP2 extends TSP1 implements TSP {
     @Override
     protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree) {
         
-        return new IteratorSeq(nonVus, sommetCrt);
+        return new IteratorSeq1(nonVus, sommetCrt, cout);
     }
 
 

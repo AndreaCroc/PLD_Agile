@@ -499,13 +499,13 @@ public class Fenetre extends JFrame {
      * @param heureArr l heure d arrivee de l etape
      * @param duree duree de l etape
      */
-    public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, int duree) {
+    public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, String duree) {
         this.etape.append(ETAPE + numEtape + "\r\n");
         this.etape.append(TYPE + type + "\r\n");
         this.etape.append(ADRESSE + adresse + "\r\n");
         this.etape.append(HEURE_ARRIVEE + heureArr + "\r\n");
         this.etape.append(HEURE_DEPART + heureDep + "\r\n");
-        this.etape.append(DUREE + duree + " secondes \r\n\r\n");
+        this.etape.append(DUREE + duree + " minutes \r\n\r\n");
     }
     /**
      * Afficher le detail de chaque etape de la tournee
@@ -513,18 +513,16 @@ public class Fenetre extends JFrame {
      * @param numEtape numero de l etape
      * @param adresse l adresse de l etape
      * @param heure l heure de depart ou d arrivee de l entrepot
-     * @param duree duree de l etape
      */
-    public void setPanneauEtapesEntrepot(int numEtape, String adresse, String heure, int duree) {
+    public void setPanneauEtapesEntrepot(int numEtape, String adresse, String heure) {
         this.etape.append(ETAPE + numEtape + "\r\n");
         this.etape.append(TYPE + "Entrepôt" + "\r\n");
         this.etape.append(ADRESSE + adresse + "\r\n");
         if (numEtape == 0) {
-            this.etape.append(HEURE_DEPART + heure + "\r\n");
+            this.etape.append(HEURE_DEPART + heure + "\r\n\r\n");
         } else {
-            this.etape.append(HEURE_ARRIVEE + heure + "\r\n");
+            this.etape.append(HEURE_ARRIVEE + heure + "\r\n\r\n");
         }
-        this.etape.append(DUREE + duree +" secondes \r\n\r\n");
     }
 
     /**

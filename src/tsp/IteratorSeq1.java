@@ -18,15 +18,19 @@ public class IteratorSeq1 implements Iterator<Integer> {
 		nbCandidats = 0;
                 int num = 0;
 		for (Integer s : nonVus){
-                        if (cout[s][s]!=0.0 && nonVus.contains(Math.floor(cout[s][s])) )
+                    System.out.println("sommet_de non_vus" + s );
+                     System.out.println("cout: "+cout[s][s]);
+                        if (cout[s][s]==0.0 || !nonVus.contains(Math.floor(cout[s][s])) )
                         {
 			Randidats[num++] = s;
                         }
 		}
+                System.out.println("après boucle");
                 this.candidats = new Integer[num];
-                for (Integer s : Randidats){
-                        
-			candidats[nbCandidats++] = s;
+                System.out.println(num);
+                for (Integer t : Randidats){
+                        System.out.println(nbCandidats);
+			candidats[nbCandidats++] = t;
                         
 		}
                 

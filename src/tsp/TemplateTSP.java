@@ -86,7 +86,7 @@ public abstract class TemplateTSP implements TSP {
      * @param tpsLimite : limite de temps pour la resolution
      */
     void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite) {
-        System.out.println("branch and bound");
+        //System.out.println("branch and bound");
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
             return;
@@ -102,11 +102,10 @@ public abstract class TemplateTSP implements TSP {
             while (it.hasNext()) {
                 Integer prochainSommet = it.next();
                 vus.add(prochainSommet);
-                System.out.println(" sommetCrt : " + sommetCrt);
-                System.out.println(" prochain sommet : " + prochainSommet);
+                //System.out.println(" sommetCrt : " + sommetCrt);
+                //System.out.println(" prochain sommet : " + prochainSommet);
                 nonVus.remove(prochainSommet);
-                System.out.println(cout[sommetCrt][prochainSommet]);
-                System.out.println(duree[prochainSommet]);
+                ////System.out.println(duree[prochainSommet]);
                 branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite);
                 vus.remove(prochainSommet);
                 nonVus.add(prochainSommet);
