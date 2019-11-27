@@ -29,14 +29,14 @@ public class Carte {
 
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
-    private TSP1 unTSP;
+    private TSP2 unTSP;
     private Tournee uneTournee;
     public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
 
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
-        this.unTSP = new TSP1();
+        this.unTSP = new TSP2();
         this.uneTournee = new Tournee();
     }
 
@@ -251,9 +251,28 @@ public class Carte {
                         //Recuperation du cout en secondes
                         cout[i][j] = plusCourtChemin.getLongueur();
                         chemins[i][j] = plusCourtChemin;
+                        
                     }
                 } else if (i == j) {
-                    cout[i][j] = 0.0;
+                    
+                    if (!listePointsInteret.get(i).isEnlevement() && i!=0)
+                    {
+                        double numPredecesseurs =0.0;
+                        String idJ = listePointsInteret.get(i).getPointDependance().getIntersection().getId();
+                        for (int k = 0; k < nbSommets; k++)
+                        {
+                            String IdK= listePointsInteret.get(k).getIntersection().getId();
+                            if (idJ==IdK)
+                            {
+                                numPredecesseurs = (double) k;
+                            }
+                        }
+                        
+                        cout[i][j] = numPredecesseurs;
+                    }
+                    else{
+                        cout[i][j] = 0.0;
+                            }
                     chemins[i][j] = null;
                 }
 
@@ -294,8 +313,9 @@ public class Carte {
         Integer indPointCourant = 0;
         PointInteret pointCourant = new PointInteret();
 
-        //Recupération de l'heure de début de la tournée
+        //Recupération de l'heure de départ de l'entrepot
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
+
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
@@ -307,7 +327,6 @@ public class Carte {
             pointCourant.setCheminDepart(chemin);
             if (pointCourant.isEntrepot()) {
                 pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
-                System.out.println("entrepot : "+ pointCourant.getHeureDepart());
             }
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
@@ -388,16 +407,10 @@ public class Carte {
         int nbHeures = heureInt / 3600;
         int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
         int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
-        
-        if (nbHeures >= 24) {
-            nbHeures = nbHeures - 24;
-        }
         String nbH = Integer.toString(nbHeures);
         if (nbHeures < 10) {
             nbH = "0" + nbH;
         }
-        
-        
         String nbM = Integer.toString(nbMinutes);
         if (nbMinutes < 10) {
             nbM = "0" + nbM;
@@ -461,7 +474,7 @@ public class Carte {
     }
 
     /**
-     * Chargement des donnees de l'element racine d'un document xml contenant
+     * Chargement des donnÃ©es de l'element racine d'un document xml contenant
      * le plan de la ville Complete l'attribut listeIntersections et leurs
      * troncons avec les informations lues depuis le document
      *
@@ -575,7 +588,6 @@ public class Carte {
             }
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
-            pI.setEntrepot(true);
 
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
             if (listeLivraisons.getLength() > 0) {

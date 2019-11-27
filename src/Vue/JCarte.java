@@ -299,18 +299,17 @@ public class JCarte extends JPanel{
                 for (Troncon t : iTroncons) {
                     g.setColor(Color.RED);
                     g.drawLine(this.getProportionalX(t.getOrigine(),intersections)+1, this.getProportionalY(t.getOrigine(),intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);
-                    
-                    
-                        if(t.getLongueur()>120){
-                            int x=(int)(Math.abs((this.getProportionalX(t.getDestination(),intersections)+this.getProportionalX(t.getOrigine(),intersections)))/2);
-                            System.out.println("x = "+x);
-                            int y=(int)(Math.abs((this.getProportionalY(t.getDestination(),intersections)+this.getProportionalY(t.getOrigine(),intersections)))/2);
-                            int xT[]={x-2,x+4,x+7};
-                            int yT[]={y-2,y+7,y};
-                            Polygon p=new Polygon(xT,yT,3);
-                            g.setColor(Color.RED);
-                            g.fillPolygon(p);
-                        }
+
+                    if(t.getLongueur()>120){
+                        int x=(int)(Math.abs((this.getProportionalX(t.getDestination(),intersections)+this.getProportionalX(t.getOrigine(),intersections)))/2);
+                        System.out.println("x = "+x);
+                        int y=(int)(Math.abs((this.getProportionalY(t.getDestination(),intersections)+this.getProportionalY(t.getOrigine(),intersections)))/2);
+                        int xT[]={x-2,x+4,x+7};
+                        int yT[]={y-2,y+7,y};
+                        Polygon p=new Polygon(xT,yT,3);
+                        g.setColor(Color.RED);
+                        g.fillPolygon(p);
+                    }
                     
                     
                 }

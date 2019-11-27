@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<demandeDeLivraisons>
+<entrepot adresse="4150019167" heureDepart="8:0:0"/>
+<livraison adresseEnlevement="208769083" adresseLivraison="55444215" dureeEnlevement="360" dureeLivraison="480"/>
+<livraison adresseEnlevement="26155372" adresseLivraison="27362899" dureeEnlevement="480" dureeLivraison="0"/>
+<livraison adresseEnlevement="1400900990" adresseLivraison="21717915" dureeEnlevement="180" dureeLivraison="540"/>
+<livraison adresseEnlevement="25610684" adresseLivraison="21992645" dureeEnlevement="180" dureeLivraison="240"/>
+<livraison adresseEnlevement="1036842078" adresseLivraison="505061101" dureeEnlevement="180" dureeLivraison="360"/>
+</demandeDeLivraisons>
