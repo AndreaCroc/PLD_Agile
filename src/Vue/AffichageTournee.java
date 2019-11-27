@@ -11,6 +11,7 @@
 package Vue;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,6 +114,7 @@ public class AffichageTournee {
         String type = "";
         String nomRueEntrepot = "";
         int duree = 0;
+        String dureeMin = "";
         String dureeTotPrevue;
         String heureDeb = "";
         String heureFin = "";
@@ -120,6 +122,7 @@ public class AffichageTournee {
 
         //S'assurer que la liste contient des points d'interet
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
+            DecimalFormat df = new DecimalFormat("0.00");
             fenetre.viderPanneauEtapes();
             dureeTotPrevue = tournee.getDuree();
             for (PointInteret pt : successionPointsInteret) {
@@ -136,7 +139,7 @@ public class AffichageTournee {
                     heureDeb = pt.getHeureDepart();
                     heureFin = pt.getHeureArrivee();
                     //Afficher le depart de l'entrepot
-                    fenetre.setPanneauEtapesEntrepot(index,nomRueEntrepot,heureDeb,duree);
+                    fenetre.setPanneauEtapesEntrepot(index,nomRueEntrepot,heureDeb);
                 } else {
                     if (pt.isEnlevement()) {
                         type = "Enlèvement";
@@ -145,18 +148,20 @@ public class AffichageTournee {
                     }
                     //Recuperer la duree de l etape
                     duree = pt.getDuree();
+                     
+                    dureeMin = df.format(duree/60);
 
                     //Recuperer l heure d arrivee au point d interet
                     heureArrivee = pt.getHeureArrivee();
                     //Recuperer l heure de depart du point d interet
                     heureDepart = pt.getHeureDepart();
-                    System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + duree);
+                    System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + dureeMin);
                     //Afficher les etapes dans la fenetre
-                    fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, duree);
+                    fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, dureeMin);
                 }
             }
             //Afficher le retour a l'entrepot
-            fenetre.setPanneauEtapesEntrepot(index+1,nomRueEntrepot,heureFin,duree);
+            fenetre.setPanneauEtapesEntrepot(index+1,nomRueEntrepot,heureFin);
             //Afficher le resume de la tournee
             fenetre.setPanneauTournee(heureDeb, heureFin, dureeTotPrevue);
 
