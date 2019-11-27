@@ -246,7 +246,7 @@ public class JCarte extends JPanel{
             
             g.setColor(Color.BLACK);
             //-3 pour centrer le symbole sur le point
-            g.fillOval(this.getProportionalX(i,intersections)-1,this.getProportionalY(i,intersections)-1,2,2);
+            g.fillOval(this.getProportionalX(i,intersections),this.getProportionalY(i,intersections),2,2);
             
             ArrayList<Troncon> iTroncons=i.getTronconsDepart();
             for (Troncon t : iTroncons) {
