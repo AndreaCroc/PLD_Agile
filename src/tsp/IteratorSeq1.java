@@ -14,7 +14,7 @@ public class IteratorSeq1 implements Iterator<Integer> {
 	 * @param sommetCrt
 	 */
 	public IteratorSeq1(Collection<Integer> nonVus, int sommetCrt, Double[][] cout){
-		Integer[] Randidats = new Integer[nonVus.size()];
+		Integer[] candidatsBis = new Integer[nonVus.size()];
 		nbCandidats = 0;
                 int num = 0;
 		for (Integer s : nonVus){
@@ -22,7 +22,7 @@ public class IteratorSeq1 implements Iterator<Integer> {
                         if (cout[s][s]==0.0 || !containsDouble(nonVus,cout[s][s]) )
                         {
 
-			Randidats[num++] = s;
+			candidatsBis[num++] = s;
                         }
 		}
 
@@ -31,7 +31,7 @@ public class IteratorSeq1 implements Iterator<Integer> {
                 System.out.println(num);
                 for (int j = 0; j < num; j++)
                 {
-			candidats[nbCandidats++] = Randidats[j];
+			candidats[nbCandidats++] = candidatsBis[j];
                         
                 }
                 

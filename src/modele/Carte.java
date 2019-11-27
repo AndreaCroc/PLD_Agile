@@ -227,19 +227,19 @@ public class Carte {
             chemins[i] = new Chemin[nbSommets];
         }
         //Remplissage de la matrice
-        //plus courts chemins de l'entrepot vers tous les autres points d'intérÃªt
+        //plus courts chemins de l'entrepot vers tous les autres points d'intéràªt
         ArrayList<PointInteret> listePointsInteret = this.demandesLivraisons.getListePointsInteret();
         Intersection intersectionCourante;
         Intersection intersectionArrivee;
         Chemin plusCourtChemin = new Chemin();
 
-        //plus court chemin de chaque point d'intérÃªt vers tous les autres 
+        //plus court chemin de chaque point d'intéràªt vers tous les autres 
         //(y compris l'entrepot)
         for (int i = 0; i < nbSommets; i++) {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
             dijkstra(intersectionCourante);
 
-            //plus courts chemins vers les autres points d'intérÃªt
+            //plus courts chemins vers les autres points d'intéràªt
             for (int j = 0; j < nbSommets; j++) {
                 if (i != j) {
                     intersectionArrivee = listePointsInteret.get(j).getIntersection();
@@ -315,7 +315,6 @@ public class Carte {
 
         //Recupération de l'heure de départ de l'entrepot
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
-
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
@@ -346,7 +345,7 @@ public class Carte {
             indPointPrec = indPointCourant;
 
         }
-        //Ajout du dernier point d'intérÃªt qui retourne vers l'entrepÃ´t
+        //Ajout du dernier point d'intérêt qui retourne vers l'entrepôt
         Chemin chemin = chemins[indPointCourant][0];
         pointCourant = listePointsInteret.get(indPointCourant);
         pointCourant.setCheminDepart(chemin);
@@ -363,7 +362,7 @@ public class Carte {
         //Ajout a la tournee
         tournee.ajouterPointInteret(pointCourant);
 
-        //Calcul de l'heure d'arrivee Ã  l'entrepÃ´t en fin de tournée
+        //Calcul de l'heure d'arrivee à  l'entrepôt en fin de tournée
         heureArriveeCour = heureDepartPrec + cout[indPointCourant][0].intValue();
         tournee.getSuccessionPointsInteret().get(0).setHeureArrivee(intToHeure(heureArriveeCour));
 
@@ -407,10 +406,14 @@ public class Carte {
         int nbHeures = heureInt / 3600;
         int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
         int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
+        if (nbHeures>=24) {
+            nbHeures = nbHeures-24;
+        }
         String nbH = Integer.toString(nbHeures);
         if (nbHeures < 10) {
             nbH = "0" + nbH;
         }
+        
         String nbM = Integer.toString(nbMinutes);
         if (nbMinutes < 10) {
             nbM = "0" + nbM;
@@ -474,7 +477,7 @@ public class Carte {
     }
 
     /**
-     * Chargement des donnÃ©es de l'element racine d'un document xml contenant
+     * Chargement des donnà©es de l'element racine d'un document xml contenant
      * le plan de la ville Complete l'attribut listeIntersections et leurs
      * troncons avec les informations lues depuis le document
      *
@@ -536,7 +539,7 @@ public class Carte {
                     if (interDep != null && interArr != null) {
                         interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
                     } else {
-                        ok = false; // s'il y a un point non-trouvÃ© dans la liste
+                        ok = false; // s'il y a un point non-trouvà© dans la liste
                     }
                 }
             } else {
@@ -588,7 +591,8 @@ public class Carte {
             }
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
-
+            pI.setEntrepot(true);
+            
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
             if (listeLivraisons.getLength() > 0) {
                 for (int i = 0; i < listeLivraisons.getLength(); i++) {
