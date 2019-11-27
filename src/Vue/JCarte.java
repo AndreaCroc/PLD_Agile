@@ -245,17 +245,15 @@ public class JCarte extends JPanel{
         for (Intersection i : intersections) {
             
             g.setColor(Color.BLACK);
-            //-3 pour centrer le symbole sur le point
+            
             g.fillOval(this.getProportionalX(i,intersections),this.getProportionalY(i,intersections),2,2);
             
             ArrayList<Troncon> iTroncons=i.getTronconsDepart();
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
-                g.drawLine(this.getProportionalX(i,intersections)+1, this.getProportionalY(i,intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);
-                
+                g.drawLine(this.getProportionalX(i,intersections)+1, this.getProportionalY(i,intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);  
             }
-   
-	}
+        }
         if(carte.getDemandesLivraisons()!=null)
         {
             ArrayList<PointInteret> PIs=carte.getDemandesLivraisons().getListePointsInteret();
@@ -266,7 +264,7 @@ public class JCarte extends JPanel{
             int x[]={xDepot,xDepot+6,xDepot+12};
             int y[]={yDepot,yDepot+12,yDepot};
             Polygon p=new Polygon(x,y,3);
-            g.setColor(Color.RED);
+            g.setColor(Color.BLACK);
             g.fillPolygon(p);
             
             if(PIs!=null){
@@ -281,10 +279,11 @@ public class JCarte extends JPanel{
                     g.setColor(randomColor);
 
                     if(i.isEnlevement()){
-                        g.fillRect(this.getProportionalXPIs(i.getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getIntersection(),PIs, intersections)-2,8,8);
-                        g.fillOval(this.getProportionalXPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,8,8);
+                        g.fillRect(this.getProportionalXPIs(i.getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getIntersection(),PIs, intersections)-2,9,9);
+                        g.fillOval(this.getProportionalXPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,this.getProportionalYPIs(i.getPointDependance().getIntersection(),PIs,intersections)-2,9,9);
 
                     }
+                    
                 }       
             }
         }
@@ -299,8 +298,21 @@ public class JCarte extends JPanel{
                 ArrayList<Troncon> iTroncons=i.getCheminDepart().getSuccessionTroncons();
                 for (Troncon t : iTroncons) {
                     g.setColor(Color.RED);
-                    g.drawLine(this.getProportionalX(t.getOrigine(),intersections)+2, this.getProportionalY(t.getOrigine(),intersections)+2,this.getProportionalX(t.getDestination(),intersections)+2,this.getProportionalY(t.getDestination(),intersections)+2);
-
+                    g.drawLine(this.getProportionalX(t.getOrigine(),intersections)+1, this.getProportionalY(t.getOrigine(),intersections)+1,this.getProportionalX(t.getDestination(),intersections)+1,this.getProportionalY(t.getDestination(),intersections)+1);
+                    
+                    
+                        if(t.getLongueur()>120){
+                            int x=(int)(Math.abs((this.getProportionalX(t.getDestination(),intersections)+this.getProportionalX(t.getOrigine(),intersections)))/2);
+                            System.out.println("x = "+x);
+                            int y=(int)(Math.abs((this.getProportionalY(t.getDestination(),intersections)+this.getProportionalY(t.getOrigine(),intersections)))/2);
+                            int xT[]={x-2,x+4,x+7};
+                            int yT[]={y-2,y+7,y};
+                            Polygon p=new Polygon(xT,yT,3);
+                            g.setColor(Color.RED);
+                            g.fillPolygon(p);
+                        }
+                    
+                    
                 }
             }        
         }
