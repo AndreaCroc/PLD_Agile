@@ -114,7 +114,7 @@ public class Fenetre extends JFrame {
         //Mise en place des caracteristiques de la fenetre
         this.setLayout(null);
         this.setTitle("OptIFmodLyon");
-        this.setSize(99 * width / 100, 93 * height / 100);
+        this.setSize(width,height );
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -239,7 +239,7 @@ public class Fenetre extends JFrame {
 
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
-        panneauDroite.setBackground(Color.blue);
+        panneauDroite.setBackground(new Color(186, 228, 255));
         panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
 
         /* PanneauLegende(haut droit)*/
@@ -324,7 +324,7 @@ public class Fenetre extends JFrame {
         
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur OptIFmodLyon");
-        titreAppli.setFont(new Font("Arial", Font.BOLD, 20));
+        titreAppli.setFont(new Font("Arial", Font.BOLD, 40));
         titreAppli.setForeground(Color.white);
         
         //Pour entrer le chemin vers un fichier XML
@@ -332,7 +332,7 @@ public class Fenetre extends JFrame {
 
         //Pour afficher une erreur en cas de probleme lors du chargement du fichier
         repChargeCarte = new JLabel("Erreur dans le chargement du fichier");
-        repChargeCarte.setFont(new Font("Arial", Font.BOLD, 24));
+        repChargeCarte.setFont(new Font("Arial", Font.BOLD, 16));
         repChargeCarte.setForeground(new Color(254, 79, 65));
         repChargeCarte.setVisible(false);
 
@@ -368,9 +368,9 @@ public class Fenetre extends JFrame {
     public void placeObjet1() {
         panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
 
-        titreAppli.setBounds(4 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
+        titreAppli.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 2, 1 * (int) panneauGlobal1.getHeight() / 10);
         inputChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
-        boutonChargerCarte.setBounds(52 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
+        boutonChargerCarte.setBounds(55 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
         repChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
     }
 
@@ -383,9 +383,9 @@ public class Fenetre extends JFrame {
         panneauDroite.setBounds(1 * (int) panneauGlobal2.getWidth() / 5, 0, 4 * (int) panneauGlobal2.getWidth() / 5, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
-        panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 13 * (int) panneauGauche.getHeight() / 24);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 1 * (int) panneauDroite.getWidth(), 9 * (int) panneauDroite.getHeight() / 10);
+        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 1 * (int) panneauDroite.getWidth(), 81 * (int) panneauDroite.getHeight() / 100);
 
         legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 4);
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
@@ -396,10 +396,10 @@ public class Fenetre extends JFrame {
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 4, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 1 * (int) panneauLivraisons.getHeight() / 4, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 4), 2 * (int) panneauLivraisons.getHeight() / 3, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /20, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 30, 1 * (int) panneauLivraisons.getHeight() / 5, 92 * (int) panneauLivraisons.getWidth() / 100, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonChargerLivraisons.setBounds(19 * ((int) panneauLivraisons.getWidth() / 100), 4 * (int) panneauLivraisons.getHeight() / 10, 7 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonCalculerTournee.setBounds(2 * ((int) panneauLivraisons.getWidth() / 10), 2 * (int) panneauLivraisons.getHeight() / 3, 6 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /30, 4 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
