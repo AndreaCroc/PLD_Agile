@@ -73,6 +73,7 @@ public class Controleur {
             // on affiche les livraisons
             if (chargerLivraison) {
                 fenetre.setTournee(null);
+                carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte,null));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
