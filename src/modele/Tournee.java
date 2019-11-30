@@ -39,6 +39,16 @@ public class Tournee {
         this.successionPointsInteret.add(pointInteret);
     }
 
+    @Override
+    public String toString() {
+        String out = "Tournée : \n";
+        for (PointInteret pI : successionPointsInteret) {
+            out+="Point "+pI.getIntersection().getId()+"\n chemin "+pI.getCheminDepart()+"\n";
+        }
+        return out;
+    }
+
+    
 
     
     

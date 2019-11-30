@@ -34,6 +34,10 @@ public class Carte {
     public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
 
+    //Pour le graphe de plus courts chemins
+    Double[][] cout;
+    Chemin[][] chemins;
+    
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.unTSP = new TSP2();
@@ -213,16 +217,16 @@ public class Carte {
      * le point d'intérêt i et le point d'intérêt j; et chemins[i][j] et la
      * liste ordonnées de tronçons représentant le plus court chemin de i à j.
      */
-    public Pair creerGraphePCC() {
+    public void creerGraphePCC() {
         //recuperation du nombre de sommets (en tenant compte de l'entrepot)
         int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
         //Initialisation de la matrice des couts
-        Double[][] cout = new Double[nbSommets][nbSommets];
+        cout = new Double[nbSommets][nbSommets];
         for (int i = 0; i < nbSommets; i++) {
             cout[i] = new Double[nbSommets];
         }
         //Initialisation de la matrice des plus courts chemins
-        Chemin[][] chemins = new Chemin[nbSommets][nbSommets];
+        chemins = new Chemin[nbSommets][nbSommets];
         for (int i = 0; i < nbSommets; i++) {
             chemins[i] = new Chemin[nbSommets];
         }
@@ -239,7 +243,7 @@ public class Carte {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
             dijkstra(intersectionCourante);
 
-            //plus courts chemins vers les autres points d'intéràªt
+            //plus courts chemins vers les autres points d'intérêt
             for (int j = 0; j < nbSommets; j++) {
                 if (i != j) {
                     intersectionArrivee = listePointsInteret.get(j).getIntersection();
@@ -278,8 +282,7 @@ public class Carte {
 
             }
         }
-        Pair coutEtChemins = new Pair<>(cout, chemins);
-        return coutEtChemins;
+        
 
     }
 
@@ -291,9 +294,7 @@ public class Carte {
      */
     public Tournee calculerTournee() {
 
-        Pair coutEtChemin = creerGraphePCC();
-        Double[][] cout = (Double[][]) coutEtChemin.getKey();
-        Chemin[][] chemins = (Chemin[][]) coutEtChemin.getValue();
+        creerGraphePCC();
 
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
@@ -312,33 +313,12 @@ public class Carte {
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         PointInteret pointCourant = new PointInteret();
-
-        //Recupération de l'heure de départ de l'entrepot
-        Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
-        Integer heureArriveeCour;
-        Integer heureDepartCour;
-
-        int dureeTrajet;
+        
         for (int i = 1; i < nbSommets; i++) {
             indPointCourant = unTSP.getMeilleureSolution(i);
             Chemin chemin = chemins[indPointPrec][indPointCourant];
             pointCourant = listePointsInteret.get(indPointPrec);
             pointCourant.setCheminDepart(chemin);
-            if (pointCourant.isEntrepot()) {
-                pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
-            }
-            if (!pointCourant.isEntrepot()) {
-                //Mise a jour de l'heure d'arrivee
-                dureeTrajet = cout[indPointPrec][indPointCourant].intValue();
-                heureArriveeCour = heureDepartPrec + dureeTrajet;
-                pointCourant.setHeureArrivee(intToHeure(heureArriveeCour));
-
-                //Mise a jour de l'heure de depart
-                heureDepartCour = heureArriveeCour + pointCourant.getDuree();
-                pointCourant.setHeureDepart(intToHeure(heureDepartCour));
-
-                heureDepartPrec = heureDepartCour;
-            }
 
             //Ajout a la tournee
             tournee.ajouterPointInteret(pointCourant);
@@ -350,20 +330,124 @@ public class Carte {
         pointCourant = listePointsInteret.get(indPointCourant);
         pointCourant.setCheminDepart(chemin);
 
-        //Mise a jour de l'heure d'arrivee
-        dureeTrajet = cout[indPointPrec][indPointCourant].intValue();
-        heureArriveeCour = heureDepartPrec + dureeTrajet;
-        pointCourant.setHeureArrivee(intToHeure(heureArriveeCour));
-
-        //Mise a jour de l'heure de depart
-        heureDepartCour = heureArriveeCour + pointCourant.getDuree();
-        pointCourant.setHeureDepart(intToHeure(heureDepartCour));
-        heureDepartPrec = heureArriveeCour;
         //Ajout a la tournee
         tournee.ajouterPointInteret(pointCourant);
 
+        //Calcul des heures
+        this.setUneTournee(calculerHeuresTournee(tournee));
+        return tournee;
+
+    }
+    
+    /**
+     * Méthode permettant de supprimer un point d'intérêt d'une tournée
+     * @param pointInteret le point d'intérêt à supprimer
+     * @return 
+     */
+    public Tournee supprimerPointInteret(PointInteret pointInteret) 
+    {
+        ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
+        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        PointInteret pointPrec; //Point précédent le point dans la tournée
+        PointInteret pointSuivant; //Point suivant le poit dans la tournée
+        int indPrecListeP; //Indice du point precedent dans la liste des points d'intérêts
+        int indSuivListeP; //Indice du point suivant dans la liste des points d'intérêts
+        int indPointTournee; //Indice du point d'intérêt dans la tournée
+        PointInteret pointDependance = pointInteret.getPointDependance(); //point
+        //d'enlévement ou de livraison associé
+        
+        
+        if (!successionPointsInteret.contains(pointInteret)) {
+            return null;
+        }
+        
+       //Récupération de la position du points dans la tournee
+       indPointTournee = successionPointsInteret.indexOf(pointInteret);
+
+        
+        //Si le point d'intérêt est le dernier de la tournee (avant le retour à 
+        //l'entrepot
+        if (indPointTournee == successionPointsInteret.size()-1) {
+            //Recuperation du point d'intérêt précédent 
+            pointPrec = successionPointsInteret.get(indPointTournee-1);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indPrecListeP = listePointsInteret.indexOf(pointPrec);
+            
+            //Recuperation du point d'intérêt suivant (l'entrepôt)
+            pointSuivant = successionPointsInteret.get(0);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indSuivListeP = 0;
+        } else {
+            //Recuperation du point d'intérêt précédent 
+            pointPrec = successionPointsInteret.get(indPointTournee-1);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indPrecListeP = listePointsInteret.indexOf(pointPrec);
+            
+            //Recuperation du point d'intérêt suivant 
+            pointSuivant = successionPointsInteret.get(indPointTournee+1);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indSuivListeP =  listePointsInteret.indexOf(pointSuivant);
+        }
+        
+        Chemin cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
+        pointPrec.setCheminDepart(cheminPointPrec);
+        
+        //Suppression de la tournee et de la liste des points d'intérêts
+        successionPointsInteret.remove(pointInteret);
+        listePointsInteret.remove(pointInteret);
+        
+        //Suppression du point de dépendance correspondant
+        supprimerPointInteret(pointDependance);
+        
+        this.setUneTournee(calculerHeuresTournee(uneTournee));
+        return uneTournee;
+    }
+    
+    /**
+     * Méthode permettant de calculer les heures d'arrivées et de départ des 
+     * points d'intérêt d'une tournée
+     * @param tournee 
+     * @return la tournée mise à jour
+     */
+    public Tournee calculerHeuresTournee(Tournee tournee) {
+        //Recuperation de l'entrepot
+        PointInteret pointCourant = tournee.getSuccessionPointsInteret().get(0);
+        PointInteret pointPrec = pointCourant;
+        
+        //Recuperation de l'heure de départ de l'entrepôt
+        Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
+        pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
+        System.out.println("Depart entrepot");
+        
+        
+        Integer heureArriveeCour;
+        Integer heureDepartCour;
+
+        int dureeTrajet;
+        int nbSommets = tournee.getSuccessionPointsInteret().size();
+        for (int i = 1; i < nbSommets; i++) {
+            pointCourant = tournee.getSuccessionPointsInteret().get(i);
+            if (!pointCourant.isEntrepot()) {
+                //Mise a jour de l'heure d'arrivee
+                dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
+                heureArriveeCour = heureDepartPrec + dureeTrajet;
+                pointCourant.setHeureArrivee(intToHeure(heureArriveeCour));
+
+                //Mise a jour de l'heure de depart
+                heureDepartCour = heureArriveeCour + pointCourant.getDuree();
+                pointCourant.setHeureDepart(intToHeure(heureDepartCour));
+
+                heureDepartPrec = heureDepartCour;
+            }
+
+            //Ajout a la tournee
+            pointPrec = pointCourant;
+
+        }
+
         //Calcul de l'heure d'arrivee à  l'entrepôt en fin de tournée
-        heureArriveeCour = heureDepartPrec + cout[indPointCourant][0].intValue();
+        dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
+        heureArriveeCour = heureDepartPrec + dureeTrajet;
         tournee.getSuccessionPointsInteret().get(0).setHeureArrivee(intToHeure(heureArriveeCour));
 
         //Calcul de la durée de la tournée
@@ -372,10 +456,9 @@ public class Carte {
         Integer dureeTournee = heureArr - heureDep;
 
         tournee.setDuree(intToHeure(dureeTournee));
-
-        this.setUneTournee(tournee);
+        
         return tournee;
-
+        
     }
 
     /**

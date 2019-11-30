@@ -95,14 +95,21 @@ public class Chemin {
     //chemin à partir des troncons qui le composent
     public Integer calculerDureeTrajet() {
         Integer dureeChemin = 0;
-        Double dureeTroncon;
-        for (Troncon troncon : this.successionTroncons) {
-            dureeTroncon = ((troncon.getLongueur()*15)/3.6);
-            dureeChemin=dureeChemin+dureeTroncon.intValue();
-        }
-        this.dureeTrajet = dureeChemin;
-        return dureeChemin;
+        Double dureeDouble = longueur;
+        
+        this.dureeTrajet = dureeDouble.intValue();
+        return dureeTrajet;
     }
+
+    @Override
+    public String toString() {
+        String out="Chemin de "+depart+"à"+arrivee;
+        
+        return out;
+    
+    }
+    
+    
 
     
 }
