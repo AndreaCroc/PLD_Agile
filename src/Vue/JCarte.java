@@ -43,7 +43,6 @@ public class JCarte extends JPanel{
         return this.tournee;  
     }
     
-    
     /*Recupère la latitude maximale présente sur la carte*/
     public Double maxLatitude(ArrayList<Intersection> intersections){
     
@@ -137,15 +136,14 @@ public class JCarte extends JPanel{
         Double maxLatitude=this.maxLatitude(intersections);
         Double minLatitude=this.minLatitude(intersections);
         
-        Double hauteurCarte=(maxLatitude-minLatitude); 
-        int hauteurPanel=this.getHeight();
+        Double hauteurCarte=(maxLatitude-minLatitude);
         
         Double distMinLatitude=(i.getLatitude()-minLatitude);
         
         /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
         Double pourcentageLatitude=((distMinLatitude*100/hauteurCarte));
 
-        
+        int hauteurPanel=this.getHeight();
         
         /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java pour les y*/
         int proportionalY=hauteurPanel-(int)(pourcentageLatitude*hauteurPanel/100);
