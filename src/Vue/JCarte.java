@@ -26,20 +26,24 @@ public class JCarte extends JPanel {
     private Carte carte;
     private Tournee tournee;
     private ArrayList<Point> coorPtInterets;
-    private int ligneTab;
+    private AffichageEtapes vueEtapes;
 
-    public JCarte(Carte carte, Tournee tournee) {
+    public JCarte(Carte carte, Tournee tournee, AffichageEtapes vueEtapes) {
         System.out.println("constructeur 1");
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
-        this.ligneTab = -1;
+        this.vueEtapes = vueEtapes;
         this.repaint();
     }
 
-
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
+        this.repaint();
+    }
+
+    public void setVueEtapes(AffichageEtapes nvVue) {
+        this.vueEtapes = nvVue;
         this.repaint();
     }
 
@@ -53,17 +57,6 @@ public class JCarte extends JPanel {
 
     public ArrayList<Point> getCoorPtInterets() {
         return this.coorPtInterets;
-    }
-
-    public void setLigne(int ligne) {
-        System.out.println("Encadrer PI");
-        this.ligneTab = ligne;
-        System.out.println("ligneTab : " + ligneTab);
-        this.repaint();
-    }
-    
-    public int getLigne(){
-        return this.ligneTab;
     }
 
     /*Recupère la latitude maximale présente sur la carte*/
@@ -276,6 +269,7 @@ public class JCarte extends JPanel {
             }
         }
         if (carte.getDemandesLivraisons() != null) {
+            this.coorPtInterets.clear();
             ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
@@ -345,26 +339,33 @@ public class JCarte extends JPanel {
                 }
             }
         }
-        this.ligneTab = this.getLigne();
-        System.out.println("ligneTab2 : "+ligneTab);
-        if (this.ligneTab != -1) {
-            int xPI;
-            int yPI;
-            if (this.ligneTab < this.coorPtInterets.size()) {
-                xPI = this.coorPtInterets.get(ligneTab).getX();
-                yPI = this.coorPtInterets.get(ligneTab).getY();
-                System.out.println("coloriage1");
-            } else {
-                xPI = this.coorPtInterets.get(0).getX();
-                yPI = this.coorPtInterets.get(0).getY();
-                System.out.println("coloriage2");
-            }
-            g.setColor(Color.RED);
-            g.drawLine(xPI - 5, yPI - 5, xPI - 5, yPI + 15);
-            g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
-            g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
-            g.drawLine(xPI + 15, yPI - 5, xPI - 5, yPI - 5);
+        if (this.vueEtapes != null) {
+            int ligneTab = this.vueEtapes.getLigneSelect();
+            System.out.println("ligneTab2 : " + ligneTab);
+            if (ligneTab != -1) {
+                int xPI = 5;
+                int yPI = 5;
+                boolean select = false;
+                if (ligneTab < this.coorPtInterets.size()) {
+                    xPI = this.coorPtInterets.get(ligneTab).getX();
+                    yPI = this.coorPtInterets.get(ligneTab).getY();
+                    select = true;
+                    System.out.println("coloriage1");
+                } else if (ligneTab == this.coorPtInterets.size()) {
+                    xPI = this.coorPtInterets.get(0).getX();
+                    yPI = this.coorPtInterets.get(0).getY();
+                    select = true;
+                    System.out.println("coloriage2");
+                }
+                if (select) {
+                    g.setColor(Color.RED);
+                    g.drawLine(xPI - 5, yPI - 5, xPI - 5, yPI + 15);
+                    g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
+                    g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
+                    g.drawLine(xPI + 15, yPI - 5, xPI - 5, yPI - 5);
+                }
 
+            }
         }
 
     }

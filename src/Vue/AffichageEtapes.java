@@ -5,10 +5,8 @@
  */
 package Vue;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
-import modele.Tournee;
 
 /**
  *
@@ -16,14 +14,16 @@ import modele.Tournee;
  */
 public class AffichageEtapes extends AbstractTableModel {
 
-    private Tournee tournee;
     private final ArrayList<LigneEtapes> steps;
     private final String header[];
+    private int ligneSelect;
+    private FormatCellRenderer formatcell;
 
-    public AffichageEtapes(Tournee tournee) {
+    public AffichageEtapes(FormatCellRenderer format) {
         this.header = new String[]{"Numéro","Type","Rue","Arrivée prévue","Départ prévu","Durée prévue"};
         this.steps = new ArrayList<>();
-        this.tournee = tournee;
+        this.ligneSelect = -1;
+        this.formatcell = format;
     }
 
     @Override
@@ -59,6 +59,22 @@ public class AffichageEtapes extends AbstractTableModel {
     @Override
     public String getColumnName(int columnIndex) {
         return header[columnIndex];
+    }
+    
+    public int getLigneSelect(){
+        return this.ligneSelect;
+    }
+    
+    public void setLigneSelect(int ligne){
+        this.ligneSelect = ligne;
+    }
+
+    public FormatCellRenderer getFormatcell() {
+        return formatcell;
+    }
+
+    public void setFormatcell(FormatCellRenderer formatcell) {
+        this.formatcell = formatcell;
     }
 
     public void addStep(LigneEtapes step) {

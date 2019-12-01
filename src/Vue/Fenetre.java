@@ -217,13 +217,13 @@ public class Fenetre extends JFrame {
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
         etapesTitre.setForeground(Color.white);
 
-        vueEtapes = new AffichageEtapes(tournee);
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1));
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(40);
         tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
         tableauEtapes.getColumnModel().getColumn(2).setPreferredWidth(200);
         for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
-            tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(new FormatCellRenderer(-1));
+            tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
@@ -302,7 +302,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee);
+        panneauCarte = new JCarte(this.carte, this.tournee,this.vueEtapes);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
@@ -397,7 +397,7 @@ public class Fenetre extends JFrame {
         labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
         legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
         labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
-        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
+        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth(), (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
         inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
@@ -456,7 +456,8 @@ public class Fenetre extends JFrame {
             System.out.println("if");
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
                 System.out.println("for");
-                tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(new FormatCellRenderer(index));
+                this.vueEtapes.getFormatcell().setIndex(index);
+                tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
             }
         }
     }
@@ -490,6 +491,10 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
+    
+    public AffichageEtapes getVueEtapes(){
+        return this.vueEtapes;
+    }
 
     /**
      * Pour afficher des donnees globales liees a une tournee
@@ -515,7 +520,6 @@ public class Fenetre extends JFrame {
      * @param duree duree de l etape
      */
     public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, String duree) {
-        //String etap = ETAPE + numEtape + " : " + type + " ("+adresse+")" + " | Arrivée prévue : "+heureArr+", Départ prévu : "+heureDep+", Durée prévue : "+duree+" minutes";
         LigneEtapes step = new LigneEtapes(numEtape, type, adresse, heureDep, heureArr, duree + " min");
         this.vueEtapes.addStep(step);
     }
@@ -528,14 +532,11 @@ public class Fenetre extends JFrame {
      * @param heure l heure de depart ou d arrivee de l entrepot
      */
     public void setPanneauEtapesEntrepot(int numEtape, String adresse, String heure) {
-        //String etap = ETAPE + numEtape + " : Entrepôt" + " ("+adresse+")";
         LigneEtapes step;
         if (numEtape == 0) {
-            //etap += " | Départ prévu : "+heure;
             step = new LigneEtapes(numEtape, "Entrepot", adresse, heure, "", "");
 
         } else {
-            //etap += " | Arrivée prévue : "+heure;
             step = new LigneEtapes(numEtape, "Entrepot", adresse, "", heure, "");
         }
 
@@ -547,19 +548,21 @@ public class Fenetre extends JFrame {
      */
     public void viderPanneauEtapes() {
         this.vueEtapes.clearSteps();
+        this.vueEtapes.getFormatcell().setIndex(-1);
+        this.vueEtapes.setLigneSelect(-1);
+        this.panneauCarte.setVueEtapes(this.vueEtapes);
+        this.panneauCarte.updateUI();
     }
 
     public void setTournee(Tournee tournee) {
-        //System.out.println("AVANT   "+this.tournee.getSuccessionPointsInteret());
         this.tournee = tournee;
-        //System.out.println("Dans setTournee FENETRE"+this.tournee.getSuccessionPointsInteret());
-        //this.panneauCarte.setTournee(tournee);
         this.panneauCarte.updateUI();
 
     }
 
     public void entourerPI(int ligne) {
-        this.panneauCarte.setLigne(ligne);
+        this.vueEtapes.setLigneSelect(ligne);
+        this.panneauCarte.setVueEtapes(this.vueEtapes);
         this.panneauCarte.updateUI();
     }
 

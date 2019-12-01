@@ -24,13 +24,15 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         this.index = index;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
-                row, column);
-
-        
+                row, column);  
 
         if (index != -1) {
             int nbLignes = table.getRowCount() - 1;

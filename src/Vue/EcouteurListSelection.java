@@ -6,6 +6,7 @@
 package Vue;
 
 import controleur.Controleur;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -23,10 +24,16 @@ public class EcouteurListSelection implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            System.out.println("ligne cliquee");
-            System.out.println("index ligne : "+e.getLastIndex());
-            controleur.surbrillancePI(e.getLastIndex());
+        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+        
+        if (!lsm.isSelectionEmpty()&&!e.getValueIsAdjusting()) {
+            int minIndex = lsm.getMinSelectionIndex();
+            int maxIndex = lsm.getMaxSelectionIndex();
+            for (int i = minIndex; i <= maxIndex; i++) {
+                if (lsm.isSelectedIndex(i)) {
+                    controleur.surbrillancePI(i);
+                }
+            }
         }
 
     }
