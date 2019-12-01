@@ -107,6 +107,14 @@ public class Controleur {
         
     }
     
+    public void surbrillanceTableau(int index){
+        fenetre.surbrillanceLigneTab(index);
+        fenetre.repaint();
+    }
+    public void surbrillancePI(int ligne){
+        fenetre.entourerPI(ligne);
+        fenetre.repaint();
+    }
     public Tournee getTournee(){
         return this.tournee;
     }

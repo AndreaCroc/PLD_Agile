@@ -23,13 +23,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import modele.Carte;
 import modele.Tournee;
 
 /**
- * 
+ *
  * Classe Fenetre permettant d'afficher notre application
  */
 public class Fenetre extends JFrame {
@@ -39,6 +40,8 @@ public class Fenetre extends JFrame {
     private Tournee tournee;
     private AffichageTournee vueTournee;
     private JCarte panneauCarte;
+    private AffichageEtapes vueEtapes;
+    private JTable tableauEtapes;
 
     //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
@@ -61,7 +64,6 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
 
-    
     //Labels pour afficher les donnees
     private JLabel livraisons;
     private JLabel labelTournee;
@@ -81,7 +83,6 @@ public class Fenetre extends JFrame {
     private JLabel titreAppli;
 
     //Pour afficher les details d une tournee
-    private JTextArea etape;
     private JScrollPane scrollEtapes;
 
     //Pour ecrire en dur le fichier XML souhaite
@@ -105,6 +106,7 @@ public class Fenetre extends JFrame {
 
     //Pour reagir aux actions de l utilisateur
     private EcouteurBoutons ecouteurBoutons;
+    private EcouteurSouris ecouteurSouris;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -114,7 +116,7 @@ public class Fenetre extends JFrame {
         //Mise en place des caracteristiques de la fenetre
         this.setLayout(null);
         this.setTitle("Opt'IFmodLyon");
-        this.setSize(width,height );
+        this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,8 +177,7 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
-        
-        /* PanneauTournee (milieu gauche) */
+ /* PanneauTournee (milieu gauche) */
         //Titre de panneauTournee
         labelTournee = new JLabel("Tournée");
         labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
@@ -210,23 +211,25 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauTournee);
 
         /* Fin PanneauTournee*/
-        
-        /* PanneauEtape (bas gauche)*/
+ /* PanneauEtape (bas gauche)*/
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
         etapesTitre.setForeground(Color.white);
 
-        //Espace contenant les etapes intermediaires d une tournee
-        etape = new JTextArea();
-        etape.setFont(new Font("Arial", Font.BOLD, 14));
-        etape.setForeground(Color.gray);
-        etape.setEditable(false);
-        etape.setOpaque(false);
-        etape.setLineWrap(true);
+        vueEtapes = new AffichageEtapes(tournee);
+        tableauEtapes = new JTable(vueEtapes);
+        tableauEtapes.setRowHeight(40);
+        tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableauEtapes.getColumnModel().getColumn(2).setPreferredWidth(200);
+        for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
+            tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(new FormatCellRenderer(-1));
+        }
+        tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
+        listSelectionModel.addListSelectionListener(new EcouteurListSelection(this.controleur));
 
-        scrollEtapes = new JScrollPane(etape, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        //panneauGauche.add(scrollEtapes);
+        scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
@@ -243,7 +246,6 @@ public class Fenetre extends JFrame {
         panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
 
         /* PanneauLegende(haut droit)*/
-        
         //Logo rond de la legende
         rond = new ImageIcon("rond-noir.jpg");
         Image imgR = rond.getImage();
@@ -299,8 +301,7 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         /* Fin PanneauLegende */
-        
-        /* PanneauCarte (bas droit) */
+ /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(this.carte, this.tournee);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
@@ -309,24 +310,26 @@ public class Fenetre extends JFrame {
         //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
         panneauDroite.add(panneauCarte);
 
+        ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
+        addMouseListener(ecouteurSouris);
+
         /* Fin panneauCarte */
 
-        /* PanneauGlobal2 : pour la deuxieme fenetre*/
+ /* PanneauGlobal2 : pour la deuxieme fenetre*/
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(new Color(186, 228, 255));
         panneauGlobal2.add(panneauGauche);
         panneauGlobal2.add(panneauDroite);
-        
+
         /* Fin PanneauGlobal2 */
 
-        /* PanneauGlobal1 : pour la premiere fenetre*/
-        
+ /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 40));
         titreAppli.setForeground(Color.white);
-        
+
         //Pour entrer le chemin vers un fichier XML
         inputChargeCarte = new JTextField();
 
@@ -353,9 +356,8 @@ public class Fenetre extends JFrame {
         panneauGlobal1.add(repChargeCarte);
         this.setContentPane(panneauGlobal1);
         panneauGlobal1.setVisible(true);
-        
-        /* Fin PanneauGlobal1 */
 
+        /* Fin PanneauGlobal1 */
         //On place les elements
         placeObjet1();
         placeObjet2();
@@ -379,14 +381,14 @@ public class Fenetre extends JFrame {
      */
     public void placeObjet2() {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
-        panneauGauche.setBounds(0, 0, 47*(int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
+        panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
         panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
         panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 13 * (int) panneauGauche.getHeight() / 24);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-        
-        int largeurCarte =  (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
+
+        int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
 
         legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 4);
@@ -399,9 +401,9 @@ public class Fenetre extends JFrame {
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
         inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
+        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
         boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() /20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
@@ -409,10 +411,9 @@ public class Fenetre extends JFrame {
         dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
 
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
-        etape.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-        //scrollEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 14 * (int) panneauGauche.getHeight() / 24);
+        tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-    
+
     }
 
     /**
@@ -446,6 +447,18 @@ public class Fenetre extends JFrame {
         vueTournee.setTournee(tournee);
         vueTournee.afficherTournee();
 
+    }
+
+    public void surbrillanceLigneTab(int index) {
+        System.out.println("surbrillance ligne tab");
+        System.out.println("index : " + index);
+        if (tableauEtapes.getRowCount() != 0) {
+            System.out.println("if");
+            for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
+                System.out.println("for");
+                tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(new FormatCellRenderer(index));
+            }
+        }
     }
 
     /**
@@ -502,13 +515,11 @@ public class Fenetre extends JFrame {
      * @param duree duree de l etape
      */
     public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, String duree) {
-        this.etape.append(ETAPE + numEtape + "\r\n");
-        this.etape.append(TYPE + type + "\r\n");
-        this.etape.append(ADRESSE + adresse + "\r\n");
-        this.etape.append(HEURE_ARRIVEE + heureArr + "\r\n");
-        this.etape.append(HEURE_DEPART + heureDep + "\r\n");
-        this.etape.append(DUREE + duree + " minutes \r\n\r\n");
+        //String etap = ETAPE + numEtape + " : " + type + " ("+adresse+")" + " | Arrivée prévue : "+heureArr+", Départ prévu : "+heureDep+", Durée prévue : "+duree+" minutes";
+        LigneEtapes step = new LigneEtapes(numEtape, type, adresse, heureDep, heureArr, duree + " min");
+        this.vueEtapes.addStep(step);
     }
+
     /**
      * Afficher le detail de chaque etape de la tournee
      *
@@ -517,21 +528,25 @@ public class Fenetre extends JFrame {
      * @param heure l heure de depart ou d arrivee de l entrepot
      */
     public void setPanneauEtapesEntrepot(int numEtape, String adresse, String heure) {
-        this.etape.append(ETAPE + numEtape + "\r\n");
-        this.etape.append(TYPE + "Entrepôt" + "\r\n");
-        this.etape.append(ADRESSE + adresse + "\r\n");
+        //String etap = ETAPE + numEtape + " : Entrepôt" + " ("+adresse+")";
+        LigneEtapes step;
         if (numEtape == 0) {
-            this.etape.append(HEURE_DEPART + heure + "\r\n\r\n");
+            //etap += " | Départ prévu : "+heure;
+            step = new LigneEtapes(numEtape, "Entrepot", adresse, heure, "", "");
+
         } else {
-            this.etape.append(HEURE_ARRIVEE + heure + "\r\n\r\n");
+            //etap += " | Arrivée prévue : "+heure;
+            step = new LigneEtapes(numEtape, "Entrepot", adresse, "", heure, "");
         }
+
+        this.vueEtapes.addStep(step);
     }
 
     /**
      * Vider le panneauEtapes
      */
     public void viderPanneauEtapes() {
-        this.etape.setText("");
+        this.vueEtapes.clearSteps();
     }
 
     public void setTournee(Tournee tournee) {
@@ -540,7 +555,20 @@ public class Fenetre extends JFrame {
         //System.out.println("Dans setTournee FENETRE"+this.tournee.getSuccessionPointsInteret());
         //this.panneauCarte.setTournee(tournee);
         this.panneauCarte.updateUI();
-        
+
+    }
+
+    public void entourerPI(int ligne) {
+        this.panneauCarte.setLigne(ligne);
+        this.panneauCarte.updateUI();
+    }
+
+    public int getWidthPanneauGauche() {
+        return this.panneauGauche.getWidth();
+    }
+
+    public int getHeightPanneauLegende() {
+        return this.panneauLegende.getHeight();
     }
 
 }
