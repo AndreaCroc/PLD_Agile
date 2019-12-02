@@ -640,6 +640,7 @@ public class Carte {
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
+    public boolean chargerCarte(boolean estUnChangement) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -647,7 +648,18 @@ public class Carte {
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("reseau")) {
+            if (estUnChangement) {
+                this.listeIntersections.clear();
+            }
+            if (construireCarteAPartirDeDOMXML(racine)) {
+                result = true;
+            }
             //System.out.println(this.getListeIntersections().toString());
+        }
+
+        if (estUnChangement) {
+            this.demandesLivraisons.supprimerLivraison();
+        }
         return result;
     }
 

@@ -50,5 +50,8 @@ public class DemandesLivraisons {
         this.listePointsInteret.add(pI);
     }
 
+    public void supprimerLivraison() {
+        this.listePointsInteret.clear();
+    }
     
 }
