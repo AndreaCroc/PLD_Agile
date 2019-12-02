@@ -56,6 +56,36 @@ public class Controleur {
         }
 
     }
+    
+    /**
+     * Charge une nouvelle carte
+     */
+    public void changerCarte() {
+        
+        boolean changerCarte = false;
+
+        try {
+            //Choix du fichier XML
+            //changerCarte = carte.chargerCarte(true);
+
+            //Si le chargement de la carte s est bien passe,
+            // on change de fenetre et un affiche la carte
+            if (changerCarte) {
+                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre.getVueEtapes()));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+                //fenetre.retireMessageErreur3();
+            } else {
+                //Sinon, on affiche un message d erreur
+                //fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            //fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+        }
+    }
+
 
     /**
     * Charge une livraison
