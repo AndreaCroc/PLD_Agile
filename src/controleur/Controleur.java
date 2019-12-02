@@ -37,7 +37,7 @@ public class Controleur {
 
         try {
             //Choix du fichier XML
-            chargerCarte = carte.chargerCarte();
+            chargerCarte = carte.chargerCarte(false);
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
@@ -66,7 +66,7 @@ public class Controleur {
 
         try {
             //Choix du fichier XML
-            //changerCarte = carte.chargerCarte(true);
+            changerCarte = carte.chargerCarte(true);
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
@@ -74,15 +74,15 @@ public class Controleur {
                 fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre.getVueEtapes()));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
-                //fenetre.retireMessageErreur3();
+                fenetre.retireMessageErreur3();
             } else {
                 //Sinon, on affiche un message d erreur
-                //fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
             }
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
         }
     }
 
