@@ -29,22 +29,18 @@ public class EcouteurBoutons implements ActionListener {
             //Si on veut charger une carte
             case Fenetre.CHARGER_CARTE:
                 controleur.chargerCarte();
-                System.out.println("CHARGER CARTE ECOUTEUR BOUTONS");
                 break;
             //Si on veut charger des livraisons
             case Fenetre.CHARGER_LIVRAISONS:
                 controleur.chargerLivraison();
-                System.out.println("CHARGER LIVRAISON ECOUTEUR BOUTONS");
                 break;
             //Si on veut calculer une tournee
             case Fenetre.CALCULER_TOURNEE:
                 controleur.calculerTournee();
-                System.out.println("CHARGER CARTE CALCULER TROUNEE");
                 break;
                 //Si on veut changer une carte
             case Fenetre.CHANGER_CARTE:
                 controleur.changerCarte();
-                System.out.println("CHANGER CARTE");
                 break;
         }
 

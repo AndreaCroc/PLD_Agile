@@ -59,6 +59,7 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
     private JButton boutonChangerCarte;
+    private JButton boutonSupprimerPI;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -100,6 +101,7 @@ public class Fenetre extends JFrame {
     private JPanel panneauLegende;
     private JPanel panneauTournee;
     private JPanel panneauGauche;
+    private JPanel panneauPIs;
 
     //Pour reagir aux actions de l utilisateur
     private EcouteurBoutons ecouteurBoutons;
@@ -174,7 +176,25 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
- /* PanneauTournee (milieu gauche) */
+        
+        /* PanneauPIs (haut gauche) */
+        
+        //Bouton pour supprimer un point d interet
+        boutonSupprimerPI = new JButton(CALCULER_TOURNEE);
+        boutonSupprimerPI.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonSupprimerPI.setForeground(Color.white);
+        boutonSupprimerPI.setBackground(new Color(50, 70, 120));
+        boutonSupprimerPI.addActionListener(ecouteurBoutons);
+        
+        panneauPIs = new JPanel();
+        panneauPIs.setLayout(null);
+        panneauPIs.setBackground(new Color(186, 228, 255));
+        panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauPIs.add(boutonSupprimerPI);
+        panneauGauche.add(panneauPIs);
+        
+        /* PanneauTournee (milieu gauche) */
+        
         //Titre de panneauTournee
         labelTournee = new JLabel("Tournée");
         labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
@@ -182,17 +202,17 @@ public class Fenetre extends JFrame {
 
         //Heure de debut de la tournee
         heureDeb = new JLabel(HEURE_DEBUT);
-        heureDeb.setFont(new Font("Arial", Font.BOLD, 16));
+        heureDeb.setFont(new Font("Arial", Font.BOLD, 14));
         heureDeb.setForeground(Color.white);
 
         //Heure de fin de la tournee
         heureFin = new JLabel(HEURE_FIN);
-        heureFin.setFont(new Font("Arial", Font.BOLD, 16));
+        heureFin.setFont(new Font("Arial", Font.BOLD, 14));
         heureFin.setForeground(Color.white);
 
         //Duree de la tournee
         dureeTournee = new JLabel(DUREE);
-        dureeTournee.setFont(new Font("Arial", Font.BOLD, 16));
+        dureeTournee.setFont(new Font("Arial", Font.BOLD, 14));
         dureeTournee.setForeground(Color.white);
 
         //Ajout des elements a panneauTournee et ajout de ce dernier a panneauGauche
@@ -396,12 +416,14 @@ public class Fenetre extends JFrame {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
         panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
         panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
-        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
-        panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
-        panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 13 * (int) panneauGauche.getHeight() / 24);
+        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 10);
+        panneauPIs.setBounds((int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6,(int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
+        panneauTournee.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 12);
+        panneauEtapes.setBounds(0, 1 * (int) panneauGauche.getHeight() / 2, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 2);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-        boutonChangerCarte.setBounds((int) 7 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 4);
-        repChangeCarte.setBounds((int) 7 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
+        
+        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 3);
+        repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 1 * panneauLegende.getHeight() / 6, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
@@ -414,11 +436,11 @@ public class Fenetre extends JFrame {
         labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth(), (int) panneauLegende.getHeight() / 4);
 
-        livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 6);
-        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 6);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 6);
+        livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 5);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 4);
+        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 4);
+        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 4);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
