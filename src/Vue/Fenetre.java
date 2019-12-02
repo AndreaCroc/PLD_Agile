@@ -54,12 +54,6 @@ public class Fenetre extends JFrame {
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
 
-    protected final static String ETAPE = "Etape ";
-    protected final static String TYPE = "Type : ";
-    protected final static String ADRESSE = "Adresse : ";
-    protected final static String HEURE_DEPART = "Heure de départ prévue : ";
-    protected final static String HEURE_ARRIVEE = "Heure d'arrivée prévue : ";
-
     //Boutons sur lesquels l utilisateur peut cliquer
     private JButton boutonChargerCarte;
     private JButton boutonChargerLivraisons;
@@ -287,7 +281,7 @@ public class Fenetre extends JFrame {
 
         //Bouton pour changer une carte, fichier XML
         boutonChangerCarte = new JButton(CHANGER_CARTE);
-        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 14));
         boutonChangerCarte.setForeground(Color.white);
         boutonChangerCarte.setBackground(new Color(50, 70, 120));
         boutonChangerCarte.addActionListener(ecouteurBoutons);
@@ -308,9 +302,10 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legendeCarre);
         panneauLegende.add(labelTriangle);
         panneauLegende.add(legendeTriangle);
-        panneauLegende.setBackground(new Color(186, 228, 255));
         panneauLegende.add(boutonChangerCarte);
         panneauLegende.add(repChangeCarte);
+        panneauLegende.setBackground(new Color(186, 228, 255));
+        
 
         legende = new JLabel("Légende");
         legende.setFont(new Font("Arial", Font.BOLD, 18));
@@ -453,7 +448,11 @@ public class Fenetre extends JFrame {
      * Pour afficher le bouton pour calculer une tournee
      */
     public void afficherBoutonCalcul() {
-        boutonCalculerTournee.setEnabled(true);
+        this.boutonCalculerTournee.setEnabled(true);
+    }
+    
+    public void griserBoutonCalcul(){
+        this.boutonCalculerTournee.setEnabled(false);
     }
 
     /**
@@ -467,6 +466,11 @@ public class Fenetre extends JFrame {
         vueTournee.setTournee(tournee);
         vueTournee.afficherTournee();
 
+    }
+    
+    public void cacherPanneauEtapesEtTour(){
+        this.panneauEtapes.setVisible(false);
+        this.panneauTournee.setVisible(false);
     }
 
     public void surbrillanceLigneTab(int index) {
@@ -573,6 +577,7 @@ public class Fenetre extends JFrame {
         this.panneauCarte.setVueEtapes(this.vueEtapes);
         this.panneauCarte.updateUI();
     }
+    
 
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;

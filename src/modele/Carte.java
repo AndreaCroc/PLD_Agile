@@ -656,9 +656,13 @@ public class Carte {
             }
             //System.out.println(this.getListeIntersections().toString());
         }
+
         if (estUnChangement) {
-            this.demandesLivraisons.supprimerLivraison();
+            if (this.demandesLivraisons!= null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
+                this.demandesLivraisons.supprimerLivraison();
+            }
         }
+
         return result;
     }
 

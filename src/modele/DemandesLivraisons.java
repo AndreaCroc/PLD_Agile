@@ -43,7 +43,7 @@ public class DemandesLivraisons {
     }
 
     public ArrayList<PointInteret> getListePointsInteret() {
-        return listePointsInteret;
+        return this.listePointsInteret;
     }
     
     public void ajouterPointInteret(PointInteret pI) {
