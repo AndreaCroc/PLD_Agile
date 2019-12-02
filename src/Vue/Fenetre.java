@@ -48,6 +48,7 @@ public class Fenetre extends JFrame {
     protected final static String CHARGER_CARTE = "Charger carte";
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
     protected final static String CALCULER_TOURNEE = "Calculer tournée";
+    protected final static String CHANGER_CARTE = "Changer carte";
 
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -63,6 +64,7 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerCarte;
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
+    private JButton boutonChangerCarte;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -81,6 +83,7 @@ public class Fenetre extends JFrame {
     private JLabel labelTriangle;
     private JLabel legendeTriangle;
     private JLabel titreAppli;
+    private JLabel repChangeCarte;
 
     //Pour afficher les details d une tournee
     private JScrollPane scrollEtapes;
@@ -282,6 +285,19 @@ public class Fenetre extends JFrame {
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
         legendeTriangle.setForeground(Color.white);
 
+        //Bouton pour changer une carte, fichier XML
+        boutonChangerCarte = new JButton(CHANGER_CARTE);
+        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonChangerCarte.setForeground(Color.white);
+        boutonChangerCarte.setBackground(new Color(50, 70, 120));
+        boutonChangerCarte.addActionListener(ecouteurBoutons);
+
+        //Pour afficher les messages d erreur lies au chargement du fichier
+        repChangeCarte = new JLabel("Erreur dans le chargement du fichier");
+        repChangeCarte.setFont(new Font("Arial", Font.BOLD, 14));
+        repChangeCarte.setForeground(new Color(254, 79, 65));
+        repChangeCarte.setVisible(false);
+
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
@@ -293,6 +309,8 @@ public class Fenetre extends JFrame {
         panneauLegende.add(labelTriangle);
         panneauLegende.add(legendeTriangle);
         panneauLegende.setBackground(new Color(186, 228, 255));
+        panneauLegende.add(boutonChangerCarte);
+        panneauLegende.add(repChangeCarte);
 
         legende = new JLabel("Légende");
         legende.setFont(new Font("Arial", Font.BOLD, 18));
@@ -302,7 +320,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee,this.vueEtapes);
+        panneauCarte = new JCarte(this.carte, this.tournee, this.vueEtapes);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
@@ -387,6 +405,8 @@ public class Fenetre extends JFrame {
         panneauTournee.setBounds(0, 1 * (int) panneauGauche.getHeight() / 4, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 6);
         panneauEtapes.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 13 * (int) panneauGauche.getHeight() / 24);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
+        boutonChangerCarte.setBounds((int) 7 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 4);
+        repChangeCarte.setBounds((int) 7 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
@@ -491,8 +511,8 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
-    
-    public AffichageEtapes getVueEtapes(){
+
+    public AffichageEtapes getVueEtapes() {
         return this.vueEtapes;
     }
 
@@ -574,4 +594,17 @@ public class Fenetre extends JFrame {
         return this.panneauLegende.getHeight();
     }
 
+    /**
+     * Afficher un message d erreur lors d un chargement des livraisons
+     *
+     * @param message qui est le contenu du message d erreur
+     */
+    public void afficherMessageErreur3(String message) {
+        repChangeCarte.setText(message);
+        repChangeCarte.setVisible(true);
+    }
+
+    public void retireMessageErreur3() {
+        repChangeCarte.setVisible(false);
+    }
 }
