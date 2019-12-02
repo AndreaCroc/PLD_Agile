@@ -28,7 +28,6 @@ public class Controleur {
     }
 
     /**
-     * Charge une carte
      *
      */
     public void chargerCarte() {
@@ -37,7 +36,6 @@ public class Controleur {
 
         try {
             //Choix du fichier XML
-            chargerCarte = carte.chargerCarte(false);
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
