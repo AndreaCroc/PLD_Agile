@@ -43,7 +43,6 @@ public class Fenetre extends JFrame {
     //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
-    protected final static String CHANGER_CARTE = "Changer carte";
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
     protected final static String CALCULER_TOURNEE = "Calculer tournée";
 
@@ -59,7 +58,6 @@ public class Fenetre extends JFrame {
 
     //Boutons sur lesquels l utilisateur peut cliquer
     private JButton boutonChargerCarte;
-    private JButton boutonChangerCarte;
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
 
@@ -69,7 +67,6 @@ public class Fenetre extends JFrame {
     private JLabel legende;
     private JLabel repChargeCarte;
     private JLabel repChargeLiv;
-    private JLabel repChangeCarte;
     private JLabel heureDeb;
     private JLabel heureFin;
     private JLabel dureeTournee;
@@ -279,19 +276,6 @@ public class Fenetre extends JFrame {
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
         legendeTriangle.setForeground(Color.white);
 
-        //Bouton pour changer une carte, fichier XML
-        boutonChangerCarte = new JButton(CHANGER_CARTE);
-        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 16));
-        boutonChangerCarte.setForeground(Color.white);
-        boutonChangerCarte.setBackground(new Color(50, 70, 120));
-        boutonChangerCarte.addActionListener(ecouteurBoutons);
-        
-        //Pour afficher les messages d erreur lies au chargement du fichier
-        repChangeCarte = new JLabel("Erreur dans le chargement du fichier");
-        repChangeCarte.setFont(new Font("Arial", Font.BOLD, 14));
-        repChangeCarte.setForeground(new Color(254, 79, 65));
-        repChangeCarte.setVisible(false);
-
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
@@ -302,8 +286,6 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legendeCarre);
         panneauLegende.add(labelTriangle);
         panneauLegende.add(legendeTriangle);
-        panneauLegende.add(boutonChangerCarte);
-        panneauLegende.add(repChangeCarte);
         panneauLegende.setBackground(new Color(186, 228, 255));
 
         legende = new JLabel("Légende");
@@ -407,8 +389,6 @@ public class Fenetre extends JFrame {
         legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
         labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
-        boutonChangerCarte.setBounds((int) 7* panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 4);
-        repChangeCarte.setBounds((int) 7* panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
 
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 10);
