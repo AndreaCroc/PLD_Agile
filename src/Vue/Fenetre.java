@@ -461,20 +461,6 @@ public class Fenetre extends JFrame {
         repChargeLiv.setText(message);
         repChargeLiv.setVisible(true);
     }
-    
-    /**
-     * Afficher un message d erreur lors d un chargement des livraisons
-     *
-     * @param message qui est le contenu du message d erreur
-     */
-    public void afficherMessageErreur3(String message) {
-        repChangeCarte.setText(message);
-        repChangeCarte.setVisible(true);
-    }
-    
-    public void retireMessageErreur3() {
-        repChangeCarte.setVisible(false);
-    }
 
     public JCarte getPanneauCarte() {
         return this.panneauCarte;
