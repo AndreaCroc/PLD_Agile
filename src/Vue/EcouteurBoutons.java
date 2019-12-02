@@ -41,6 +41,10 @@ public class EcouteurBoutons implements ActionListener {
                 //Si on veut changer une carte
             case Fenetre.CHANGER_CARTE:
                 controleur.changerCarte();
+            case Fenetre.MODIFIER:
+                System.out.println("bouton modifier");
+            case Fenetre.SUPPRIMER:
+                System.out.println("bouton supprimer");
                 break;
         }
 

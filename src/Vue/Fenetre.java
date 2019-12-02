@@ -42,13 +42,13 @@ public class Fenetre extends JFrame {
     private JCarte panneauCarte;
     private AffichageEtapes vueEtapes;
     private AffichagePIs vuePIs;
-    
+
     //Tableau contenant le details des etapes de la tournee
     private JTable tableauEtapes;
 
     //Tabeau contenant une vue generale des points d'interets de la tournee
     private JTable tableauPIs;
-    
+
     //Savoir si un element est deja mis en surbrillance
     private boolean surbrillance;
 
@@ -58,7 +58,9 @@ public class Fenetre extends JFrame {
     protected final static String CHARGER_LIVRAISONS = "Charger livraisons";
     protected final static String CALCULER_TOURNEE = "Calculer tournée";
     protected final static String CHANGER_CARTE = "Changer carte";
-
+    protected final static String MODIFIER = "Modifier";
+    protected final static String SUPPRIMER = "Supprimer";
+    
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
@@ -186,23 +188,21 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
-        
-        /* PanneauPIs (haut gauche) */
-        
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1),this.carte,this);
+ /* PanneauPIs (haut gauche) */
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1), this.carte, this);
         tableauPIs = new JTable(vuePIs);
         tableauPIs.setRowHeight(40);
         tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(50);
         tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(200);
-        
-        for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
+
+        this.tableauPIs.setDefaultRenderer(JButton.class, new BoutonCellRenderer());
+        for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount() - 2; i++) {
             tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
-            tableauPIs.getColumnModel().getColumn(i).setCellRenderer(new BoutonCellRenderer());
         }
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
@@ -220,7 +220,6 @@ public class Fenetre extends JFrame {
         labelTournee = new JLabel(HEURE_DEBUT);
         labelTournee.setFont(new Font("Arial", Font.BOLD, 14));
         labelTournee.setForeground(Color.white);
-
 
         //Ajout des elements a panneauTournee et ajout de ce dernier a panneauGauche
         panneauTournee = new JPanel();
@@ -448,12 +447,12 @@ public class Fenetre extends JFrame {
 
         labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
         labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
-        
+
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-        
-        scrollPIs.setBounds(0,0,(int)panneauPIs.getWidth(),(int)panneauPIs.getHeight());
+
+        scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
     }
 
     /**
@@ -498,11 +497,10 @@ public class Fenetre extends JFrame {
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
-    
-    public void afficherPanneauPI(){
+
+    public void afficherPanneauPI() {
         vuePIs.afficherPIs();
     }
-
 
     public void surbrillanceLigneTab(int index) {
         System.out.println("surbrillance ligne tab");
@@ -552,6 +550,10 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
+    
+    public EcouteurBoutons getEcouteurBoutons(){
+        return this.ecouteurBoutons;
+    }
 
     public AffichageEtapes getVueEtapes() {
         return this.vueEtapes;
@@ -565,7 +567,7 @@ public class Fenetre extends JFrame {
      * @param duree duree de la tournee
      */
     public void setPanneauTournee(String heureDeb, String heureFin, String duree) {
-        this.labelTournee.setText("   " +HEURE_DEBUT + heureDeb + "      "+ HEURE_FIN + heureFin + "      "+DUREE + duree);
+        this.labelTournee.setText("   " + HEURE_DEBUT + heureDeb + "      " + HEURE_FIN + heureFin + "      " + DUREE + duree);
     }
 
     /**
@@ -582,10 +584,11 @@ public class Fenetre extends JFrame {
         LigneEtapes step = new LigneEtapes(numEtape, type, adresse, heureDep, heureArr, duree + " min");
         this.vueEtapes.addStep(step);
     }
-    
+
     public void setPanneauPIs(int numEtape, String type, String adresse) {
         LignePI pi = new LignePI(numEtape, type, adresse);
         this.vuePIs.addPI(pi);
+        this.vuePIs.setBouton(pi);
     }
 
     /**
@@ -618,6 +621,10 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
     }
 
+    public void viderPanneauPIs() {
+        this.vuePIs.clearPIs();
+    }
+
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
         this.panneauCarte.updateUI();
@@ -629,7 +636,7 @@ public class Fenetre extends JFrame {
     }
 
     public void entourerPI(int ligne) {
-        if(this.surbrillance){
+        if (this.surbrillance) {
             this.vueEtapes.getFormatcell().setIndex(-1);
             this.surbrillance = false;
         }

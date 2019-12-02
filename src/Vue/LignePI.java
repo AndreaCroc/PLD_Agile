@@ -40,6 +40,14 @@ public class LignePI {
     public String getRue() {
         return rue;
     }
+    
+    public JButton getBoutonModifier() {
+        return boutonModifier;
+    }
+
+    public JButton getBoutonSupp() {
+        return boutonSupp;
+    }
 
     public void setNumero(int numero) {
         this.numero = numero;
@@ -51,6 +59,14 @@ public class LignePI {
 
     public void setRue(String rue) {
         this.rue = rue;
+    }
+    
+    public void setBoutonModifier(JButton modifier) {
+        this.boutonModifier = modifier;
+    }
+
+    public void setBoutonSupp(JButton supp) {
+        this.boutonSupp = supp;
     }
     
     

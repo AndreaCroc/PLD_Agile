@@ -6,6 +6,7 @@
 package Vue;
 
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.table.AbstractTableModel;
 import modele.Carte;
 import modele.Chemin;
@@ -54,7 +55,10 @@ public class AffichagePIs extends AbstractTableModel {
                 return this.lignePIs.get(rowIndex).getType();
             case 2:
                 return this.lignePIs.get(rowIndex).getRue();
-
+            case 3:
+                return this.lignePIs.get(rowIndex).getBoutonModifier();
+            case 4:
+                return this.lignePIs.get(rowIndex).getBoutonSupp();
             default:
                 return null;
         }
@@ -63,6 +67,18 @@ public class AffichagePIs extends AbstractTableModel {
     @Override
     public String getColumnName(int columnIndex) {
         return header[columnIndex];
+    }
+
+    @Override
+    public Class getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 3:
+                return JButton.class;
+            case 4:
+                return JButton.class;
+            default:
+                return Object.class;
+        }
     }
 
     public int getLigneSelect() {
@@ -97,8 +113,11 @@ public class AffichagePIs extends AbstractTableModel {
         this.lignePIs.clear();
     }
 
-    public void setCarte(Carte carte) {
-        this.carte = carte;
+    public void setBouton(LignePI pi) {
+        int i = this.lignePIs.indexOf(pi);
+        this.lignePIs.get(i).getBoutonModifier().addActionListener(this.fenetre.getEcouteurBoutons());
+        this.lignePIs.get(i).getBoutonSupp().addActionListener(this.fenetre.getEcouteurBoutons());
+
     }
 
     public void afficherPIs() {
@@ -110,7 +129,7 @@ public class AffichagePIs extends AbstractTableModel {
         int index = 0;
 
         for (PointInteret pt : listePIs) {
-            
+
             //Recuperer le numero du point d interet
             index = listePIs.indexOf(pt);
 
@@ -121,7 +140,10 @@ public class AffichagePIs extends AbstractTableModel {
             } else {
                 type = "Livraison";
             }
-            this.fenetre.setPanneauPIs(index, type, nomRue);
+            if (index != 0) {
+                this.fenetre.setPanneauPIs(index, type, nomRue);
+            }
+
         }
     }
 
