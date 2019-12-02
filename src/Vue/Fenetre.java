@@ -59,7 +59,6 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
     private JButton boutonChangerCarte;
-    private JButton boutonSupprimerPI;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -151,7 +150,7 @@ public class Fenetre extends JFrame {
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
-        repChargeLiv.setFont(new Font("Arial", Font.BOLD, 14));
+        repChargeLiv.setFont(new Font("Arial", Font.BOLD, 13));
         repChargeLiv.setForeground(new Color(254, 79, 65));
         repChargeLiv.setVisible(false);
 
@@ -179,18 +178,10 @@ public class Fenetre extends JFrame {
         
         /* PanneauPIs (haut gauche) */
         
-        //Bouton pour supprimer un point d interet
-        boutonSupprimerPI = new JButton(CALCULER_TOURNEE);
-        boutonSupprimerPI.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonSupprimerPI.setForeground(Color.white);
-        boutonSupprimerPI.setBackground(new Color(50, 70, 120));
-        boutonSupprimerPI.addActionListener(ecouteurBoutons);
-        
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
-        panneauPIs.add(boutonSupprimerPI);
         panneauGauche.add(panneauPIs);
         
         /* PanneauTournee (milieu gauche) */
@@ -437,10 +428,10 @@ public class Fenetre extends JFrame {
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth(), (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 5);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 4);
-        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 4);
-        boutonCalculerTournee.setBounds(1 * ((int) panneauLivraisons.getWidth() / 3), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 4);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 35 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 3);
+        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
+        boutonCalculerTournee.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
 
         labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
         heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
