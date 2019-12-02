@@ -43,6 +43,8 @@ public class Fenetre extends JFrame {
     private AffichageEtapes vueEtapes;
     private JTable tableauEtapes;
 
+    private boolean surbrillance;
+
     //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
     protected final static String CHARGER_CARTE = "Charger carte";
@@ -123,6 +125,8 @@ public class Fenetre extends JFrame {
         this.carte = carte;
         this.tournee = tournee;
 
+        this.surbrillance = false;
+
         this.vueTournee = new AffichageTournee(tournee, this);
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
@@ -175,17 +179,14 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
-        
-        /* PanneauPIs (haut gauche) */
-        
+ /* PanneauPIs (haut gauche) */
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
         panneauGauche.add(panneauPIs);
-        
+
         /* PanneauTournee (milieu gauche) */
-        
         //Titre de panneauTournee
         labelTournee = new JLabel("Tournée");
         labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
@@ -316,7 +317,6 @@ public class Fenetre extends JFrame {
         panneauLegende.add(boutonChangerCarte);
         panneauLegende.add(repChangeCarte);
         panneauLegende.setBackground(new Color(186, 228, 255));
-        
 
         legende = new JLabel("Légende");
         legende.setFont(new Font("Arial", Font.BOLD, 18));
@@ -408,11 +408,11 @@ public class Fenetre extends JFrame {
         panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
         panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
         panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 10);
-        panneauPIs.setBounds((int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6,(int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
+        panneauPIs.setBounds((int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
         panneauTournee.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 12);
         panneauEtapes.setBounds(0, 1 * (int) panneauGauche.getHeight() / 2, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 2);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-        
+
         boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 3);
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 1 * panneauLegende.getHeight() / 6, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
 
@@ -463,8 +463,11 @@ public class Fenetre extends JFrame {
     public void afficherBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(true);
     }
-    
-    public void griserBoutonCalcul(){
+
+    /**
+     * Pour rendre non cliquable le bouton pour calculer une tournee
+     */
+    public void griserBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(false);
     }
 
@@ -480,8 +483,8 @@ public class Fenetre extends JFrame {
         vueTournee.afficherTournee();
 
     }
-    
-    public void cacherPanneauEtapesEtTour(){
+
+    public void cacherPanneauEtapesEtTour() {
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
@@ -489,6 +492,12 @@ public class Fenetre extends JFrame {
     public void surbrillanceLigneTab(int index) {
         System.out.println("surbrillance ligne tab");
         System.out.println("index : " + index);
+        if (this.surbrillance) {
+            this.vueEtapes.setLigneSelect(-1);
+            this.panneauCarte.setFenetre(this);
+            this.panneauCarte.updateUI();
+            this.surbrillance = false;
+        }
         if (tableauEtapes.getRowCount() != 0) {
             System.out.println("if");
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
@@ -590,7 +599,6 @@ public class Fenetre extends JFrame {
         this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
-    
 
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
@@ -598,7 +606,15 @@ public class Fenetre extends JFrame {
 
     }
 
+    public void setSurbrillance(boolean surb) {
+        this.surbrillance = surb;
+    }
+
     public void entourerPI(int ligne) {
+        if(this.surbrillance){
+            this.vueEtapes.getFormatcell().setIndex(-1);
+            this.surbrillance = false;
+        }
         this.vueEtapes.setLigneSelect(ligne);
         this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();

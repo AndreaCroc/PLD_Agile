@@ -24,14 +24,16 @@ public class EcouteurListSelection implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-        
-        if (!lsm.isSelectionEmpty()&&!e.getValueIsAdjusting()) {
+        ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+
+        if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
             int minIndex = lsm.getMinSelectionIndex();
             int maxIndex = lsm.getMaxSelectionIndex();
             for (int i = minIndex; i <= maxIndex; i++) {
+                //Trouver la ligne qui a ete selectionnee
                 if (lsm.isSelectedIndex(i)) {
-                    controleur.surbrillancePI(i);
+                    this.controleur.setFenetreSurbrillance(true);
+                    this.controleur.surbrillancePI(i);
                 }
             }
         }

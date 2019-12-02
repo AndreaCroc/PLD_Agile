@@ -157,6 +157,10 @@ public class Controleur {
     public Tournee getTournee(){
         return this.tournee;
     }
+    
+    public void setFenetreSurbrillance(boolean surb){
+        this.fenetre.setSurbrillance(surb);
+    }
             
             
             

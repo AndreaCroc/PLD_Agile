@@ -51,6 +51,7 @@ public class EcouteurSouris extends MouseAdapter {
 
                 if (x >= nvXpt-5 && x <= nvXpt + 5 && y >= nvYpt-5 && y <= nvYpt + 5) {
                     System.out.println("nvxpt : "+nvXpt + " nvYpt : "+nvYpt);
+                    this.controleur.setFenetreSurbrillance(true);
                     System.out.println("Point Interet clique");
                     this.controleur.surbrillanceTableau(index);
                     break;
