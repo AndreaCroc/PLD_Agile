@@ -50,6 +50,5 @@ public class DemandesLivraisons {
         this.listePointsInteret.add(pI);
     }
 
- 
     
 }

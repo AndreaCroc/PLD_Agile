@@ -28,7 +28,6 @@ public class Controleur {
     }
 
     /**
-     * Charge une nouvelle carte
      *
      */
     public void chargerCarte() {
@@ -37,12 +36,11 @@ public class Controleur {
 
         try {
             //Choix du fichier XML
-            chargerCarte = carte.chargerCarte();
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre.getVueEtapes()));
+                fenetre.setPanneauCarte(new JCarte(carte,tournee));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -55,6 +53,35 @@ public class Controleur {
             fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
 
+    }
+    
+    /**
+     * Charge une nouvelle carte
+     */
+    public void changerCarte() {
+        
+        boolean changerCarte = false;
+
+        try {
+            //Choix du fichier XML
+            changerCarte = carte.chargerCarte(true);
+
+            //Si le chargement de la carte s est bien passe,
+            // on change de fenetre et un affiche la carte
+            if (changerCarte) {
+                fenetre.setPanneauCarte(new JCarte(carte,tournee));
+                fenetre.repaint();
+                fenetre.afficherConteneur2();
+                fenetre.retireMessageErreur3();
+            } else {
+                //Sinon, on affiche un message d erreur
+                fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+            }
+
+        } catch (Exception e) {
+            //En cas d erreur lie a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+        }
     }
 
     /**
@@ -72,10 +99,9 @@ public class Controleur {
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
-                fenetre.viderPanneauEtapes();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre.getVueEtapes()));
+                fenetre.setPanneauCarte(new JCarte(carte,null));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -97,10 +123,9 @@ public class Controleur {
     */
     public void calculerTournee() {
 
-        fenetre.viderPanneauEtapes();
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre.getVueEtapes()));
+        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
         fenetre.setTournee(this.tournee);
         fenetre.repaint();
         fenetre.afficherEtapesTour();
@@ -109,14 +134,6 @@ public class Controleur {
         
     }
     
-    public void surbrillanceTableau(int index){
-        fenetre.surbrillanceLigneTab(index);
-        fenetre.repaint();
-    }
-    public void surbrillancePI(int ligne){
-        fenetre.entourerPI(ligne);
-        fenetre.repaint();
-    }
     public Tournee getTournee(){
         return this.tournee;
     }
