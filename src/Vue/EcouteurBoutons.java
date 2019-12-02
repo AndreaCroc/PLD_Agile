@@ -41,11 +41,6 @@ public class EcouteurBoutons implements ActionListener {
                 controleur.calculerTournee();
                 System.out.println("CHARGER CARTE CALCULER TROUNEE");
                 break;
-            //Si on veut changer une carte
-            case Fenetre.CHANGER_CARTE:
-                controleur.changerCarte();
-                System.out.println("CHANGER CARTE");
-                break;
         }
 
     }
