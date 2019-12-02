@@ -28,14 +28,14 @@ public class JCarte extends JPanel {
     private Carte carte;
     private Tournee tournee;
     private ArrayList<Point> coorPtInterets;
-    private AffichageEtapes vueEtapes;
+    private Fenetre fenetre;
 
-    public JCarte(Carte carte, Tournee tournee, AffichageEtapes vueEtapes) {
+    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         System.out.println("constructeur 1");
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
-        this.vueEtapes = vueEtapes;
+        this.fenetre = fenetre;
         this.repaint();
     }
 
@@ -44,8 +44,8 @@ public class JCarte extends JPanel {
         this.repaint();
     }
 
-    public void setVueEtapes(AffichageEtapes nvVue) {
-        this.vueEtapes = nvVue;
+    public void setFenetre(Fenetre fenetre) {
+        this.fenetre = fenetre;
         this.repaint();
     }
 
@@ -349,8 +349,8 @@ public class JCarte extends JPanel {
                 }
             }
         }
-        if (this.vueEtapes != null) {
-            int ligneTab = this.vueEtapes.getLigneSelect();
+        if (this.fenetre != null) {
+            int ligneTab = this.fenetre.getVueEtapes().getLigneSelect();
             System.out.println("ligneTab2 : " + ligneTab);
             if (ligneTab != -1) {
                 int xPI = 5;

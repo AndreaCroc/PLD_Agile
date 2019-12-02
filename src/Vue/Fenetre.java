@@ -315,7 +315,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee, this.vueEtapes);
+        panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
@@ -574,7 +574,7 @@ public class Fenetre extends JFrame {
         this.vueEtapes.clearSteps();
         this.vueEtapes.getFormatcell().setIndex(-1);
         this.vueEtapes.setLigneSelect(-1);
-        this.panneauCarte.setVueEtapes(this.vueEtapes);
+        this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
     
@@ -587,7 +587,7 @@ public class Fenetre extends JFrame {
 
     public void entourerPI(int ligne) {
         this.vueEtapes.setLigneSelect(ligne);
-        this.panneauCarte.setVueEtapes(this.vueEtapes);
+        this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
 

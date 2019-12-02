@@ -42,7 +42,7 @@ public class Controleur {
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre.getVueEtapes()));
+                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -74,7 +74,7 @@ public class Controleur {
                 fenetre.viderPanneauEtapes();
                 this.fenetre.cacherPanneauEtapesEtTour();
                 this.fenetre.griserBoutonCalcul();
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre.getVueEtapes()));
+                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
@@ -109,7 +109,7 @@ public class Controleur {
                 this.fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre.getVueEtapes()));
+                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -134,7 +134,7 @@ public class Controleur {
         fenetre.viderPanneauEtapes();
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre.getVueEtapes()));
+        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre));
         fenetre.setTournee(this.tournee);
         fenetre.repaint();
         fenetre.afficherEtapesTour();
