@@ -7,7 +7,9 @@ package Vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
@@ -266,6 +268,14 @@ public class JCarte extends JPanel {
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
                 g.drawLine(this.getProportionalX(i, intersections) + 1, this.getProportionalY(i, intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
+                //ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
+                /*
+                if(t.getNomRue().contains("Avenue")||t.getNomRue().contains("Cours")){
+                    Graphics2D g2 = (Graphics2D)g; //cast for java2
+                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+                    g2.setColor(new Color(0,0,0));
+                    g2.drawString(t.getNomRue(), this.getProportionalX(t.getDestination(), intersections),this.getProportionalY(t.getDestination(), intersections));// S, left, BOTTOM
+                }*/
             }
         }
         if (carte.getDemandesLivraisons() != null) {
