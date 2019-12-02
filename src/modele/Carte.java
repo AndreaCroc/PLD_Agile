@@ -51,7 +51,8 @@ public class Carte {
     public void setListeIntersections(ArrayList<Intersection> listeIntersections) {
         this.listeIntersections = listeIntersections;
     }
-
+    
+    
     public DemandesLivraisons getDemandesLivraisons() {
         return demandesLivraisons;
     }
@@ -250,24 +251,28 @@ public class Carte {
                         //Recuperation du cout en secondes
                         cout[i][j] = plusCourtChemin.getLongueur();
                         chemins[i][j] = plusCourtChemin;
-
+                        
                     }
                 } else if (i == j) {
-
-                    if (!listePointsInteret.get(i).isEnlevement() && i != 0) {
-                        double numPredecesseurs = 0.0;
+                    
+                    if (!listePointsInteret.get(i).isEnlevement() && i!=0)
+                    {
+                        double numPredecesseurs =0.0;
                         String idJ = listePointsInteret.get(i).getPointDependance().getIntersection().getId();
-                        for (int k = 0; k < nbSommets; k++) {
-                            String IdK = listePointsInteret.get(k).getIntersection().getId();
-                            if (idJ == IdK) {
+                        for (int k = 0; k < nbSommets; k++)
+                        {
+                            String IdK= listePointsInteret.get(k).getIntersection().getId();
+                            if (idJ==IdK)
+                            {
                                 numPredecesseurs = (double) k;
                             }
                         }
-
+                        
                         cout[i][j] = numPredecesseurs;
-                    } else {
-                        cout[i][j] = 0.0;
                     }
+                    else{
+                        cout[i][j] = 0.0;
+                            }
                     chemins[i][j] = null;
                 }
 
@@ -392,6 +397,7 @@ public class Carte {
         return heureInt;
     }
 
+    
     /* Méthode permettant de convertir une heure donnée (en nombre de secondes,
      * donc int) en string (hh:mm:ss)
      * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
@@ -406,14 +412,14 @@ public class Carte {
         int nbHeures = heureInt / 3600;
         int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
         int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
-        if (nbHeures >= 24) {
-            nbHeures = nbHeures - 24;
+        if (nbHeures>=24) {
+            nbHeures = nbHeures-24;
         }
         String nbH = Integer.toString(nbHeures);
         if (nbHeures < 10) {
             nbH = "0" + nbH;
         }
-
+        
         String nbM = Integer.toString(nbMinutes);
         if (nbMinutes < 10) {
             nbM = "0" + nbM;
@@ -592,7 +598,7 @@ public class Carte {
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
             pI.setEntrepot(true);
-
+            
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
             if (listeLivraisons.getLength() > 0) {
                 for (int i = 0; i < listeLivraisons.getLength(); i++) {
@@ -617,16 +623,16 @@ public class Carte {
                     if (pe != null && pl != null) {
                         pe.setPointDependance(pl);
                         pl.setPointDependance(pe);
-
-                        pe.setNumeroDemande(i + 1);
-                        pl.setNumeroDemande(i + 1);
+                        
+                        pe.setNumeroDemande(i+1);
+                        pl.setNumeroDemande(i+1);
 
                         this.demandesLivraisons.ajouterPointInteret(pe);
                         this.demandesLivraisons.ajouterPointInteret(pl);
                     } else {
                         ok = false; // s'il y a un point non-trouvé dans la liste
                     }
-
+                    
                 }
             } else {
                 ok = false;
@@ -640,6 +646,7 @@ public class Carte {
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
+    public boolean chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
         File xml = choisirFichierXML(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -647,7 +654,11 @@ public class Carte {
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("reseau")) {
+             if(construireCarteAPartirDeDOMXML(racine)){
+                 result = true;
+             }
             //System.out.println(this.getListeIntersections().toString());
+        } 
         return result;
     }
 
@@ -659,10 +670,10 @@ public class Carte {
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("demandeDeLivraisons")) {
-            if (construireLivraisonAPartirDeDOMXML(racine)) {
+            if(construireLivraisonAPartirDeDOMXML(racine)){
                 result = true;
             }
-        }
+        } 
         return result;
     }
 
