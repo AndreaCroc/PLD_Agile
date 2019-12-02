@@ -41,8 +41,15 @@ public class Fenetre extends JFrame {
     private AffichageTournee vueTournee;
     private JCarte panneauCarte;
     private AffichageEtapes vueEtapes;
+    private AffichagePIs vuePIs;
+    
+    //Tableau contenant le details des etapes de la tournee
     private JTable tableauEtapes;
 
+    //Tabeau contenant une vue generale des points d'interets de la tournee
+    private JTable tableauPIs;
+    
+    //Savoir si un element est deja mis en surbrillance
     private boolean surbrillance;
 
     //Constantes utilisee pour l affichage
@@ -64,13 +71,11 @@ public class Fenetre extends JFrame {
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
-    private JLabel labelTournee;
+    private JLabel labelTitreTournee;
     private JLabel legende;
     private JLabel repChargeCarte;
     private JLabel repChargeLiv;
-    private JLabel heureDeb;
-    private JLabel heureFin;
-    private JLabel dureeTournee;
+    private JLabel labelTournee;
     private JLabel etapesTitre;
     private JLabel labelRond;
     private JLabel legendeRond;
@@ -83,6 +88,8 @@ public class Fenetre extends JFrame {
 
     //Pour afficher les details d une tournee
     private JScrollPane scrollEtapes;
+    //Pour afficher les points d interets d une tournee
+    private JScrollPane scrollPIs;
 
     //Pour ecrire en dur le fichier XML souhaite
     private JTextField inputChargeCarte;
@@ -179,43 +186,48 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
- /* PanneauPIs (haut gauche) */
+        
+        /* PanneauPIs (haut gauche) */
+        
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1));
+        tableauPIs = new JTable(vuePIs);
+        tableauPIs.setRowHeight(40);
+        tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(200);
+        
+        for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
+            tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
+        }
+        tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauPIs.add(scrollPIs);
         panneauGauche.add(panneauPIs);
 
         /* PanneauTournee (milieu gauche) */
         //Titre de panneauTournee
-        labelTournee = new JLabel("Tournée");
-        labelTournee.setFont(new Font("Arial", Font.BOLD, 18));
-        labelTournee.setForeground(Color.white);
+        labelTitreTournee = new JLabel("Tournée");
+        labelTitreTournee.setFont(new Font("Arial", Font.BOLD, 18));
+        labelTitreTournee.setForeground(Color.white);
 
         //Heure de debut de la tournee
-        heureDeb = new JLabel(HEURE_DEBUT);
-        heureDeb.setFont(new Font("Arial", Font.BOLD, 14));
-        heureDeb.setForeground(Color.white);
+        labelTournee = new JLabel(HEURE_DEBUT);
+        labelTournee.setFont(new Font("Arial", Font.BOLD, 14));
+        labelTournee.setForeground(Color.white);
 
-        //Heure de fin de la tournee
-        heureFin = new JLabel(HEURE_FIN);
-        heureFin.setFont(new Font("Arial", Font.BOLD, 14));
-        heureFin.setForeground(Color.white);
-
-        //Duree de la tournee
-        dureeTournee = new JLabel(DUREE);
-        dureeTournee.setFont(new Font("Arial", Font.BOLD, 14));
-        dureeTournee.setForeground(Color.white);
 
         //Ajout des elements a panneauTournee et ajout de ce dernier a panneauGauche
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(new Color(186, 228, 255));
-        panneauTournee.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauTournee.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(50, 70, 120)));
+        panneauTournee.add(labelTitreTournee);
         panneauTournee.add(labelTournee);
-        panneauTournee.add(heureDeb);
-        panneauTournee.add(heureFin);
-        panneauTournee.add(dureeTournee);
         panneauTournee.setVisible(false);
         panneauGauche.add(panneauTournee);
 
@@ -407,10 +419,10 @@ public class Fenetre extends JFrame {
         panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
         panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
         panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
-        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 10);
-        panneauPIs.setBounds((int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 4);
-        panneauTournee.setBounds(0, 10 * (int) panneauGauche.getHeight() / 24, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 12);
-        panneauEtapes.setBounds(0, 1 * (int) panneauGauche.getHeight() / 2, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 2);
+        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6);
+        panneauPIs.setBounds(0, 1 * (int) panneauGauche.getHeight() / 6, (int) panneauGauche.getWidth(), 30 * (int) panneauGauche.getHeight() / 100);
+        panneauTournee.setBounds(0, 47 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 20);
+        panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
         boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 3);
@@ -433,15 +445,14 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
 
-        labelTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
-        heureDeb.setBounds(0, 1 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
-        heureFin.setBounds(0, 2 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
-        dureeTournee.setBounds(0, 3 * (int) panneauTournee.getHeight() / 5, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 5);
-
+        labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
+        labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
+        
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-
+        
+        scrollPIs.setBounds(0,0,(int)panneauPIs.getWidth(),(int)panneauPIs.getHeight());
     }
 
     /**
@@ -550,9 +561,7 @@ public class Fenetre extends JFrame {
      * @param duree duree de la tournee
      */
     public void setPanneauTournee(String heureDeb, String heureFin, String duree) {
-        this.heureDeb.setText(HEURE_DEBUT + heureDeb);
-        this.heureFin.setText(HEURE_FIN + heureFin);
-        this.dureeTournee.setText(DUREE + duree);
+        this.labelTournee.setText("   " +HEURE_DEBUT + heureDeb + "      "+ HEURE_FIN + heureFin + "      "+DUREE + duree);
     }
 
     /**
