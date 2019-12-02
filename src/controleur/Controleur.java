@@ -4,6 +4,7 @@ import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
 import modele.Tournee;
+import modele.DemandesLivraisons;
 
 /*
  * Controleur
@@ -104,7 +105,7 @@ public class Controleur {
         try {
             //Choix du fichier XML
             chargerLivraison = carte.chargerLivraison();
-
+            
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
@@ -116,6 +117,7 @@ public class Controleur {
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
+                fenetre.afficherPanneauPI();
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");

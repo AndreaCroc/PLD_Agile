@@ -189,7 +189,7 @@ public class Fenetre extends JFrame {
         
         /* PanneauPIs (haut gauche) */
         
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1));
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1),this.carte,this);
         tableauPIs = new JTable(vuePIs);
         tableauPIs.setRowHeight(40);
         tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -197,6 +197,7 @@ public class Fenetre extends JFrame {
         
         for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
             tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
+            tableauPIs.getColumnModel().getColumn(i).setCellRenderer(new BoutonCellRenderer());
         }
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -486,8 +487,6 @@ public class Fenetre extends JFrame {
      * Pour afficher les details d une tournee
      */
     public void afficherEtapesTour() {
-
-        //scrollEtapes.setVisible(true);
         panneauEtapes.setVisible(true);
         panneauTournee.setVisible(true);
         vueTournee.setTournee(tournee);
@@ -499,6 +498,11 @@ public class Fenetre extends JFrame {
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
+    
+    public void afficherPanneauPI(){
+        vuePIs.afficherPIs();
+    }
+
 
     public void surbrillanceLigneTab(int index) {
         System.out.println("surbrillance ligne tab");
@@ -577,6 +581,11 @@ public class Fenetre extends JFrame {
     public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, String duree) {
         LigneEtapes step = new LigneEtapes(numEtape, type, adresse, heureDep, heureArr, duree + " min");
         this.vueEtapes.addStep(step);
+    }
+    
+    public void setPanneauPIs(int numEtape, String type, String adresse) {
+        LignePI pi = new LignePI(numEtape, type, adresse);
+        this.vuePIs.addPI(pi);
     }
 
     /**
