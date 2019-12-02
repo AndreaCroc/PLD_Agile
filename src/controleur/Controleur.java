@@ -74,10 +74,13 @@ public class Controleur {
                 fenetre.viderPanneauEtapes();
                 this.fenetre.cacherPanneauEtapesEtTour();
                 this.fenetre.griserBoutonCalcul();
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre));
+                fenetre.setTournee(null);
+                carte.setUneTournee(null);
+                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
+                
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur3("1 Erreur lors du chargement du fichier");
