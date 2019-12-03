@@ -7,10 +7,11 @@ package Vue;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 import javax.swing.table.AbstractTableModel;
 import modele.Carte;
-import modele.Chemin;
 import modele.DemandesLivraisons;
+import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
 
@@ -29,7 +30,7 @@ public class AffichagePIs extends AbstractTableModel {
 
     public AffichagePIs(FormatCellRenderer formatcell, Carte carte, Fenetre fenetre) {
         this.lignePIs = new ArrayList<>();
-        this.header = new String[]{"Numéro", "Type", "Rue", "Modifier", "Supprimer"};
+        this.header = new String[]{"Numéro", "Type", "Rue(s)", "Modifier", "Supprimer"};
         this.ligneSelect = -1;
         this.formatcell = formatcell;
         this.carte = carte;
@@ -72,6 +73,8 @@ public class AffichagePIs extends AbstractTableModel {
     @Override
     public Class getColumnClass(int columnIndex) {
         switch (columnIndex) {
+            case 2:
+                return JTextArea.class;
             case 3:
                 return JButton.class;
             case 4:
@@ -113,27 +116,31 @@ public class AffichagePIs extends AbstractTableModel {
         this.lignePIs.clear();
     }
 
-    public void setBouton(LignePI pi) {
-        int i = this.lignePIs.indexOf(pi);
-        this.lignePIs.get(i).getBoutonModifier().addActionListener(this.fenetre.getEcouteurBoutons());
-        this.lignePIs.get(i).getBoutonSupp().addActionListener(this.fenetre.getEcouteurBoutons());
-
-    }
-
     public void afficherPIs() {
-        //ArrayList<PointInteret>listePIs = this.carte.getDemandesLivraisons().getListePointsInteret();
         DemandesLivraisons liste = this.carte.getDemandesLivraisons();
         ArrayList<PointInteret> listePIs = liste.getListePointsInteret();
         System.out.println("demandesLivraisons : " + listePIs.get(1).getDuree());
         String nomRue = "";
         int index = 0;
+        Intersection intersection;
+        ArrayList<Troncon> listeT;
 
         for (PointInteret pt : listePIs) {
+            nomRue = "";
 
+            intersection = pt.getIntersection();
+            listeT = intersection.getTronconsDepart();
+
+            //Recuperer les noms des rues qui intersectent le point d interet
+            for (Troncon t : listeT) {
+                if (!nomRue.contains(t.getNomRue())) {
+                    nomRue +=t.getNomRue()+", ";
+                }
+            }
+            nomRue = nomRue.substring(0,nomRue.lastIndexOf(", "));
             //Recuperer le numero du point d interet
             index = listePIs.indexOf(pt);
 
-            //Recuperer le point d'interet correspondant a l'entrepot
             String type = "";
             if (pt.isEnlevement()) {
                 type = "Enlèvement";

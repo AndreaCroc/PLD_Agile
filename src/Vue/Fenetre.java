@@ -19,6 +19,8 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -116,6 +118,8 @@ public class Fenetre extends JFrame {
     //Pour reagir aux actions de l utilisateur
     private EcouteurBoutons ecouteurBoutons;
     private EcouteurSouris ecouteurSouris;
+    private EcouteurBoutonsTable ecouteurBoutonsTable;
+    private EcouteurListSelection ecouteurListSelect;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -139,6 +143,10 @@ public class Fenetre extends JFrame {
         this.vueTournee = new AffichageTournee(tournee, this);
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
+        
+        this.ecouteurBoutonsTable = new EcouteurBoutonsTable();
+        
+        this.ecouteurListSelect = new EcouteurListSelection(this.controleur);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
@@ -192,13 +200,20 @@ public class Fenetre extends JFrame {
         vuePIs = new AffichagePIs(new FormatCellRenderer(-1), this.carte, this);
         tableauPIs = new JTable(vuePIs);
         tableauPIs.setRowHeight(40);
-        tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tableauPIs.getColumnModel().getColumn(1).setPreferredWidth(40);
+        tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(230);
 
-        this.tableauPIs.setDefaultRenderer(JButton.class, new BoutonCellRenderer());
-        for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount() - 2; i++) {
-            tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
+        for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
+            if(i<2){
+                tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
+            }else{
+                 this.tableauPIs.setDefaultRenderer(JComponent.class, new TypeCellRenderer());
+            }
         }
+        tableauPIs.getColumnModel().getColumn(3).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
+        tableauPIs.getColumnModel().getColumn(4).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
+        
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -207,6 +222,7 @@ public class Fenetre extends JFrame {
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauPIs.setVisible(false);
         panneauPIs.add(scrollPIs);
         panneauGauche.add(panneauPIs);
 
@@ -248,7 +264,7 @@ public class Fenetre extends JFrame {
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
-        listSelectionModel.addListSelectionListener(new EcouteurListSelection(this.controleur));
+        listSelectionModel.addListSelectionListener(this.ecouteurListSelect);
 
         scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -305,7 +321,7 @@ public class Fenetre extends JFrame {
 
         //Bouton pour changer une carte, fichier XML
         boutonChangerCarte = new JButton(CHANGER_CARTE);
-        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 13));
         boutonChangerCarte.setForeground(Color.white);
         boutonChangerCarte.setBackground(new Color(50, 70, 120));
         boutonChangerCarte.addActionListener(ecouteurBoutons);
@@ -426,7 +442,7 @@ public class Fenetre extends JFrame {
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
         boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 3);
-        repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 1 * panneauLegende.getHeight() / 6, (int) panneauLegende.getWidth() / 3, (int) panneauLegende.getHeight() / 4);
+        repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
@@ -442,7 +458,7 @@ public class Fenetre extends JFrame {
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 5);
         inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 3);
         boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
-        boutonCalculerTournee.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
+        boutonCalculerTournee.setBounds(45 * ((int) panneauLivraisons.getWidth() / 100), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
 
         labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
@@ -497,8 +513,13 @@ public class Fenetre extends JFrame {
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
+    
+    public void cacherPanneauPI(){
+        this.panneauPIs.setVisible(false);
+    }
 
     public void afficherPanneauPI() {
+        panneauPIs.setVisible(true);
         vuePIs.afficherPIs();
     }
 
@@ -588,7 +609,6 @@ public class Fenetre extends JFrame {
     public void setPanneauPIs(int numEtape, String type, String adresse) {
         LignePI pi = new LignePI(numEtape, type, adresse);
         this.vuePIs.addPI(pi);
-        this.vuePIs.setBouton(pi);
     }
 
     /**

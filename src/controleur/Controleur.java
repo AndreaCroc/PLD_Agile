@@ -33,7 +33,6 @@ public class Controleur {
      *
      */
     public void chargerCarte() {
-        //Appeler methode affichage carte + ...
         boolean chargerCarte = false;
 
         try {
@@ -73,7 +72,9 @@ public class Controleur {
             // on change de fenetre et un affiche la carte
             if (changerCarte) {
                 fenetre.viderPanneauEtapes();
+                fenetre.viderPanneauPIs();
                 this.fenetre.cacherPanneauEtapesEtTour();
+                this.fenetre.cacherPanneauPI();
                 this.fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
@@ -110,6 +111,7 @@ public class Controleur {
             // on affiche les livraisons
             if (chargerLivraison) {
                 fenetre.viderPanneauEtapes();
+                fenetre.viderPanneauPIs();
                 this.fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
@@ -137,7 +139,6 @@ public class Controleur {
     public void calculerTournee() {
 
         fenetre.viderPanneauEtapes();
-        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
         fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre));
         fenetre.setTournee(this.tournee);

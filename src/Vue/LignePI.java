@@ -6,6 +6,7 @@
 package Vue;
 
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -14,14 +15,17 @@ import javax.swing.JButton;
 public class LignePI {
     private int numero;
     private String type;
-    private String rue;
+    private JTextArea rue;
     private JButton boutonModifier;
     private JButton boutonSupp;
+    
 
     public LignePI(int numero, String type, String rue) {
         this.numero = numero;
         this.type = type;
-        this.rue = rue;
+        this.rue = new JTextArea(rue);
+        this.rue.setLineWrap(true);
+        this.rue.setWrapStyleWord(true);
         this.boutonModifier = new JButton("Modifier");
         this.boutonSupp = new JButton("Supprimer");
     }
@@ -37,7 +41,7 @@ public class LignePI {
         return type;
     }
 
-    public String getRue() {
+    public JTextArea getRue() {
         return rue;
     }
     
@@ -57,7 +61,7 @@ public class LignePI {
         this.type = type;
     }
 
-    public void setRue(String rue) {
+    public void setRue(JTextArea rue) {
         this.rue = rue;
     }
     
