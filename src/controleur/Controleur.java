@@ -1,11 +1,3 @@
-package controleur;
-
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
-import modele.DemandesLivraisons;
-
 /*
  * Controleur
  *
@@ -15,6 +7,16 @@ import modele.DemandesLivraisons;
  * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
+ */
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
+
+/**
+ * Classe Controleur qui permet de faire le lien entre la vue et le modele
  */
 public class Controleur {
 
@@ -42,7 +44,7 @@ public class Controleur {
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -56,12 +58,12 @@ public class Controleur {
         }
 
     }
-    
+
     /**
-     * Charge une nouvelle carte
+     * Changer la carte
      */
     public void changerCarte() {
-        
+
         boolean changerCarte = false;
 
         try {
@@ -69,7 +71,7 @@ public class Controleur {
             changerCarte = carte.chargerCarte(true);
 
             //Si le chargement de la carte s est bien passe,
-            // on change de fenetre et un affiche la carte
+            // on change de fenetre et on affiche la carte
             if (changerCarte) {
                 fenetre.viderPanneauEtapes();
                 fenetre.viderPanneauPIs();
@@ -78,11 +80,11 @@ public class Controleur {
                 this.fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
-                
+
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur3("1 Erreur lors du chargement du fichier");
@@ -94,11 +96,10 @@ public class Controleur {
         }
     }
 
-
     /**
-    * Charge une livraison
-    *
-    */
+     * Charge une livraison
+     *
+     */
     public void chargerLivraison() {
 
         boolean chargerLivraison = false;
@@ -106,7 +107,7 @@ public class Controleur {
         try {
             //Choix du fichier XML
             chargerLivraison = carte.chargerLivraison();
-            
+
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
@@ -115,7 +116,7 @@ public class Controleur {
                 this.fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -133,40 +134,48 @@ public class Controleur {
     }
 
     /**
-    * Calculer une tournee
-    *
-    */
+     * Calculer une tournee
+     *
+     */
     public void calculerTournee() {
 
         fenetre.viderPanneauEtapes();
         this.tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre));
+        fenetre.setPanneauCarte(new JCarte(this.carte, this.tournee, this.fenetre));
         fenetre.setTournee(this.tournee);
         fenetre.repaint();
         fenetre.afficherEtapesTour();
 
         System.out.println("Je lance le calcul d'une tournee");
-        
+
     }
-    
-    public void surbrillanceTableau(int index){
+
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     *
+     * @param index indice du point d interet clique
+     */
+    public void surbrillanceTableau(int index) {
         fenetre.surbrillanceLigneTab(index);
         fenetre.repaint();
     }
-    public void surbrillancePI(int ligne){
+
+    /**
+     * Encadrer un point d interet de la tournee
+     *
+     * @param ligne ligne du tableau selectionnee
+     */
+    public void surbrillancePI(int ligne) {
         fenetre.entourerPI(ligne);
         fenetre.repaint();
     }
-    public Tournee getTournee(){
+
+    public Tournee getTournee() {
         return this.tournee;
     }
-    
-    public void setFenetreSurbrillance(boolean surb){
+
+    public void setFenetreSurbrillance(boolean surb) {
         this.fenetre.setSurbrillance(surb);
     }
-            
-            
-            
-            
 
 }

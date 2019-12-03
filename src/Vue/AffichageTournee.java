@@ -2,6 +2,7 @@
  * AffichageTournee
  *
  * Version 1
+ * 
  *
  * 
  * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
@@ -116,7 +117,7 @@ public class AffichageTournee {
         String heureFin = "";
         int index = 0;
 
-        //S'assurer que la liste contient des points d'interet
+        //S assurer que la liste contient des points d'interet
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
             DecimalFormat df = new DecimalFormat("0.00");
             fenetre.viderPanneauEtapes();

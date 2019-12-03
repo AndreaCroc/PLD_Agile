@@ -1,7 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * TypeCellRenderer
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package Vue;
 
@@ -13,7 +19,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author acer
+ * Classe TypeCellRenderer permet d afficher un element objet du tableau
+ * tel qu un bouton ou un textarea en prenant en compte le type de l objet
  */
 public class TypeCellRenderer extends DefaultTableCellRenderer {
 
@@ -26,6 +33,7 @@ public class TypeCellRenderer extends DefaultTableCellRenderer {
         //Si la valeur est de type JButton, on la transtype
         if (value instanceof JButton) {
             return (JButton) value;
+        //Si la valeur ets de type JTextArea, on la transtype
         } else if (value instanceof JTextArea) {
             return (JTextArea) value;
         }

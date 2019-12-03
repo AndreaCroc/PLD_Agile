@@ -196,21 +196,29 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
- /* PanneauPIs (haut gauche) */
+        
+        /* PanneauPIs (haut gauche) */
+        //Vue sur les details des points d interets d une demande de livraison
         vuePIs = new AffichagePIs(new FormatCellRenderer(-1), this.carte, this);
+        //Tableau contenant les details des points d interets
         tableauPIs = new JTable(vuePIs);
+        //Ajuster la taille des lignes
         tableauPIs.setRowHeight(40);
+        //Ajuster la taille des colonnes
         tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(30);
         tableauPIs.getColumnModel().getColumn(1).setPreferredWidth(40);
         tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(230);
 
         for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
             if(i<2){
+                //Appliquer un formatage a certaines colonnes du tableau
                 tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
             }else{
+                //Appliquer un formatage a certaines colonnes du tableau
                  this.tableauPIs.setDefaultRenderer(JComponent.class, new TypeCellRenderer());
             }
         }
+        //Rendre les boutons du tableau cliquable
         tableauPIs.getColumnModel().getColumn(3).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
         tableauPIs.getColumnModel().getColumn(4).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
         
@@ -218,6 +226,7 @@ public class Fenetre extends JFrame {
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(new Color(186, 228, 255));
@@ -226,7 +235,7 @@ public class Fenetre extends JFrame {
         panneauPIs.add(scrollPIs);
         panneauGauche.add(panneauPIs);
 
-        /* PanneauTournee (milieu gauche) */
+        /* PanneauTournee (milieu bas gauche) */
         //Titre de panneauTournee
         labelTitreTournee = new JLabel("Tournée");
         labelTitreTournee.setFont(new Font("Arial", Font.BOLD, 18));
@@ -248,22 +257,27 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauTournee);
 
         /* Fin PanneauTournee*/
- /* PanneauEtape (bas gauche)*/
+        
+        /* PanneauEtape (bas gauche)*/
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
         etapesTitre.setForeground(Color.white);
 
+        //Vue sur les etapes d une tournee
         vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1));
+        //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(40);
         tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
         tableauEtapes.getColumnModel().getColumn(2).setPreferredWidth(200);
         for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
+            //Appliquer un format aux colonnes du tableau
             tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
+        //Ajouter un evenement sur les lignes du tableau
         listSelectionModel.addListSelectionListener(this.ecouteurListSelect);
 
         scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -277,6 +291,8 @@ public class Fenetre extends JFrame {
         panneauEtapes.setVisible(false);
         panneauGauche.add(panneauEtapes);
 
+        /* PanneauDroite */
+        //Panneau droit contenant la legende et la carte
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(new Color(186, 228, 255));
@@ -353,7 +369,8 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         /* Fin PanneauLegende */
- /* PanneauCarte (bas droit) */
+        
+        /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(Color.white);
@@ -366,8 +383,9 @@ public class Fenetre extends JFrame {
         addMouseListener(ecouteurSouris);
 
         /* Fin panneauCarte */
+        /* Fin panneauDroite */
 
- /* PanneauGlobal2 : pour la deuxieme fenetre*/
+        /* PanneauGlobal2 : pour la deuxieme fenetre */
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(new Color(186, 228, 255));
@@ -376,7 +394,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauGlobal2 */
 
- /* PanneauGlobal1 : pour la premiere fenetre*/
+         /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 40));
@@ -410,6 +428,7 @@ public class Fenetre extends JFrame {
         panneauGlobal1.setVisible(true);
 
         /* Fin PanneauGlobal1 */
+        
         //On place les elements
         placeObjet1();
         placeObjet2();
@@ -509,23 +528,37 @@ public class Fenetre extends JFrame {
 
     }
 
+    /**
+     * Pour cacher les panneaux etapes et tournee
+     */
     public void cacherPanneauEtapesEtTour() {
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
     
+    /**
+     * Pour cacher le panneauPI
+     */
     public void cacherPanneauPI(){
         this.panneauPIs.setVisible(false);
     }
 
+    /**
+     * Pour rendre visible le panneauPI
+     */
     public void afficherPanneauPI() {
         panneauPIs.setVisible(true);
         vuePIs.afficherPIs();
     }
 
+    /**
+     * Mettre en surbrillance la ligne du tableau correspondant a l index
+     * 
+     * @param index : ligne du tableau a encadrer
+     */
     public void surbrillanceLigneTab(int index) {
-        System.out.println("surbrillance ligne tab");
-        System.out.println("index : " + index);
+        //Si on clique sur un point d interet alors qu il y en avait deja un  
+        //encadre en rouge, enlever le cadre autour de ce point
         if (this.surbrillance) {
             this.vueEtapes.setLigneSelect(-1);
             this.panneauCarte.setFenetre(this);
@@ -533,9 +566,8 @@ public class Fenetre extends JFrame {
             this.surbrillance = false;
         }
         if (tableauEtapes.getRowCount() != 0) {
-            System.out.println("if");
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
-                System.out.println("for");
+                //Encadrer en rouge la ligne correspond a l index
                 this.vueEtapes.getFormatcell().setIndex(index);
                 tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
             }
@@ -606,6 +638,14 @@ public class Fenetre extends JFrame {
         this.vueEtapes.addStep(step);
     }
 
+    /**
+     * Afficher le detail de chaque point d interet
+     *  faisant partie de la demande de livraions
+     * 
+     * @param numEtape numero de l etape
+     * @param type type de l etape
+     * @param adresse  adresse de l etape
+     */
     public void setPanneauPIs(int numEtape, String type, String adresse) {
         LignePI pi = new LignePI(numEtape, type, adresse);
         this.vuePIs.addPI(pi);
@@ -641,6 +681,9 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
     }
 
+    /**
+     * Vider le panneauPIs
+     */
     public void viderPanneauPIs() {
         this.vuePIs.clearPIs();
     }
@@ -655,7 +698,13 @@ public class Fenetre extends JFrame {
         this.surbrillance = surb;
     }
 
+    /**
+     * Entourer le point d interet correspond a la ligne du tableau selectionnee
+     * @param ligne ligne du tableau selectionnee
+     */
     public void entourerPI(int ligne) {
+        //Si une ligne du tableau etait deja en surbrillance au moment du clic sur une ligne
+        //Enlever le contour rouge de cette ligne du tableau
         if (this.surbrillance) {
             this.vueEtapes.getFormatcell().setIndex(-1);
             this.surbrillance = false;
@@ -674,7 +723,7 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Afficher un message d erreur lors d un chargement des livraisons
+     * Afficher un message d erreur lors d un changement de la carte
      *
      * @param message qui est le contenu du message d erreur
      */
@@ -683,6 +732,10 @@ public class Fenetre extends JFrame {
         repChangeCarte.setVisible(true);
     }
 
+    /**
+     * Cacher le message d erreur si tout s est bien passe lors du changement
+     * de la carte
+     */
     public void retireMessageErreur3() {
         repChangeCarte.setVisible(false);
     }

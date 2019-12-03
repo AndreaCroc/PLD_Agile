@@ -1,7 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EcouteurSouris
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package Vue;
 
@@ -12,7 +18,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author acer
+ * Classe EcouteurSouris permettant de recuperer et de gerer les evenements
+ * lies a la souris et ici sur un clic
+ * 
  */
 public class EcouteurSouris extends MouseAdapter {
 
@@ -28,31 +36,32 @@ public class EcouteurSouris extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent evt) {
+        //Recuperer la largeur du panneau gauche
         int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
+        //Recuperer la hauteur du panneau legende situee au dessus de la carte
         int yPanneauLegende = this.fenetre.getHeightPanneauLegende();
-        System.out.println("width : "+xPanneauGauche);
-        System.out.println("height : "+yPanneauLegende);
         
+        //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
         ArrayList<Point> coordPis =  vueCarte.getCoorPtInterets();
 
-        System.out.println("Fenetre cliquee");
+        //Recuperer les coordonnees de la souris lors du clic
         int x = evt.getX()-8;
         int y = evt.getY()-8;
-        System.out.println("x : "+x+" y : "+y);
         
+        //Si il y a bien des points d interets sur la carte
         if (coordPis != null && !coordPis.isEmpty()) {
             int index = 0;
             for (Point p : coordPis) {
                 index = coordPis.indexOf(p);
-                //Point(nxXpt,nvYpt) correspond au centre des figures
+                //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
                 int nvXpt = p.getX()+ xPanneauGauche+5;
                 int nvYpt = p.getY() + yPanneauLegende+25;
                 
-
+                //Si le clic se trouve sur un efigure d un point d interet
                 if (x >= nvXpt-5 && x <= nvXpt + 5 && y >= nvYpt-5 && y <= nvYpt + 5) {
-                    System.out.println("nvxpt : "+nvXpt + " nvYpt : "+nvYpt);
+                    //Prevenir le controleur qu un point a ete clique
                     this.controleur.setFenetreSurbrillance(true);
-                    System.out.println("Point Interet clique");
+                    //Mettre en surbrillance la ligne du tableau correspondante
                     this.controleur.surbrillanceTableau(index);
                     break;
                 }

@@ -1,7 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ /*
+ * FormatCellRenderer
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package Vue;
 
@@ -14,7 +20,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author acer
+ * Classe FormatCellRenderer permettant de mettre tous les elements
+ * du tableau au centre de la cellule et d encadrer en rouge la ligne
+ * en cas de clic sur un point d interet
  */
 public class FormatCellRenderer extends DefaultTableCellRenderer {
 
@@ -34,13 +42,16 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                 row, column);
 
+        //Si on a clique sur un point d interet
         if (index != -1) {
             int nbLignes = table.getRowCount() - 1;
+            //Encadrer chaque cellule de la ligne associee au point d interet
             if (row == this.index || row - nbLignes == index) {
                 this.setBorder(BorderFactory.createLineBorder(Color.red));
             }
         }
 
+        //Poisitionner les elements textes au centre de la case
         this.setHorizontalAlignment(JLabel.CENTER);
         return this;
     }
