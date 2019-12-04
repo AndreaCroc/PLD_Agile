@@ -71,6 +71,11 @@ public class Fenetre extends JFrame {
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
+    
+    protected final static Color COULEUR_FOND = new Color(186, 228, 255);
+    protected final static Color COULEUR_BOUTON = new Color(50, 70, 120);
+    protected final static Color COULEUR_ERREUR = new Color(254, 79, 65);
+    protected final static Color COULEUR_ECRITURE = Color.white;
 
     //Boutons sur lesquels l utilisateur peut cliquer
     private JButton boutonChargerCarte;
@@ -159,13 +164,13 @@ public class Fenetre extends JFrame {
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
         panneauGauche.setLayout(null);
-        panneauGauche.setBackground(new Color(186, 228, 255));
+        panneauGauche.setBackground(COULEUR_FOND);
 
         /* PanneauLivraison (haut gauche)*/
         panneauLivraisons = new JPanel();
         panneauLivraisons.setLayout(null);
-        panneauLivraisons.setBackground(new Color(186, 228, 255));
-        panneauLivraisons.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauLivraisons.setBackground(COULEUR_FOND);
+        panneauLivraisons.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COULEUR_BOUTON));
 
         //Input pour ecrire le nom du fichier XML souhaite
         inputChargeLiv = new JTextField();
@@ -173,27 +178,27 @@ public class Fenetre extends JFrame {
         //Bouton pour demander a charger un fichier XML contenant des livraisons
         boutonChargerLivraisons = new JButton(CHARGER_LIVRAISONS);
         boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonChargerLivraisons.setForeground(Color.white);
-        boutonChargerLivraisons.setBackground(new Color(50, 70, 120));
+        boutonChargerLivraisons.setForeground(COULEUR_ECRITURE);
+        boutonChargerLivraisons.setBackground(COULEUR_BOUTON);
         boutonChargerLivraisons.addActionListener(ecouteurBoutons);
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
         repChargeLiv.setFont(new Font("Arial", Font.BOLD, 13));
-        repChargeLiv.setForeground(new Color(254, 79, 65));
+        repChargeLiv.setForeground(COULEUR_ERREUR);
         repChargeLiv.setVisible(false);
 
         //Bouton pour calculer une tournee
         boutonCalculerTournee = new JButton(CALCULER_TOURNEE);
         boutonCalculerTournee.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonCalculerTournee.setForeground(Color.white);
-        boutonCalculerTournee.setBackground(new Color(50, 70, 120));
+        boutonCalculerTournee.setForeground(COULEUR_ECRITURE);
+        boutonCalculerTournee.setBackground(COULEUR_BOUTON);
         boutonCalculerTournee.setEnabled(false);
         boutonCalculerTournee.addActionListener(ecouteurBoutons);
 
         livraisons = new JLabel("Livraisons");
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
-        livraisons.setForeground(Color.white);
+        livraisons.setForeground(COULEUR_ECRITURE);
 
         //Remplissage du panneauLivraison et ajout de ce dernier au panneauGauche
         panneauLivraisons.add(livraisons);
@@ -233,14 +238,14 @@ public class Fenetre extends JFrame {
         //Pour afficher si aucun point d interet dans le fichier de livraisons
         labelTabPI = new JLabel("Aucune donnée dans le fichier de livraisons chargé");
         labelTabPI.setFont(new Font("Arial", Font.BOLD, 14));
-        labelTabPI.setForeground(new Color(254, 79, 65));
+        labelTabPI.setForeground(COULEUR_ERREUR);
         labelTabPI.setVisible(false);
         
         // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
-        panneauPIs.setBackground(new Color(186, 228, 255));
-        panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
+        panneauPIs.setBackground(COULEUR_FOND);
+        panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COULEUR_BOUTON));
         panneauPIs.setVisible(false);
         panneauPIs.add(scrollPIs);
         panneauPIs.add(labelTabPI);
@@ -252,18 +257,18 @@ public class Fenetre extends JFrame {
         //Titre de panneauTournee
         labelTitreTournee = new JLabel("Tournée");
         labelTitreTournee.setFont(new Font("Arial", Font.BOLD, 18));
-        labelTitreTournee.setForeground(Color.white);
+        labelTitreTournee.setForeground(COULEUR_ECRITURE);
 
         //Heure de debut de la tournee
         labelTournee = new JLabel(HEURE_DEBUT);
         labelTournee.setFont(new Font("Arial", Font.BOLD, 14));
-        labelTournee.setForeground(Color.white);
+        labelTournee.setForeground(COULEUR_ECRITURE);
 
         //Ajout des elements a panneauTournee et ajout de ce dernier a panneauGauche
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
-        panneauTournee.setBackground(new Color(186, 228, 255));
-        panneauTournee.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(50, 70, 120)));
+        panneauTournee.setBackground(COULEUR_FOND);
+        panneauTournee.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, COULEUR_BOUTON));
         panneauTournee.add(labelTitreTournee);
         panneauTournee.add(labelTournee);
         panneauTournee.setVisible(false);
@@ -274,7 +279,7 @@ public class Fenetre extends JFrame {
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
-        etapesTitre.setForeground(Color.white);
+        etapesTitre.setForeground(COULEUR_ECRITURE);
 
         //Vue sur les etapes d une tournee
         vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1), this, this.tournee);
@@ -297,34 +302,34 @@ public class Fenetre extends JFrame {
         //Bouton pour supprimer un point d interet de la tournee
         boutonSupprimer = new JButton(SUPPRIMER);
         boutonSupprimer.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonSupprimer.setForeground(Color.white);
-        boutonSupprimer.setBackground(new Color(50, 70, 120));
+        boutonSupprimer.setForeground(COULEUR_ECRITURE);
+        boutonSupprimer.setBackground(COULEUR_BOUTON);
         boutonSupprimer.addActionListener(ecouteurBoutons);
 
         //Bouton pour modifier  la tournee
         boutonModifier = new JButton(MODIFIER);
         boutonModifier.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonModifier.setForeground(Color.white);
-        boutonModifier.setBackground(new Color(50, 70, 120));
+        boutonModifier.setForeground(COULEUR_ECRITURE);
+        boutonModifier.setBackground(COULEUR_BOUTON);
         boutonModifier.addActionListener(ecouteurBoutons);
         
         //Bouton pour annuler  la suppression d un point d interet
         boutonAnnuler = new JButton(ANNULER);
         boutonAnnuler.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonAnnuler.setForeground(Color.white);
-        boutonAnnuler.setBackground(new Color(50, 70, 120));
+        boutonAnnuler.setForeground(COULEUR_ECRITURE);
+        boutonAnnuler.setBackground(COULEUR_BOUTON);
         boutonAnnuler.addActionListener(ecouteurBoutons);
         
          //Afficher un message si aucun point d interet
         labelTabEtapes = new JLabel("Aucun points d'intérêts");
         labelTabEtapes.setFont(new Font("Arial", Font.BOLD, 14));
-        labelTabEtapes.setForeground(new Color(254, 79, 65));
+        labelTabEtapes.setForeground(COULEUR_ERREUR);
         labelTabEtapes.setVisible(false);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
-        panneauEtapes.setBackground(new Color(186, 228, 255));
+        panneauEtapes.setBackground(COULEUR_FOND);
         panneauEtapes.add(etapesTitre);
         panneauEtapes.add(scrollEtapes);
         panneauEtapes.add(boutonSupprimer);
@@ -337,8 +342,8 @@ public class Fenetre extends JFrame {
         //Panneau droit contenant la legende et la carte
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
-        panneauDroite.setBackground(new Color(186, 228, 255));
-        panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
+        panneauDroite.setBackground(COULEUR_FOND);
+        panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
 
         /* PanneauLegende(haut droit)*/
         //Logo rond de la legende
@@ -351,7 +356,7 @@ public class Fenetre extends JFrame {
 
         legendeRond = new JLabel(": Point de livraison");
         legendeRond.setFont(new Font("Arial", Font.BOLD, 14));
-        legendeRond.setForeground(Color.white);
+        legendeRond.setForeground(COULEUR_ECRITURE);
 
         //Logo carre de la legende
         carre = new ImageIcon("carre-noir.png");
@@ -363,7 +368,7 @@ public class Fenetre extends JFrame {
 
         legendeCarre = new JLabel(": Point d'enlèvement");
         legendeCarre.setFont(new Font("Arial", Font.BOLD, 14));
-        legendeCarre.setForeground(Color.white);
+        legendeCarre.setForeground(COULEUR_ECRITURE);
 
         //Logo triangle de la legende
         triangle = new ImageIcon("triangle-noir.png");
@@ -375,25 +380,25 @@ public class Fenetre extends JFrame {
 
         legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de tous les livreurs");
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
-        legendeTriangle.setForeground(Color.white);
+        legendeTriangle.setForeground(COULEUR_ECRITURE);
 
         //Bouton pour changer une carte, fichier XML
         boutonChangerCarte = new JButton(CHANGER_CARTE);
-        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 13));
-        boutonChangerCarte.setForeground(Color.white);
-        boutonChangerCarte.setBackground(new Color(50, 70, 120));
+        boutonChangerCarte.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonChangerCarte.setForeground(COULEUR_ECRITURE);
+        boutonChangerCarte.setBackground(COULEUR_BOUTON);
         boutonChangerCarte.addActionListener(ecouteurBoutons);
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChangeCarte = new JLabel("Erreur dans le chargement du fichier");
         repChangeCarte.setFont(new Font("Arial", Font.BOLD, 14));
-        repChangeCarte.setForeground(new Color(254, 79, 65));
+        repChangeCarte.setForeground(COULEUR_ERREUR);
         repChangeCarte.setVisible(false);
 
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
-        panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, new Color(50, 70, 120)));
+        panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, COULEUR_BOUTON));
         panneauLegende.add(labelRond);
         panneauLegende.add(legendeRond);
         panneauLegende.add(labelCarre);
@@ -402,11 +407,11 @@ public class Fenetre extends JFrame {
         panneauLegende.add(legendeTriangle);
         panneauLegende.add(boutonChangerCarte);
         panneauLegende.add(repChangeCarte);
-        panneauLegende.setBackground(new Color(186, 228, 255));
+        panneauLegende.setBackground(COULEUR_FOND);
 
         legende = new JLabel("Légende");
         legende.setFont(new Font("Arial", Font.BOLD, 18));
-        legende.setForeground(Color.white);
+        legende.setForeground(COULEUR_ECRITURE);
         panneauLegende.add(legende);
         panneauDroite.add(panneauLegende);
 
@@ -414,8 +419,8 @@ public class Fenetre extends JFrame {
  /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
-        panneauCarte.setBackground(Color.white);
-        panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(50, 70, 120)));
+        panneauCarte.setBackground(COULEUR_ECRITURE);
+        panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
         panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
         //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
         panneauDroite.add(panneauCarte);
@@ -429,7 +434,7 @@ public class Fenetre extends JFrame {
  /* PanneauGlobal2 : pour la deuxieme fenetre */
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
-        panneauGlobal2.setBackground(new Color(186, 228, 255));
+        panneauGlobal2.setBackground(COULEUR_FOND);
         panneauGlobal2.add(panneauGauche);
         panneauGlobal2.add(panneauDroite);
 
@@ -438,8 +443,8 @@ public class Fenetre extends JFrame {
  /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
-        titreAppli.setFont(new Font("Arial", Font.BOLD, 40));
-        titreAppli.setForeground(Color.white);
+        titreAppli.setFont(new Font("Arial", Font.BOLD, 45));
+        titreAppli.setForeground(COULEUR_ECRITURE);
 
         //Pour entrer le chemin vers un fichier XML
         inputChargeCarte = new JTextField();
@@ -447,20 +452,20 @@ public class Fenetre extends JFrame {
         //Pour afficher une erreur en cas de probleme lors du chargement du fichier
         repChargeCarte = new JLabel("Erreur dans le chargement du fichier");
         repChargeCarte.setFont(new Font("Arial", Font.BOLD, 16));
-        repChargeCarte.setForeground(new Color(254, 79, 65));
+        repChargeCarte.setForeground(COULEUR_ERREUR);
         repChargeCarte.setVisible(false);
 
         //Bouton pour lancer le chargement d une carte, fichier XML
         boutonChargerCarte = new JButton(CHARGER_CARTE);
         boutonChargerCarte.setFont(new Font("Arial", Font.BOLD, 16));
-        boutonChargerCarte.setForeground(Color.white);
-        boutonChargerCarte.setBackground(new Color(50, 70, 120));
+        boutonChargerCarte.setForeground(COULEUR_ECRITURE);
+        boutonChargerCarte.setBackground(COULEUR_BOUTON);
         boutonChargerCarte.addActionListener(ecouteurBoutons);
 
         //On ajoute tout au panneauGlobal1
         panneauGlobal1 = new JPanel();
         panneauGlobal1.setLayout(null);
-        panneauGlobal1.setBackground(new Color(186, 228, 255));
+        panneauGlobal1.setBackground(COULEUR_FOND);
         panneauGlobal1.add(titreAppli);
         panneauGlobal1.add(inputChargeCarte);
         panneauGlobal1.add(boutonChargerCarte);
@@ -481,9 +486,9 @@ public class Fenetre extends JFrame {
     public void placeObjet1() {
         panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
 
-        titreAppli.setBounds(1 * (int) panneauGlobal1.getWidth() / 3, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 2, 1 * (int) panneauGlobal1.getHeight() / 10);
-        inputChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
-        boutonChargerCarte.setBounds(55 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
+        titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 2, 1 * (int) panneauGlobal1.getHeight() / 10);
+        inputChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
+        boutonChargerCarte.setBounds(60 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
         repChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
     }
 
@@ -500,7 +505,7 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
-        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, (int) panneauLegende.getHeight() / 3);
+        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4*(int) panneauLegende.getHeight() /10 );
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
@@ -515,8 +520,8 @@ public class Fenetre extends JFrame {
         legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth(), (int) panneauLegende.getHeight() / 4);
 
         livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 5);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 1 * (int) panneauLivraisons.getWidth() / 2, 1 * (int) panneauLivraisons.getHeight() / 3);
-        boutonChargerLivraisons.setBounds(60 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 55 * (int) panneauLivraisons.getWidth() / 100, 1 * (int) panneauLivraisons.getHeight() / 3);
+        boutonChargerLivraisons.setBounds(70 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
         boutonCalculerTournee.setBounds(45 * ((int) panneauLivraisons.getWidth() / 100), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
 
