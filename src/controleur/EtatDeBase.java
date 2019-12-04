@@ -32,7 +32,7 @@ public class EtatDeBase implements Etat {
         boolean changerCarte = false;
         try {
             //Choix du fichier XML
-            changerCarte = carte.chargerCarte(true);
+            changerCarte = carte.chargerCarte(true,"");
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et on affiche la carte
@@ -76,7 +76,7 @@ public class EtatDeBase implements Etat {
         String cheminFichier = fenetre.getInputChargeLiv();
         try {
             //Choix du fichier XML
-            chargerLivraison = carte.chargerLivraison();
+            chargerLivraison = carte.chargerLivraison(cheminFichier);
 
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons et on change d etat

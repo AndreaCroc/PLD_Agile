@@ -643,9 +643,22 @@ public class Carte {
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
-    public boolean chargerCarte(boolean estUnChangement) throws Exception, ParserConfigurationException, SAXException, IOException {
+    public boolean chargerCarte(boolean estUnChangement, String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        File xml = choisirFichierXML(true);
+        //File xml = choisirFichierXML(true);;
+         File xml = null;
+        if ("".equals(fichier)) {
+            xml = choisirFichierXML(true);
+        } else {
+            if (fichier.contains(".xml")) {
+                xml = new File(fichier);
+                if(!xml.exists()){
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
@@ -660,7 +673,7 @@ public class Carte {
         }
 
         if (estUnChangement) {
-            if (this.demandesLivraisons!= null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
+            if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
                 this.demandesLivraisons.supprimerLivraison();
             }
         }
@@ -668,9 +681,22 @@ public class Carte {
         return result;
     }
 
-    public boolean chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
+    public boolean chargerLivraison(String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        File xml = choisirFichierXML(true);
+        //File xml = choisirFichierXML(true);
+        File xml = null;
+        if ("".equals(fichier)) {
+            xml = choisirFichierXML(true);
+        } else {
+            if (fichier.contains(".xml")) {
+                xml = new File(fichier);
+                if(!xml.exists()){
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();

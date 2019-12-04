@@ -37,7 +37,7 @@ public class EtatInit implements Etat {
         String cheminFichier = fenetre.getInputChargeCarte();
         try {
             //Choix du fichier XML
-            chargerCarte = carte.chargerCarte(false);
+            chargerCarte = carte.chargerCarte(false,cheminFichier);
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre, on affiche la carte

@@ -35,7 +35,7 @@ public class EtatTournee implements Etat {
         
         try {
             //Choix du fichier XML
-            changerCarte = carte.chargerCarte(true);
+            changerCarte = carte.chargerCarte(true,"");
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et on affiche la carte et on change detat
@@ -105,7 +105,7 @@ public class EtatTournee implements Etat {
 
         try {
             //Choix du fichier XML
-            chargerLivraison = carte.chargerLivraison();
+            chargerLivraison = carte.chargerLivraison(cheminFichier);
 
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons et on reste dans le meme etat
