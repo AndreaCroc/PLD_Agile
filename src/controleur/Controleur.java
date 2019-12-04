@@ -1,11 +1,3 @@
-package controleur;
-
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
-import modele.DemandesLivraisons;
-
 /*
  * Controleur
  *
@@ -75,7 +67,6 @@ public class Controleur {
     }
 
     /**
-     * Charge une nouvelle carte
      * Changer la carte
      */
     public void changerCarte() {
@@ -87,7 +78,6 @@ public class Controleur {
             changerCarte = carte.chargerCarte(true);
 
             //Si le chargement de la carte s est bien passe,
-            // on change de fenetre et un affiche la carte
             // on change de fenetre et on affiche la carte
             if (changerCarte) {
                 fenetre.viderPanneauEtapes();
