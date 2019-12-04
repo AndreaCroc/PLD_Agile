@@ -68,6 +68,10 @@ public class Controleur {
         etatCourant.supprimer(this, fenetre, carte, tournee, index);
     }
     
+    public void annuler () {
+        etatCourant.annuler(this, fenetre);
+    }
+    
     /**
      * 
      * @param etat 

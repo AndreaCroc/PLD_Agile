@@ -114,6 +114,7 @@ public class EtatTournee implements Etat {
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index){
         fenetre.setClicSupp(true);
+        fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
     }
     
