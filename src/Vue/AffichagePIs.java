@@ -133,6 +133,11 @@ public class AffichagePIs extends AbstractTableModel {
         this.formatcell = formatcell;
     }
 
+    public void setCarte(Carte carte) {
+        this.carte = carte;
+    }
+
+    
     /**
      * Ajouter une ligne a lia liste du tableau
      *

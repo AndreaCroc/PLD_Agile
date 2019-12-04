@@ -564,6 +564,7 @@ public class Fenetre extends JFrame {
      */
     public void afficherPanneauPI() {
         panneauPIs.setVisible(true);
+        vuePIs.setCarte(carte);
         vuePIs.afficherPIs();
     }
 

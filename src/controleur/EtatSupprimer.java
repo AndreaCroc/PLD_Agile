@@ -6,6 +6,7 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
@@ -30,6 +31,17 @@ public class EtatSupprimer implements Etat {
             if (option == JOptionPane.OK_OPTION) {
                 System.out.println("Point d'interet supprime");
                 //carte.supprimerPointInteret(ptI);
+                tournee = carte.getTournee();
+                tournee.getSuccessionPointsInteret().remove(index);
+                carte.getDemandesLivraisons().getListePointsInteret().remove(index);
+                fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+                fenetre.setTournee(tournee);
+                controleur.setTournee(tournee);
+                fenetre.repaint();
+                fenetre.viderPanneauEtapes();
+                fenetre.viderPanneauPIs();
+                fenetre.afficherEtapesTour();
+                fenetre.afficherPanneauPI();
             }
         } else {
             //Afficher popup d erreur car pas possible de supprimer l entrepot
