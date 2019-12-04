@@ -14,6 +14,11 @@ import controleur.Controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe EcouteurBoutons pour recuperer et gerer les evenements
+ * sur les boutons de la fenetre
+ * 
+ */
 public class EcouteurBoutons implements ActionListener {
 
     private Controleur controleur;

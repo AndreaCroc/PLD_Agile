@@ -1,15 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * JCarte
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package Vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
@@ -21,7 +25,7 @@ import modele.Troncon;
 
 /**
  *
- * @author GRAZIA GIULIA
+ * Classe JCarte permet d afficher la carte, les points d interets, la tournee
  */
 public class JCarte extends JPanel {
 
@@ -53,6 +57,12 @@ public class JCarte extends JPanel {
         return this.tournee;
     }
 
+    /**
+     * Ajouter un point au tableau stockant les coordonnes des points d interets
+     * de la tournee
+     *
+     * @param p point a ajouter
+     */
     public void ajouterPoint(Point p) {
         this.coorPtInterets.add(p);
     }
@@ -291,6 +301,7 @@ public class JCarte extends JPanel {
             g.setColor(Color.BLACK);
             g.fillPolygon(p);
 
+            //Ajouter le point du depot dans la liste
             Point ptDepot = new Point(xDepot, yDepot);
             this.ajouterPoint(ptDepot);
 
@@ -314,6 +325,7 @@ public class JCarte extends JPanel {
                         Point ptOval = new Point(xOval, yOval);
                         g.fillRect(xRect, yRect, 9, 9);
                         g.fillOval(xOval, yOval, 9, 9);
+                        //Ajout des points a la liste stockant les coordonnees des points d interets
                         this.ajouterPoint(ptRect);
                         this.ajouterPoint(ptOval);
 
@@ -351,24 +363,25 @@ public class JCarte extends JPanel {
         }
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVueEtapes().getLigneSelect();
-            System.out.println("ligneTab2 : " + ligneTab);
+            //Si une ligne du tableau des etapes de la tournee a ete selectionnee
             if (ligneTab != -1) {
                 int xPI = 5;
                 int yPI = 5;
                 boolean select = false;
                 if (ligneTab < this.coorPtInterets.size()) {
+                    //Recuperer les coordonnes du point d interet associe a la ligne du tableau
                     xPI = this.coorPtInterets.get(ligneTab).getX();
                     yPI = this.coorPtInterets.get(ligneTab).getY();
                     select = true;
-                    System.out.println("coloriage1");
+                    //Si le point selectionne est l entrepot
                 } else if (ligneTab == this.coorPtInterets.size()) {
                     xPI = this.coorPtInterets.get(0).getX();
                     yPI = this.coorPtInterets.get(0).getY();
                     select = true;
-                    System.out.println("coloriage2");
                 }
                 if (select) {
                     g.setColor(Color.RED);
+                    //Faire un carre rouge autour du point d interets
                     g.drawLine(xPI - 5, yPI - 5, xPI - 5, yPI + 15);
                     g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
                     g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
