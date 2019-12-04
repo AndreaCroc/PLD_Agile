@@ -8,8 +8,6 @@ package controleur;
 import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
-import modele.Tournee;
-
 
 public class EtatDeBase implements Etat {
     

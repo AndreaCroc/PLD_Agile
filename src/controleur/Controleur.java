@@ -30,6 +30,7 @@ public class Controleur {
     protected final EtatDeBase etatDeBase = new EtatDeBase();
     protected final EtatLivraison etatLivraison = new EtatLivraison();
     protected final EtatTournee etatTournee = new EtatTournee();
+    protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
 
     public Controleur() {
         carte = new Carte();
@@ -61,6 +62,10 @@ public class Controleur {
     
     public void calculerTournee () {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
+    }
+    
+    public void supprimer () {
+        etatCourant.supprimer(this, fenetre, carte, tournee);
     }
     
     /**

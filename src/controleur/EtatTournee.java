@@ -8,6 +8,7 @@ package controleur;
 import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
+import modele.Tournee;
 
 /**
  *
@@ -108,6 +109,11 @@ public class EtatTournee implements Etat {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
             //fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
+    }
+    
+    @Override
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){
+        controleur.setEtat(controleur.etatSupprimer);
     }
     
 }
