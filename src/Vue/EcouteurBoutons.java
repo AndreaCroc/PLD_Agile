@@ -53,7 +53,7 @@ public class EcouteurBoutons implements ActionListener {
                 break;
             //Si on veut changer une carte
             case Fenetre.SUPPRIMER:
-                controleur.supprimer();
+                controleur.supprimer(-1);
                 System.out.println("SUPPRIMER");
                 break;
         }

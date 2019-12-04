@@ -64,8 +64,8 @@ public class Controleur {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
     
-    public void supprimer () {
-        etatCourant.supprimer(this, fenetre, carte, tournee);
+    public void supprimer (int index) {
+        etatCourant.supprimer(this, fenetre, carte, tournee, index);
     }
     
     /**

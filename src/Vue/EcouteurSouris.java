@@ -63,6 +63,9 @@ public class EcouteurSouris extends MouseAdapter {
                     this.controleur.setFenetreSurbrillance(true);
                     //Mettre en surbrillance la ligne du tableau correspondante
                     this.controleur.surbrillanceTableau(index);
+                    if(this.fenetre.getClicSupp()){
+                        this.controleur.supprimer(index);
+                    }
                     break;
                 }
                 

@@ -26,6 +26,6 @@ public interface Etat {
     public default void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte){};
     public default void chargerLivraison(Controleur controleur,Fenetre fenetre, Carte carte){};
     public default void calculerTournee(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee){};
-    public default void supprimer(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void supprimer(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee, int index){};
     
 }
