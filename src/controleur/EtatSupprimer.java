@@ -29,15 +29,23 @@ public class EtatSupprimer implements Etat {
             option = fenetre.afficherPopSuppression(ptI);
             if (option == JOptionPane.OK_OPTION) {
                 System.out.println("Point d'interet supprime");
+
                 //carte.supprimerPointInteret(ptI);
             }
         } else {
             //Afficher popup d erreur car pas possible de supprimer l entrepot
             fenetre.afficherPopSuppressionErreur();
         }
+        fenetre.afficherBoutonSupprimer();
         controleur.setEtat(controleur.etatTournee);
         fenetre.setClicSupp(false);
 
+    }
+
+    @Override
+    public void annuler(Controleur controleur, Fenetre fenetre) {
+        fenetre.afficherBoutonSupprimer();
+        controleur.setEtat(controleur.etatTournee);
     }
 
 }

@@ -51,10 +51,15 @@ public class EcouteurBoutons implements ActionListener {
                 controleur.changerCarte();
                 System.out.println("CHANGER CARTE");
                 break;
-            //Si on veut changer une carte
+            //Si on veut supprimer un point dinteret
             case Fenetre.SUPPRIMER:
                 controleur.supprimer(-1);
                 System.out.println("SUPPRIMER");
+                break;
+            //Si on veut annuler la suppression
+            case Fenetre.ANNULER:
+                controleur.annuler();
+                System.out.println("ANNULER");
                 break;
         }
 

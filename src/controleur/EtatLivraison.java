@@ -28,6 +28,7 @@ public class EtatLivraison implements Etat {
         fenetre.repaint();
         fenetre.afficherEtapesTour();
         fenetre.griserBoutonCalcul();
+        fenetre.afficherBoutonSupprimer();
         controleur.setEtat(controleur.etatTournee);
     }
 

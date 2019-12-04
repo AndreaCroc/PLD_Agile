@@ -66,6 +66,7 @@ public class Fenetre extends JFrame {
     protected final static String CHANGER_CARTE = "Changer carte";
     protected final static String MODIFIER = "Modifier";
     protected final static String SUPPRIMER = "Supprimer";
+    protected final static String ANNULER = "Annuler";
 
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -78,6 +79,7 @@ public class Fenetre extends JFrame {
     private JButton boutonChangerCarte;
     private JButton boutonModifier;
     private JButton boutonSupprimer;
+    private JButton boutonAnnuler;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -293,6 +295,13 @@ public class Fenetre extends JFrame {
         boutonModifier.setForeground(Color.white);
         boutonModifier.setBackground(new Color(50, 70, 120));
         boutonModifier.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour annuler  la suppression d un point d interet
+        boutonAnnuler = new JButton(ANNULER);
+        boutonAnnuler.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonAnnuler.setForeground(Color.white);
+        boutonAnnuler.setBackground(new Color(50, 70, 120));
+        boutonAnnuler.addActionListener(ecouteurBoutons);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
@@ -302,6 +311,7 @@ public class Fenetre extends JFrame {
         panneauEtapes.add(scrollEtapes);
         panneauEtapes.add(boutonSupprimer);
         panneauEtapes.add(boutonModifier);
+        panneauEtapes.add(boutonAnnuler);
         panneauEtapes.setVisible(false);
         panneauGauche.add(panneauEtapes);
 
@@ -498,8 +508,9 @@ public class Fenetre extends JFrame {
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth() / 5, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonModifier.setBounds(5 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonModifier.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonAnnuler.setBounds(7 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
     }
@@ -529,6 +540,36 @@ public class Fenetre extends JFrame {
      */
     public void griserBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(false);
+    }
+    
+    /**
+     * Pour rendre non cliquable le bouton pour annuler la suppression 
+     * ou modification
+     * Pour rendre cliquable les autres boutons
+     */
+    public void griserBoutonsSupprimer() {
+        this.boutonAnnuler.setEnabled(true);
+        
+        this.boutonChangerCarte.setEnabled(false);
+        this.boutonChargerLivraisons.setEnabled(false);
+        this.boutonCalculerTournee.setEnabled(false);
+        this.boutonSupprimer.setEnabled(false);
+        this.boutonModifier.setEnabled(false);
+    }
+    
+    /**
+     * Pour afficher le bouton pour l annulation de la suppression
+     * ou la modification
+     * Et poour griser les autres
+     */
+    public void afficherBoutonSupprimer() {
+        this.boutonAnnuler.setEnabled(false);
+        
+        this.boutonChangerCarte.setEnabled(true);
+        this.boutonChargerLivraisons.setEnabled(true);
+        this.boutonCalculerTournee.setEnabled(true);
+        this.boutonSupprimer.setEnabled(true);
+        this.boutonModifier.setEnabled(true);
     }
 
     /**
