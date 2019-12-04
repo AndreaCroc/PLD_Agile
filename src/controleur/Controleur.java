@@ -21,6 +21,11 @@ public class Controleur {
     private Fenetre fenetre;
     private Carte carte;
     private Tournee tournee;
+    private Etat etatCourant = new EtatInit();
+    // Instances associees a chaque etat possible du controleur
+    protected final EtatInit etatInit = new EtatInit();
+    protected final EtatAccueil etatAccueil = new EtatAccueil();
+    //etatCourant = etatInit;
 
     public Controleur() {
         carte = new Carte();
@@ -42,7 +47,7 @@ public class Controleur {
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
             } else {
@@ -54,14 +59,16 @@ public class Controleur {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
-
+        etatCourant.test1(this,fenetre);
+        etatCourant = etatAccueil;
+        etatCourant.test2(this,fenetre);
     }
-    
+
     /**
      * Charge une nouvelle carte
      */
     public void changerCarte() {
-        
+
         boolean changerCarte = false;
 
         try {
@@ -78,11 +85,11 @@ public class Controleur {
                 this.fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
-                
+
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur3("1 Erreur lors du chargement du fichier");
@@ -94,11 +101,10 @@ public class Controleur {
         }
     }
 
-
     /**
-    * Charge une livraison
-    *
-    */
+     * Charge une livraison
+     *
+     */
     public void chargerLivraison() {
 
         boolean chargerLivraison = false;
@@ -106,7 +112,7 @@ public class Controleur {
         try {
             //Choix du fichier XML
             chargerLivraison = carte.chargerLivraison();
-            
+
             //Si le chargement des livraisons s est bien passe,
             // on affiche les livraisons
             if (chargerLivraison) {
@@ -115,7 +121,7 @@ public class Controleur {
                 this.fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null,fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
@@ -133,40 +139,38 @@ public class Controleur {
     }
 
     /**
-    * Calculer une tournee
-    *
-    */
+     * Calculer une tournee
+     *
+     */
     public void calculerTournee() {
 
         fenetre.viderPanneauEtapes();
         this.tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee,this.fenetre));
+        fenetre.setPanneauCarte(new JCarte(this.carte, this.tournee, this.fenetre));
         fenetre.setTournee(this.tournee);
         fenetre.repaint();
         fenetre.afficherEtapesTour();
 
         System.out.println("Je lance le calcul d'une tournee");
-        
+
     }
-    
-    public void surbrillanceTableau(int index){
+
+    public void surbrillanceTableau(int index) {
         fenetre.surbrillanceLigneTab(index);
         fenetre.repaint();
     }
-    public void surbrillancePI(int ligne){
+
+    public void surbrillancePI(int ligne) {
         fenetre.entourerPI(ligne);
         fenetre.repaint();
     }
-    public Tournee getTournee(){
+
+    public Tournee getTournee() {
         return this.tournee;
     }
-    
-    public void setFenetreSurbrillance(boolean surb){
+
+    public void setFenetreSurbrillance(boolean surb) {
         this.fenetre.setSurbrillance(surb);
     }
-            
-            
-            
-            
 
 }
