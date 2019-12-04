@@ -566,6 +566,7 @@ public class Carte {
      * @throws Exception
      */
     public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException, Exception {
+        DemandesLivraisons sauvegardeDL = this.demandesLivraisons;
         this.setDemandesLivraisons(null);
         boolean ok = true;
 
@@ -630,10 +631,12 @@ public class Carte {
                 }
             } else {
                 ok = false;
+                this.setDemandesLivraisons(sauvegardeDL);
             }
 
         } else {
             ok = false;
+            this.setDemandesLivraisons(sauvegardeDL);
         }
 
         return ok;
@@ -654,7 +657,6 @@ public class Carte {
             if (construireCarteAPartirDeDOMXML(racine)) {
                 result = true;
             }
-            //System.out.println(this.getListeIntersections().toString());
         }
 
         if (estUnChangement) {

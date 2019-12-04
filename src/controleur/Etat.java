@@ -6,6 +6,8 @@
 package controleur;
 
 import Vue.Fenetre;
+import modele.Carte;
+import modele.Tournee;
 
 /*
  * Etat
@@ -21,6 +23,11 @@ public interface Etat {
     
     public default void test1(Controleur controleur, Fenetre fenetre){};
     public default void test2(Controleur controleur, Fenetre fenetre){};
-
+    
+    public default void chargerPageInit(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void chargerPageDeBase(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte){};
+    public default void chargerLivraison(Controleur controleur,Fenetre fenetre, Carte carte){};
+    public default void calculerTournee(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee){};
     
 }
