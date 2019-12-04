@@ -17,15 +17,17 @@ package Vue;
  */
 public class LigneEtapes {
 
-    private int numero;
+    private int ordre;
+    private int numDemande;
     private String type;
     private String rue;
     private String depart;
     private String arrivee;
     private String duree;
 
-    public LigneEtapes(int numero, String type, String rue, String depart, String arrivee, String duree) {
-        this.numero = numero;
+    public LigneEtapes(int ordre,int numero, String type, String rue, String depart, String arrivee, String duree) {
+        this.ordre = ordre;
+        this.numDemande = numero;
         this.type = type;
         this.rue = rue;
         this.depart = depart;
@@ -36,8 +38,12 @@ public class LigneEtapes {
     public LigneEtapes() {
     }
 
-    public int getNumero() {
-        return numero;
+    public int getOrdre() {
+        return ordre;
+    }
+
+    public int getNumDemande() {
+        return numDemande;
     }
 
     public String getType() {

@@ -11,7 +11,6 @@
  */
 package Vue;
 
-import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 /**
@@ -19,28 +18,26 @@ import javax.swing.JTextArea;
  * Classe LignePI correspond a un eligne du tableauPIs
  */
 public class LignePI {
-    private int numero;
+
+    private int numeroDemande;
     private String type;
     private JTextArea rue;
-    private JButton boutonModifier;
-    private JButton boutonSupp;
-    
+    private String duree;
 
-    public LignePI(int numero, String type, String rue) {
-        this.numero = numero;
+    public LignePI(int numero, String type, String rue, String duree) {
+        this.numeroDemande = numero;
         this.type = type;
         this.rue = new JTextArea(rue);
         this.rue.setLineWrap(true);
         this.rue.setWrapStyleWord(true);
-        this.boutonModifier = new JButton("Modifier");
-        this.boutonSupp = new JButton("Supprimer");
+        this.duree = duree;
     }
 
     public LignePI() {
     }
 
     public int getNumero() {
-        return numero;
+        return numeroDemande;
     }
 
     public String getType() {
@@ -51,16 +48,12 @@ public class LignePI {
         return rue;
     }
     
-    public JButton getBoutonModifier() {
-        return boutonModifier;
-    }
-
-    public JButton getBoutonSupp() {
-        return boutonSupp;
+    public String getDuree() {
+        return duree;
     }
 
     public void setNumero(int numero) {
-        this.numero = numero;
+        this.numeroDemande = numero;
     }
 
     public void setType(String type) {
@@ -70,14 +63,14 @@ public class LignePI {
     public void setRue(JTextArea rue) {
         this.rue = rue;
     }
-    
-    public void setBoutonModifier(JButton modifier) {
-        this.boutonModifier = modifier;
-    }
 
-    public void setBoutonSupp(JButton supp) {
-        this.boutonSupp = supp;
+    public void setDuree(String duree) {
+        this.duree = duree;
     }
     
     
+
+
+    
+
 }
