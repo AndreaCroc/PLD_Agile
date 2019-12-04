@@ -16,6 +16,16 @@ import modele.DemandesLivraisons;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
+
+/**
+ * Classe Controleur qui permet de faire le lien entre la vue et le modele
+ */
 public class Controleur {
 
     private Fenetre fenetre;
@@ -66,6 +76,7 @@ public class Controleur {
 
     /**
      * Charge une nouvelle carte
+     * Changer la carte
      */
     public void changerCarte() {
 
@@ -77,6 +88,7 @@ public class Controleur {
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et un affiche la carte
+            // on change de fenetre et on affiche la carte
             if (changerCarte) {
                 fenetre.viderPanneauEtapes();
                 fenetre.viderPanneauPIs();
@@ -155,11 +167,27 @@ public class Controleur {
 
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     *
+     * @param index indice du point d interet clique
+     */
+>>>>>>> b9c16c1022b00b21ecebd1cdae7f1fd696633c08
     public void surbrillanceTableau(int index) {
         fenetre.surbrillanceLigneTab(index);
         fenetre.repaint();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Encadrer un point d interet de la tournee
+     *
+     * @param ligne ligne du tableau selectionnee
+     */
+>>>>>>> b9c16c1022b00b21ecebd1cdae7f1fd696633c08
     public void surbrillancePI(int ligne) {
         fenetre.entourerPI(ligne);
         fenetre.repaint();
