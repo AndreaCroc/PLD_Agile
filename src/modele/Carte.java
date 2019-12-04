@@ -56,7 +56,10 @@ public class Carte {
         this.listeIntersections = listeIntersections;
     }
     
-    
+    public TSP2 getTSP(){
+        return unTSP;
+    }
+            
     public DemandesLivraisons getDemandesLivraisons() {
         return demandesLivraisons;
     }
@@ -81,7 +84,7 @@ public class Carte {
      * @param arrivee destination du troncon
      */
     public void relacherArc(Intersection depart, Intersection arrivee) {
-        System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
+        //System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
         Double coutArc = INFINI;
         ArrayList<Troncon> listeTronconsDepart = depart.getTronconsDepart();
         Troncon arc = new Troncon();
@@ -174,7 +177,7 @@ public class Carte {
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
         //le chemin dans le sens inverse en utilisant les prédécesseurs
-
+        
         while (intersectionCourante.getPredecesseur() != null) {
             //Tant qu'on est pas au sommet de départ 
             Intersection intersectionPrec = intersectionCourante;
@@ -204,7 +207,7 @@ public class Carte {
             //Creation du chemin correspondant
             chemin = new Chemin(depart, arrivee, successionTroncons);
         }
-
+        
         return chemin;
     }
 
@@ -239,6 +242,8 @@ public class Carte {
 
         //plus court chemin de chaque point d'intéràªt vers tous les autres 
         //(y compris l'entrepot)
+        long debut=System.currentTimeMillis();
+        System.out.println("DEBUT DIKSTRA : ");
         for (int i = 0; i < nbSommets; i++) {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
             dijkstra(intersectionCourante);
@@ -282,8 +287,8 @@ public class Carte {
 
             }
         }
-        
-
+        long fin=System.currentTimeMillis();
+        System.out.println("FIN DIKSTRA : "+(fin-debut));
     }
 
     /**
@@ -294,6 +299,7 @@ public class Carte {
      */
     public Tournee calculerTournee() {
 
+        
         creerGraphePCC();
 
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
@@ -305,8 +311,11 @@ public class Carte {
             duree[i] = listePointsInteret.get(i).getDuree();
         }
         //Execution du TSP
-        unTSP.chercheSolution(1000000, nbSommets, cout, duree);
-
+        System.out.println("DEBUT TSP : ");
+        long debut = System.currentTimeMillis();
+        //while(!unTSP.getStop()){
+            unTSP.chercheSolution(1000000, nbSommets, cout, duree);
+        
         Integer indPointPrec = unTSP.getMeilleureSolution(0);
 
         //Creation de la tournée
@@ -315,7 +324,7 @@ public class Carte {
         PointInteret pointCourant = new PointInteret();
         
         for (int i = 1; i < nbSommets; i++) {
-            indPointCourant = unTSP.getMeilleureSolution(i);
+            indPointCourant = unTSP.getMeilleureSolution(i);    
             Chemin chemin = chemins[indPointPrec][indPointCourant];
             pointCourant = listePointsInteret.get(indPointPrec);
             pointCourant.setCheminDepart(chemin);
@@ -325,6 +334,9 @@ public class Carte {
             indPointPrec = indPointCourant;
 
         }
+        long fin = System.currentTimeMillis();
+        System.out.println("Fin TSP : "+(fin-debut));
+        
         //Ajout du dernier point d'intérêt qui retourne vers l'entrepôt
         Chemin chemin = chemins[indPointCourant][0];
         pointCourant = listePointsInteret.get(indPointCourant);
@@ -417,7 +429,7 @@ public class Carte {
         //Recuperation de l'heure de départ de l'entrepôt
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
         pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
-        System.out.println("Depart entrepot");
+        //System.out.println("Depart entrepot");
         
         
         Integer heureArriveeCour;
