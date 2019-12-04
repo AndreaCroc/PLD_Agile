@@ -11,8 +11,13 @@
  */
 package Vue;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import modele.Chemin;
+import modele.PointInteret;
+import modele.Tournee;
+import modele.Troncon;
 
 /**
  *
@@ -25,12 +30,16 @@ public class AffichageEtapes extends AbstractTableModel {
     private final String header[];
     private int ligneSelect;
     private FormatCellRenderer formatcell;
+    private Fenetre fenetre;
+    private Tournee tournee;
 
-    public AffichageEtapes(FormatCellRenderer format) {
-        this.header = new String[]{"Numéro", "Type", "Rue", "Arrivée prévue", "Départ prévu", "Durée prévue"};
+    public AffichageEtapes(FormatCellRenderer format, Fenetre fenetre, Tournee tournee) {
+        this.header = new String[]{"Ordre", "Demande", "Type", "Rue", "Arrivée prévue", "Départ prévu", "Durée prévue"};
         this.steps = new ArrayList<>();
         this.ligneSelect = -1;
         this.formatcell = format;
+        this.fenetre = fenetre;
+        this.tournee = tournee;
     }
 
     /**
@@ -65,17 +74,20 @@ public class AffichageEtapes extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return this.steps.get(rowIndex).getNumero();
+                return this.steps.get(rowIndex).getOrdre();
             case 1:
-                return this.steps.get(rowIndex).getType();
+                return this.steps.get(rowIndex).getNumDemande();
             case 2:
-                return this.steps.get(rowIndex).getRue();
+                return this.steps.get(rowIndex).getType();
             case 3:
-                return this.steps.get(rowIndex).getArrivee();
+                return this.steps.get(rowIndex).getRue();
             case 4:
-                return this.steps.get(rowIndex).getDepart();
+                return this.steps.get(rowIndex).getArrivee();
             case 5:
+                return this.steps.get(rowIndex).getDepart();
+            case 6:
                 return this.steps.get(rowIndex).getDuree();
+
             default:
                 return null;
         }
@@ -83,7 +95,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Recuperer le nom de la colonne
-     * 
+     *
      * @param columnIndex : numero de la colonne
      * @return : nom de la colonne
      */
@@ -100,6 +112,10 @@ public class AffichageEtapes extends AbstractTableModel {
         this.ligneSelect = ligne;
     }
 
+    public void setTournee(Tournee tournee) {
+        this.tournee = tournee;
+    }
+
     public FormatCellRenderer getFormatcell() {
         return formatcell;
     }
@@ -110,7 +126,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Ajouter une ligne au tableau
-     * 
+     *
      * @param step : ligne a ajouter
      */
     public void addStep(LigneEtapes step) {
@@ -122,7 +138,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Supprimer une ligne du tableau
-     * 
+     *
      * @param rowIndex : numero de la ligne a supprimer
      */
     public void removeStep(int rowIndex) {
@@ -137,6 +153,79 @@ public class AffichageEtapes extends AbstractTableModel {
      */
     public void clearSteps() {
         this.steps.clear();
+    }
+
+    /**
+     * Afficher les etapes d une tournee
+     */
+    public void afficherEtapes() {
+        ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
+
+        String nomRue = "";
+        String heureArrivee = "";
+        String heureDepart = "";
+        String heureDeb = "";
+        String heureFin = "";
+        String type = "";
+        String nomRueEntrepot = "";
+        int duree = 0;
+        String dureeMin = "";
+        int ordre = 0;
+        int numDemande = 0;
+
+        //S assurer que la liste contient des points d'interet
+        if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
+            fenetre.viderPanneauEtapes();
+            for (PointInteret pt : successionPointsInteret) {
+                //Recuperer le numero de l etape
+                ordre = successionPointsInteret.indexOf(pt);
+                Chemin c = pt.getCheminDepart();
+                Troncon t = c.getSuccessionTroncons().get(0);
+                //Recuperer l adresse
+                nomRue = t.getNomRue();
+
+                //Recuperer le point d'interet correspondant a l'entrepot
+                if (ordre == 0) {
+                    nomRueEntrepot = nomRue;
+                    numDemande = 0;
+                    heureDeb = pt.getHeureDepart();
+                    heureDeb = heureDeb.substring(0, heureDeb.lastIndexOf(":"));
+                    heureDeb = heureDeb.replace(":", "h");
+                    heureFin = pt.getHeureArrivee();
+                    heureFin = heureFin.substring(0, heureFin.lastIndexOf(":"));
+                    heureFin = heureFin.replace(":", "h");
+                    //Afficher le depart de l'entrepot
+                    fenetre.setPanneauEtapesEntrepot(ordre, numDemande, nomRueEntrepot, heureDeb);
+                } else {
+                    numDemande = pt.getNumeroDemande();
+                    if (pt.isEnlevement()) {
+                        type = "Enlèvement";
+                    } else {
+                        type = "Livraison";
+                    }
+                    //Recuperer la duree de l etape
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    duree = pt.getDuree();
+                    dureeMin = df.format(duree / 60);
+                    dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf(","));
+                    //Recuperer l heure d arrivee au point d interet
+                    heureArrivee = pt.getHeureArrivee();
+                    heureArrivee = heureArrivee.substring(0, heureArrivee.lastIndexOf(":"));
+                    heureArrivee = heureArrivee.replace(":", "h");
+                    //Recuperer l heure de depart du point d interet
+                    heureDepart = pt.getHeureDepart();
+                    heureDepart = heureDepart.substring(0, heureDepart.lastIndexOf(":"));
+                    heureDepart = heureDepart.replace(":", "h");
+                    System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + dureeMin);
+                    //Afficher les etapes dans la fenetre
+                    fenetre.setPanneauEtapes(ordre, numDemande, type, nomRue, heureDepart, heureArrivee, dureeMin);
+                }
+            }
+            //Afficher le retour a l'entrepot
+            fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot, heureFin);
+
+        }
+
     }
 
 }

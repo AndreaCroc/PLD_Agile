@@ -30,11 +30,7 @@ public class TypeCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                 row, column);
 
-        //Si la valeur est de type JButton, on la transtype
-        if (value instanceof JButton) {
-            return (JButton) value;
-        //Si la valeur ets de type JTextArea, on la transtype
-        } else if (value instanceof JTextArea) {
+         if (value instanceof JTextArea) {
             return (JTextArea) value;
         }
         return this;

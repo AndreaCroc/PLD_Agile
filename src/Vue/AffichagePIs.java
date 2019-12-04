@@ -11,8 +11,8 @@
  */
 package Vue;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.table.AbstractTableModel;
 import modele.Carte;
@@ -38,7 +38,7 @@ public class AffichagePIs extends AbstractTableModel {
 
     public AffichagePIs(FormatCellRenderer formatcell, Carte carte, Fenetre fenetre) {
         this.lignePIs = new ArrayList<>();
-        this.header = new String[]{"Numéro", "Type", "Rue(s)", "Modifier", "Supprimer"};
+        this.header = new String[]{"Numéro demande", "Type", "Durée", "Rue(s)"};
         this.ligneSelect = -1;
         this.formatcell = formatcell;
         this.carte = carte;
@@ -81,11 +81,9 @@ public class AffichagePIs extends AbstractTableModel {
             case 1:
                 return this.lignePIs.get(rowIndex).getType();
             case 2:
-                return this.lignePIs.get(rowIndex).getRue();
+                return this.lignePIs.get(rowIndex).getDuree();
             case 3:
-                return this.lignePIs.get(rowIndex).getBoutonModifier();
-            case 4:
-                return this.lignePIs.get(rowIndex).getBoutonSupp();
+                return this.lignePIs.get(rowIndex).getRue();
             default:
                 return null;
         }
@@ -93,7 +91,7 @@ public class AffichagePIs extends AbstractTableModel {
 
     /**
      * Recuperer le nom de la colonne
-     * 
+     *
      * @param columnIndex : numero de la colonne
      * @return : nom de la colonne
      */
@@ -104,19 +102,16 @@ public class AffichagePIs extends AbstractTableModel {
 
     /**
      * Recuperer la classe d un element du tableau
-     * 
-     * @param columnIndex : indice de la colonne dont on veut recuperer la classe
+     *
+     * @param columnIndex : indice de la colonne dont on veut recuperer la
+     * classe
      * @return : classe de la colonne
      */
     @Override
     public Class getColumnClass(int columnIndex) {
         switch (columnIndex) {
-            case 2:
-                return JTextArea.class;
             case 3:
-                return JButton.class;
-            case 4:
-                return JButton.class;
+                return JTextArea.class;
             default:
                 return Object.class;
         }
@@ -140,7 +135,7 @@ public class AffichagePIs extends AbstractTableModel {
 
     /**
      * Ajouter une ligne a lia liste du tableau
-     * 
+     *
      * @param pi : ligne a ajouter
      */
     public void addPI(LignePI pi) {
@@ -152,7 +147,7 @@ public class AffichagePIs extends AbstractTableModel {
 
     /**
      * Supprimer une ligne de la liste du tableau
-     * 
+     *
      * @param rowIndex : indice de la ligne a supprimer
      */
     public void removePI(int rowIndex) {
@@ -180,7 +175,9 @@ public class AffichagePIs extends AbstractTableModel {
         ArrayList<PointInteret> listePIs = liste.getListePointsInteret();
         String nomRue = "";
         String type = "";
-        int index = 0;
+        int duree = 0;
+        String dureePt = "";
+        int num = 0;
         Intersection intersection;
         ArrayList<Troncon> listeT;
 
@@ -197,8 +194,12 @@ public class AffichagePIs extends AbstractTableModel {
                 }
             }
             nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
-            //Recuperer le numero du point d interet
-            index = listePIs.indexOf(pt);
+
+            //Recuperer la duree une fois arrivee au point d interet
+            DecimalFormat df = new DecimalFormat("0.00");
+            duree = pt.getDuree();
+            dureePt = df.format(duree / 60);
+            dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
 
             //Recuperer le type du point d interet
             if (pt.isEnlevement()) {
@@ -206,11 +207,17 @@ public class AffichagePIs extends AbstractTableModel {
             } else {
                 type = "Livraison";
             }
-            //On n affiche pas le depot
-            if (index != 0) {
-                //Afficher les details des points d interets
-                this.fenetre.setPanneauPIs(index, type, nomRue);
+            if (listePIs.indexOf(pt) == 0) {
+                type = "Entrepot";
+                dureePt = "";
+                num = 0;
+
+            //Recuperer le numero de la demande du point d interet
+            } else {
+                num = pt.getNumeroDemande();
             }
+            //Afficher les details des points d interets
+            this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
 
         }
     }

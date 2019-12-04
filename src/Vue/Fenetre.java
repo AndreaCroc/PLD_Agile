@@ -118,7 +118,6 @@ public class Fenetre extends JFrame {
     //Pour reagir aux actions de l utilisateur
     private EcouteurBoutons ecouteurBoutons;
     private EcouteurSouris ecouteurSouris;
-    private EcouteurBoutonsTable ecouteurBoutonsTable;
     private EcouteurListSelection ecouteurListSelect;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
@@ -143,8 +142,6 @@ public class Fenetre extends JFrame {
         this.vueTournee = new AffichageTournee(tournee, this);
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
-        
-        this.ecouteurBoutonsTable = new EcouteurBoutonsTable();
         
         this.ecouteurListSelect = new EcouteurListSelection(this.controleur);
 
@@ -205,12 +202,11 @@ public class Fenetre extends JFrame {
         //Ajuster la taille des lignes
         tableauPIs.setRowHeight(40);
         //Ajuster la taille des colonnes
-        tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tableauPIs.getColumnModel().getColumn(1).setPreferredWidth(40);
-        tableauPIs.getColumnModel().getColumn(2).setPreferredWidth(230);
+        //tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tableauPIs.getColumnModel().getColumn(3).setPreferredWidth(250);
 
         for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
-            if(i<2){
+            if(i<3){
                 //Appliquer un formatage a certaines colonnes du tableau
                 tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
             }else{
@@ -218,9 +214,6 @@ public class Fenetre extends JFrame {
                  this.tableauPIs.setDefaultRenderer(JComponent.class, new TypeCellRenderer());
             }
         }
-        //Rendre les boutons du tableau cliquable
-        tableauPIs.getColumnModel().getColumn(3).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
-        tableauPIs.getColumnModel().getColumn(4).setCellEditor(new BoutonCellEditor(new JCheckBox(),this.ecouteurBoutonsTable));
         
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -265,12 +258,12 @@ public class Fenetre extends JFrame {
         etapesTitre.setForeground(Color.white);
 
         //Vue sur les etapes d une tournee
-        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1));
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1),this,this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(40);
         tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableauEtapes.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableauEtapes.getColumnModel().getColumn(3).setPreferredWidth(150);
         for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
             //Appliquer un format aux colonnes du tableau
             tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
@@ -525,6 +518,8 @@ public class Fenetre extends JFrame {
         panneauTournee.setVisible(true);
         vueTournee.setTournee(tournee);
         vueTournee.afficherTournee();
+        vueEtapes.setTournee(tournee);
+        vueEtapes.afficherEtapes();
 
     }
 
@@ -626,15 +621,16 @@ public class Fenetre extends JFrame {
     /**
      * Afficher le detail de chaque etape de la tournee
      *
-     * @param numEtape numero de l etape
+     * @param ordre ordre de l etape dans la tournee
+     * @param numDemande numero de la demande de livraison associe a un point d interet
      * @param type le type de l etape
      * @param adresse l adresse de l etape
      * @param heureDep l heure de depart de l etape
      * @param heureArr l heure d arrivee de l etape
      * @param duree duree de l etape
      */
-    public void setPanneauEtapes(int numEtape, String type, String adresse, String heureDep, String heureArr, String duree) {
-        LigneEtapes step = new LigneEtapes(numEtape, type, adresse, heureDep, heureArr, duree + " min");
+    public void setPanneauEtapes(int ordre, int numDemande,String type, String adresse, String heureDep, String heureArr, String duree) {
+        LigneEtapes step = new LigneEtapes(ordre, numDemande,type, adresse, heureDep, heureArr, duree + " min");
         this.vueEtapes.addStep(step);
     }
 
@@ -642,29 +638,31 @@ public class Fenetre extends JFrame {
      * Afficher le detail de chaque point d interet
      *  faisant partie de la demande de livraions
      * 
-     * @param numEtape numero de l etape
+     * @param numEtape numero de la demande de livraison
      * @param type type de l etape
      * @param adresse  adresse de l etape
+     * @param duree duree de l etape
      */
-    public void setPanneauPIs(int numEtape, String type, String adresse) {
-        LignePI pi = new LignePI(numEtape, type, adresse);
+    public void setPanneauPIs(int numEtape, String type, String adresse,String duree) {
+        LignePI pi = new LignePI(numEtape, type, adresse, duree);
         this.vuePIs.addPI(pi);
     }
 
     /**
      * Afficher le detail de chaque etape de la tournee
      *
-     * @param numEtape numero de l etape
+     * @param ordre ordre de l etape dans la tournee
+     * @param numDemande numero de la demande
      * @param adresse l adresse de l etape
      * @param heure l heure de depart ou d arrivee de l entrepot
      */
-    public void setPanneauEtapesEntrepot(int numEtape, String adresse, String heure) {
+    public void setPanneauEtapesEntrepot(int ordre,int numDemande, String adresse, String heure) {
         LigneEtapes step;
-        if (numEtape == 0) {
-            step = new LigneEtapes(numEtape, "Entrepot", adresse, heure, "", "");
+        if (ordre == 0) {
+            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, heure, "", "");
 
         } else {
-            step = new LigneEtapes(numEtape, "Entrepot", adresse, "", heure, "");
+            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, "", heure, "");
         }
 
         this.vueEtapes.addStep(step);
