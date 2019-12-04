@@ -157,27 +157,24 @@ public class Controleur {
 
     }
 
-<<<<<<< HEAD
-=======
+
     /**
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee
      *
      * @param index indice du point d interet clique
      */
->>>>>>> b9c16c1022b00b21ecebd1cdae7f1fd696633c08
+
     public void surbrillanceTableau(int index) {
         fenetre.surbrillanceLigneTab(index);
         fenetre.repaint();
     }
 
-<<<<<<< HEAD
-=======
+    
     /**
      * Encadrer un point d interet de la tournee
      *
      * @param ligne ligne du tableau selectionnee
      */
->>>>>>> b9c16c1022b00b21ecebd1cdae7f1fd696633c08
     public void surbrillancePI(int ligne) {
         fenetre.entourerPI(ligne);
         fenetre.repaint();
