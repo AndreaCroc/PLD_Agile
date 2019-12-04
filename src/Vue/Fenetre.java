@@ -852,6 +852,10 @@ public class Fenetre extends JFrame {
         return inputChargeCarte.getText();
     }
     
+    public String getInputChargeLiv() {
+        return inputChargeLiv.getText();
+    }
+    
     
 
     /**

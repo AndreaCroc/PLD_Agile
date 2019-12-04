@@ -99,7 +99,7 @@ public class EtatTournee implements Etat {
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean chargerLivraison = false;
-        String cheminFichier = fenetre.getInputChargeCarte();
+        String cheminFichier = fenetre.getInputChargeLiv();
         
         fenetre.afficherMessageErreur3("");
 
