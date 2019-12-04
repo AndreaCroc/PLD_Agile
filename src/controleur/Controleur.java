@@ -11,7 +11,6 @@
 package controleur;
 
 import Vue.Fenetre;
-import Vue.JCarte;
 import modele.Carte;
 import modele.Tournee;
 
@@ -47,23 +46,29 @@ public class Controleur {
     }
     
     /**
-     * 
+     * Change la carte donc en charge une nouvelle
      */
     public void changerCarte() {
         etatCourant.changerCarte(this,fenetre,carte);
     }
     
     /**
-     * 
+     * Charger une livraison
      */
     public void chargerLivraison () {
         etatCourant.chargerLivraison(this,fenetre, carte);
     }
-    
+    /**
+     * Calculer une tournee
+     */
     public void calculerTournee () {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
     
+    /**
+     * Supprimer un point d interet de la tournee
+     * @param index : numero du point d interet a supprimer
+     */
     public void supprimer (int index) {
         etatCourant.supprimer(this, fenetre, carte, tournee, index);
     }

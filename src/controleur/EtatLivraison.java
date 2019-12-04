@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EtatLivraison
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package controleur;
 
@@ -12,10 +17,18 @@ import modele.Tournee;
 
 /**
  *
- * @author labou
+ * Classe EtatLivraison
  */
 public class EtatLivraison implements Etat {
 
+    /**
+     * Calculer une tournee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param tournee 
+     */
     @Override
     public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
 
@@ -32,6 +45,13 @@ public class EtatLivraison implements Etat {
         controleur.setEtat(controleur.etatTournee);
     }
 
+    /**
+     * Charger un fichier de livraisons
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
@@ -66,6 +86,13 @@ public class EtatLivraison implements Etat {
         }
     }
 
+    /**
+     * Changer la carte deja chargee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
 

@@ -25,9 +25,11 @@ import javax.swing.event.ListSelectionListener;
 public class EcouteurListSelection implements ListSelectionListener {
 
     private Controleur controleur;
+    private Fenetre fenetre;
 
-    public EcouteurListSelection(Controleur controleur) {
+    public EcouteurListSelection(Controleur controleur,Fenetre fenetre) {
         this.controleur = controleur;
+        this.fenetre = fenetre;
     }
 
     @Override
@@ -36,9 +38,9 @@ public class EcouteurListSelection implements ListSelectionListener {
 
         //Quand une ligne du tableau a ete selectionnee
         if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
-            //Trouver l index min d une ligne du tableau
+            //Trouver le premier index selectionne
             int minIndex = lsm.getMinSelectionIndex();
-            //Trouver l index max d une ligne du tableau
+            //Trouver le dernier index selectionne
             int maxIndex = lsm.getMaxSelectionIndex();
             for (int i = minIndex; i <= maxIndex; i++) {
                 //Trouver l unique ligne qui a ete selectionnee
@@ -47,6 +49,9 @@ public class EcouteurListSelection implements ListSelectionListener {
                     this.controleur.setFenetreSurbrillance(true);
                     //Afficher la point d interet correspond a la ligne en surbrillance
                     this.controleur.surbrillancePI(i);
+                    if(this.fenetre.getClicSupp()){
+                        this.controleur.supprimer(i);
+                    }
                 }
             }
         }

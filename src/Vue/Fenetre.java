@@ -152,7 +152,7 @@ public class Fenetre extends JFrame {
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
-        this.ecouteurListSelect = new EcouteurListSelection(this.controleur);
+        this.ecouteurListSelect = new EcouteurListSelection(this.controleur,this);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();

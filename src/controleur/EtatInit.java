@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EtatInit
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package controleur;
 
@@ -12,12 +17,13 @@ import modele.Tournee;
 
 /**
  *
- * @author labou
+ * Classe EtatInit
  */
 public class EtatInit implements Etat {
 
     /**
-     *
+     * Charger la premiere carte
+     * 
      * @param controleur
      * @param fenetre
      * @param carte

@@ -10,7 +10,6 @@
  */
 package application;
 
-import Vue.Fenetre;
 import controleur.Controleur;
 
 public class Application {

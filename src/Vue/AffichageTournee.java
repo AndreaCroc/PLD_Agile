@@ -13,10 +13,8 @@ package Vue;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import modele.Chemin;
 import modele.PointInteret;
 import modele.Tournee;
-import modele.Troncon;
 
 /**
  *

@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EtatDeBase
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package controleur;
 
@@ -9,8 +14,18 @@ import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
 
+/**
+ * Classe EtatDeBase
+ * 
+ */
 public class EtatDeBase implements Etat {
     
+    /**
+     * Changer la carte deja charge
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte){
         
@@ -48,6 +63,13 @@ public class EtatDeBase implements Etat {
         
     }
     
+    /**
+     * Charger une livraison lorsqu une carte est chargee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte){
         

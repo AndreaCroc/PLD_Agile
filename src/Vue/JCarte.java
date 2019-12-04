@@ -58,7 +58,7 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Ajouter un point au tableau stockant les coordonnes des points d interets
+     * Ajouter un point au tableau stockant les coordonnees des points d interets
      * de la tournee
      *
      * @param p point a ajouter

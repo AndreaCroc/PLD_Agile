@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EtatSupprimer
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package controleur;
 
@@ -14,16 +19,26 @@ import modele.Tournee;
 
 /**
  *
- * @author acer
+ * Classe EtatSupprimer
  */
 public class EtatSupprimer implements Etat {
 
+    /**
+     * Supprimer un point d interet de la tournee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param tournee
+     * @param index 
+     */
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
         PointInteret ptI = new PointInteret();
         System.out.println("index : " + index);
         int option = 1;
-        if (index != 0) {
+        int nbPIs = tournee.getSuccessionPointsInteret().size();
+        if (index != 0 && index !=nbPIs) {
             //Recuperer le point d interet que l utilisateur veut supprimer
             ptI = tournee.getSuccessionPointsInteret().get(index);
             //Afficher un popup de confirmation de suppression
@@ -54,6 +69,12 @@ public class EtatSupprimer implements Etat {
 
     }
 
+    /**
+     * Annuler le mode suppression d un point d interet
+     * 
+     * @param controleur
+     * @param fenetre 
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();

@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * EtatTournee
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 package controleur;
 
@@ -12,10 +17,17 @@ import modele.Tournee;
 
 /**
  *
- * @author labou
+ * Classe EtatTournee
  */
 public class EtatTournee implements Etat {
     
+    /**
+     * Changer la carte deja chargee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
 
@@ -76,6 +88,13 @@ public class EtatTournee implements Etat {
         }
     }
     
+    /**
+     * Charger des livraisons depuis un fichier XML
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte 
+     */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
@@ -111,6 +130,15 @@ public class EtatTournee implements Etat {
         }
     }
     
+    /**
+     * Supprimer un point d interet de la tournee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param tournee
+     * @param index 
+     */
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index){
         fenetre.setClicSupp(true);
