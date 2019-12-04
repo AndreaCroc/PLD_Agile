@@ -4,6 +4,7 @@ import tsp.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,6 +38,7 @@ public class Carte {
     //Pour le graphe de plus courts chemins
     Double[][] cout;
     Chemin[][] chemins;
+    TreeMap<Integer, Integer> mapPredecesseur;
     
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
@@ -222,6 +224,7 @@ public class Carte {
         int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
         //Initialisation de la matrice des couts
         cout = new Double[nbSommets][nbSommets];
+        mapPredecesseur = new TreeMap<>();
         for (int i = 0; i < nbSommets; i++) {
             cout[i] = new Double[nbSommets];
         }
@@ -261,18 +264,17 @@ public class Carte {
                     
                     if (!listePointsInteret.get(i).isEnlevement() && i!=0)
                     {
-                        double numPredecesseurs =0.0;
                         String idJ = listePointsInteret.get(i).getPointDependance().getIntersection().getId();
                         for (int k = 0; k < nbSommets; k++)
                         {
                             String IdK= listePointsInteret.get(k).getIntersection().getId();
                             if (idJ==IdK)
                             {
-                                numPredecesseurs = (double) k;
+                                mapPredecesseur.put(i, k);
                             }
                         }
-                        
-                        cout[i][j] = numPredecesseurs;
+                       
+                        cout[i][j] = 0.0;
                     }
                     else{
                         cout[i][j] = 0.0;
