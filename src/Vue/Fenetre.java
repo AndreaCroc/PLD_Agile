@@ -19,7 +19,6 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -72,6 +71,8 @@ public class Fenetre extends JFrame {
     private JButton boutonChargerLivraisons;
     private JButton boutonCalculerTournee;
     private JButton boutonChangerCarte;
+    private JButton boutonModifier;
+    private JButton boutonSupprimer;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -261,8 +262,8 @@ public class Fenetre extends JFrame {
         vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1),this,this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
-        tableauEtapes.setRowHeight(40);
-        tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableauEtapes.setRowHeight(30);
+        //tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
         tableauEtapes.getColumnModel().getColumn(3).setPreferredWidth(150);
         for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
             //Appliquer un format aux colonnes du tableau
@@ -275,12 +276,28 @@ public class Fenetre extends JFrame {
 
         scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        //Bouton pour supprimer un point d interet de la tournee
+        boutonSupprimer = new JButton(SUPPRIMER);
+        boutonSupprimer.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonSupprimer.setForeground(Color.white);
+        boutonSupprimer.setBackground(new Color(50, 70, 120));
+        boutonSupprimer.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour modifier  la tournee
+        boutonModifier = new JButton(MODIFIER);
+        boutonModifier.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonModifier.setForeground(Color.white);
+        boutonModifier.setBackground(new Color(50, 70, 120));
+        boutonModifier.addActionListener(ecouteurBoutons);
+        
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
         panneauEtapes.setBackground(new Color(186, 228, 255));
         panneauEtapes.add(etapesTitre);
         panneauEtapes.add(scrollEtapes);
+        panneauEtapes.add(boutonSupprimer);
+        panneauEtapes.add(boutonModifier);
         panneauEtapes.setVisible(false);
         panneauGauche.add(panneauEtapes);
 
@@ -477,8 +494,10 @@ public class Fenetre extends JFrame {
         labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
 
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
-        tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
-        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 9 * (int) panneauEtapes.getHeight() / 10);
+        tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
+        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
+        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth()/5,82 * (int) panneauEtapes.getHeight() / 100,1 * (int) panneauEtapes.getWidth()/4,15 * (int) panneauEtapes.getHeight() / 100);
+        boutonModifier.setBounds(1 * (int) panneauEtapes.getWidth()/2,82 * (int) panneauEtapes.getHeight() / 100,1 * (int) panneauEtapes.getWidth()/4,15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
     }
