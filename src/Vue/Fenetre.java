@@ -848,6 +848,12 @@ public class Fenetre extends JFrame {
         return this.clicSupp;
     }
 
+    public String getInputChargeCarte() {
+        return inputChargeCarte.getText();
+    }
+    
+    
+
     /**
      * Afficher une popup pour valider la suppression d un point d interet
      *

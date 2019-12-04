@@ -32,7 +32,7 @@ public class EtatTournee implements Etat {
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean changerCarte = false;
-
+        
         try {
             //Choix du fichier XML
             changerCarte = carte.chargerCarte(true);
@@ -99,6 +99,8 @@ public class EtatTournee implements Etat {
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean chargerLivraison = false;
+        String cheminFichier = fenetre.getInputChargeCarte();
+        
         fenetre.afficherMessageErreur3("");
 
         try {

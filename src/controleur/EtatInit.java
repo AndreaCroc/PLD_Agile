@@ -34,7 +34,7 @@ public class EtatInit implements Etat {
        
         //On charge la carte
         boolean chargerCarte = false;
-
+        String cheminFichier = fenetre.getInputChargeCarte();
         try {
             //Choix du fichier XML
             chargerCarte = carte.chargerCarte(false);
