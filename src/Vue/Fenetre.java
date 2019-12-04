@@ -97,6 +97,8 @@ public class Fenetre extends JFrame {
     private JLabel legendeTriangle;
     private JLabel titreAppli;
     private JLabel repChangeCarte;
+    private JLabel labelTabPI;
+    private JLabel labelTabEtapes;
 
     //Pour afficher les details d une tournee
     private JScrollPane scrollEtapes;
@@ -202,7 +204,8 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
- /* PanneauPIs (haut gauche) */
+        
+        /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
         vuePIs = new AffichagePIs(new FormatCellRenderer(-1), this.carte, this);
         //Tableau contenant les details des points d interets
@@ -227,6 +230,12 @@ public class Fenetre extends JFrame {
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        //Pour afficher si aucun point d interet dans le fichier de livraisons
+        labelTabPI = new JLabel("Aucune donnée dans le fichier de livraisons chargé");
+        labelTabPI.setFont(new Font("Arial", Font.BOLD, 14));
+        labelTabPI.setForeground(new Color(254, 79, 65));
+        labelTabPI.setVisible(false);
+        
         // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
@@ -234,7 +243,10 @@ public class Fenetre extends JFrame {
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(50, 70, 120)));
         panneauPIs.setVisible(false);
         panneauPIs.add(scrollPIs);
+        panneauPIs.add(labelTabPI);
         panneauGauche.add(panneauPIs);
+        
+        
 
         /* PanneauTournee (milieu bas gauche) */
         //Titre de panneauTournee
@@ -302,6 +314,12 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setForeground(Color.white);
         boutonAnnuler.setBackground(new Color(50, 70, 120));
         boutonAnnuler.addActionListener(ecouteurBoutons);
+        
+         //Afficher un message si aucun point d interet
+        labelTabEtapes = new JLabel("Aucun points d'intérêts");
+        labelTabEtapes.setFont(new Font("Arial", Font.BOLD, 14));
+        labelTabEtapes.setForeground(new Color(254, 79, 65));
+        labelTabEtapes.setVisible(false);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
@@ -513,6 +531,7 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setBounds(7 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
+        labelTabPI.setBounds((int) panneauPIs.getWidth()/4,(int) panneauPIs.getHeight()/20,(int) panneauPIs.getWidth(),(int) panneauPIs.getHeight()/20);
     }
 
     /**
@@ -650,6 +669,24 @@ public class Fenetre extends JFrame {
     public void afficherMessageErreur2(String message) {
         repChargeLiv.setText(message);
         repChargeLiv.setVisible(true);
+    }
+    
+     /**
+     * Afficher un message si aucune donnees dans le fichier des livraisons charge
+     *
+     * @param afficher savoir si on veut afficher ou cacher le message
+     */
+    public void afficherOuCacherMessageLivraison(boolean afficher) {
+        labelTabPI.setVisible(afficher);
+    }
+    
+    /**
+     * Afficher un message si aucune donnees dans le fichier des livraisons charge
+     *
+     * @param afficher savoir si on veut afficher ou cacher le message
+     */
+    public void afficherOuCacherMessageTournee(boolean afficher) {
+        labelTabEtapes.setVisible(afficher);
     }
 
     public JCarte getPanneauCarte() {

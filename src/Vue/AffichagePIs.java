@@ -137,7 +137,6 @@ public class AffichagePIs extends AbstractTableModel {
         this.carte = carte;
     }
 
-    
     /**
      * Ajouter une ligne a lia liste du tableau
      *
@@ -185,46 +184,51 @@ public class AffichagePIs extends AbstractTableModel {
         int num = 0;
         Intersection intersection;
         ArrayList<Troncon> listeT;
+        if (listePIs.size() > 1) {
+            for (PointInteret pt : listePIs) {
+                nomRue = "";
 
-        for (PointInteret pt : listePIs) {
-            nomRue = "";
+                intersection = pt.getIntersection();
+                listeT = intersection.getTronconsDepart();
 
-            intersection = pt.getIntersection();
-            listeT = intersection.getTronconsDepart();
-
-            //Recuperer les noms des rues qui intersectent le point d interet
-            for (Troncon t : listeT) {
-                if (!nomRue.contains(t.getNomRue())) {
-                    nomRue += t.getNomRue() + ", ";
+                //Recuperer les noms des rues qui intersectent le point d interet
+                for (Troncon t : listeT) {
+                    if (!nomRue.contains(t.getNomRue())) {
+                        nomRue += t.getNomRue() + ", ";
+                    }
                 }
+                nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
+
+                //Recuperer la duree une fois arrivee au point d interet
+                DecimalFormat df = new DecimalFormat("0.00");
+                duree = pt.getDuree();
+                dureePt = df.format(duree / 60);
+                dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
+
+                //Recuperer le type du point d interet
+                if (pt.isEnlevement()) {
+                    type = "Enlèvement";
+                } else {
+                    type = "Livraison";
+                }
+                if (listePIs.indexOf(pt) == 0) {
+                    type = "Entrepot";
+                    dureePt = "";
+                    num = 0;
+
+                    //Recuperer le numero de la demande du point d interet
+                } else {
+                    num = pt.getNumeroDemande();
+                }
+                //Afficher les details des points d interets
+                this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
+
             }
-            nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
-
-            //Recuperer la duree une fois arrivee au point d interet
-            DecimalFormat df = new DecimalFormat("0.00");
-            duree = pt.getDuree();
-            dureePt = df.format(duree / 60);
-            dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
-
-            //Recuperer le type du point d interet
-            if (pt.isEnlevement()) {
-                type = "Enlèvement";
-            } else {
-                type = "Livraison";
-            }
-            if (listePIs.indexOf(pt) == 0) {
-                type = "Entrepot";
-                dureePt = "";
-                num = 0;
-
-            //Recuperer le numero de la demande du point d interet
-            } else {
-                num = pt.getNumeroDemande();
-            }
-            //Afficher les details des points d interets
-            this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
-
+        } else{
+            this.fenetre.cacherPanneauPI();
+            this.fenetre.afficherOuCacherMessageLivraison(true);
         }
+
     }
 
 }

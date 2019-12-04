@@ -91,6 +91,7 @@ public class EtatDeBase implements Etat {
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
+                fenetre.afficherOuCacherMessageLivraison(false);
                 fenetre.afficherPanneauPI();
                 controleur.setEtat(controleur.etatLivraison);
             } else {

@@ -39,6 +39,7 @@ public class EtatLivraison implements Etat {
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
         fenetre.repaint();
+        fenetre.afficherOuCacherMessageTournee(false);
         fenetre.afficherEtapesTour();
         fenetre.griserBoutonCalcul();
         fenetre.afficherBoutonSupprimer();
@@ -74,6 +75,7 @@ public class EtatLivraison implements Etat {
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
+                fenetre.afficherOuCacherMessageLivraison(false);
                 fenetre.afficherPanneauPI();
             } else {
                 //Sinon, on affiche un message d erreur
