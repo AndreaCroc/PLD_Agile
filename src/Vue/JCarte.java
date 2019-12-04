@@ -302,7 +302,7 @@ public class JCarte extends JPanel{
 
                     if(t.getLongueur()>120){
                         int x=(int)(Math.abs((this.getProportionalX(t.getDestination(),intersections)+this.getProportionalX(t.getOrigine(),intersections)))/2);
-                        System.out.println("x = "+x);
+                        //System.out.println("x = "+x);
                         int y=(int)(Math.abs((this.getProportionalY(t.getDestination(),intersections)+this.getProportionalY(t.getOrigine(),intersections)))/2);
                         int xT[]={x-2,x+4,x+7};
                         int yT[]={y-2,y+7,y};

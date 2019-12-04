@@ -95,15 +95,24 @@ public class Controleur {
     *
     */
     public void calculerTournee() {
-
-        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
-        this.tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
-        fenetre.setTournee(this.tournee);
-        fenetre.repaint();
-        fenetre.afficherEtapesTour();
-
+        
         System.out.println("Je lance le calcul d'une tournee");
+        
+        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
+        while(!carte.getTSP().getStop()){
+            carte.getTSP().setNouvelleSolution(false);
+            while(!carte.getTSP().getNouvelleSolution()){
+            //System.out.println("stooooop  "+carte.getTSP().getStop());
+            //System.out.println("iciiiiiiiii "+carte.getTSP().getStop());
+            this.tournee = carte.calculerTournee();
+            fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
+            fenetre.setTournee(this.tournee);
+            fenetre.repaint();
+            fenetre.afficherEtapesTour();
+            //System.out.println("laaaaaaaaaa "+carte.getTSP().getStop());
+            }
+        }
+        carte.getTSP().setStop(false);
         
     }
     
