@@ -6,6 +6,7 @@
 package controleur;
 
 import Vue.Fenetre;
+import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -18,18 +19,25 @@ public class EtatSupprimer implements Etat {
 
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
-        PointInteret ptI;
-        System.out.println("index : "+index);
-        if(index!=0){
+        PointInteret ptI = new PointInteret();
+        System.out.println("index : " + index);
+        int option = 1;
+        if (index != 0) {
             //Recuperer le point d interet que l utilisateur veut supprimer
-            //ptI = tournee.getSuccessionPointsInteret().get(index);
+            ptI = tournee.getSuccessionPointsInteret().get(index);
             //Afficher un popup de confirmation de suppression
-            fenetre.afficherPopSuppression();
-        }else{
+            option = fenetre.afficherPopSuppression(ptI);
+            if (option == JOptionPane.OK_OPTION) {
+                System.out.println("Point d'interet supprime");
+                //carte.supprimerPointInteret(ptI);
+            }
+        } else {
             //Afficher popup d erreur car pas possible de supprimer l entrepot
+            fenetre.afficherPopSuppressionErreur();
         }
-        
-        
+        controleur.setEtat(controleur.etatTournee);
+        fenetre.setClicSupp(false);
+
     }
 
 }

@@ -129,6 +129,10 @@ public class Controleur {
     public Tournee getTournee() {
         return this.tournee;
     }
+    
+    public void setTournee(Tournee tournee){
+        this.tournee = tournee;
+    }
 
     public void setFenetreSurbrillance(boolean surb) {
         this.fenetre.setSurbrillance(surb);

@@ -24,6 +24,7 @@ public class EtatLivraison implements Etat {
         tournee = carte.calculerTournee();
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
         fenetre.repaint();
         fenetre.afficherEtapesTour();
         fenetre.griserBoutonCalcul();

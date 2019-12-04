@@ -29,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import modele.Carte;
+import modele.PointInteret;
 import modele.Tournee;
 
 /**
@@ -497,8 +498,8 @@ public class Fenetre extends JFrame {
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth() / 5, 82 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonModifier.setBounds(1 * (int) panneauEtapes.getWidth() / 2, 82 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth() / 5, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonModifier.setBounds(5 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
     }
@@ -768,18 +769,41 @@ public class Fenetre extends JFrame {
         return this.clicSupp;
     }
 
-    public void afficherPopSuppression() {
+    /**
+     * Afficher une popup pour valider la suppression d un point d interet
+     *
+     * @return option choisie par l utilisateur
+     */
+    public int afficherPopSuppression(PointInteret pti) {
         JOptionPane jop = new JOptionPane();
-        int option = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer le point d' intérêt?", "Suppression d'un point d 'intérêt", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        String type = "";
+        String typeAssocie = "";
+        String message = "Voulez-vous supprimer le point d'intérêt de type ";
 
-        if (option == JOptionPane.NO_OPTION) {
-            System.out.println("no option");
-        } else if (option == JOptionPane.OK_OPTION) {
-            System.out.println("ok option");
-        } else if (option == JOptionPane.CLOSED_OPTION) {
-            System.out.println("closed option");
-        } else{
-            System.out.println("autre option");
+        if (pti != null) {
+            int num = pti.getNumeroDemande();
+            if (pti.isEnlevement()) {
+                type = "enlèvement";
+                typeAssocie = "livraison";
+            } else {
+                type = "livraison";
+                typeAssocie = "enlèvement";
+            }
+            message += type + "\n"+"correspondant à la demande de livraison " + num +"\n"+"en sachant que le point d'intérêt de type " + typeAssocie + "\n"+"associé sera également supprimé ?";
         }
+        int option = jop.showConfirmDialog(null, message, "Suppression d'un point d 'intérêt", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        return option;
+    }
+
+    /**
+     * Afficher une popup d erreur dans le cas ou l utilisateur veut supprimer l
+     * entrepot
+     *
+     */
+    public void afficherPopSuppressionErreur() {
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "Vous ne pouvez pas supprimer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
+
     }
 }
