@@ -50,6 +50,11 @@ public class DemandesLivraisons {
         this.listePointsInteret.add(pI);
     }
 
+    public void setListePointsInteret(ArrayList<PointInteret> listePointsInteret) {
+        this.listePointsInteret = listePointsInteret;
+    }
+    
+
  
     
 }

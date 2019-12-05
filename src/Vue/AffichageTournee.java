@@ -52,7 +52,7 @@ public class AffichageTournee {
 //        Troncon troncon1 = new Troncon();
 //        troncon1.setNomRue("Lyon");
 //        chemin1.ajouterTroncon(troncon1);
-//        p1.setEstEnlevement(false);
+//        p1.setEnlevement(false);
 //        p1.setHeureArrivee(9);
 //        p1.setCheminDepart(chemin1);
 //        
@@ -60,7 +60,7 @@ public class AffichageTournee {
 //        Troncon troncon2 = new Troncon();
 //        troncon2.setNomRue("Paris");
 //        chemin2.ajouterTroncon(troncon2);
-//        p2.setEstEnlevement(true);
+//        p2.setEnlevement(true);
 //        p2.setHeureArrivee(10);
 //        p2.setCheminDepart(chemin2);
 //        
@@ -68,7 +68,7 @@ public class AffichageTournee {
 //        Troncon troncon3 = new Troncon();
 //        troncon3.setNomRue("Sainte Maxime");
 //        chemin3.ajouterTroncon(troncon3);
-//        p3.setEstEnlevement(false);
+//        p3.setEnlevement(false);
 //        p3.setHeureArrivee(11);
 //        p3.setCheminDepart(chemin3);
 //        
@@ -76,7 +76,7 @@ public class AffichageTournee {
 //        Troncon troncon4 = new Troncon();
 //        troncon4.setNomRue("Sainte Maxime");
 //        chemin4.ajouterTroncon(troncon4);
-//        p4.setEstEnlevement(false);
+//        p4.setEnlevement(false);
 //        p4.setHeureArrivee(11);
 //        p4.setCheminDepart(chemin4);
 //        
@@ -84,7 +84,7 @@ public class AffichageTournee {
 //        Troncon troncon5 = new Troncon();
 //        troncon5.setNomRue("Sainte Maxime");
 //        chemin5.ajouterTroncon(troncon5);
-//        p5.setEstEnlevement(false);
+//        p5.setEnlevement(false);
 //        p5.setHeureArrivee(11);
 //        p5.setCheminDepart(chemin5);
 //        
@@ -92,7 +92,7 @@ public class AffichageTournee {
 //        Troncon troncon6 = new Troncon();
 //        troncon6.setNomRue("Sainte Maxime");
 //        chemin6.ajouterTroncon(troncon6);
-//        p6.setEstEnlevement(false);
+//        p6.setEnlevement(false);
 //        p6.setHeureArrivee(11);
 //        p6.setCheminDepart(chemin6);
 //        

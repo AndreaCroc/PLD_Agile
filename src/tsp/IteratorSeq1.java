@@ -28,7 +28,6 @@ public class IteratorSeq1 implements Iterator<Integer> {
 
                 
                 this.candidats = new Integer[num];
-                System.out.println(num);
                 for (int j = 0; j < num; j++)
                 {
 			candidats[nbCandidats++] = candidatsBis[j];

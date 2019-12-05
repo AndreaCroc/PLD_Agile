@@ -53,7 +53,7 @@ public class PointInteret {
         return enlevement;
     }
 
-    public void setEstEnlevement(boolean estEnlevement) {
+    public void setEnlevement(boolean estEnlevement) {
         this.enlevement = estEnlevement;
     }
 

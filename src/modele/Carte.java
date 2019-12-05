@@ -38,8 +38,12 @@ public class Carte {
     Double[][] cout;
     Chemin[][] chemins;
     
+    //Pour l'affichage des points d'intérêt à tout moment sur la carte
+    ArrayList<PointInteret> listePointsInteretActuelle;
+
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
+        this.listePointsInteretActuelle = new ArrayList<PointInteret>();
         this.unTSP = new TSP2();
         this.uneTournee = new Tournee();
     }
@@ -55,8 +59,7 @@ public class Carte {
     public void setListeIntersections(ArrayList<Intersection> listeIntersections) {
         this.listeIntersections = listeIntersections;
     }
-    
-    
+
     public DemandesLivraisons getDemandesLivraisons() {
         return demandesLivraisons;
     }
@@ -73,6 +76,24 @@ public class Carte {
         this.demandesLivraisons = dL;
     }
 
+    public void setCout(Double[][] cout) {
+        this.cout = cout;
+    }
+
+    public void setChemins(Chemin[][] chemins) {
+        this.chemins = chemins;
+    }
+
+    public ArrayList<PointInteret> getListePointsInteretActuelle() {
+        return listePointsInteretActuelle;
+    }
+
+    public void setListePointsInteretActuelle(ArrayList<PointInteret> listePointsInteretActuelle) {
+        this.listePointsInteretActuelle = listePointsInteretActuelle;
+    }
+    
+    
+
     /**
      * Relâchement d'un arc (troncon) reliant deux intersections Utilisée pour
      * le calcul des plus courts chemins (Dijkstra)
@@ -81,7 +102,6 @@ public class Carte {
      * @param arrivee destination du troncon
      */
     public void relacherArc(Intersection depart, Intersection arrivee) {
-        System.out.println("Relachement Arc (" + depart.getId() + "," + arrivee.getId() + ")");
         Double coutArc = INFINI;
         ArrayList<Troncon> listeTronconsDepart = depart.getTronconsDepart();
         Troncon arc = new Troncon();
@@ -174,7 +194,7 @@ public class Carte {
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
         //le chemin dans le sens inverse en utilisant les prédécesseurs
-
+        
         while (intersectionCourante.getPredecesseur() != null) {
             //Tant qu'on est pas au sommet de départ 
             Intersection intersectionPrec = intersectionCourante;
@@ -193,6 +213,7 @@ public class Carte {
 
             //S'il n'y a pas de chemin, retourner null
             if (cheminInverse.size() == 0) {
+                System.out.println("if chiant");
                 return null;
             }
 
@@ -203,8 +224,8 @@ public class Carte {
             }
             //Creation du chemin correspondant
             chemin = new Chemin(depart, arrivee, successionTroncons);
+            
         }
-
         return chemin;
     }
 
@@ -221,14 +242,15 @@ public class Carte {
         //recuperation du nombre de sommets (en tenant compte de l'entrepot)
         int nbSommets = this.demandesLivraisons.getListePointsInteret().size();
         //Initialisation de la matrice des couts
-        cout = new Double[nbSommets][nbSommets];
-        for (int i = 0; i < nbSommets; i++) {
-            cout[i] = new Double[nbSommets];
+        cout = new Double[nbSommets + 5][nbSommets + 5];
+        for (int i = 0; i < nbSommets + 5; i++) {
+            cout[i] = new Double[nbSommets + 5];
         }
-        //Initialisation de la matrice des plus courts chemins
-        chemins = new Chemin[nbSommets][nbSommets];
-        for (int i = 0; i < nbSommets; i++) {
-            chemins[i] = new Chemin[nbSommets];
+        //Initialisation de la matrice des plus courts chemins (avec des colonnes
+        //et lignes supplémentaires)
+        chemins = new Chemin[nbSommets + 5][nbSommets + 5];
+        for (int i = 0; i < nbSommets + 5; i++) {
+            chemins[i] = new Chemin[nbSommets + 5];
         }
         //Remplissage de la matrice
         //plus courts chemins de l'entrepot vers tous les autres points d'intéràªt
@@ -255,34 +277,29 @@ public class Carte {
                         //Recuperation du cout en secondes
                         cout[i][j] = plusCourtChemin.getLongueur();
                         chemins[i][j] = plusCourtChemin;
-                        
+
                     }
                 } else if (i == j) {
-                    
-                    if (!listePointsInteret.get(i).isEnlevement() && i!=0)
-                    {
-                        double numPredecesseurs =0.0;
+
+                    if (!listePointsInteret.get(i).isEnlevement() && i != 0) {
+                        double numPredecesseurs = 0.0;
                         String idJ = listePointsInteret.get(i).getPointDependance().getIntersection().getId();
-                        for (int k = 0; k < nbSommets; k++)
-                        {
-                            String IdK= listePointsInteret.get(k).getIntersection().getId();
-                            if (idJ==IdK)
-                            {
+                        for (int k = 0; k < nbSommets; k++) {
+                            String IdK = listePointsInteret.get(k).getIntersection().getId();
+                            if (idJ == IdK) {
                                 numPredecesseurs = (double) k;
                             }
                         }
-                        
+
                         cout[i][j] = numPredecesseurs;
-                    }
-                    else{
+                    } else {
                         cout[i][j] = 0.0;
-                            }
+                    }
                     chemins[i][j] = null;
                 }
 
             }
         }
-        
 
     }
 
@@ -293,140 +310,342 @@ public class Carte {
      * @return l'objet tournée créée
      */
     public Tournee calculerTournee() {
-
-        creerGraphePCC();
-
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
-
-        //Initialisation des durees
-        Integer[] duree = new Integer[nbSommets];
-        for (int i = 0; i < nbSommets; i++) {
-            duree[i] = listePointsInteret.get(i).getDuree();
-        }
-        //Execution du TSP
-        unTSP.chercheSolution(1000000, nbSommets, cout, duree);
-
-        Integer indPointPrec = unTSP.getMeilleureSolution(0);
-
         //Creation de la tournée
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
-        PointInteret pointCourant = new PointInteret();
-        
-        for (int i = 1; i < nbSommets; i++) {
-            indPointCourant = unTSP.getMeilleureSolution(i);
-            Chemin chemin = chemins[indPointPrec][indPointCourant];
-            pointCourant = listePointsInteret.get(indPointPrec);
+        Integer indPointPrec;
+        Chemin chemin;
+            
+        //Cas où il n'y a aucune demande de livraisons
+        if (nbSommets == 1) {
+            tournee.ajouterPointInteret(listePointsInteret.get(0));
+            this.setUneTournee(tournee);
+        } else {
+            creerGraphePCC();
+
+            //Initialisation des durees
+            Integer[] duree = new Integer[nbSommets];
+            for (int i = 0; i < nbSommets; i++) {
+                duree[i] = listePointsInteret.get(i).getDuree();
+            }
+
+            //Execution du TSP
+            unTSP.chercheSolution(1000000, nbSommets, cout, duree);
+
+            indPointPrec = unTSP.getMeilleureSolution(0);
+
+            
+            PointInteret pointCourant = new PointInteret();
+
+            for (int i = 1; i < nbSommets; i++) {
+                indPointCourant = unTSP.getMeilleureSolution(i);
+                chemin = chemins[indPointPrec][indPointCourant];
+                pointCourant = listePointsInteret.get(indPointPrec);
+                pointCourant.setCheminDepart(chemin);
+
+                //Ajout a la tournee
+                tournee.ajouterPointInteret(pointCourant);
+                indPointPrec = indPointCourant;
+
+            }
+            //Ajout du dernier point d'intérêt qui retourne vers l'entrepôt
+           chemin = chemins[indPointCourant][0];
+            pointCourant = listePointsInteret.get(indPointCourant);
             pointCourant.setCheminDepart(chemin);
 
             //Ajout a la tournee
             tournee.ajouterPointInteret(pointCourant);
-            indPointPrec = indPointCourant;
+            
+            this.setUneTournee(tournee);
 
+            //Calcul des heures
+            this.calculerHeuresTournee();
         }
-        //Ajout du dernier point d'intérêt qui retourne vers l'entrepôt
-        Chemin chemin = chemins[indPointCourant][0];
-        pointCourant = listePointsInteret.get(indPointCourant);
-        pointCourant.setCheminDepart(chemin);
-
-        //Ajout a la tournee
-        tournee.ajouterPointInteret(pointCourant);
-
-        //Calcul des heures
-        this.setUneTournee(calculerHeuresTournee(tournee));
         return tournee;
-
     }
-    
+
     /**
      * Méthode permettant de supprimer un point d'intérêt d'une tournée
+     *
      * @param pointInteret le point d'intérêt à supprimer
-     * @return 
+     * @return vrai si la suppression a été effectuée, faux sinon
      */
-    public Tournee supprimerPointInteret(PointInteret pointInteret) 
-    {
+    public boolean supprimerPointInteret(PointInteret pointInteret) {
         ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         PointInteret pointPrec; //Point précédent le point dans la tournée
-        PointInteret pointSuivant; //Point suivant le poit dans la tournée
+        PointInteret pointSuivant; //Point suivant le point dans la tournée
         int indPrecListeP; //Indice du point precedent dans la liste des points d'intérêts
         int indSuivListeP; //Indice du point suivant dans la liste des points d'intérêts
         int indPointTournee; //Indice du point d'intérêt dans la tournée
         PointInteret pointDependance = pointInteret.getPointDependance(); //point
         //d'enlévement ou de livraison associé
-        
-        
-        if (!successionPointsInteret.contains(pointInteret)) {
-            return null;
-        }
-        
-       //Récupération de la position du points dans la tournee
-       indPointTournee = successionPointsInteret.indexOf(pointInteret);
+        Chemin cheminPointPrec; //Chemin allant du point précédent au point suivant
 
-        
+        if (!successionPointsInteret.contains(pointInteret)) {
+            return false;
+        }
+
+        //Récupération de la position du points dans la tournee
+        indPointTournee = successionPointsInteret.indexOf(pointInteret);
+
+        //Recuperation du point d'intérêt précédent 
+        pointPrec = successionPointsInteret.get(indPointTournee - 1);
+        //Recuperation de l'indice du point prec dans la liste des points d'intérêts
+        indPrecListeP = listePointsInteret.indexOf(pointPrec);
         //Si le point d'intérêt est le dernier de la tournee (avant le retour à 
         //l'entrepot
-        if (indPointTournee == successionPointsInteret.size()-1) {
-            //Recuperation du point d'intérêt précédent 
-            pointPrec = successionPointsInteret.get(indPointTournee-1);
-            //Recuperation de l'indice du point dans la liste des points d'intérêts
-            indPrecListeP = listePointsInteret.indexOf(pointPrec);
-            
+        if (indPointTournee == successionPointsInteret.size() - 1) {
             //Recuperation du point d'intérêt suivant (l'entrepôt)
             pointSuivant = successionPointsInteret.get(0);
             //Recuperation de l'indice du point dans la liste des points d'intérêts
             indSuivListeP = 0;
         } else {
-            //Recuperation du point d'intérêt précédent 
-            pointPrec = successionPointsInteret.get(indPointTournee-1);
-            //Recuperation de l'indice du point dans la liste des points d'intérêts
-            indPrecListeP = listePointsInteret.indexOf(pointPrec);
-            
             //Recuperation du point d'intérêt suivant 
-            pointSuivant = successionPointsInteret.get(indPointTournee+1);
+            pointSuivant = successionPointsInteret.get(indPointTournee + 1);
             //Recuperation de l'indice du point dans la liste des points d'intérêts
-            indSuivListeP =  listePointsInteret.indexOf(pointSuivant);
+            indSuivListeP = listePointsInteret.indexOf(pointSuivant);
         }
-        
-        Chemin cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
+        cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
         pointPrec.setCheminDepart(cheminPointPrec);
-        
-        //Suppression de la tournee et de la liste des points d'intérêts
+
+        //Suppression du point de la tournee et de la liste des points d'intérêts
         successionPointsInteret.remove(pointInteret);
-        listePointsInteret.remove(pointInteret);
-        
-        //Suppression du point de dépendance correspondant
-        supprimerPointInteret(pointDependance);
-        
-        this.setUneTournee(calculerHeuresTournee(uneTournee));
-        return uneTournee;
+        listePointsInteretActuelle.remove(pointInteret);
+
+        //Suppression du point de dépendance correspondant (si nécessaire)
+        if (successionPointsInteret.contains(pointDependance)) {
+            supprimerPointInteret(pointDependance);
+        }
+
+        //S'il reste encore des éléments dans la tournée     
+        if (successionPointsInteret.size() > 1) {
+            //Mise à jour des heures de départ et d'arrivée
+            calculerHeuresTournee();
+        }
+
+        return true;
     }
-    
+
+    /** Méthode permettant d'ajouter une nouvelle livraison (point enlevement + 
+     * point de livraison) à une tournee
+     * 
+     * @param latitudeEnlvt latitude du point d'enlèvement
+     * @param longitudeEnlvt longitude du point d'enlèvement
+     * @param latitudeLivr latitude du point de livraison
+     * @param longitudeLivr longitude du point de livraison
+     * @param pointAvantEnlevement point d'intérêt après lequel on souhaite placer le point d'enlèvement
+     * @param pointAvantLivraison point d'intérêt après lequel on souhaite placer le point de livraison
+     * @param dureeEnlevement durée d'enlèvement
+     * @param dureeLivraison durée de livraison
+     * @return vrai si l'ajout a été effectué, faux sinon
+     */
+    public boolean ajouterLivraison(Double latitudeEnlvt, Double longitudeEnlvt, 
+            Double latitudeLivr,Double longitudeLivr, PointInteret pointAvantEnlevement, 
+            PointInteret pointAvantLivraison,int dureeEnlevement, int dureeLivraison) {
+        
+        ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
+        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        Intersection intersectionEnlvt = null; //Intersection correspondant au premier point (enlévement)
+        Intersection intersectionLivr = null; ////Intersection correspondant au second point (livraison)
+        PointInteret pointEnlevement; //Le point d'enlévement à ajouter
+        PointInteret pointLivraison; //Le point de livraison à ajouter
+        //Indice du point précédant l'enlevement dans la tournee
+        int indPointAvantEnlvt = successionPointsInteret.indexOf(pointAvantEnlevement);
+        //Indice du point précédant la livraison dans la tournee
+        int indPointAvantLivr = successionPointsInteret.indexOf(pointAvantLivraison);
+        //Numéro de la demande de livraison
+        int numeroDemande = (listePointsInteret.size()-1)/2 +1;
+
+        //Recherche des intersections correspondants aux coordonnées 
+        for (Intersection i : listeIntersections) {
+            if ((i.getLatitude()).toString().equals(latitudeEnlvt.toString())  && 
+                    (i.getLongitude()).toString().equals(longitudeEnlvt.toString())) {
+                intersectionEnlvt = i;
+            } 
+            if ((i.getLatitude()).toString().equals(latitudeLivr.toString()) && 
+                    (i.getLongitude()).toString().equals(longitudeLivr.toString())) {
+                intersectionLivr = i;
+            }
+        }
+        //Création des points d'intérêt
+        pointEnlevement = new PointInteret(intersectionEnlvt, dureeEnlevement);
+        pointEnlevement.setEnlevement(true);
+        pointEnlevement.setEntrepot(false);
+        pointLivraison = new PointInteret(intersectionLivr, dureeLivraison);
+        pointLivraison.setEnlevement(false);
+        pointLivraison.setEntrepot(false);
+        pointEnlevement.setPointDependance(pointLivraison);
+        pointLivraison.setPointDependance(pointEnlevement);
+        pointEnlevement.setNumeroDemande(numeroDemande);
+        pointLivraison.setNumeroDemande(numeroDemande);
+        
+        //Cas où le point d'intérêt est déjà dans la liste
+        //A voir
+        
+        //Ajout aux listes de points d'intérêt
+        listePointsInteret.add(pointEnlevement);
+        listePointsInteret.add(pointLivraison);
+        listePointsInteretActuelle.add(pointEnlevement);
+        listePointsInteretActuelle.add(pointLivraison);
+
+
+        //Vérification de la contrainte de précédence
+        if (indPointAvantLivr < indPointAvantEnlvt) {
+            return false;
+        } //Cas où l'enlèvement doit être placé juste avant la livraison
+        else if (indPointAvantLivr == indPointAvantEnlvt) {
+            this.ajouterPointInteret(pointEnlevement, pointAvantEnlevement);
+            this.ajouterPointInteret(pointLivraison, pointEnlevement);
+        } else {
+            ajouterPointInteret(pointEnlevement, pointAvantEnlevement);
+            ajouterPointInteret(pointLivraison, pointAvantLivraison);
+        }
+
+        //Mise à jour des heures de départ et d'arrivée
+        this.calculerHeuresTournee();
+
+        return true;
+    }
     /**
-     * Méthode permettant de calculer les heures d'arrivées et de départ des 
+     * Méthode permettant d'ajouter un point d'intérêt à une tournée après un point
+     * d'intérêt donné de la tournée
+     * @param pointInteret le point d'intérêt à ajouter
+     * @param pointPrecedent le point d'intérêt après lequel il faut ajouter le nouveau point
+     * @return vrai si l'ajout a été effectué, faux sinon
+     */
+    public boolean ajouterPointInteret(PointInteret pointInteret, PointInteret pointPrecedent) {
+        ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
+        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        PointInteret pointSuivant; //Point suivant le point dans la tournée
+        int indPrecListeP; //Indice du point precedent dans la liste des points d'intérêts
+        int indSuivListeP; //Indice du point suivant dans la liste des points d'intérêts
+        int indPointListeP; //Indice du point d'intérêt dans la liste des points d'intérêts
+        int indPointPrecT; //Indice du point précédent dans la tournée
+        Chemin cheminPointPrec; //Chemin allant du point précédent au point d'intérêt
+        Chemin cheminPointCourant; //Chemin allant du point d'intérêt ajouté au point d'intérêt suivant
+
+        //Récupération de l'indice du point précédent dans la tournée
+        indPointPrecT = successionPointsInteret.indexOf(pointPrecedent);
+
+        //Récupération du point suivant dans la tournée
+        //Si l'ajout se fait en fin de tournee
+        if (indPointPrecT == successionPointsInteret.size() - 1) {
+            //Recuperation du point d'intérêt suivant (l'entrepôt)
+            pointSuivant = successionPointsInteret.get(0);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indSuivListeP = 0;
+        } else {
+            //Recuperation du point d'intérêt suivant 
+            pointSuivant = successionPointsInteret.get(indPointPrecT + 1);
+            //Recuperation de l'indice du point dans la liste des points d'intérêts
+            indSuivListeP = listePointsInteret.indexOf(pointSuivant);
+        }
+
+        //Récupération des indices des autres points dans la liste des points d'intérêt
+        indPrecListeP = listePointsInteret.indexOf(pointPrecedent);
+        indPointListeP = listePointsInteret.indexOf(pointInteret);
+
+        //Ajout du point d'intérêt après le point précédent
+        successionPointsInteret.add(indPointPrecT + 1, pointInteret);
+
+        //Mise à jour des chemins
+        //Calcul du chemin allant du point précédent au point ajouté
+        dijkstra(pointPrecedent.getIntersection());
+        cheminPointPrec = plusCourtChemin(pointPrecedent.getIntersection(), pointInteret.getIntersection());
+        System.out.println("chemin point prec "+plusCourtChemin(pointPrecedent.getIntersection(), pointInteret.getIntersection()));
+
+        //Ajout à la matrice des chemins et celle des couts
+        ajouterCoutEtChemin(cheminPointPrec, indPrecListeP, indPointListeP);
+
+        //Calcul du chemin allant du point ajouté au point suivant
+        dijkstra(pointInteret.getIntersection());
+        cheminPointCourant = plusCourtChemin(pointInteret.getIntersection(), pointSuivant.getIntersection());
+        System.out.println("chemin point courant "+cheminPointCourant);
+        //Ajout à la matrice des chemins et celle des couts
+        ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
+
+        
+        pointPrecedent.setCheminDepart(cheminPointPrec);
+        pointInteret.setCheminDepart(cheminPointCourant);
+
+        return true;
+    }
+
+    private boolean ajouterCoutEtChemin(Chemin chemin, int indOrigine, int indDestination) {
+        Chemin[][] nouvChemins;
+        Double[][] nouvCouts;
+        int nbSommets = demandesLivraisons.getListePointsInteret().size();
+        //Si la matrice des chemins n'est pas encore pleine
+        if (chemins[0].length > nbSommets) {
+            chemins[indOrigine][indDestination] = chemin;
+        } else {
+            //On crée une nouvelle matrice
+            //Initialisation de la matrice des plus courts chemins (avec des colonnes
+            //et lignes supplémentaires)
+            nouvChemins = new Chemin[nbSommets + 5][nbSommets + 5];
+            for (int i = 0; i < nbSommets + 5; i++) {
+                nouvChemins[i] = new Chemin[nbSommets + 5];
+            }
+
+            //Remplissage de la matrice 
+            for (int i = 0; i < nbSommets - 1; i++) {
+                for (int j = 0; j < nbSommets - 1; j++) {
+                    nouvChemins[i][j] = chemins[i][j];
+                }
+            }
+            nouvChemins[indOrigine][indDestination] = chemin;
+            this.setChemins(nouvChemins);
+        }
+        //Même chose pour la matrice des couts
+        if (cout[0].length > nbSommets) {
+            cout[indOrigine][indDestination] = chemin.getLongueur();
+        } else {
+            //On crée une nouvelle matrice
+            //Initialisation de la matrice des plus courts chemins (avec des colonnes
+            //et lignes supplémentaires)
+            nouvCouts = new Double[nbSommets + 5][nbSommets + 5];
+            for (int i = 0; i < nbSommets + 5; i++) {
+                nouvCouts[i] = new Double[nbSommets + 5];
+            }
+
+            //Remplissage de la matrice 
+            for (int i = 0; i < nbSommets - 1; i++) {
+                for (int j = 0; j < nbSommets - 1; j++) {
+                    nouvCouts[i][j] = cout[i][j];
+                }
+            }
+            nouvCouts[indOrigine][indDestination] = chemin.getLongueur();
+            this.setCout(nouvCouts);
+        }
+        return true;
+    }
+
+    /**
+     * Méthode permettant de calculer les heures d'arrivées et de départ des
      * points d'intérêt d'une tournée
-     * @param tournee 
+     *
+     * @param tournee
      * @return la tournée mise à jour
      */
-    public Tournee calculerHeuresTournee(Tournee tournee) {
+    public boolean calculerHeuresTournee() {
         //Recuperation de l'entrepot
-        PointInteret pointCourant = tournee.getSuccessionPointsInteret().get(0);
+        PointInteret pointCourant = uneTournee.getSuccessionPointsInteret().get(0);
         PointInteret pointPrec = pointCourant;
-        
+
         //Recuperation de l'heure de départ de l'entrepôt
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
         pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
-        System.out.println("Depart entrepot");
-        
-        
+
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
         int dureeTrajet;
-        int nbSommets = tournee.getSuccessionPointsInteret().size();
+        int nbSommets = uneTournee.getSuccessionPointsInteret().size();
         for (int i = 1; i < nbSommets; i++) {
-            pointCourant = tournee.getSuccessionPointsInteret().get(i);
+            pointCourant = uneTournee.getSuccessionPointsInteret().get(i);
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
                 dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
@@ -448,17 +667,16 @@ public class Carte {
         //Calcul de l'heure d'arrivee à  l'entrepôt en fin de tournée
         dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
         heureArriveeCour = heureDepartPrec + dureeTrajet;
-        tournee.getSuccessionPointsInteret().get(0).setHeureArrivee(intToHeure(heureArriveeCour));
+        uneTournee.getSuccessionPointsInteret().get(0).setHeureArrivee(intToHeure(heureArriveeCour));
 
         //Calcul de la durée de la tournée
-        Integer heureDep = heureToInt(tournee.getSuccessionPointsInteret().get(0).getHeureDepart());
-        Integer heureArr = heureToInt(tournee.getSuccessionPointsInteret().get(0).getHeureArrivee());
+        Integer heureDep = heureToInt(uneTournee.getSuccessionPointsInteret().get(0).getHeureDepart());
+        Integer heureArr = heureToInt(uneTournee.getSuccessionPointsInteret().get(0).getHeureArrivee());
         Integer dureeTournee = heureArr - heureDep;
 
-        tournee.setDuree(intToHeure(dureeTournee));
-        
-        return tournee;
-        
+        uneTournee.setDuree(intToHeure(dureeTournee));
+        return true;
+
     }
 
     /**
@@ -480,7 +698,6 @@ public class Carte {
         return heureInt;
     }
 
-    
     /* Méthode permettant de convertir une heure donnée (en nombre de secondes,
      * donc int) en string (hh:mm:ss)
      * Utilisée pour les calculs des heures de départ et d'arrivée lors du calcul
@@ -495,14 +712,14 @@ public class Carte {
         int nbHeures = heureInt / 3600;
         int nbMinutes = (heureInt - (nbHeures * 3600)) / 60;
         int nbSecondes = heureInt - (nbHeures * 3600) - (nbMinutes * 60);
-        if (nbHeures>=24) {
-            nbHeures = nbHeures-24;
+        if (nbHeures >= 24) {
+            nbHeures = nbHeures - 24;
         }
         String nbH = Integer.toString(nbHeures);
         if (nbHeures < 10) {
             nbH = "0" + nbH;
         }
-        
+
         String nbM = Integer.toString(nbMinutes);
         if (nbMinutes < 10) {
             nbM = "0" + nbM;
@@ -605,16 +822,7 @@ public class Carte {
                     String nomRue = listeTroncons.item(i).getAttributes().item(2).getNodeValue();
                     String origine = listeTroncons.item(i).getAttributes().item(3).getNodeValue();
 
-//                    for (Intersection interDep : listeIntersections) {
-//                        if (interDep.getId().equals(origine)) {
-//                            for (Intersection interArr : listeIntersections) {
-//                                if (interArr.getId().equals(destination)) {
-//                                    //System.out.println("Ajout d'un troncon " + nomRue + longueur + interDep +interArr);
-//                                    interDep.ajouterTronconDepart(new Troncon(nomRue, Double.parseDouble(longueur), interDep, interArr));
-//                                }
-//                            }
-//                        }
-//                    }
+
                     Intersection interDep = null;
                     Intersection interArr = null;
                     for (Intersection inter : listeIntersections) {
@@ -680,8 +888,9 @@ public class Carte {
             }
             this.demandesLivraisons.setHeureDepart(heureDepart);
             this.demandesLivraisons.ajouterPointInteret(pI);
+            this.listePointsInteretActuelle.add(pI);
             pI.setEntrepot(true);
-            
+
             NodeList listeLivraisons = noeudDOMRacine.getElementsByTagName("livraison");
             if (listeLivraisons.getLength() > 0) {
                 for (int i = 0; i < listeLivraisons.getLength(); i++) {
@@ -696,30 +905,35 @@ public class Carte {
                     for (Intersection j : listeIntersections) {
                         if ((j.getId().equals(adresseEnlevement))) {
                             pe = new PointInteret(j, Integer.parseInt(dureeEnlevement));
-                            pe.setEstEnlevement(true);
+                            pe.setEnlevement(true);
                         }
                         if ((j.getId().equals(adresseLivraison))) {
                             pl = new PointInteret(j, Integer.parseInt(dureeLivraison));
-                            pl.setEstEnlevement(false);
+                            pl.setEnlevement(false);
                         }
                     }
                     if (pe != null && pl != null) {
                         pe.setPointDependance(pl);
                         pl.setPointDependance(pe);
-                        
-                        pe.setNumeroDemande(i+1);
-                        pl.setNumeroDemande(i+1);
+
+                        pe.setNumeroDemande(i + 1);
+                        pl.setNumeroDemande(i + 1);
 
                         this.demandesLivraisons.ajouterPointInteret(pe);
+                        this.listePointsInteretActuelle.add(pe);
+
                         this.demandesLivraisons.ajouterPointInteret(pl);
+                        this.listePointsInteretActuelle.add(pI);
+
                     } else {
                         ok = false; // s'il y a un point non-trouvé dans la liste
                     }
-                    
+
                 }
             } else {
                 ok = false;
             }
+            
 
         } else {
             ok = false;
@@ -737,11 +951,10 @@ public class Carte {
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("reseau")) {
-             if(construireCarteAPartirDeDOMXML(racine)){
-                 result = true;
-             }
-            //System.out.println(this.getListeIntersections().toString());
-        } 
+            if (construireCarteAPartirDeDOMXML(racine)) {
+                result = true;
+            }
+        }
         return result;
     }
 
@@ -753,28 +966,28 @@ public class Carte {
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("demandeDeLivraisons")) {
-            if(construireLivraisonAPartirDeDOMXML(racine)){
+            if (construireLivraisonAPartirDeDOMXML(racine)) {
                 result = true;
             }
-        } 
+        }
         return result;
     }
 
-    // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
-    public void AfficherIntersections() {
-        for (Intersection i : listeIntersections) {
-            System.out.println("id:" + i.getId() + " latitude:" + i.getLatitude() + " longitude:" + i.getLongitude());
-            System.out.println("listeTronconDepart:" + i.getTronconsDepart());
-            System.out.println();
-        }
-    }
-
-    public void AfficherLivraisons() {
-        DemandesLivraisons dl = this.demandesLivraisons;
-        System.out.println("adresseDepart:" + dl.getAdresseDepart() + " heureDepart:" + dl.getHeureDepart());
-        for (PointInteret pI : dl.getListePointsInteret()) {
-            System.out.println("adresse:" + pI.getIntersection().getId() + " duree:" + pI.getDuree() + ((pI.isEnlevement()) ? " estEnlevement" : " estLivraison"));
-        }
-    }
+//    // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
+//    public void AfficherIntersections() {
+//        for (Intersection i : listeIntersections) {
+//            System.out.println("id:" + i.getId() + " latitude:" + i.getLatitude() + " longitude:" + i.getLongitude());
+//            System.out.println("listeTronconDepart:" + i.getTronconsDepart());
+//            System.out.println();
+//        }
+//    }
+//
+//    public void AfficherLivraisons() {
+//        DemandesLivraisons dl = this.demandesLivraisons;
+//        System.out.println("adresseDepart:" + dl.getAdresseDepart() + " heureDepart:" + dl.getHeureDepart());
+//        for (PointInteret pI : dl.getListePointsInteret()) {
+//            System.out.println("adresse:" + pI.getIntersection().getId() + " duree:" + pI.getDuree() + ((pI.isEnlevement()) ? " estEnlevement" : " estLivraison"));
+//        }
+//    }
 
 }
