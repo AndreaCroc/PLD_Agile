@@ -151,5 +151,21 @@ public class EtatTournee implements Etat {
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
     }
+    
+    /**
+     * Supprimer un point d interet de la tournee Dans tous les cas, on passe
+     * dans l etat EtatSupprimer
+     *
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param tournee
+     * @param index
+     */
+    @Override
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte) {
+        controleur.setEtat(controleur.etatAjouter);
+        controleur.ajouter();
+    }
 
 }
