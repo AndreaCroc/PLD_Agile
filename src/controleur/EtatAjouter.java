@@ -138,6 +138,8 @@ public class EtatAjouter implements Etat {
             carte.getDemandesLivraisons().ajouterPointInteret(pL);
             fenetre.repaint();
         }
+        
+        controleur.setEtat(controleur.etatTournee);
         // a completer: algo
     }
 }

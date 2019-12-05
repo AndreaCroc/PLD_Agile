@@ -57,7 +57,6 @@ public class EcouteurBoutons implements ActionListener {
                 break;
             case Fenetre.AJOUTER:
                 controleur.ajouter();
-                System.out.println("LAA");
                 break;
         }
 
