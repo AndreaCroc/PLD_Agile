@@ -6,10 +6,12 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
+import modele.Tournee;
 
 /**
  *
@@ -18,7 +20,7 @@ import modele.PointInteret;
 public class EtatAjouter implements Etat {
 
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         Intersection iE = null;
         Integer dureeE = null;
         Double laE = null;
@@ -67,6 +69,7 @@ public class EtatAjouter implements Etat {
                     // si on détecte une erreur de format, on passe a la prochaine iteration
                     iE = null;
                     continue;
+
                 }
             }
 
@@ -138,8 +141,18 @@ public class EtatAjouter implements Etat {
             carte.getDemandesLivraisons().ajouterPointInteret(pL);
             fenetre.repaint();
         }
+        tournee = carte.getTournee();
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
+        fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
+        fenetre.afficherEtapesTour();
+        fenetre.afficherPanneauPI();
+        fenetre.afficherBoutonSupprimer();
+        fenetre.repaint();
         
         controleur.setEtat(controleur.etatTournee);
-        // a completer: algo
+        
     }
 }

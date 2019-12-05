@@ -31,6 +31,7 @@ public class Controleur {
     protected final EtatTournee etatTournee = new EtatTournee();
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
     protected final EtatAjouter etatAjouter = new EtatAjouter();
+    protected final EtatModifier etatModifier = new EtatModifier();
 
     public Controleur() {
         carte = new Carte();
@@ -66,6 +67,10 @@ public class Controleur {
     public void calculerTournee() {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
+    
+    public void modifier(int bouton, int index){
+        etatCourant.modifier(this, bouton, index);
+    }
 
     /**
      * Supprimer un point d interet de la tournee
@@ -84,7 +89,7 @@ public class Controleur {
     }
 
     public void ajouter() {
-        etatCourant.ajouter(this, fenetre, carte);
+        etatCourant.ajouter(this, fenetre, carte, tournee);
     }
 
     /**

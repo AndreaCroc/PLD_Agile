@@ -134,10 +134,10 @@ public class EtatTournee implements Etat {
             fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
     }
-
+   
     /**
-     * Supprimer un point d interet de la tournee Dans tous les cas, on passe
-     * dans l etat EtatSupprimer
+     * Supprimer un point d interet de la tournee 
+     * Dans tous les cas, on passe dans l etat EtatSupprimer
      *
      * @param controleur
      * @param fenetre
@@ -163,8 +163,9 @@ public class EtatTournee implements Etat {
      * @param index
      */
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         controleur.setEtat(controleur.etatAjouter);
+        fenetre.griserBoutonsSupprimer();
         controleur.ajouter();
     }
 

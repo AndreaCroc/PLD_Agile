@@ -541,7 +541,7 @@ public class Fenetre extends JFrame {
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        boutonAjouterPoints.setBounds(1 * (int) panneauLivraisons.getWidth() / 25, 81 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth() / 5, 15 * (int) panneauLivraisons.getHeight() / 100);
+        boutonAjouterPoints.setBounds(1 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
         boutonSupprimer.setBounds(7 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
         boutonModifier.setBounds(13 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
         boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);

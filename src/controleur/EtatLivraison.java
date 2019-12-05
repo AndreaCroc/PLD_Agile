@@ -40,12 +40,13 @@ public class EtatLivraison implements Etat {
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
-        fenetre.repaint();
+        
         fenetre.afficherOuCacherMessageTournee(false);
         fenetre.afficherEtapesTour();
         fenetre.afficherPanneauPI();
-        fenetre.griserBoutonCalcul();
         fenetre.afficherBoutonSupprimer();
+        fenetre.griserBoutonCalcul();
+        fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
     }
 
