@@ -489,7 +489,7 @@ public class Fenetre extends JFrame {
         titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 2, 1 * (int) panneauGlobal1.getHeight() / 10);
         inputChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
         boutonChargerCarte.setBounds(60 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
-        repChargeCarte.setBounds(1 * (int) panneauGlobal1.getWidth() / 4, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
+        repChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
     }
 
     /**

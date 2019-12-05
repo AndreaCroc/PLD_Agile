@@ -651,7 +651,7 @@ public class Carte {
             xml = choisirFichierXML(true);
         } else {
             if (fichier.contains(".xml")) {
-                xml = new File(fichier);
+                xml = new File(fichier).getAbsoluteFile();
                 if(!xml.exists()){
                     return false;
                 }
@@ -689,7 +689,7 @@ public class Carte {
             xml = choisirFichierXML(true);
         } else {
             if (fichier.contains(".xml")) {
-                xml = new File(fichier);
+                xml = new File(fichier).getAbsoluteFile();;
                 if(!xml.exists()){
                     return false;
                 }
