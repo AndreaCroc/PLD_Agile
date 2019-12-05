@@ -443,7 +443,7 @@ public class Fenetre extends JFrame {
  /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
-        titreAppli.setFont(new Font("Arial", Font.BOLD, 45));
+        titreAppli.setFont(new Font("Arial", Font.BOLD, 50));
         titreAppli.setForeground(COULEUR_ECRITURE);
 
         //Pour entrer le chemin vers un fichier XML
@@ -486,7 +486,7 @@ public class Fenetre extends JFrame {
     public void placeObjet1() {
         panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
 
-        titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth() / 2, 1 * (int) panneauGlobal1.getHeight() / 10);
+        titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth(), 1 * (int) panneauGlobal1.getHeight() / 10);
         inputChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
         boutonChargerCarte.setBounds(60 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
         repChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);

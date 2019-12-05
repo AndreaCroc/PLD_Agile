@@ -49,6 +49,7 @@ public class EcouteurListSelection implements ListSelectionListener {
                     this.controleur.setFenetreSurbrillance(true);
                     //Afficher la point d interet correspond a la ligne en surbrillance
                     this.controleur.surbrillancePI(i);
+                    this.controleur.surbrillanceTableau(i);
                     if(this.fenetre.getClicSupp()){
                         this.controleur.supprimer(i);
                     }
