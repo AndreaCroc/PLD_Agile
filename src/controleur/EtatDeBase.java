@@ -15,13 +15,16 @@ import Vue.JCarte;
 import modele.Carte;
 
 /**
- * Classe EtatDeBase
+ * Classe EtatDeBase qui correspond a l affichage de la carte sans rien dessus
+ * Depuis cet etat on peut charger une nouvelle carte ou charger une
+ * livraison
  * 
  */
 public class EtatDeBase implements Etat {
     
     /**
-     * Changer la carte deja charge
+     * Changer la carte deja chargee
+     * Dans tous les cas (succes ou echec) on reste dans cet EtatDeBase
      * @param controleur
      * @param fenetre
      * @param carte 
@@ -57,13 +60,15 @@ public class EtatDeBase implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
         }
         
     }
     
     /**
      * Charger une livraison lorsqu une carte est chargee
+     * En cas de succes, on passe a l etat EtatLivraison
+     * En cas d echec, on reste dans cet etat
      * 
      * @param controleur
      * @param fenetre
@@ -100,7 +105,7 @@ public class EtatDeBase implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
     }
     

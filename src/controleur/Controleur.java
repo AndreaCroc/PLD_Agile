@@ -73,6 +73,9 @@ public class Controleur {
         etatCourant.supprimer(this, fenetre, carte, tournee, index);
     }
     
+    /**
+     * Annuler la suppression d un point d interet
+     */
     public void annuler () {
         etatCourant.annuler(this, fenetre);
     }
@@ -84,34 +87,6 @@ public class Controleur {
     public void setEtat(Etat etat) {
         etatCourant = etat;
     }
-
-    /**
-     * Changer la carte
-     */
-    //public void changerCarte() {
-
-        
-    //}
-
-    /**
-     * Charge une livraison
-     *
-     */
-    //public void chargerLivraison() {
-
-        
-    //}
-
-    /**
-     * Calculer une tournee
-     *
-     */
-    //public void calculerTournee() {
-
-       
-
-    //}
-
 
     /**
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee

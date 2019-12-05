@@ -17,12 +17,14 @@ import modele.Tournee;
 
 /**
  *
- * Classe EtatInit
+ * Classe EtatInit qui correspond a la page d accueil
  */
 public class EtatInit implements Etat {
 
     /**
      * Charger la premiere carte
+     * En cas de succes, on passe a l etat EtatDeBase
+     * En cas d echec on reste dans cet etat
      * 
      * @param controleur
      * @param fenetre
@@ -54,7 +56,7 @@ public class EtatInit implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
         }
        
     }

@@ -275,7 +275,7 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauTournee);
 
         /* Fin PanneauTournee*/
- /* PanneauEtape (bas gauche)*/
+        /* PanneauEtape (bas gauche)*/
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
@@ -416,7 +416,7 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         /* Fin PanneauLegende */
- /* PanneauCarte (bas droit) */
+        /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
@@ -429,9 +429,9 @@ public class Fenetre extends JFrame {
         addMouseListener(ecouteurSouris);
 
         /* Fin panneauCarte */
- /* Fin panneauDroite */
+        /* Fin panneauDroite */
 
- /* PanneauGlobal2 : pour la deuxieme fenetre */
+        /* PanneauGlobal2 : pour la deuxieme fenetre */
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(COULEUR_FOND);
@@ -440,7 +440,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauGlobal2 */
 
- /* PanneauGlobal1 : pour la premiere fenetre*/
+        /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 50));

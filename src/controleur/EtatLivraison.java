@@ -17,17 +17,18 @@ import modele.Tournee;
 
 /**
  *
- * Classe EtatLivraison
+ * Classe EtatLivraison qui correspond a laffichage des points d interets dune
+ * livraison sur la carte
  */
 public class EtatLivraison implements Etat {
 
     /**
-     * Calculer une tournee
-     * 
+     * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
+     *
      * @param controleur
      * @param fenetre
      * @param carte
-     * @param tournee 
+     * @param tournee
      */
     @Override
     public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
@@ -47,18 +48,19 @@ public class EtatLivraison implements Etat {
     }
 
     /**
-     * Charger un fichier de livraisons
-     * 
+     * Charger un fichier de livraisons Dans tous les cas, on reste dans cet
+     * etat
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
-        
+
         fenetre.afficherMessageErreur3("");
         try {
             //Choix du fichier XML
@@ -85,16 +87,17 @@ public class EtatLivraison implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
     }
 
     /**
-     * Changer la carte deja chargee
-     * 
+     * Changer la carte deja chargee Dans tous les cas, on retourne dans l etat
+     * EtatDeBase
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
@@ -103,7 +106,7 @@ public class EtatLivraison implements Etat {
 
         try {
             //Choix du fichier XML
-            changerCarte = carte.chargerCarte(true,"");
+            changerCarte = carte.chargerCarte(true, "");
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et on affiche la carte et on change detat
@@ -140,9 +143,8 @@ public class EtatLivraison implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
-            /*
-            carte.setDemandesLivraisons(null);
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            /*carte.setDemandesLivraisons(null);
             fenetre.viderPanneauEtapes();
             fenetre.viderPanneauPIs();
             fenetre.cacherPanneauEtapesEtTour();
