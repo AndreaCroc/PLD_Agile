@@ -593,6 +593,7 @@ public class Fenetre extends JFrame {
         this.boutonCalculerTournee.setEnabled(false);
         this.boutonSupprimer.setEnabled(false);
         this.boutonModifier.setEnabled(false);
+        this.boutonAjouterPoints.setEnabled(false);
     }
 
     /**
@@ -607,6 +608,7 @@ public class Fenetre extends JFrame {
         this.boutonCalculerTournee.setEnabled(true);
         this.boutonSupprimer.setEnabled(true);
         this.boutonModifier.setEnabled(true);
+        this.boutonAjouterPoints.setEnabled(true);
     }
 
     /**
