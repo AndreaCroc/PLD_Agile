@@ -50,9 +50,9 @@ public class EtatTournee implements Etat {
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-                fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
+                fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 
             } else {
@@ -118,11 +118,11 @@ public class EtatTournee implements Etat {
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-                fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);
                 fenetre.afficherPanneauPI();
+                fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
             } else {
                 //Sinon, on affiche un message d erreur

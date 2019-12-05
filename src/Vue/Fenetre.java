@@ -566,6 +566,7 @@ public class Fenetre extends JFrame {
      * Pour rendre non cliquable le bouton pour calculer une tournee
      */
     public void griserBoutonCalcul() {
+        System.out.println("griser");
         this.boutonCalculerTournee.setEnabled(false);
     }
     

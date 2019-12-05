@@ -45,22 +45,41 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                 row, column);
 
-        //Si on a clique sur un point d interet
-        if (index != -1) {
-            //Si on veut encadrer une ligne du tableauPIs
-            if (tableau == 1) {
-                if (row == this.index) {
-                    this.setBorder(BorderFactory.createLineBorder(Color.red));
+        //Si on veut encadrer une ligne du tableauPIs
+        if (tableau == 1) {
+            //Si on a clique sur un point d interet
+            if (index != -1) {
+                if (row == this.index || row == this.index - table.getRowCount()) {
+                    if (column == 0) {
+                        this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.red));
+                    } else if (value instanceof JTextArea) {
+                        JTextArea textArea = (JTextArea) value;
+                        textArea.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.red));
+                        return textArea;
+                    } else {
+                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.red));
+                    }
                 }
-                if (value instanceof JTextArea) {
-                    return (JTextArea) value;
-                }
-                //Si on veut encadrer un eligne du tableauEtapes
-            } else {
+            }
+
+            if (value instanceof JTextArea) {
+                JTextArea textArea = (JTextArea) value;
+                textArea.setBorder(null);
+                return textArea;
+            }
+            //Si on veut encadrer une ligne du tableauEtapes
+        } else {
+            if (index != -1) {
                 int nbLignes = table.getRowCount() - 1;
                 //Encadrer chaque cellule de la ligne associee au point d interet
-                if (row == this.index || row - nbLignes == index) {
-                    this.setBorder(BorderFactory.createLineBorder(Color.red));
+                if (row == this.index || row - nbLignes == index || row == index - nbLignes) {
+                    if (column == 0) {
+                        this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.red));
+                    } else if (column == table.getColumnCount() - 1) {
+                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.red));
+                    } else {
+                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.red));
+                    }
                 }
             }
 

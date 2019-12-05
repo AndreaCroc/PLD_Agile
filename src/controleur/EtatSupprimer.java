@@ -54,11 +54,11 @@ public class EtatSupprimer implements Etat {
                 fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                 fenetre.setTournee(tournee);
                 controleur.setTournee(tournee);
-                fenetre.repaint();
                 fenetre.viderPanneauEtapes();
                 fenetre.viderPanneauPIs();
                 fenetre.afficherEtapesTour();
                 fenetre.afficherPanneauPI();
+                fenetre.repaint();
             }
         } else {
             //Afficher popup d erreur car pas possible de supprimer l entrepot

@@ -46,8 +46,8 @@ public class EtatInit implements Etat {
             //et on change d etat
             if (chargerCarte) {
                 fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
-                fenetre.repaint();
                 fenetre.afficherConteneur2();
+                fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
             } else {
                 //Sinon, on affiche un message d erreur et on reste dans le meme etat

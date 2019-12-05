@@ -34,6 +34,7 @@ public class EtatLivraison implements Etat {
     public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
 
         fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
         tournee = carte.calculerTournee();
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
@@ -42,6 +43,7 @@ public class EtatLivraison implements Etat {
         fenetre.repaint();
         fenetre.afficherOuCacherMessageTournee(false);
         fenetre.afficherEtapesTour();
+        fenetre.afficherPanneauPI();
         fenetre.griserBoutonCalcul();
         fenetre.afficherBoutonSupprimer();
         controleur.setEtat(controleur.etatTournee);
@@ -75,11 +77,11 @@ public class EtatLivraison implements Etat {
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-                fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);
                 fenetre.afficherPanneauPI();
+                fenetre.repaint();
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
@@ -119,10 +121,11 @@ public class EtatLivraison implements Etat {
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-                fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
+                fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
+                
 
             } else {
                 //Sinon, on affiche un message d erreur
