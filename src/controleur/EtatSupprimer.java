@@ -40,7 +40,8 @@ public class EtatSupprimer implements Etat {
         int option = 1;
         if (index != 0) {
             //Recuperer le point d interet que l utilisateur veut supprimer
-            ptI = tournee.getSuccessionPointsInteret().get(index);
+            //ptI = tournee.getSuccessionPointsInteret().get(index);
+            ptI = carte.getListePointsInteretActuelle().get(index);
             //Afficher un popup de confirmation de suppression
             option = fenetre.afficherPopSuppression(ptI);
             if (option == JOptionPane.OK_OPTION) {
@@ -48,8 +49,7 @@ public class EtatSupprimer implements Etat {
 
                 carte.supprimerPointInteret(ptI);
                 tournee = carte.getTournee();
-//                tournee.getSuccessionPointsInteret().remove(index);
-//                carte.getDemandesLivraisons().getListePointsInteret().remove(index);
+                
                 fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                 fenetre.setTournee(tournee);
                 controleur.setTournee(tournee);

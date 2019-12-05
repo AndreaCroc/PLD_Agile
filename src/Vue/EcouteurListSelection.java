@@ -15,6 +15,8 @@ import controleur.Controleur;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import modele.Carte;
+import modele.Tournee;
 
 /**
  *
@@ -35,7 +37,9 @@ public class EcouteurListSelection implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-        
+        Tournee tournee = new Tournee();
+        Carte carte = new Carte();
+        int index =0;
         //Quand une ligne du tableau a ete selectionnee
         if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
             //Trouver le premier index selectionne
@@ -47,12 +51,14 @@ public class EcouteurListSelection implements ListSelectionListener {
                 if (lsm.isSelectedIndex(i)) {
                     //Indiquer qu une ligne a ete selectionee
                     this.controleur.setFenetreSurbrillance(true);
+                    tournee = fenetre.getTournee();
+                    carte = fenetre.getCarte();
                     //Afficher la point d interet correspond a la ligne en surbrillance
                     this.controleur.surbrillancePI(i);
                     this.controleur.surbrillanceTableau(i);
-                    if(this.fenetre.getClicSupp()){
+                    /*if(this.fenetre.getClicSupp()){
                         this.controleur.supprimer(i);
-                    }
+                    }*/
                 }
             }
         }

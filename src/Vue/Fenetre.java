@@ -294,9 +294,9 @@ public class Fenetre extends JFrame {
             tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
+        /*ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
         //Ajouter un evenement sur les lignes du tableau
-        listSelectionModel.addListSelectionListener(this.ecouteurListSelect);
+        listSelectionModel.addListSelectionListener(this.ecouteurListSelect);*/
 
         scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -666,13 +666,13 @@ public class Fenetre extends JFrame {
             this.surbrillance = false;
         }*/
 
-        if (tableauEtapes.getRowCount() != 0) {
+        /*if (tableauEtapes.getRowCount() != 0) {
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
                 //Encadrer en rouge la ligne correspond a l index
                 this.vueEtapes.getFormatcell().setIndex(index);
                 tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
             }
-        }
+        }*/
         if (tableauPIs.getRowCount() != 0) {
             for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
                 //Encadrer en rouge la ligne correspond a l index
@@ -895,6 +895,21 @@ public class Fenetre extends JFrame {
     public String getInputChargeLiv() {
         return inputChargeLiv.getText();
     }
+
+    public Carte getCarte() {
+        return carte;
+    }
+
+    public Tournee getTournee() {
+        return tournee;
+    }
+
+    public AffichagePIs getVuePIs() {
+        return vuePIs;
+    }
+    
+    
+    
 
     /**
      * Afficher une popup pour valider la suppression d un point d interet

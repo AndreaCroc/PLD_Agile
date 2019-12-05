@@ -160,7 +160,6 @@ public class AffichageEtapes extends AbstractTableModel {
      */
     public void afficherEtapes() {
         ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
-
         String nomRue = "";
         String heureArrivee = "";
         String heureDepart = "";

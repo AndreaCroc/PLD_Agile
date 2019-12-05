@@ -15,8 +15,6 @@ import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Map;
-import modele.Intersection;
 
 /**
  *
@@ -38,72 +36,42 @@ public class EcouteurSouris extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent evt) {
+        //Recuperer la largeur du panneau gauche
         int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
+        //Recuperer la hauteur du panneau legende situee au dessus de la carte
         int yPanneauLegende = this.fenetre.getHeightPanneauLegende();
-        System.out.println("width : "+xPanneauGauche);
-        System.out.println("height : "+yPanneauLegende);
         
+        //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
         ArrayList<Point> coordPis =  vueCarte.getCoorPtInterets();
 
-        System.out.println("Fenetre cliquee");
+        //Recuperer les coordonnees de la souris lors du clic
         int x = evt.getX()-8;
         int y = evt.getY()-8;
-        System.out.println("x : "+x+" y : "+y);
         
+        //Si il y a bien des points d interets sur la carte
         if (coordPis != null && !coordPis.isEmpty()) {
             int index = 0;
             for (Point p : coordPis) {
                 index = coordPis.indexOf(p);
-                //Point(nxXpt,nvYpt) correspond au centre des figures
+                //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
                 int nvXpt = p.getX()+ xPanneauGauche+5;
                 int nvYpt = p.getY() + yPanneauLegende+25;
                 
-
+                //Si le clic se trouve sur un efigure d un point d interet
                 if (x >= nvXpt-5 && x <= nvXpt + 5 && y >= nvYpt-5 && y <= nvYpt + 5) {
-                    System.out.println("nvxpt : "+nvXpt + " nvYpt : "+nvYpt);
-                    System.out.println("Point Interet clique");
+                    //Prevenir le controleur qu un point a ete clique
+                    this.controleur.setFenetreSurbrillance(true);
+                    //Mettre en surbrillance la ligne du tableau correspondante
                     this.controleur.surbrillanceTableau(index);
-                    
-                    
-                    
+                    this.controleur.surbrillancePI(index);
+                    if(this.fenetre.getClicSupp()){
+                        this.controleur.supprimer(index);
+                    }
                     break;
                 }
                 
             }
         }
-        
-        
-        Map<Intersection, Point> mesCoordIntersections = vueCarte.getIntersectionsMap();
-        
-        // si tableau des intersections non vide et non null
-        if(!mesCoordIntersections.isEmpty()) {
-            //test x y sont sur pt intersect coord 
-            for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
-                //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
-                Intersection key = iEntry.getKey();
-                Point value = iEntry.getValue();
-                                
-                //coordonnées adaptees des points d'intersections
-                int nvXpt2 = value.getX()+ xPanneauGauche+5;
-                int nvYpt2 = value.getY() + yPanneauLegende+45;
-                
-                //System.out.println("Intersection : "+ key.getId());
-                //System.out.println("ix:"+nvXpt2);
-                //System.out.println("iy:"+nvYpt2);
-                
-                if(x >= nvXpt2 && x <= nvXpt2+5 && y >= nvYpt2-5 && y <= nvYpt2+5) {
-                    //les coordonnées correspondent
-                    System.out.println("Clique sur intersection numero : " + key.getId());
-                    System.out.println("Coordonnees cliquees par utilisateur x : " + x + " / y : " + y);
-                    
-                    //On recupere la liste des troncons dans le but d'afficher leur noms
-                    //key.getTronconsDepart();
-                    
-                }
-                
-            }
-                    
-        }
-    }           
 
     }
+}
