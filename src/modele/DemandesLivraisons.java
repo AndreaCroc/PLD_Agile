@@ -43,18 +43,16 @@ public class DemandesLivraisons {
     }
 
     public ArrayList<PointInteret> getListePointsInteret() {
-        return listePointsInteret;
+        return this.listePointsInteret;
     }
     
     public void ajouterPointInteret(PointInteret pI) {
         this.listePointsInteret.add(pI);
     }
 
-    public void setListePointsInteret(ArrayList<PointInteret> listePointsInteret) {
-        this.listePointsInteret = listePointsInteret;
+    public void supprimerLivraison() {
+        this.listePointsInteret.clear();
     }
-    
-
  
     
 }

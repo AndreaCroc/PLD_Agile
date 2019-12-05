@@ -1,10 +1,3 @@
-package controleur;
-
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
-
 /*
  * Controleur
  *
@@ -15,11 +8,30 @@ import modele.Tournee;
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
+package controleur;
+
+import Vue.Fenetre;
+import modele.Carte;
+import modele.Tournee;
+
+/**
+ * Classe Controleur qui permet de faire le lien entre la vue et le modele
+ */
 public class Controleur {
 
     private Fenetre fenetre;
     private Carte carte;
     private Tournee tournee;
+    private Etat etatCourant = new EtatInit();
+
+    // Instances associees a chaque etat possible du controleur
+    protected final EtatInit etatInit = new EtatInit();
+    protected final EtatDeBase etatDeBase = new EtatDeBase();
+    protected final EtatLivraison etatLivraison = new EtatLivraison();
+    protected final EtatTournee etatTournee = new EtatTournee();
+    protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
+    protected final EtatAjouter etatAjouter = new EtatAjouter();
+    protected final EtatModifier etatModifier = new EtatModifier();
 
     public Controleur() {
         carte = new Carte();
@@ -32,88 +44,92 @@ public class Controleur {
      *
      */
     public void chargerCarte() {
-        //Appeler methode affichage carte + ...
-        boolean chargerCarte = false;
-
-        try {
-            //Choix du fichier XML
-            chargerCarte = carte.chargerCarte();
-
-            //Si le chargement de la carte s est bien passe,
-            // on change de fenetre et un affiche la carte
-            if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte,tournee));
-                fenetre.repaint();
-                fenetre.afficherConteneur2();
-            } else {
-                //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur1("Erreur lors du chargement du fichier");
-            }
-
-        } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur1("Erreur lors de la sélection du fichier");
-        }
-
+        etatCourant.chargerPageDeBase(this, fenetre, carte, tournee);
     }
 
     /**
-    * Charge une livraison
-    *
-    */
+     * Change la carte donc en charge une nouvelle
+     */
+    public void changerCarte() {
+        etatCourant.changerCarte(this, fenetre, carte);
+    }
+
+    /**
+     * Charger une livraison
+     */
     public void chargerLivraison() {
-
-        boolean chargerLivraison = false;
-
-        try {
-            //Choix du fichier XML
-            chargerLivraison = carte.chargerLivraison();
-
-            //Si le chargement des livraisons s est bien passe,
-            // on affiche les livraisons
-            if (chargerLivraison) {
-                fenetre.setTournee(null);
-                carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte,null));
-                fenetre.repaint();
-                fenetre.afficherConteneur2();
-                fenetre.afficherBoutonCalcul();
-            } else {
-                //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
-            }
-
-        } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
-        }
-
+        etatCourant.chargerLivraison(this, fenetre, carte);
     }
 
     /**
-    * Calculer une tournee
-    *
-    */
+     * Calculer une tournee
+     */
     public void calculerTournee() {
-
-        //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
-        this.tournee = carte.calculerTournee();
-        
-        fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
-        fenetre.setTournee(this.tournee);
-        fenetre.repaint();
-        fenetre.afficherEtapesTour();
-
-        System.out.println("Je lance le calcul d'une tournee");
-        
+        etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
     
-    public Tournee getTournee(){
+    public void modifier(int bouton, int index){
+        etatCourant.modifier(this, bouton, index);
+    }
+
+    /**
+     * Supprimer un point d interet de la tournee
+     *
+     * @param index : numero du point d interet a supprimer
+     */
+    public void supprimer(int index) {
+        etatCourant.supprimer(this, fenetre, carte, tournee, index);
+    }
+
+    /**
+     * Annuler la suppression d un point d interet
+     */
+    public void annuler() {
+        etatCourant.annuler(this, fenetre);
+    }
+
+    public void ajouter() {
+        etatCourant.ajouter(this, fenetre, carte, tournee);
+    }
+
+    /**
+     *
+     * @param etat
+     */
+    public void setEtat(Etat etat) {
+        etatCourant = etat;
+    }
+
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     *
+     * @param index indice du point d interet clique
+     */
+    public void surbrillanceTableau(int index) {
+        fenetre.surbrillanceLigneTab(index);
+        fenetre.repaint();
+    }
+
+    /**
+     * Encadrer un point d interet de la tournee
+     *
+     * @param ligne ligne du tableau selectionnee
+     */
+    public void surbrillancePI(int ligne) {
+        fenetre.entourerPI(ligne);
+        fenetre.repaint();
+    }
+
+    public Tournee getTournee() {
         return this.tournee;
     }
-            
-            
-            
-            
+
+    public void setTournee(Tournee tournee) {
+        this.tournee = tournee;
+    }
+
+    public void setFenetreSurbrillance(boolean surb) {
+        this.fenetre.setSurbrillance(surb);
+    }
 
 }

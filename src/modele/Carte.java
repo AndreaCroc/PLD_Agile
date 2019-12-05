@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
-import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -868,6 +867,7 @@ public class Carte {
      * @throws Exception
      */
     public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException, Exception {
+        DemandesLivraisons sauvegardeDL = this.demandesLivraisons;
         this.setDemandesLivraisons(null);
         boolean ok = true;
 
@@ -937,35 +937,73 @@ public class Carte {
                 }
             } else {
                 ok = false;
+                this.setDemandesLivraisons(sauvegardeDL);
             }
             
 
         } else {
             ok = false;
+            this.setDemandesLivraisons(sauvegardeDL);
         }
 
         return ok;
     }
 
     // lancer l'ouvreur de fichier et choisir la bonne methode pour charger les donnees
-    public boolean chargerCarte() throws Exception, ParserConfigurationException, SAXException, IOException {
+    public boolean chargerCarte(boolean estUnChangement, String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        File xml = choisirFichierXML(true);
+        //File xml = choisirFichierXML(true);;
+         File xml = null;
+        if ("".equals(fichier)) {
+            xml = choisirFichierXML(true);
+        } else {
+            if (fichier.contains(".xml")) {
+                xml = new File(fichier).getAbsoluteFile();
+                if(!xml.exists()){
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
 
         if (racine.getNodeName().equals("reseau")) {
+            if (estUnChangement) {
+                this.listeIntersections.clear();
+            }
             if (construireCarteAPartirDeDOMXML(racine)) {
                 result = true;
             }
         }
+
+        if (estUnChangement) {
+            if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
+                this.demandesLivraisons.supprimerLivraison();
+            }
+        }
+
         return result;
     }
 
-    public boolean chargerLivraison() throws Exception, ParserConfigurationException, SAXException, IOException {
+    public boolean chargerLivraison(String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        File xml = choisirFichierXML(true);
+        //File xml = choisirFichierXML(true);
+        File xml = null;
+        if ("".equals(fichier)) {
+            xml = choisirFichierXML(true);
+        } else {
+            if (fichier.contains(".xml")) {
+                xml = new File(fichier).getAbsoluteFile();;
+                if(!xml.exists()){
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();

@@ -2,6 +2,7 @@
  * AffichageTournee
  *
  * Version 1
+ * 
  *
  * 
  * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
@@ -12,14 +13,13 @@ package Vue;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import modele.Chemin;
 import modele.PointInteret;
 import modele.Tournee;
-import modele.Troncon;
 
 /**
- * 
- * Classe AffichageTournee permettant d'afficher les details d'une tournee
+ *
+ * Classe AffichageTournee permettant d'afficher les donnes globales d'une
+ * tournee
  */
 public class AffichageTournee {
 
@@ -36,7 +36,7 @@ public class AffichageTournee {
     }
 
     /**
-     * Affichage des etapes de la tournee
+     * Affichage des heures de debut, fin et duree de la tournee
      */
     public void afficherTournee() {
         ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
@@ -104,69 +104,28 @@ public class AffichageTournee {
 //        successionPointsInteret.add(p5);
 //        successionPointsInteret.add(p6);
 
-        String nomRue = "";
-        String heureArrivee = "";
-        String heureDepart = "";
-        String type = "";
-        String nomRueEntrepot = "";
         int duree = 0;
         String dureeMin = "";
-        String dureeTotPrevue;
+        String dureeTotPrevue = "";
         String heureDeb = "";
         String heureFin = "";
         int index = 0;
 
-        //S'assurer que la liste contient des points d'interet
+        //S assurer que la liste contient des points d'interet
         if (successionPointsInteret != null && !successionPointsInteret.isEmpty()) {
             DecimalFormat df = new DecimalFormat("0.00");
-            fenetre.viderPanneauEtapes();
             dureeTotPrevue = tournee.getDuree();
-            dureeTotPrevue = dureeTotPrevue.substring(0,dureeTotPrevue.lastIndexOf(":"));
-            dureeTotPrevue = dureeTotPrevue.replace(":","h");
-            for (PointInteret pt : successionPointsInteret) {
-                //Recuperer le numero de l etape
-                index = successionPointsInteret.indexOf(pt);
-                Chemin c = pt.getCheminDepart();
-                Troncon t = c.getSuccessionTroncons().get(0);
-                //Recuperer l adresse
-                nomRue = t.getNomRue();
+            dureeTotPrevue = dureeTotPrevue.substring(0, dureeTotPrevue.lastIndexOf(":"));
+            dureeTotPrevue = dureeTotPrevue.replace(":", "h");
 
-                //Recuperer le point d'interet correspondant a l'entrepot
-                if (index == 0) {
-                    nomRueEntrepot = nomRue;
-                    heureDeb = pt.getHeureDepart();
-                    heureDeb = heureDeb.substring(0,heureDeb.lastIndexOf(":"));
-                    heureDeb = heureDeb.replace(":","h");
-                    heureFin = pt.getHeureArrivee();
-                    heureFin = heureFin.substring(0,heureFin.lastIndexOf(":"));
-                    heureFin = heureFin.replace(":","h");
-                    //Afficher le depart de l'entrepot
-                    fenetre.setPanneauEtapesEntrepot(index,nomRueEntrepot,heureDeb);
-                } else {
-                    if (pt.isEnlevement()) {
-                        type = "Enlèvement";
-                    } else {
-                        type = "Livraison";
-                    }
-                    //Recuperer la duree de l etape
-                    duree = pt.getDuree();
-                    dureeMin = df.format(duree/60);
-                    dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf(","));
-                    //Recuperer l heure d arrivee au point d interet
-                    heureArrivee = pt.getHeureArrivee();
-                    heureArrivee = heureArrivee.substring(0,heureArrivee.lastIndexOf(":"));
-                    heureArrivee = heureArrivee.replace(":","h");
-                    //Recuperer l heure de depart du point d interet
-                    heureDepart = pt.getHeureDepart();
-                    heureDepart = heureDepart.substring(0,heureDepart.lastIndexOf(":"));
-                    heureDepart = heureDepart.replace(":","h");
-                    System.out.println("nomRue : " + nomRue + "type : " + type + "heure Arrivee : " + heureArrivee + "duree : " + dureeMin);
-                    //Afficher les etapes dans la fenetre
-                    fenetre.setPanneauEtapes(index, type, nomRue, heureDepart, heureArrivee, dureeMin);
-                }
-            }
-            //Afficher le retour a l'entrepot
-            fenetre.setPanneauEtapesEntrepot(index+1,nomRueEntrepot,heureFin);
+            //Recuperer le point d'interet correspondant a l'entrepot
+            heureDeb = successionPointsInteret.get(0).getHeureDepart();
+            heureDeb = heureDeb.substring(0, heureDeb.lastIndexOf(":"));
+            heureDeb = heureDeb.replace(":", "h");
+            heureFin = successionPointsInteret.get(0).getHeureArrivee();
+            heureFin = heureFin.substring(0, heureFin.lastIndexOf(":"));
+            heureFin = heureFin.replace(":", "h");
+
             //Afficher le resume de la tournee
             fenetre.setPanneauTournee(heureDeb, heureFin, dureeTotPrevue);
 
