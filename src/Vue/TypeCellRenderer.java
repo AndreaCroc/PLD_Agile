@@ -30,7 +30,7 @@ public class TypeCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                 row, column);
 
-         if (value instanceof JTextArea) {
+        if (value instanceof JTextArea) {
             return (JTextArea) value;
         }
         return this;

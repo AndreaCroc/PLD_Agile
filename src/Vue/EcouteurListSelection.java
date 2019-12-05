@@ -35,7 +35,7 @@ public class EcouteurListSelection implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
+        
         //Quand une ligne du tableau a ete selectionnee
         if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
             //Trouver le premier index selectionne

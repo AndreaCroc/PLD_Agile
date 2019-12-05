@@ -1,4 +1,4 @@
- /*
+/*
  * FormatCellRenderer
  *
  * Version 1
@@ -16,20 +16,23 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * Classe FormatCellRenderer permettant de mettre tous les elements
- * du tableau au centre de la cellule et d encadrer en rouge la ligne
- * en cas de clic sur un point d interet
+ * Classe FormatCellRenderer permettant de mettre tous les elements du tableau
+ * au centre de la cellule et d encadrer en rouge la ligne en cas de clic sur un
+ * point d interet
  */
 public class FormatCellRenderer extends DefaultTableCellRenderer {
 
     private int index;
+    private int tableau;
 
-    public FormatCellRenderer(int index) {
+    public FormatCellRenderer(int index, int table) {
         this.index = index;
+        this.tableau = table;
     }
 
     public void setIndex(int index) {
@@ -44,11 +47,23 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
 
         //Si on a clique sur un point d interet
         if (index != -1) {
-            int nbLignes = table.getRowCount() - 1;
-            //Encadrer chaque cellule de la ligne associee au point d interet
-            if (row == this.index || row - nbLignes == index) {
-                this.setBorder(BorderFactory.createLineBorder(Color.red));
+            //Si on veut encadrer une ligne du tableauPIs
+            if (tableau == 1) {
+                if (row == this.index) {
+                    this.setBorder(BorderFactory.createLineBorder(Color.red));
+                }
+                if (value instanceof JTextArea) {
+                    return (JTextArea) value;
+                }
+                //Si on veut encadrer un eligne du tableauEtapes
+            } else {
+                int nbLignes = table.getRowCount() - 1;
+                //Encadrer chaque cellule de la ligne associee au point d interet
+                if (row == this.index || row - nbLignes == index) {
+                    this.setBorder(BorderFactory.createLineBorder(Color.red));
+                }
             }
+
         }
 
         //Poisitionner les elements textes au centre de la case

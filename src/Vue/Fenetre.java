@@ -212,7 +212,7 @@ public class Fenetre extends JFrame {
         
         /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1), this.carte, this);
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1,1), this.carte, this);
         //Tableau contenant les details des points d interets
         tableauPIs = new JTable(vuePIs);
         //Ajuster la taille des lignes
@@ -230,8 +230,11 @@ public class Fenetre extends JFrame {
                 this.tableauPIs.setDefaultRenderer(JComponent.class, new TypeCellRenderer());
             }
         }
-
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel listSelectModel = tableauPIs.getSelectionModel();
+        //Ajouter un evenement sur les lignes du tableau
+        listSelectModel.addListSelectionListener(this.ecouteurListSelect);
+        
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -282,7 +285,7 @@ public class Fenetre extends JFrame {
         etapesTitre.setForeground(COULEUR_ECRITURE);
 
         //Vue sur les etapes d une tournee
-        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1), this, this.tournee);
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1,2), this, this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(30);
@@ -635,7 +638,8 @@ public class Fenetre extends JFrame {
 
     /**
      * Mettre en surbrillance la ligne du tableau correspondant a l index
-     *
+     * du point d interet clique
+     * 
      * @param index : ligne du tableau a encadrer
      */
     public void surbrillanceLigneTab(int index) {
@@ -643,6 +647,7 @@ public class Fenetre extends JFrame {
         //encadre en rouge, enlever le cadre autour de ce point
         if (this.surbrillance) {
             this.vueEtapes.setLigneSelect(-1);
+            this.vuePIs.setLigneSelect(-1);
             this.panneauCarte.setFenetre(this);
             this.panneauCarte.updateUI();
             this.surbrillance = false;
@@ -652,6 +657,13 @@ public class Fenetre extends JFrame {
                 //Encadrer en rouge la ligne correspond a l index
                 this.vueEtapes.getFormatcell().setIndex(index);
                 tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
+            }
+        }
+        if(tableauPIs.getRowCount() !=0){
+            for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
+                //Encadrer en rouge la ligne correspond a l index
+                this.vuePIs.getFormatcell().setIndex(index);
+                tableauPIs.getColumnModel().getColumn(j).setCellRenderer(this.vuePIs.getFormatcell());
             }
         }
     }
@@ -790,6 +802,10 @@ public class Fenetre extends JFrame {
      */
     public void viderPanneauPIs() {
         this.vuePIs.clearPIs();
+        this.vuePIs.getFormatcell().setIndex(-1);
+        this.vuePIs.setLigneSelect(-1);
+        this.panneauCarte.setFenetre(this);
+        this.panneauCarte.updateUI();
     }
 
     public void setTournee(Tournee tournee) {
@@ -812,9 +828,11 @@ public class Fenetre extends JFrame {
         //Enlever le contour rouge de cette ligne du tableau
         if (this.surbrillance) {
             this.vueEtapes.getFormatcell().setIndex(-1);
+            this.vuePIs.getFormatcell().setIndex(-1);
             this.surbrillance = false;
         }
         this.vueEtapes.setLigneSelect(ligne);
+        this.vuePIs.setLigneSelect(ligne);
         this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
