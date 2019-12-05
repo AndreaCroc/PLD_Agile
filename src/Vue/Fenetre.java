@@ -67,11 +67,12 @@ public class Fenetre extends JFrame {
     protected final static String MODIFIER = "Modifier";
     protected final static String SUPPRIMER = "Supprimer";
     protected final static String ANNULER = "Annuler";
+    protected final static String AJOUTER = "Ajouter";
 
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
-    
+
     protected final static Color COULEUR_FOND = new Color(186, 228, 255);
     protected final static Color COULEUR_BOUTON = new Color(50, 70, 120);
     protected final static Color COULEUR_ERREUR = new Color(254, 79, 65);
@@ -85,6 +86,7 @@ public class Fenetre extends JFrame {
     private JButton boutonModifier;
     private JButton boutonSupprimer;
     private JButton boutonAnnuler;
+    private JButton boutonAjouterPoints;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -159,7 +161,7 @@ public class Fenetre extends JFrame {
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
 
-        this.ecouteurListSelect = new EcouteurListSelection(this.controleur,this);
+        this.ecouteurListSelect = new EcouteurListSelection(this.controleur, this);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
@@ -200,19 +202,27 @@ public class Fenetre extends JFrame {
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
         livraisons.setForeground(COULEUR_ECRITURE);
 
+        //Bouton pour ajouter des points
+        boutonAjouterPoints = new JButton(AJOUTER);
+        boutonAjouterPoints.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonAjouterPoints.setForeground(Color.white);
+        boutonAjouterPoints.setBackground(new Color(50, 70, 120));
+        boutonAjouterPoints.setEnabled(false);
+        boutonAjouterPoints.addActionListener(ecouteurBoutons);
+
         //Remplissage du panneauLivraison et ajout de ce dernier au panneauGauche
         panneauLivraisons.add(livraisons);
         panneauLivraisons.add(inputChargeLiv);
         panneauLivraisons.add(boutonChargerLivraisons);
         panneauLivraisons.add(boutonCalculerTournee);
+        panneauLivraisons.add(boutonAjouterPoints);
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
-        
-        /* PanneauPIs (haut gauche) */
+ /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1,1), this.carte, this);
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1, 1), this.carte, this);
         //Tableau contenant les details des points d interets
         tableauPIs = new JTable(vuePIs);
         //Ajuster la taille des lignes
@@ -234,7 +244,6 @@ public class Fenetre extends JFrame {
         ListSelectionModel listSelectModel = tableauPIs.getSelectionModel();
         //Ajouter un evenement sur les lignes du tableau
         listSelectModel.addListSelectionListener(this.ecouteurListSelect);
-        
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -243,7 +252,7 @@ public class Fenetre extends JFrame {
         labelTabPI.setFont(new Font("Arial", Font.BOLD, 14));
         labelTabPI.setForeground(COULEUR_ERREUR);
         labelTabPI.setVisible(false);
-        
+
         // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
@@ -253,8 +262,6 @@ public class Fenetre extends JFrame {
         panneauPIs.add(scrollPIs);
         panneauPIs.add(labelTabPI);
         panneauGauche.add(panneauPIs);
-        
-        
 
         /* PanneauTournee (milieu bas gauche) */
         //Titre de panneauTournee
@@ -278,14 +285,14 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauTournee);
 
         /* Fin PanneauTournee*/
-        /* PanneauEtape (bas gauche)*/
+ /* PanneauEtape (bas gauche)*/
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
         etapesTitre.setForeground(COULEUR_ECRITURE);
 
         //Vue sur les etapes d une tournee
-        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1,2), this, this.tournee);
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1, 2), this, this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(30);
@@ -315,15 +322,15 @@ public class Fenetre extends JFrame {
         boutonModifier.setForeground(COULEUR_ECRITURE);
         boutonModifier.setBackground(COULEUR_BOUTON);
         boutonModifier.addActionListener(ecouteurBoutons);
-        
+
         //Bouton pour annuler  la suppression d un point d interet
         boutonAnnuler = new JButton(ANNULER);
         boutonAnnuler.setFont(new Font("Arial", Font.BOLD, 14));
         boutonAnnuler.setForeground(COULEUR_ECRITURE);
         boutonAnnuler.setBackground(COULEUR_BOUTON);
         boutonAnnuler.addActionListener(ecouteurBoutons);
-        
-         //Afficher un message si aucun point d interet
+
+        //Afficher un message si aucun point d interet
         labelTabEtapes = new JLabel("Aucun points d'intérêts");
         labelTabEtapes.setFont(new Font("Arial", Font.BOLD, 14));
         labelTabEtapes.setForeground(COULEUR_ERREUR);
@@ -419,7 +426,7 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         /* Fin PanneauLegende */
-        /* PanneauCarte (bas droit) */
+ /* PanneauCarte (bas droit) */
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
@@ -432,9 +439,9 @@ public class Fenetre extends JFrame {
         addMouseListener(ecouteurSouris);
 
         /* Fin panneauCarte */
-        /* Fin panneauDroite */
+ /* Fin panneauDroite */
 
-        /* PanneauGlobal2 : pour la deuxieme fenetre */
+ /* PanneauGlobal2 : pour la deuxieme fenetre */
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(COULEUR_FOND);
@@ -443,7 +450,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauGlobal2 */
 
-        /* PanneauGlobal1 : pour la premiere fenetre*/
+ /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 50));
@@ -508,7 +515,7 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
-        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4*(int) panneauLegende.getHeight() /10 );
+        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
@@ -539,7 +546,10 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setBounds(7 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
-        labelTabPI.setBounds((int) panneauPIs.getWidth()/4,(int) panneauPIs.getHeight()/20,(int) panneauPIs.getWidth(),(int) panneauPIs.getHeight()/20);
+        labelTabPI.setBounds((int) panneauPIs.getWidth() / 4, (int) panneauPIs.getHeight() / 20, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight() / 20);
+
+        boutonAjouterPoints.setBounds(7 * ((int) panneauLivraisons.getWidth() / 12), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 3, 1 * (int) panneauLivraisons.getHeight() / 6);
+
     }
 
     /**
@@ -560,6 +570,7 @@ public class Fenetre extends JFrame {
      */
     public void afficherBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(true);
+        this.boutonAjouterPoints.setEnabled(true);
     }
 
     /**
@@ -569,30 +580,28 @@ public class Fenetre extends JFrame {
         System.out.println("griser");
         this.boutonCalculerTournee.setEnabled(false);
     }
-    
+
     /**
-     * Pour rendre non cliquable le bouton pour annuler la suppression 
-     * ou modification
-     * Pour rendre cliquable les autres boutons
+     * Pour rendre non cliquable le bouton pour annuler la suppression ou
+     * modification Pour rendre cliquable les autres boutons
      */
     public void griserBoutonsSupprimer() {
         this.boutonAnnuler.setEnabled(true);
-        
+
         this.boutonChangerCarte.setEnabled(false);
         this.boutonChargerLivraisons.setEnabled(false);
         this.boutonCalculerTournee.setEnabled(false);
         this.boutonSupprimer.setEnabled(false);
         this.boutonModifier.setEnabled(false);
     }
-    
+
     /**
-     * Pour afficher le bouton pour l annulation de la suppression
-     * ou la modification
-     * Et poour griser les autres
+     * Pour afficher le bouton pour l annulation de la suppression ou la
+     * modification Et poour griser les autres
      */
     public void afficherBoutonSupprimer() {
         this.boutonAnnuler.setEnabled(false);
-        
+
         this.boutonChangerCarte.setEnabled(true);
         this.boutonChargerLivraisons.setEnabled(true);
         this.boutonCalculerTournee.setEnabled(true);
@@ -638,9 +647,9 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Mettre en surbrillance la ligne du tableau correspondant a l index
-     * du point d interet clique
-     * 
+     * Mettre en surbrillance la ligne du tableau correspondant a l index du
+     * point d interet clique
+     *
      * @param index : ligne du tableau a encadrer
      */
     public void surbrillanceLigneTab(int index) {
@@ -661,7 +670,7 @@ public class Fenetre extends JFrame {
                 tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
             }
         }
-        if(tableauPIs.getRowCount() !=0){
+        if (tableauPIs.getRowCount() != 0) {
             for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
                 //Encadrer en rouge la ligne correspond a l index
                 this.vuePIs.getFormatcell().setIndex(index);
@@ -689,18 +698,20 @@ public class Fenetre extends JFrame {
         repChargeLiv.setText(message);
         repChargeLiv.setVisible(true);
     }
-    
-     /**
-     * Afficher un message si aucune donnees dans le fichier des livraisons charge
+
+    /**
+     * Afficher un message si aucune donnees dans le fichier des livraisons
+     * charge
      *
      * @param afficher savoir si on veut afficher ou cacher le message
      */
     public void afficherOuCacherMessageLivraison(boolean afficher) {
         labelTabPI.setVisible(afficher);
     }
-    
+
     /**
-     * Afficher un message si aucune donnees dans le fichier des livraisons charge
+     * Afficher un message si aucune donnees dans le fichier des livraisons
+     * charge
      *
      * @param afficher savoir si on veut afficher ou cacher le message
      */
@@ -877,12 +888,10 @@ public class Fenetre extends JFrame {
     public String getInputChargeCarte() {
         return inputChargeCarte.getText();
     }
-    
+
     public String getInputChargeLiv() {
         return inputChargeLiv.getText();
     }
-    
-    
 
     /**
      * Afficher une popup pour valider la suppression d un point d interet
@@ -904,7 +913,7 @@ public class Fenetre extends JFrame {
                 type = "livraison";
                 typeAssocie = "enlèvement";
             }
-            message += type + "\n"+"correspondant à la demande de livraison " + num +"\n"+"en sachant que le point d'intérêt de type " + typeAssocie + "\n"+"associé sera également supprimé ?";
+            message += type + "\n" + "correspondant à la demande de livraison " + num + "\n" + "en sachant que le point d'intérêt de type " + typeAssocie + "\n" + "associé sera également supprimé ?";
         }
         int option = jop.showConfirmDialog(null, message, "Suppression d'un point d 'intérêt", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 

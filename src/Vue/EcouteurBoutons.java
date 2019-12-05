@@ -15,9 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Classe EcouteurBoutons pour recuperer et gerer les evenements
- * sur les boutons de la fenetre
- * 
+ * Classe EcouteurBoutons pour recuperer et gerer les evenements sur les boutons
+ * de la fenetre
+ *
  */
 public class EcouteurBoutons implements ActionListener {
 
@@ -54,6 +54,10 @@ public class EcouteurBoutons implements ActionListener {
             //Si on veut annuler la suppression
             case Fenetre.ANNULER:
                 controleur.annuler();
+                break;
+            case Fenetre.AJOUTER:
+                controleur.ajouter();
+                System.out.println("LAA");
                 break;
         }
 

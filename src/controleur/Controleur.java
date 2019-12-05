@@ -23,13 +23,14 @@ public class Controleur {
     private Carte carte;
     private Tournee tournee;
     private Etat etatCourant = new EtatInit();
-    
+
     // Instances associees a chaque etat possible du controleur
     protected final EtatInit etatInit = new EtatInit();
     protected final EtatDeBase etatDeBase = new EtatDeBase();
     protected final EtatLivraison etatLivraison = new EtatLivraison();
     protected final EtatTournee etatTournee = new EtatTournee();
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
+    protected final EtatAjouter etatAjouter = new EtatAjouter();
 
     public Controleur() {
         carte = new Carte();
@@ -42,47 +43,53 @@ public class Controleur {
      *
      */
     public void chargerCarte() {
-        etatCourant.chargerPageDeBase(this,fenetre,carte,tournee);
+        etatCourant.chargerPageDeBase(this, fenetre, carte, tournee);
     }
-    
+
     /**
      * Change la carte donc en charge une nouvelle
      */
     public void changerCarte() {
-        etatCourant.changerCarte(this,fenetre,carte);
+        etatCourant.changerCarte(this, fenetre, carte);
     }
-    
+
     /**
      * Charger une livraison
      */
-    public void chargerLivraison () {
-        etatCourant.chargerLivraison(this,fenetre, carte);
+    public void chargerLivraison() {
+        etatCourant.chargerLivraison(this, fenetre, carte);
     }
+
     /**
      * Calculer une tournee
      */
-    public void calculerTournee () {
+    public void calculerTournee() {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
-    
+
     /**
      * Supprimer un point d interet de la tournee
+     *
      * @param index : numero du point d interet a supprimer
      */
-    public void supprimer (int index) {
+    public void supprimer(int index) {
         etatCourant.supprimer(this, fenetre, carte, tournee, index);
     }
-    
+
     /**
      * Annuler la suppression d un point d interet
      */
-    public void annuler () {
+    public void annuler() {
         etatCourant.annuler(this, fenetre);
     }
-    
+
+    public void ajouter() {
+        etatCourant.ajouter(this, fenetre, carte);
+    }
+
     /**
-     * 
-     * @param etat 
+     *
+     * @param etat
      */
     public void setEtat(Etat etat) {
         etatCourant = etat;
@@ -93,13 +100,11 @@ public class Controleur {
      *
      * @param index indice du point d interet clique
      */
-
     public void surbrillanceTableau(int index) {
         fenetre.surbrillanceLigneTab(index);
         fenetre.repaint();
     }
 
-    
     /**
      * Encadrer un point d interet de la tournee
      *
@@ -113,8 +118,8 @@ public class Controleur {
     public Tournee getTournee() {
         return this.tournee;
     }
-    
-    public void setTournee(Tournee tournee){
+
+    public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }
 
