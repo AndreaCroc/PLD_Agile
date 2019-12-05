@@ -15,7 +15,7 @@ import modele.Carte;
 import modele.Tournee;
 
 /**
- * Interface Etat
+ * Interface Etat permettant de gerer les differents etats de lapplication
  * 
  */
 public interface Etat {

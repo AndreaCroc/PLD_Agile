@@ -19,12 +19,13 @@ import modele.Tournee;
 
 /**
  *
- * Classe EtatSupprimer
+ * Classe EtatSupprimer quand on veut supprimer un point d interet
  */
 public class EtatSupprimer implements Etat {
 
     /**
-     * Supprimer un point d interet de la tournee
+     * Supprimer un point d interet de la tournee et son point correspondant
+     * Dans tous les cas, on repasse a l etat EtatTournee
      * 
      * @param controleur
      * @param fenetre
@@ -71,6 +72,7 @@ public class EtatSupprimer implements Etat {
 
     /**
      * Annuler le mode suppression d un point d interet
+     * On repasse dans l etat EtatTournee
      * 
      * @param controleur
      * @param fenetre 

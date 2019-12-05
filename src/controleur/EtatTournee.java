@@ -17,25 +17,27 @@ import modele.Tournee;
 
 /**
  *
- * Classe EtatTournee
+ * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et sur
+ * les tableaux de gauche) a une tournee calculee
  */
 public class EtatTournee implements Etat {
-    
+
     /**
-     * Changer la carte deja chargee
-     * 
+     * Changer la carte deja chargee Dans tous les cas, on retourne dans l
+     * EtatDeBase
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean changerCarte = false;
-        
+
         try {
             //Choix du fichier XML
-            changerCarte = carte.chargerCarte(true,"");
+            changerCarte = carte.chargerCarte(true, "");
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et on affiche la carte et on change detat
@@ -72,9 +74,8 @@ public class EtatTournee implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
-            /*
-            carte.setDemandesLivraisons(null);
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            /*carte.setDemandesLivraisons(null);
             fenetre.viderPanneauEtapes();
             fenetre.viderPanneauPIs();
             fenetre.cacherPanneauEtapesEtTour();
@@ -87,20 +88,21 @@ public class EtatTournee implements Etat {
             controleur.setEtat(controleur.etatDeBase);*/
         }
     }
-    
+
     /**
-     * Charger des livraisons depuis un fichier XML
-     * 
+     * Charger des livraisons depuis un fichier XML En cas de succes on retourne
+     * a l etat EtatLivraison En cas d echec, on reste dans cet etat
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
-        
+
         fenetre.afficherMessageErreur3("");
 
         try {
@@ -129,24 +131,25 @@ public class EtatTournee implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
-            //fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
     }
-    
+
     /**
-     * Supprimer un point d interet de la tournee
-     * 
+     * Supprimer un point d interet de la tournee Dans tous les cas, on passe
+     * dans l etat EtatSupprimer
+     *
      * @param controleur
      * @param fenetre
      * @param carte
      * @param tournee
-     * @param index 
+     * @param index
      */
     @Override
-    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index){
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
         fenetre.setClicSupp(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
     }
-    
+
 }
