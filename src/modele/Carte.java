@@ -928,7 +928,7 @@ public class Carte {
                         this.listePointsInteretActuelle.add(pe);
 
                         this.demandesLivraisons.ajouterPointInteret(pl);
-                        this.listePointsInteretActuelle.add(pI);
+                        this.listePointsInteretActuelle.add(pl);
 
                     } else {
                         ok = false; // s'il y a un point non-trouvé dans la liste
