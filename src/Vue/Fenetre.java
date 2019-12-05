@@ -202,20 +202,11 @@ public class Fenetre extends JFrame {
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
         livraisons.setForeground(COULEUR_ECRITURE);
 
-        //Bouton pour ajouter des points
-        boutonAjouterPoints = new JButton(AJOUTER);
-        boutonAjouterPoints.setFont(new Font("Arial", Font.BOLD, 14));
-        boutonAjouterPoints.setForeground(Color.white);
-        boutonAjouterPoints.setBackground(new Color(50, 70, 120));
-        boutonAjouterPoints.setEnabled(false);
-        boutonAjouterPoints.addActionListener(ecouteurBoutons);
-
         //Remplissage du panneauLivraison et ajout de ce dernier au panneauGauche
         panneauLivraisons.add(livraisons);
         panneauLivraisons.add(inputChargeLiv);
         panneauLivraisons.add(boutonChargerLivraisons);
         panneauLivraisons.add(boutonCalculerTournee);
-        panneauLivraisons.add(boutonAjouterPoints);
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
@@ -329,6 +320,14 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setForeground(COULEUR_ECRITURE);
         boutonAnnuler.setBackground(COULEUR_BOUTON);
         boutonAnnuler.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour ajouter des points
+        boutonAjouterPoints = new JButton(AJOUTER);
+        boutonAjouterPoints.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonAjouterPoints.setForeground(COULEUR_ECRITURE);
+        boutonAjouterPoints.setBackground(COULEUR_BOUTON);
+        //boutonAjouterPoints.setEnabled(false);
+        boutonAjouterPoints.addActionListener(ecouteurBoutons);
 
         //Afficher un message si aucun point d interet
         labelTabEtapes = new JLabel("Aucun points d'intérêts");
@@ -345,6 +344,7 @@ public class Fenetre extends JFrame {
         panneauEtapes.add(boutonSupprimer);
         panneauEtapes.add(boutonModifier);
         panneauEtapes.add(boutonAnnuler);
+        panneauEtapes.add(boutonAjouterPoints);
         panneauEtapes.setVisible(false);
         panneauGauche.add(panneauEtapes);
 
@@ -541,14 +541,15 @@ public class Fenetre extends JFrame {
         etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
         tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
         scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        boutonSupprimer.setBounds(1 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonModifier.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonAnnuler.setBounds(7 * (int) panneauEtapes.getWidth() / 10, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 4, 15 * (int) panneauEtapes.getHeight() / 100);
-
+        boutonAjouterPoints.setBounds(1 * (int) panneauLivraisons.getWidth() / 25, 81 * (int) panneauLivraisons.getHeight() / 100, 1 * (int) panneauLivraisons.getWidth() / 5, 15 * (int) panneauLivraisons.getHeight() / 100);
+        boutonSupprimer.setBounds(7 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonModifier.setBounds(13 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
+        
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
         labelTabPI.setBounds((int) panneauPIs.getWidth() / 4, (int) panneauPIs.getHeight() / 20, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight() / 20);
 
-        boutonAjouterPoints.setBounds(7 * ((int) panneauLivraisons.getWidth() / 12), 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth() / 3, 1 * (int) panneauLivraisons.getHeight() / 6);
+        
 
     }
 
