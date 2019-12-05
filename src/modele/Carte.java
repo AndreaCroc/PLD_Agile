@@ -334,7 +334,7 @@ public class Carte {
             for (int i = 0; i < nbSommets; i++) {
                 duree[i] = listePointsInteret.get(i).getDuree();
             }
-
+           
             //Execution du TSP
             unTSP.chercheSolution(1000000, nbSommets, cout, duree);
 

@@ -1,20 +1,19 @@
 /*
- * JCarte
- *
- * Version 1
- * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.JPanel;
 import modele.Carte;
@@ -25,13 +24,14 @@ import modele.Troncon;
 
 /**
  *
- * Classe JCarte permet d afficher la carte, les points d interets, la tournee
+ * @author GRAZIA GIULIA
  */
 public class JCarte extends JPanel {
 
     private Carte carte;
     private Tournee tournee;
     private ArrayList<Point> coorPtInterets;
+    private Map<Intersection, Point> intersectionsMap;
     private Fenetre fenetre;
 
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
@@ -39,6 +39,7 @@ public class JCarte extends JPanel {
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
+        this.intersectionsMap = new HashMap<>();
         this.fenetre = fenetre;
         this.repaint();
     }
@@ -57,18 +58,20 @@ public class JCarte extends JPanel {
         return this.tournee;
     }
 
-    /**
-     * Ajouter un point au tableau stockant les coordonnees des points d interets
-     * de la tournee
-     *
-     * @param p point a ajouter
-     */
     public void ajouterPoint(Point p) {
         this.coorPtInterets.add(p);
+    }
+    
+    public void ajouterPointToIntersection(Intersection i, Point p) {
+        this.intersectionsMap.put(i, p);
     }
 
     public ArrayList<Point> getCoorPtInterets() {
         return this.coorPtInterets;
+    }
+    
+    public Map<Intersection, Point> getIntersectionsMap() {
+        return this.intersectionsMap;
     }
 
     /*Recupère la latitude maximale présente sur la carte*/
@@ -269,7 +272,11 @@ public class JCarte extends JPanel {
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
-
+            
+            //ajout de l'intersection et de ses coordonnees correspondantes dans la map (sert au clic sur une intersection)
+            this.ajouterPointToIntersection(i, new Point(this.getProportionalX(i, intersections), this.getProportionalY(i, intersections)));
+            //System.out.println("ALEXANNE\r\nAjout à la map : \r\nIntersection : " + i.getId() + " x : " + getProportionalX(i, intersections) + " / y : " + getProportionalY(i, intersections));
+            
             g.setColor(Color.BLACK);
 
             g.fillOval(this.getProportionalX(i, intersections), this.getProportionalY(i, intersections), 2, 2);
@@ -290,7 +297,7 @@ public class JCarte extends JPanel {
         }
         if (carte.getDemandesLivraisons() != null) {
             this.coorPtInterets.clear();
-            ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
+            ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
             int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs, intersections) - 2;
@@ -301,7 +308,6 @@ public class JCarte extends JPanel {
             g.setColor(Color.BLACK);
             g.fillPolygon(p);
 
-            //Ajouter le point du depot dans la liste
             Point ptDepot = new Point(xDepot, yDepot);
             this.ajouterPoint(ptDepot);
 
@@ -325,7 +331,6 @@ public class JCarte extends JPanel {
                         Point ptOval = new Point(xOval, yOval);
                         g.fillRect(xRect, yRect, 9, 9);
                         g.fillOval(xOval, yOval, 9, 9);
-                        //Ajout des points a la liste stockant les coordonnees des points d interets
                         this.ajouterPoint(ptRect);
                         this.ajouterPoint(ptOval);
 
@@ -351,15 +356,8 @@ public class JCarte extends JPanel {
                         int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
                         System.out.println("x = " + x);
                         int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
-                        double k = ((double)(this.getProportionalY(t.getDestination(),intersections)-this.getProportionalY(t.getOrigine(),intersections)))/((double)(this.getProportionalX(t.getDestination(),intersections)-this.getProportionalX(t.getOrigine(),intersections)));
-                        int r = 6;      // taille de fleche
-                        int sens = (t.getDestination().getLongitude()>t.getOrigine().getLongitude())?1:-1;  // sens de fleche
-                        double v = (Math.sqrt(1+k*k));
-                        double w = Math.sqrt(1+(-1/k)*(-1/k));
-                        double ajoutX=(r/2*sens/v);
-                        double ajoutY=(r/2*sens*k/v);
-                        int xT[]={(int)(2*r*sens/v+ajoutX)+x,x-(int)(r/w-ajoutX),x+(int)(r/w+ajoutX)};
-                        int yT[]={(int)(2*r*k*sens/v+ajoutY)+y,y-(int)(r*(-1/k)/w-ajoutY),y+(int)(r*(-1/k)/w+ajoutY)};
+                        int xT[] = {x - 2, x + 4, x + 7};
+                        int yT[] = {y - 2, y + 7, y};
                         Polygon p = new Polygon(xT, yT, 3);
                         g.setColor(Color.RED);
                         g.fillPolygon(p);
@@ -370,25 +368,24 @@ public class JCarte extends JPanel {
         }
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVueEtapes().getLigneSelect();
-            //Si une ligne du tableau des etapes de la tournee a ete selectionnee
+            System.out.println("ligneTab2 : " + ligneTab);
             if (ligneTab != -1) {
                 int xPI = 5;
                 int yPI = 5;
                 boolean select = false;
                 if (ligneTab < this.coorPtInterets.size()) {
-                    //Recuperer les coordonnes du point d interet associe a la ligne du tableau
                     xPI = this.coorPtInterets.get(ligneTab).getX();
                     yPI = this.coorPtInterets.get(ligneTab).getY();
                     select = true;
-                    //Si le point selectionne est l entrepot
+                    System.out.println("coloriage1");
                 } else if (ligneTab == this.coorPtInterets.size()) {
                     xPI = this.coorPtInterets.get(0).getX();
                     yPI = this.coorPtInterets.get(0).getY();
                     select = true;
+                    System.out.println("coloriage2");
                 }
                 if (select) {
                     g.setColor(Color.RED);
-                    //Faire un carre rouge autour du point d interets
                     g.drawLine(xPI - 5, yPI - 5, xPI - 5, yPI + 15);
                     g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
                     g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
