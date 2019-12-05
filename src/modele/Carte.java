@@ -4,6 +4,7 @@ import tsp.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,6 +38,7 @@ public class Carte {
     //Pour le graphe de plus courts chemins
     Double[][] cout;
     Chemin[][] chemins;
+    TreeMap<Integer, Integer> mapPredecesseur;
     
     //Pour l'affichage des points d'intérêt à tout moment sur la carte
     ArrayList<PointInteret> listePointsInteretActuelle;
@@ -226,6 +228,7 @@ public class Carte {
             chemin = new Chemin(depart, arrivee, successionTroncons);
             
         }
+        
         return chemin;
     }
 
@@ -261,6 +264,8 @@ public class Carte {
 
         //plus court chemin de chaque point d'intéràªt vers tous les autres 
         //(y compris l'entrepot)
+        long debut=System.currentTimeMillis();
+        System.out.println("DEBUT DIKSTRA : ");
         for (int i = 0; i < nbSommets; i++) {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
             dijkstra(intersectionCourante);

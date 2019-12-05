@@ -98,6 +98,7 @@ public class Controleur {
 
         //Appeler methode calculerTournee de Tournee : tournee.calculerTourner();
         this.tournee = carte.calculerTournee();
+        
         fenetre.setPanneauCarte(new JCarte(this.carte,this.tournee));
         fenetre.setTournee(this.tournee);
         fenetre.repaint();
