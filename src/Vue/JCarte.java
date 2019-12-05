@@ -351,8 +351,15 @@ public class JCarte extends JPanel {
                         int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
                         System.out.println("x = " + x);
                         int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
-                        int xT[] = {x - 2, x + 4, x + 7};
-                        int yT[] = {y - 2, y + 7, y};
+                        double k = ((double)(this.getProportionalY(t.getDestination(),intersections)-this.getProportionalY(t.getOrigine(),intersections)))/((double)(this.getProportionalX(t.getDestination(),intersections)-this.getProportionalX(t.getOrigine(),intersections)));
+                        int r = 6;      // taille de fleche
+                        int sens = (t.getDestination().getLongitude()>t.getOrigine().getLongitude())?1:-1;  // sens de fleche
+                        double v = (Math.sqrt(1+k*k));
+                        double w = Math.sqrt(1+(-1/k)*(-1/k));
+                        double ajoutX=(r/2*sens/v);
+                        double ajoutY=(r/2*sens*k/v);
+                        int xT[]={(int)(2*r*sens/v+ajoutX)+x,x-(int)(r/w-ajoutX),x+(int)(r/w+ajoutX)};
+                        int yT[]={(int)(2*r*k*sens/v+ajoutY)+y,y-(int)(r*(-1/k)/w-ajoutY),y+(int)(r*(-1/k)/w+ajoutY)};
                         Polygon p = new Polygon(xT, yT, 3);
                         g.setColor(Color.RED);
                         g.fillPolygon(p);
