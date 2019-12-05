@@ -646,13 +646,14 @@ public class Fenetre extends JFrame {
     public void surbrillanceLigneTab(int index) {
         //Si on clique sur un point d interet alors qu il y en avait deja un  
         //encadre en rouge, enlever le cadre autour de ce point
-        if (this.surbrillance) {
+        /*if (this.surbrillance) {
             this.vueEtapes.setLigneSelect(-1);
             this.vuePIs.setLigneSelect(-1);
             this.panneauCarte.setFenetre(this);
             this.panneauCarte.updateUI();
             this.surbrillance = false;
-        }
+        }*/
+
         if (tableauEtapes.getRowCount() != 0) {
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
                 //Encadrer en rouge la ligne correspond a l index
@@ -827,11 +828,12 @@ public class Fenetre extends JFrame {
     public void entourerPI(int ligne) {
         //Si une ligne du tableau etait deja en surbrillance au moment du clic sur une ligne
         //Enlever le contour rouge de cette ligne du tableau
-        if (this.surbrillance) {
+        /*if (this.surbrillance) {
+            System.out.println("surbrillance");
             this.vueEtapes.getFormatcell().setIndex(-1);
             this.vuePIs.getFormatcell().setIndex(-1);
             this.surbrillance = false;
-        }
+        }*/
         this.vueEtapes.setLigneSelect(ligne);
         this.vuePIs.setLigneSelect(ligne);
         this.panneauCarte.setFenetre(this);
