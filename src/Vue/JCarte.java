@@ -290,7 +290,7 @@ public class JCarte extends JPanel {
         }
         if (carte.getDemandesLivraisons() != null) {
             this.coorPtInterets.clear();
-            ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
+            ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
             int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs, intersections) - 2;
