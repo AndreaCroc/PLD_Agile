@@ -34,16 +34,26 @@ public class JCarte extends JPanel {
     private Tournee tournee;
     private ArrayList<Point> coorPtInterets;
     private Fenetre fenetre;
+    private double zoom;
 
-    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
+    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre,double zoom) {
         System.out.println("constructeur 1");
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
         this.fenetre = fenetre;
+        this.zoom=zoom;
         this.repaint();
     }
 
+    public void setZoom(double z){
+        this.zoom=z;
+    }
+    
+    public double getZoom(){
+        return zoom;
+    }
+    
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
         this.repaint();
@@ -183,6 +193,9 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
+        proportionalY*=zoom;
+       
+
         return proportionalY;
     }
 
@@ -208,7 +221,9 @@ public class JCarte extends JPanel {
         } else if (proportionalY >= hauteurPanel) {
             proportionalY = hauteurPanel - 12;
         }
-
+        
+        proportionalY*=zoom;
+        
         return proportionalY;
     }
 
@@ -234,7 +249,9 @@ public class JCarte extends JPanel {
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-
+        
+        proportionalX*=zoom;
+        
         return proportionalX;
     }
 
@@ -259,7 +276,9 @@ public class JCarte extends JPanel {
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-
+        
+        proportionalX*=zoom;
+        
         return proportionalX;
     }
 

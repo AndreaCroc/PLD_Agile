@@ -49,7 +49,7 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
@@ -66,7 +66,7 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 
@@ -117,7 +117,7 @@ public class EtatTournee implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);

@@ -427,7 +427,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee, this);
+        panneauCarte = new JCarte(this.carte, this.tournee, this,1.0);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));

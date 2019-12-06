@@ -48,7 +48,7 @@ public class EtatDeBase implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
@@ -91,7 +91,7 @@ public class EtatDeBase implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);

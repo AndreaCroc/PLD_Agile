@@ -142,7 +142,7 @@ public class EtatAjouter implements Etat {
             fenetre.repaint();
         }
         tournee = carte.getTournee();
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre,fenetre.getPanneauCarte().getZoom()));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
         fenetre.viderPanneauEtapes();
