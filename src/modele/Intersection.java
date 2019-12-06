@@ -27,8 +27,6 @@ public class Intersection {
         tronconsDepart = new ArrayList<Troncon>();
     }
 
-
-    
     public Intersection(String id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
