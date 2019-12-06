@@ -121,7 +121,7 @@ public class EtatTournee implements Etat {
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);
-                fenetre.afficherPanneauPI();
+                fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
             } else {

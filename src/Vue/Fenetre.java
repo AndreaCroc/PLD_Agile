@@ -320,7 +320,7 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setForeground(COULEUR_ECRITURE);
         boutonAnnuler.setBackground(COULEUR_BOUTON);
         boutonAnnuler.addActionListener(ecouteurBoutons);
-        
+
         //Bouton pour ajouter des points
         boutonAjouterPoints = new JButton(AJOUTER);
         boutonAjouterPoints.setFont(new Font("Arial", Font.BOLD, 14));
@@ -545,11 +545,9 @@ public class Fenetre extends JFrame {
         boutonSupprimer.setBounds(7 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
         boutonModifier.setBounds(13 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
         boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
-        
+
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
         labelTabPI.setBounds((int) panneauPIs.getWidth() / 4, (int) panneauPIs.getHeight() / 20, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight() / 20);
-
-        
 
     }
 
@@ -614,14 +612,16 @@ public class Fenetre extends JFrame {
 
     /**
      * Pour afficher les details d une tournee
+     *
+     * @param afficher savoir si la liste a afficher est non vide
      */
-    public void afficherEtapesTour() {
+    public void afficherEtapesTour(boolean afficher) {
         panneauEtapes.setVisible(true);
         panneauTournee.setVisible(true);
         vueTournee.setTournee(tournee);
         vueTournee.afficherTournee();
         vueEtapes.setTournee(tournee);
-        vueEtapes.afficherEtapes();
+        vueEtapes.afficherEtapes(afficher);
 
     }
 
@@ -629,8 +629,17 @@ public class Fenetre extends JFrame {
      * Pour cacher les panneaux etapes et tournee
      */
     public void cacherPanneauEtapesEtTour() {
+        System.out.println("cacher panneau etapes et tour");
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
+    }
+
+    public void cacherTablePI() {
+        this.tableauPIs.setVisible(false);
+    }
+    
+    public void cacherTableEtapes(){
+        this.tableauEtapes.setVisible(false);
     }
 
     /**
@@ -642,11 +651,13 @@ public class Fenetre extends JFrame {
 
     /**
      * Pour rendre visible le panneauPI
+     *
+     * @param afficher savoir si la liste a afficher est vide
      */
-    public void afficherPanneauPI() {
+    public void afficherPanneauPI(boolean afficher) {
         panneauPIs.setVisible(true);
         vuePIs.setCarte(carte);
-        vuePIs.afficherPIs();
+        vuePIs.afficherPIs(afficher);
     }
 
     /**
@@ -666,7 +677,7 @@ public class Fenetre extends JFrame {
             this.surbrillance = false;
         }*/
 
-        /*if (tableauEtapes.getRowCount() != 0) {
+ /*if (tableauEtapes.getRowCount() != 0) {
             for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
                 //Encadrer en rouge la ligne correspond a l index
                 this.vueEtapes.getFormatcell().setIndex(index);
@@ -907,9 +918,6 @@ public class Fenetre extends JFrame {
     public AffichagePIs getVuePIs() {
         return vuePIs;
     }
-    
-    
-    
 
     /**
      * Afficher une popup pour valider la suppression d un point d interet

@@ -42,8 +42,8 @@ public class EtatLivraison implements Etat {
         controleur.setTournee(tournee);
         
         fenetre.afficherOuCacherMessageTournee(false);
-        fenetre.afficherEtapesTour();
-        fenetre.afficherPanneauPI();
+        fenetre.afficherEtapesTour(true);
+        fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
         fenetre.griserBoutonCalcul();
         fenetre.repaint();
@@ -81,7 +81,7 @@ public class EtatLivraison implements Etat {
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);
-                fenetre.afficherPanneauPI();
+                fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
             } else {
                 //Sinon, on affiche un message d erreur

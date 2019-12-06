@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 import modele.Carte;
+import modele.Chemin;
 import modele.Intersection;
 import modele.PointInteret;
 import modele.Tournee;
@@ -58,8 +59,8 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Ajouter un point au tableau stockant les coordonnees des points d interets
-     * de la tournee
+     * Ajouter un point au tableau stockant les coordonnees des points d
+     * interets de la tournee
      *
      * @param p point a ajouter
      */
@@ -336,36 +337,39 @@ public class JCarte extends JPanel {
         }
 
         tournee = carte.getTournee();
-        if (this.tournee != null ) {
+        if (this.tournee != null) {
 
             ArrayList<PointInteret> PIs = this.tournee.getSuccessionPointsInteret();
-            
+
             for (PointInteret i : PIs) {
-                System.out.println("paint tournee : "+i.getHeureArrivee());
-                ArrayList<Troncon> iTroncons = i.getCheminDepart().getSuccessionTroncons();
-                for (Troncon t : iTroncons) {
-                    g.setColor(Color.RED);
-                    g.drawLine(this.getProportionalX(t.getOrigine(), intersections) + 1, this.getProportionalY(t.getOrigine(), intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
-
-                    if (t.getLongueur() > 120) {
-                        int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
-                        System.out.println("x = " + x);
-                        int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
-                        double k = ((double)(this.getProportionalY(t.getDestination(),intersections)-this.getProportionalY(t.getOrigine(),intersections)))/((double)(this.getProportionalX(t.getDestination(),intersections)-this.getProportionalX(t.getOrigine(),intersections)));
-                        int r = 6;      // taille de fleche
-                        int sens = (t.getDestination().getLongitude()>t.getOrigine().getLongitude())?1:-1;  // sens de fleche
-                        double v = (Math.sqrt(1+k*k));
-                        double w = Math.sqrt(1+(-1/k)*(-1/k));
-                        double ajoutX=(r/2*sens/v);
-                        double ajoutY=(r/2*sens*k/v);
-                        int xT[]={(int)(2*r*sens/v+ajoutX)+x,x-(int)(r/w-ajoutX),x+(int)(r/w+ajoutX)};
-                        int yT[]={(int)(2*r*k*sens/v+ajoutY)+y,y-(int)(r*(-1/k)/w-ajoutY),y+(int)(r*(-1/k)/w+ajoutY)};
-                        Polygon p = new Polygon(xT, yT, 3);
+                Chemin chemin = i.getCheminDepart();
+                if (chemin != null) {
+                    ArrayList<Troncon> iTroncons = chemin.getSuccessionTroncons();
+                    for (Troncon t : iTroncons) {
                         g.setColor(Color.RED);
-                        g.fillPolygon(p);
-                    }
+                        g.drawLine(this.getProportionalX(t.getOrigine(), intersections) + 1, this.getProportionalY(t.getOrigine(), intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
 
+                        if (t.getLongueur() > 120) {
+                            int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
+                            System.out.println("x = " + x);
+                            int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
+                            double k = ((double) (this.getProportionalY(t.getDestination(), intersections) - this.getProportionalY(t.getOrigine(), intersections))) / ((double) (this.getProportionalX(t.getDestination(), intersections) - this.getProportionalX(t.getOrigine(), intersections)));
+                            int r = 6;      // taille de fleche
+                            int sens = (t.getDestination().getLongitude() > t.getOrigine().getLongitude()) ? 1 : -1;  // sens de fleche
+                            double v = (Math.sqrt(1 + k * k));
+                            double w = Math.sqrt(1 + (-1 / k) * (-1 / k));
+                            double ajoutX = (r / 2 * sens / v);
+                            double ajoutY = (r / 2 * sens * k / v);
+                            int xT[] = {(int) (2 * r * sens / v + ajoutX) + x, x - (int) (r / w - ajoutX), x + (int) (r / w + ajoutX)};
+                            int yT[] = {(int) (2 * r * k * sens / v + ajoutY) + y, y - (int) (r * (-1 / k) / w - ajoutY), y + (int) (r * (-1 / k) / w + ajoutY)};
+                            Polygon p = new Polygon(xT, yT, 3);
+                            g.setColor(Color.RED);
+                            g.fillPolygon(p);
+                        }
+
+                    }
                 }
+
             }
         }
         if (this.fenetre != null) {

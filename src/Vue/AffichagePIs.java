@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import javax.swing.JTextArea;
 import javax.swing.table.AbstractTableModel;
 import modele.Carte;
-import modele.DemandesLivraisons;
 import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
@@ -171,59 +170,72 @@ public class AffichagePIs extends AbstractTableModel {
     /**
      * Afficher tous les points d interet au chargement du fichier XML
      * correspondant a une livraison
+     *
+     * @param afficher savoir si la liste a afficher est non vide
      */
-    public void afficherPIs() {
-        //Recuperer les points d interets
-        ArrayList<PointInteret> listePIs = this.carte.getListePointsInteretActuelle();
-        String nomRue = "";
-        String type = "";
-        int duree = 0;
-        String dureePt = "";
-        int num = 0;
-        Intersection intersection;
-        ArrayList<Troncon> listeT;
-        if (listePIs.size() > 1) {
-            for (PointInteret pt : listePIs) {
-                nomRue = "";
+    public void afficherPIs(boolean afficher) {
+        if (afficher) {
+            //Recuperer les points d interets
+            this.setCarte(fenetre.getCarte());
+            
+            ArrayList<PointInteret> listePIs = this.carte.getListePointsInteretActuelle();
+            System.out.println("carte pi : "+listePIs);
+            String nomRue = "";
+            String type = "";
+            int duree = 0;
+            String dureePt = "";
+            int num = 0;
+            Intersection intersection;
+            ArrayList<Troncon> listeT;
+            if (listePIs.size() > 1) {
+                for (PointInteret pt : listePIs) {
+                    nomRue = "";
 
-                intersection = pt.getIntersection();
-                listeT = intersection.getTronconsDepart();
+                    intersection = pt.getIntersection();
+                    listeT = intersection.getTronconsDepart();
 
-                //Recuperer les noms des rues qui intersectent le point d interet
-                for (Troncon t : listeT) {
-                    if (!nomRue.contains(t.getNomRue())) {
-                        nomRue += t.getNomRue() + ", ";
+                    //Recuperer les noms des rues qui intersectent le point d interet
+                    for (Troncon t : listeT) {
+                        if (!nomRue.contains(t.getNomRue())) {
+                            nomRue += t.getNomRue() + ", ";
+                        }
                     }
+                    nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
+
+                    //Recuperer la duree une fois arrivee au point d interet
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    duree = pt.getDuree();
+                    dureePt = df.format(duree / 60);
+                    dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
+
+                    //Recuperer le type du point d interet
+                    if (pt.isEnlevement()) {
+                        type = "Enlèvement";
+                    } else {
+                        type = "Livraison";
+                    }
+                    if (listePIs.indexOf(pt) == 0) {
+                        type = "Entrepot";
+                        dureePt = "";
+                        num = 0;
+
+                        //Recuperer le numero de la demande du point d interet
+                    } else {
+                        num = pt.getNumeroDemande();
+                    }
+                    //Afficher les details des points d interets
+                    this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
+
                 }
-                nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
-
-                //Recuperer la duree une fois arrivee au point d interet
-                DecimalFormat df = new DecimalFormat("0.00");
-                duree = pt.getDuree();
-                dureePt = df.format(duree / 60);
-                dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
-
-                //Recuperer le type du point d interet
-                if (pt.isEnlevement()) {
-                    type = "Enlèvement";
-                } else {
-                    type = "Livraison";
-                }
-                if (listePIs.indexOf(pt) == 0) {
-                    type = "Entrepot";
-                    dureePt = "";
-                    num = 0;
-
-                    //Recuperer le numero de la demande du point d interet
-                } else {
-                    num = pt.getNumeroDemande();
-                }
-                //Afficher les details des points d interets
-                this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
-
+            } else {
+                this.fenetre.cacherPanneauPI();
+                //this.fenetre.cacherTablePI();
+                this.fenetre.afficherOuCacherMessageLivraison(true);
             }
-        } else{
+
+        } else {
             this.fenetre.cacherPanneauPI();
+            //this.fenetre.cacherTablePI();
             this.fenetre.afficherOuCacherMessageLivraison(true);
         }
 

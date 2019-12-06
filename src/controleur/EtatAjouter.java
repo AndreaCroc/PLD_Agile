@@ -147,8 +147,8 @@ public class EtatAjouter implements Etat {
         controleur.setTournee(tournee);
         fenetre.viderPanneauEtapes();
         fenetre.viderPanneauPIs();
-        fenetre.afficherEtapesTour();
-        fenetre.afficherPanneauPI();
+        fenetre.afficherEtapesTour(true);
+        fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
         fenetre.repaint();
         
