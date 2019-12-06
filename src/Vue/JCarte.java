@@ -37,7 +37,6 @@ public class JCarte extends JPanel {
     private double zoom;
 
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre,double zoom) {
-        System.out.println("constructeur 1");
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
@@ -289,7 +288,6 @@ public class JCarte extends JPanel {
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
-
             g.setColor(Color.BLACK);
 
             g.fillOval(this.getProportionalX(i, intersections), this.getProportionalY(i, intersections), 2, 2);
@@ -308,9 +306,11 @@ public class JCarte extends JPanel {
                 }*/
             }
         }
+        
         if (carte.getDemandesLivraisons() != null) {
             this.coorPtInterets.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
+            //ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
             int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs, intersections) - 2;

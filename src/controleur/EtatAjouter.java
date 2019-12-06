@@ -139,6 +139,8 @@ public class EtatAjouter implements Etat {
             pL.setPointDependance(pE);
             carte.getDemandesLivraisons().ajouterPointInteret(pE);
             carte.getDemandesLivraisons().ajouterPointInteret(pL);
+            carte.ajouterIntersection2(pE);
+            carte.ajouterIntersection2(pL);
             fenetre.repaint();
         }
         tournee = carte.getTournee();

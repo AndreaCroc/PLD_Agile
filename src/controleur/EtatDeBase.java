@@ -16,26 +16,26 @@ import modele.Carte;
 
 /**
  * Classe EtatDeBase qui correspond a l affichage de la carte sans rien dessus
- * Depuis cet etat on peut charger une nouvelle carte ou charger une
- * livraison
- * 
+ * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
+ *
  */
 public class EtatDeBase implements Etat {
-    
+
     /**
-     * Changer la carte deja chargee
-     * Dans tous les cas (succes ou echec) on reste dans cet EtatDeBase
+     * Changer la carte deja chargee Dans tous les cas (succes ou echec) on
+     * reste dans cet EtatDeBase
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
-    public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte){
-        
+    public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
+
         boolean changerCarte = false;
         try {
             //Choix du fichier XML
-            changerCarte = carte.chargerCarte(true,"");
+            changerCarte = carte.chargerCarte(true, "");
 
             //Si le chargement de la carte s est bien passe,
             // on change de fenetre et on affiche la carte
@@ -48,7 +48,7 @@ public class EtatDeBase implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
@@ -62,21 +62,20 @@ public class EtatDeBase implements Etat {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
         }
-        
+
     }
-    
+
     /**
-     * Charger une livraison lorsqu une carte est chargee
-     * En cas de succes, on passe a l etat EtatLivraison
-     * En cas d echec, on reste dans cet etat
-     * 
+     * Charger une livraison lorsqu une carte est chargee En cas de succes, on
+     * passe a l etat EtatLivraison En cas d echec, on reste dans cet etat
+     *
      * @param controleur
      * @param fenetre
-     * @param carte 
+     * @param carte
      */
     @Override
-    public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte){
-        
+    public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
+
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
         try {
@@ -91,7 +90,7 @@ public class EtatDeBase implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherOuCacherMessageLivraison(false);
@@ -104,10 +103,13 @@ public class EtatDeBase implements Etat {
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            //En cas d erreur liee a la selection d un fichier, on affiche un message
+            fenetre.afficherMessageErreur2("LUI Erreur lors de la sélection du fichier");
+            //Throwable t = e.getCause();
+            //StackTraceElement[] ste = t.getStackTrace();
+            //int line = ste[0].getLineNumber();
+            System.out.println("LIGNE LUI : "+e.getLocalizedMessage());
         }
     }
-    
 
 }

@@ -38,7 +38,7 @@ public class Carte {
     Double[][] cout;
     Chemin[][] chemins;
     TreeMap<Integer, Integer> mapPredecesseur;
-    
+
     //Pour l'affichage des points d'intérêt à tout moment sur la carte
     ArrayList<PointInteret> listePointsInteretActuelle;
 
@@ -55,6 +55,10 @@ public class Carte {
 
     public void ajouterIntersection(Intersection i) {
         this.listeIntersections.add(i);
+    }
+    
+    public void ajouterIntersection2(PointInteret i) {
+        this.listePointsInteretActuelle.add(i);
     }
 
     public void setListeIntersections(ArrayList<Intersection> listeIntersections) {
@@ -92,8 +96,6 @@ public class Carte {
     public void setListePointsInteretActuelle(ArrayList<PointInteret> listePointsInteretActuelle) {
         this.listePointsInteretActuelle = listePointsInteretActuelle;
     }
-    
-    
 
     /**
      * Relâchement d'un arc (troncon) reliant deux intersections Utilisée pour
@@ -195,7 +197,7 @@ public class Carte {
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
         //le chemin dans le sens inverse en utilisant les prédécesseurs
-        
+
         while (intersectionCourante.getPredecesseur() != null) {
             //Tant qu'on est pas au sommet de départ 
             Intersection intersectionPrec = intersectionCourante;
@@ -225,9 +227,9 @@ public class Carte {
             }
             //Creation du chemin correspondant
             chemin = new Chemin(depart, arrivee, successionTroncons);
-            
+
         }
-        
+
         return chemin;
     }
 
@@ -263,7 +265,7 @@ public class Carte {
 
         //plus court chemin de chaque point d'intéràªt vers tous les autres 
         //(y compris l'entrepot)
-        long debut=System.currentTimeMillis();
+        long debut = System.currentTimeMillis();
         System.out.println("DEBUT DIKSTRA : ");
         for (int i = 0; i < nbSommets; i++) {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
@@ -316,12 +318,19 @@ public class Carte {
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
+        for (int i = 1; i < nbSommets; i++) {
+                System.out.println("Duree " + listePointsInteret.get(i).getDuree() + " Num " + listePointsInteret.get(i).getNumeroDemande());
+                //System.out.println("Duree " + listePointsInteret.get(i).get + " Num " + listePointsInteret.get(i).getNumeroDemande());
+        }
+        
+        
         //Creation de la tournée
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         Integer indPointPrec;
         Chemin chemin;
-            
+        
+        
         //Cas où il n'y a aucune demande de livraisons
         if (nbSommets == 1) {
             tournee.ajouterPointInteret(listePointsInteret.get(0));
@@ -334,34 +343,34 @@ public class Carte {
             for (int i = 0; i < nbSommets; i++) {
                 duree[i] = listePointsInteret.get(i).getDuree();
             }
-           
+
             //Execution du TSP
             unTSP.chercheSolution(1000000, nbSommets, cout, duree);
 
             indPointPrec = unTSP.getMeilleureSolution(0);
 
-            
             PointInteret pointCourant = new PointInteret();
-
             for (int i = 1; i < nbSommets; i++) {
+                //System.out.println("Duree " + listePointsInteret.get(i).getDuree() + " Num " + listePointsInteret.get(i).getNumeroDemande());
                 indPointCourant = unTSP.getMeilleureSolution(i);
                 chemin = chemins[indPointPrec][indPointCourant];
+                System.out.println("I : "+i+" chemin : "+ chemin);
                 pointCourant = listePointsInteret.get(indPointPrec);
                 pointCourant.setCheminDepart(chemin);
 
                 //Ajout a la tournee
                 tournee.ajouterPointInteret(pointCourant);
                 indPointPrec = indPointCourant;
-
+                
             }
             //Ajout du dernier point d'intérêt qui retourne vers l'entrepôt
-           chemin = chemins[indPointCourant][0];
+            chemin = chemins[indPointCourant][0];
             pointCourant = listePointsInteret.get(indPointCourant);
             pointCourant.setCheminDepart(chemin);
 
             //Ajout a la tournee
             tournee.ajouterPointInteret(pointCourant);
-            
+
             this.setUneTournee(tournee);
 
             //Calcul des heures
@@ -412,10 +421,10 @@ public class Carte {
             //Recuperation de l'indice du point dans la liste des points d'intérêts
             indSuivListeP = listePointsInteret.indexOf(pointSuivant);
         }
-        
+
         //Prise en compte du cas où il ne reste que l'entrepôt
         if (!(pointPrec == pointSuivant)) {
-             cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
+            cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
             pointPrec.setCheminDepart(cheminPointPrec);
         }
 
@@ -437,23 +446,26 @@ public class Carte {
         return true;
     }
 
-    /** Méthode permettant d'ajouter une nouvelle livraison (point enlevement + 
+    /**
+     * Méthode permettant d'ajouter une nouvelle livraison (point enlevement +
      * point de livraison) à une tournee
-     * 
+     *
      * @param latitudeEnlvt latitude du point d'enlèvement
      * @param longitudeEnlvt longitude du point d'enlèvement
      * @param latitudeLivr latitude du point de livraison
      * @param longitudeLivr longitude du point de livraison
-     * @param pointAvantEnlevement point d'intérêt après lequel on souhaite placer le point d'enlèvement
-     * @param pointAvantLivraison point d'intérêt après lequel on souhaite placer le point de livraison
+     * @param pointAvantEnlevement point d'intérêt après lequel on souhaite
+     * placer le point d'enlèvement
+     * @param pointAvantLivraison point d'intérêt après lequel on souhaite
+     * placer le point de livraison
      * @param dureeEnlevement durée d'enlèvement
      * @param dureeLivraison durée de livraison
      * @return vrai si l'ajout a été effectué, faux sinon
      */
-    public boolean ajouterLivraison(Double latitudeEnlvt, Double longitudeEnlvt, 
-            Double latitudeLivr,Double longitudeLivr, PointInteret pointAvantEnlevement, 
-            PointInteret pointAvantLivraison,int dureeEnlevement, int dureeLivraison) {
-        
+    public boolean ajouterLivraison(Double latitudeEnlvt, Double longitudeEnlvt,
+            Double latitudeLivr, Double longitudeLivr, PointInteret pointAvantEnlevement,
+            PointInteret pointAvantLivraison, int dureeEnlevement, int dureeLivraison) {
+
         ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         Intersection intersectionEnlvt = null; //Intersection correspondant au premier point (enlévement)
@@ -465,16 +477,16 @@ public class Carte {
         //Indice du point précédant la livraison dans la tournee
         int indPointAvantLivr = successionPointsInteret.indexOf(pointAvantLivraison);
         //Numéro de la demande de livraison
-        int numeroDemande = (listePointsInteret.size()-1)/2 +1;
+        int numeroDemande = (listePointsInteret.size() - 1) / 2 + 1;
 
         //Recherche des intersections correspondants aux coordonnées 
         for (Intersection i : listeIntersections) {
-            if ((i.getLatitude()).toString().equals(latitudeEnlvt.toString())  && 
-                    (i.getLongitude()).toString().equals(longitudeEnlvt.toString())) {
+            if ((i.getLatitude()).toString().equals(latitudeEnlvt.toString())
+                    && (i.getLongitude()).toString().equals(longitudeEnlvt.toString())) {
                 intersectionEnlvt = i;
-            } 
-            if ((i.getLatitude()).toString().equals(latitudeLivr.toString()) && 
-                    (i.getLongitude()).toString().equals(longitudeLivr.toString())) {
+            }
+            if ((i.getLatitude()).toString().equals(latitudeLivr.toString())
+                    && (i.getLongitude()).toString().equals(longitudeLivr.toString())) {
                 intersectionLivr = i;
             }
         }
@@ -489,16 +501,14 @@ public class Carte {
         pointLivraison.setPointDependance(pointEnlevement);
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
-        
+
         //Cas où le point d'intérêt est déjà dans la liste
         //A voir
-        
         //Ajout aux listes de points d'intérêt
         listePointsInteret.add(pointEnlevement);
         listePointsInteret.add(pointLivraison);
         listePointsInteretActuelle.add(pointEnlevement);
         listePointsInteretActuelle.add(pointLivraison);
-
 
         //Vérification de la contrainte de précédence
         if (indPointAvantLivr < indPointAvantEnlvt) {
@@ -517,11 +527,14 @@ public class Carte {
 
         return true;
     }
+
     /**
-     * Méthode permettant d'ajouter un point d'intérêt à une tournée après un point
-     * d'intérêt donné de la tournée
+     * Méthode permettant d'ajouter un point d'intérêt à une tournée après un
+     * point d'intérêt donné de la tournée
+     *
      * @param pointInteret le point d'intérêt à ajouter
-     * @param pointPrecedent le point d'intérêt après lequel il faut ajouter le nouveau point
+     * @param pointPrecedent le point d'intérêt après lequel il faut ajouter le
+     * nouveau point
      * @return vrai si l'ajout a été effectué, faux sinon
      */
     public boolean ajouterPointInteret(PointInteret pointInteret, PointInteret pointPrecedent) {
@@ -563,7 +576,7 @@ public class Carte {
         //Calcul du chemin allant du point précédent au point ajouté
         dijkstra(pointPrecedent.getIntersection());
         cheminPointPrec = plusCourtChemin(pointPrecedent.getIntersection(), pointInteret.getIntersection());
-        System.out.println("chemin point prec "+plusCourtChemin(pointPrecedent.getIntersection(), pointInteret.getIntersection()));
+        System.out.println("chemin point prec " + plusCourtChemin(pointPrecedent.getIntersection(), pointInteret.getIntersection()));
 
         //Ajout à la matrice des chemins et celle des couts
         ajouterCoutEtChemin(cheminPointPrec, indPrecListeP, indPointListeP);
@@ -571,11 +584,10 @@ public class Carte {
         //Calcul du chemin allant du point ajouté au point suivant
         dijkstra(pointInteret.getIntersection());
         cheminPointCourant = plusCourtChemin(pointInteret.getIntersection(), pointSuivant.getIntersection());
-        System.out.println("chemin point courant "+cheminPointCourant);
+        System.out.println("chemin point courant " + cheminPointCourant);
         //Ajout à la matrice des chemins et celle des couts
         ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
 
-        
         pointPrecedent.setCheminDepart(cheminPointPrec);
         pointInteret.setCheminDepart(cheminPointCourant);
 
@@ -830,7 +842,6 @@ public class Carte {
                     String nomRue = listeTroncons.item(i).getAttributes().item(2).getNodeValue();
                     String origine = listeTroncons.item(i).getAttributes().item(3).getNodeValue();
 
-
                     Intersection interDep = null;
                     Intersection interArr = null;
                     for (Intersection inter : listeIntersections) {
@@ -873,6 +884,7 @@ public class Carte {
     public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException, Exception {
         DemandesLivraisons sauvegardeDL = this.demandesLivraisons;
         this.setDemandesLivraisons(null);
+        this.listePointsInteretActuelle.clear();
         boolean ok = true;
 
         if (listeIntersections.isEmpty()) {
@@ -939,15 +951,17 @@ public class Carte {
                     }
 
                 }
+                
             } else {
                 ok = false;
                 this.setDemandesLivraisons(sauvegardeDL);
+                this.listePointsInteretActuelle = sauvegardeDL.getPis();
             }
-            
 
         } else {
             ok = false;
             this.setDemandesLivraisons(sauvegardeDL);
+            this.listePointsInteretActuelle = sauvegardeDL.getPis();
         }
 
         return ok;
@@ -957,18 +971,16 @@ public class Carte {
     public boolean chargerCarte(boolean estUnChangement, String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
         //File xml = choisirFichierXML(true);;
-         File xml = null;
+        File xml = null;
         if ("".equals(fichier)) {
             xml = choisirFichierXML(true);
-        } else {
-            if (fichier.contains(".xml")) {
-                xml = new File(fichier).getAbsoluteFile();
-                if(!xml.exists()){
-                    return false;
-                }
-            } else {
+        } else if (fichier.contains(".xml")) {
+            xml = new File(fichier).getAbsoluteFile();
+            if (!xml.exists()) {
                 return false;
             }
+        } else {
+            return false;
         }
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
@@ -977,15 +989,13 @@ public class Carte {
         if (racine.getNodeName().equals("reseau")) {
             if (estUnChangement) {
                 this.listeIntersections.clear();
+                if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
+                    //this.demandesLivraisons.supprimerLivraison();
+                    this.demandesLivraisons = null;
+                }
             }
             if (construireCarteAPartirDeDOMXML(racine)) {
                 result = true;
-            }
-        }
-
-        if (estUnChangement) {
-            if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
-                this.demandesLivraisons.supprimerLivraison();
             }
         }
 
@@ -998,16 +1008,19 @@ public class Carte {
         File xml = null;
         if ("".equals(fichier)) {
             xml = choisirFichierXML(true);
-        } else {
-            if (fichier.contains(".xml")) {
-                xml = new File(fichier).getAbsoluteFile();;
-                if(!xml.exists()){
-                    return false;
-                }
-            } else {
+        } else if (fichier.contains(".xml")) {
+            xml = new File(fichier).getAbsoluteFile();;
+            if (!xml.exists()) {
                 return false;
             }
+        } else {
+            return false;
         }
+
+        /*if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
+            //this.demandesLivraisons.supprimerLivraison();
+            this.demandesLivraisons = null;
+        }*/
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
@@ -1036,5 +1049,4 @@ public class Carte {
 //            System.out.println("adresse:" + pI.getIntersection().getId() + " duree:" + pI.getDuree() + ((pI.isEnlevement()) ? " estEnlevement" : " estLivraison"));
 //        }
 //    }
-
 }
