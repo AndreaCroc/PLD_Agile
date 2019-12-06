@@ -174,6 +174,7 @@ public class AffichagePIs extends AbstractTableModel {
      * @param afficher savoir si la liste a afficher est non vide
      */
     public void afficherPIs(boolean afficher) {
+        System.out.println("AFFICHER PIS");
         if (afficher) {
             //Recuperer les points d interets
             this.setCarte(fenetre.getCarte());
@@ -190,7 +191,8 @@ public class AffichagePIs extends AbstractTableModel {
             if (listePIs.size() > 1) {
                 for (PointInteret pt : listePIs) {
                     nomRue = "";
-
+                    System.out.println("INFO 2 : " + pt.getDuree());
+                    
                     intersection = pt.getIntersection();
                     listeT = intersection.getTronconsDepart();
 
@@ -207,6 +209,8 @@ public class AffichagePIs extends AbstractTableModel {
                     duree = pt.getDuree();
                     dureePt = df.format(duree / 60);
                     dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
+                    
+                    
 
                     //Recuperer le type du point d interet
                     if (pt.isEnlevement()) {
@@ -214,18 +218,20 @@ public class AffichagePIs extends AbstractTableModel {
                     } else {
                         type = "Livraison";
                     }
+                    System.out.println("NOM : "+ nomRue + " DUREE : "+ dureePt +" TYPE : " + type);
+                    
                     if (listePIs.indexOf(pt) == 0) {
                         type = "Entrepot";
                         dureePt = "";
-                        num = 0;
-
+                        System.out.println("IF");
                         //Recuperer le numero de la demande du point d interet
                     } else {
-                        num = pt.getNumeroDemande();
+                        System.out.println("ELSE");
+                        //num = pt.getNumeroDemande();
                     }
                     //Afficher les details des points d interets
                     this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
-
+                        
                 }
             } else {
                 this.fenetre.cacherPanneauPI();

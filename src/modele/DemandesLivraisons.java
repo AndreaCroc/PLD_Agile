@@ -54,5 +54,8 @@ public class DemandesLivraisons {
         this.listePointsInteret.clear();
     }
  
+    public ArrayList<PointInteret> getPis() {
+        return this.listePointsInteret;
+    }
     
 }

@@ -104,7 +104,6 @@ public class EtatLivraison implements Etat {
      */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
-
         boolean changerCarte = false;
 
         try {
@@ -148,17 +147,6 @@ public class EtatLivraison implements Etat {
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
-            /*carte.setDemandesLivraisons(null);
-            fenetre.viderPanneauEtapes();
-            fenetre.viderPanneauPIs();
-            fenetre.cacherPanneauEtapesEtTour();
-            fenetre.cacherPanneauPI();
-            fenetre.griserBoutonCalcul();
-            fenetre.setTournee(null);
-            carte.setUneTournee(null);
-            fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-            fenetre.repaint();
-            controleur.setEtat(controleur.etatDeBase);*/
         }
 
     }
