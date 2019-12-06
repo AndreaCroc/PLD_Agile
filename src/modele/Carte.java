@@ -412,8 +412,12 @@ public class Carte {
             //Recuperation de l'indice du point dans la liste des points d'intérêts
             indSuivListeP = listePointsInteret.indexOf(pointSuivant);
         }
-        cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
-        pointPrec.setCheminDepart(cheminPointPrec);
+        
+        //Prise en compte du cas où il ne reste que l'entrepôt
+        if (!(pointPrec == pointSuivant)) {
+             cheminPointPrec = chemins[indPrecListeP][indSuivListeP];
+            pointPrec.setCheminDepart(cheminPointPrec);
+        }
 
         //Suppression du point de la tournee et de la liste des points d'intérêts
         successionPointsInteret.remove(pointInteret);
