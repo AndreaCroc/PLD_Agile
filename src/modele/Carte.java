@@ -443,6 +443,86 @@ public class Carte {
 
         return true;
     }
+    
+    /**
+     * Méthode permettant de déplacer un point d'intérêt dans la tournée à une 
+     * nouvelle position
+     * @param pointADeplacer
+     * @param decalage
+     * @return 
+     */
+    public boolean deplacerPointInteret(PointInteret pointADeplacer, int decalage) {
+        ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
+        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        int positionInitiale = successionPointsInteret.indexOf(pointADeplacer);
+        int nouvPosition = positionInitiale+decalage;
+        PointInteret pointDependance = pointADeplacer.getPointDependance(); //Point d'enlévement ou de livraison associé
+        PointInteret ancienPointSuivant; //Point suivant à l'ancienne position
+        PointInteret ancienPointPrecedent; //Point précédent à l'ancienne position
+        PointInteret nouvPointSuivant; //Point suivant à la nouvelle position
+        PointInteret nouvPointPrecedent; //Point précédent à la nouvelle position
+        int indAncienPointSuiv; //Indice de l'ancien point suivant dans la liste des points interet
+        int indAncienPointPrec; //Indice de l'ancien point précédent dans la liste des points interet
+        int indPointADeplacer = listePointsInteret.indexOf(pointADeplacer);
+        int indNouvPointSuiv; //Indice du nouveau point suivant dans la liste des points interet
+        int indNouvPointPrec; //Indice du nouveau point précédent dans la liste des points interet
+        int positionPointDep = successionPointsInteret.indexOf(pointDependance);
+        
+        //Vérification de la contrainte de dépendance
+        if (pointADeplacer.isEnlevement()) {
+            if (positionPointDep < nouvPosition) {
+                return false;
+            }
+        } else if (!pointADeplacer.isEnlevement()) {
+            if (positionPointDep > nouvPosition) {
+                return false;
+            }
+        }
+        //Récupération des points d'intérêt à modifier
+        ancienPointPrecedent = successionPointsInteret.get(positionInitiale - 1);
+        indAncienPointPrec = listePointsInteret.indexOf(ancienPointPrecedent);
+        System.out.println("ancienPointPrec : "+ ancienPointPrecedent.getIntersection().getId());
+        if (positionInitiale == successionPointsInteret.size()-1) {
+            //Le point suivant est l'entrepôt
+            ancienPointSuivant = successionPointsInteret.get(0);
+        } else {
+            ancienPointSuivant = successionPointsInteret.get(positionInitiale+1);
+        }
+        System.out.println("ancienPointSuivant : "+ ancienPointSuivant.getIntersection().getId());
+        indAncienPointSuiv = listePointsInteret.indexOf(ancienPointSuivant);
+        
+        
+        
+        
+
+        if (nouvPosition == successionPointsInteret.size()-1) {
+            nouvPointPrecedent = successionPointsInteret.get(nouvPosition);
+            //Le point suivant est l'entrepôt
+            nouvPointSuivant = successionPointsInteret.get(0);
+        } else {
+            nouvPointPrecedent = successionPointsInteret.get(nouvPosition-1);
+            nouvPointSuivant = successionPointsInteret.get(nouvPosition);
+            
+        }
+        indNouvPointPrec = listePointsInteret.indexOf(nouvPointPrecedent);
+        indNouvPointSuiv = listePointsInteret.indexOf(nouvPointSuivant);
+        System.out.println("nouvPointPrec : "+ nouvPointPrecedent.getIntersection().getId());
+        System.out.println("nouvPointSuivant : "+ nouvPointSuivant.getIntersection().getId());
+        
+        //Deplacement du point dans la tournee
+        successionPointsInteret.remove(pointADeplacer);
+        successionPointsInteret.add(nouvPosition, pointADeplacer);
+        
+        //Mise à jour des chemins
+        nouvPointPrecedent.setCheminDepart(chemins[indNouvPointPrec][indPointADeplacer]);
+        pointADeplacer.setCheminDepart(chemins[indPointADeplacer][indNouvPointSuiv]);
+        ancienPointPrecedent.setCheminDepart(chemins[indAncienPointPrec][indAncienPointSuiv]);
+        
+        //Mise à jour des heures
+        calculerHeuresTournee();
+        
+        return true;
+    }
 
     /**
      * Méthode permettant d'ajouter une nouvelle livraison (point enlevement +

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -594,6 +595,132 @@ public class CarteTest {
         
         
         
+    }
+    
+    /**
+     * Test of deplacerPointInteret method, of class Carte
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     * @throws Exception 
+     */
+    @Test
+    public void testDeplacerPointInteret() throws ParserConfigurationException, SAXException, IOException, Exception {
+        System.out.println("deplacerPointInteret");
+        
+        //Cas d'une suppression en milieu de tournée
+        File xml = new File(cheminAcces+"demandeMoyen3.xml");
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        Document document = docBuilder.parse(xml);
+        Element racine = document.getDocumentElement();
+        System.out.println(racine.toString());
+        
+        File xml2 = new File(cheminAcces+"moyenPlan.xml");
+        DocumentBuilder docBuilder2 = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        Document document2 = docBuilder2.parse(xml2);
+        Element racine2 = document2.getDocumentElement();
+        
+        Carte carte = new Carte();
+        carte.construireCarteAPartirDeDOMXML(racine2);
+        carte.construireLivraisonAPartirDeDOMXML(racine);
+        carte.calculerTournee();
+        
+        DemandesLivraisons dl = carte.getDemandesLivraisons();
+        Tournee tournee = carte.getTournee();
+        System.out.println("tournee : "+ tournee);
+        ArrayList<PointInteret> successionPointsInteretInitiale = tournee.getSuccessionPointsInteret();
+       
+        PointInteret pointADeplacer = successionPointsInteretInitiale.get(4);
+        int decalage = -2;
+        ArrayList<String> successionAttendue = new ArrayList<String>();
+        successionAttendue.add("1349383079");
+        successionAttendue.add("27362899");
+        successionAttendue.add("505061101");
+        successionAttendue.add( "26121686");
+        successionAttendue.add( "55444018");
+        successionAttendue.add( "191134392");
+        successionAttendue.add( "26470086");
+        
+        //Deplacement du point
+        carte.deplacerPointInteret(pointADeplacer, decalage);
+        Tournee nouvTournee = carte.getTournee();
+        ArrayList<PointInteret> nouvSuccessionPointsInteret = nouvTournee.getSuccessionPointsInteret();
+        System.out.println("nouv tournee : "+ nouvTournee);
+        
+        //Assertions
+        for (int i = 0; i<nouvSuccessionPointsInteret.size(); i++) {
+            assertEquals(nouvSuccessionPointsInteret.get(i).getIntersection().getId(),
+                    successionAttendue.get(i));
+        }
+
+        //Vérifications des chemins
+        for (int i=0; i < nouvSuccessionPointsInteret.size()-1;i++) {
+            assertEquals(nouvSuccessionPointsInteret.get(i).getCheminDepart().getArrivee(),
+                    nouvSuccessionPointsInteret.get(i+1).getIntersection());
+        }
+        assertEquals(nouvSuccessionPointsInteret.get(nouvSuccessionPointsInteret.size() - 1).getCheminDepart().getArrivee(),
+                nouvSuccessionPointsInteret.get(0).getIntersection());
+        
+        //Cas où la contrainte de précédence n'est plus respectee
+        Carte carte2 = new Carte();
+        carte2.construireCarteAPartirDeDOMXML(racine2);
+        carte2.construireLivraisonAPartirDeDOMXML(racine);
+        carte2.calculerTournee();
+        
+        DemandesLivraisons dl2 = carte2.getDemandesLivraisons();
+        Tournee tournee2 = carte2.getTournee();
+        System.out.println("tournee 2 : "+ tournee2);
+        ArrayList<PointInteret> successionPointsInteretInitiale2 = tournee2.getSuccessionPointsInteret();
+       
+        PointInteret pointADeplacer2 = successionPointsInteretInitiale2.get(2);
+        int decalage2 = 4;
+        
+        //Deplacement du point
+        boolean retour = carte2.deplacerPointInteret(pointADeplacer2, decalage2);
+        Tournee nouvTournee2 = carte2.getTournee();
+        ArrayList<PointInteret> nouvSuccessionPointsInteret2 = nouvTournee2.getSuccessionPointsInteret();
+        System.out.println("nouv tournee 2 : "+ nouvTournee2);
+        
+        //Assertions
+        assertEquals(false, retour);
+        assertEquals(nouvSuccessionPointsInteret2, successionPointsInteretInitiale2);
+        
+        
+        //Cas d'un déplacement en fin de tournée
+        DemandesLivraisons dl3 = carte2.getDemandesLivraisons();
+        Tournee tournee3 = carte2.getTournee();
+        System.out.println("tournee : "+ tournee3);
+       
+        PointInteret pointADeplacer3 = nouvSuccessionPointsInteret2.get(4);
+        int decalage3 = 2;
+        ArrayList<String> successionAttendue3 = new ArrayList<String>();
+        successionAttendue3.add("1349383079");
+        successionAttendue3.add("27362899");
+        successionAttendue3.add( "26121686");
+        successionAttendue3.add( "55444018");
+        successionAttendue3.add( "191134392");
+        successionAttendue3.add( "26470086");
+        successionAttendue3.add("505061101");
+        
+        //Deplacement du point
+        carte2.deplacerPointInteret(pointADeplacer3, decalage3);
+        Tournee nouvTournee3 = carte2.getTournee();
+        ArrayList<PointInteret> nouvSuccessionPointsInteret3 = nouvTournee3.getSuccessionPointsInteret();
+        System.out.println("nouv tournee 3 : "+ nouvTournee3);
+        
+        //Assertions
+        for (int i = 0; i<nouvSuccessionPointsInteret3.size(); i++) {
+            assertEquals(nouvSuccessionPointsInteret3.get(i).getIntersection().getId(),
+                    successionAttendue3.get(i));
+        }
+
+        //Vérifications des chemins
+        for (int i=0; i < nouvSuccessionPointsInteret3.size()-1;i++) {
+            assertEquals(nouvSuccessionPointsInteret3.get(i).getCheminDepart().getArrivee(),
+                    nouvSuccessionPointsInteret3.get(i+1).getIntersection());
+        }
+        assertEquals(nouvSuccessionPointsInteret3.get(nouvSuccessionPointsInteret3.size() - 1).getCheminDepart().getArrivee(),
+                nouvSuccessionPointsInteret3.get(0).getIntersection());
     }
 }
     
