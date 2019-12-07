@@ -197,7 +197,10 @@ public class Carte {
         Intersection intersectionCourante = arrivee;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
         //le chemin dans le sens inverse en utilisant les prédécesseurs
-
+ 
+        if (depart == arrivee) {
+            chemin =  new Chemin(depart, arrivee, cheminInverse);
+        }
         while (intersectionCourante.getPredecesseur() != null) {
             //Tant qu'on est pas au sommet de départ 
             Intersection intersectionPrec = intersectionCourante;
@@ -348,12 +351,8 @@ public class Carte {
 
             PointInteret pointCourant = new PointInteret();
             for (int i = 1; i < nbSommets; i++) {
-                //System.out.println("Duree " + listePointsInteret.get(i).getDuree() + " Num " + listePointsInteret.get(i).getNumeroDemande());
                 indPointCourant = unTSP.getMeilleureSolution(i);
-                System.out.println("ind point prec : "+indPointPrec);
-                System.out.println("ind point courant : "+indPointCourant);
                 chemin = chemins[indPointPrec][indPointCourant];
-                System.out.println("I : "+i+" chemin : "+ chemin);
                 pointCourant = listePointsInteret.get(indPointPrec);
                 pointCourant.setCheminDepart(chemin);
 
@@ -501,8 +500,6 @@ public class Carte {
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
 
-        //Cas où le point d'intérêt est déjà dans la liste
-        //A voir
         //Ajout aux listes de points d'intérêt
         listePointsInteret.add(pointEnlevement);
         listePointsInteret.add(pointLivraison);
@@ -570,7 +567,7 @@ public class Carte {
 
         //Ajout du point d'intérêt après le point précédent
         successionPointsInteret.add(indPointPrecT + 1, pointInteret);
-
+        
         //Mise à jour des chemins
         //Calcul du chemin allant du point précédent au point ajouté
         dijkstra(pointPrecedent.getIntersection());
@@ -592,13 +589,25 @@ public class Carte {
 
         return true;
     }
-
+    
+    /**
+     * Méthode permettant d'agrandir la matrice des chemins et celle des couts
+     * dans le cas de l'ajout de points d'intérêt
+     * 
+     * @param chemin
+     * @param indOrigine
+     * @param indDestination
+     * @return 
+     */
     private boolean ajouterCoutEtChemin(Chemin chemin, int indOrigine, int indDestination) {
         Chemin[][] nouvChemins;
         Double[][] nouvCouts;
         int nbSommets = demandesLivraisons.getListePointsInteret().size();
         //Si la matrice des chemins n'est pas encore pleine
-        if (chemins[0].length > nbSommets) {
+        System.out.println("length chemins : "+chemins[0].length);
+        if (chemins[0].length >= nbSommets) {
+            System.out.println("indOrigine : "+ indOrigine);
+            System.out.println("indDestination : "+ indDestination);
             chemins[indOrigine][indDestination] = chemin;
         } else {
             //On crée une nouvelle matrice
@@ -619,7 +628,10 @@ public class Carte {
             this.setChemins(nouvChemins);
         }
         //Même chose pour la matrice des couts
-        if (cout[0].length > nbSommets) {
+        System.out.println("length chemins : "+chemins[0].length);
+        if (cout[0].length >= nbSommets) {
+            System.out.println("indOrigine : "+ indOrigine);
+            System.out.println("indDestination : "+ indDestination);
             cout[indOrigine][indDestination] = chemin.getLongueur();
         } else {
             //On crée une nouvelle matrice
@@ -867,7 +879,7 @@ public class Carte {
         return ok;
     }
 
-    /**
+        /**
      * Chargement des données de l'element racine d'un document xml contenant
      * les demandes de livraisons Complete l'attribut demandesLivraisons et la
      * liste des points d'interet qui la composent
@@ -1016,10 +1028,6 @@ public class Carte {
             return false;
         }
 
-        /*if (this.demandesLivraisons != null && !this.demandesLivraisons.getListePointsInteret().isEmpty()) {
-            //this.demandesLivraisons.supprimerLivraison();
-            this.demandesLivraisons = null;
-        }*/
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
