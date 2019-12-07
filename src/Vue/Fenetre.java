@@ -102,8 +102,6 @@ public class Fenetre extends JFrame {
     private JLabel legendeTriangle;
     private JLabel titreAppli;
     private JLabel repChangeCarte;
-    private JLabel labelTabPI;
-    private JLabel labelTabEtapes;
 
     //Pour afficher les details d une tournee
     private JScrollPane scrollEtapes;
@@ -238,12 +236,6 @@ public class Fenetre extends JFrame {
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        //Pour afficher si aucun point d interet dans le fichier de livraisons
-        labelTabPI = new JLabel("Aucune donnée dans le fichier de livraisons chargé");
-        labelTabPI.setFont(new Font("Arial", Font.BOLD, 14));
-        labelTabPI.setForeground(COULEUR_ERREUR);
-        labelTabPI.setVisible(false);
-
         // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
@@ -251,7 +243,6 @@ public class Fenetre extends JFrame {
         panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COULEUR_BOUTON));
         panneauPIs.setVisible(false);
         panneauPIs.add(scrollPIs);
-        panneauPIs.add(labelTabPI);
         panneauGauche.add(panneauPIs);
 
         /* PanneauTournee (milieu bas gauche) */
@@ -328,12 +319,6 @@ public class Fenetre extends JFrame {
         boutonAjouterPoints.setBackground(COULEUR_BOUTON);
         //boutonAjouterPoints.setEnabled(false);
         boutonAjouterPoints.addActionListener(ecouteurBoutons);
-
-        //Afficher un message si aucun point d interet
-        labelTabEtapes = new JLabel("Aucun points d'intérêts");
-        labelTabEtapes.setFont(new Font("Arial", Font.BOLD, 14));
-        labelTabEtapes.setForeground(COULEUR_ERREUR);
-        labelTabEtapes.setVisible(false);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
         panneauEtapes = new JPanel();
@@ -547,7 +532,6 @@ public class Fenetre extends JFrame {
         boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
 
         scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
-        labelTabPI.setBounds((int) panneauPIs.getWidth() / 4, (int) panneauPIs.getHeight() / 20, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight() / 20);
 
     }
 
@@ -786,25 +770,6 @@ public class Fenetre extends JFrame {
         repChargeLiv.setVisible(true);
     }
 
-    /**
-     * Afficher un message si aucune donnees dans le fichier des livraisons
-     * charge
-     *
-     * @param afficher savoir si on veut afficher ou cacher le message
-     */
-    public void afficherOuCacherMessageLivraison(boolean afficher) {
-        labelTabPI.setVisible(afficher);
-    }
-
-    /**
-     * Afficher un message si aucune donnees dans le fichier des livraisons
-     * charge
-     *
-     * @param afficher savoir si on veut afficher ou cacher le message
-     */
-    public void afficherOuCacherMessageTournee(boolean afficher) {
-        labelTabEtapes.setVisible(afficher);
-    }
 
     public JCarte getPanneauCarte() {
         return this.panneauCarte;
@@ -1018,6 +983,26 @@ public class Fenetre extends JFrame {
     public void afficherPopSuppressionErreur() {
         JOptionPane jop = new JOptionPane();
         jop.showMessageDialog(null, "Vous ne pouvez pas supprimer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
+
+    }
+    
+    /**
+     * Afficher une popup pour prevenir que plus de points dans la liste
+     *
+     */
+    public void afficherPopSuppressionVide() {
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "La tournée ne possède plus de points", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+    
+    /**
+     * Afficher une popup pour prevenir que la suppression n a pas ete effectuee
+     *
+     */
+    public void afficherPopSuppressionAnnulee() {
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "La suppression n'a pas pu être effectuée ", "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }
 }

@@ -416,35 +416,6 @@ public class JCarte extends JPanel {
 
             }
         }
-        /*if (this.fenetre != null) {
-            int ligneTab = this.fenetre.getVuePIs().getLigneSelect();
-            //Si une ligne du tableau des etapes de la tournee a ete selectionnee
-            if (ligneTab != -1) {
-                int xPI = 5;
-                int yPI = 5;
-                boolean select = false;
-                if (ligneTab < this.coorPtInterets.size()) {
-                    //Recuperer les coordonnes du point d interet associe a la ligne du tableau
-                    xPI = this.coorPtInterets.get(ligneTab).getX();
-                    yPI = this.coorPtInterets.get(ligneTab).getY();
-                    select = true;
-                    //Si le point selectionne est l entrepot
-                } else if (ligneTab == this.coorPtInterets.size()) {
-                    xPI = this.coorPtInterets.get(0).getX();
-                    yPI = this.coorPtInterets.get(0).getY();
-                    select = true;
-                }
-                if (select) {
-                    g.setColor(Color.RED);
-                    //Faire un carre rouge autour du point d interets
-                    g.drawLine(xPI - 5, yPI - 5, xPI - 5, yPI + 15);
-                    g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
-                    g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
-                    g.drawLine(xPI + 15, yPI - 5, xPI - 5, yPI - 5);
-                }
-
-            }
-        }*/
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVuePIs().getLignePISelect();
             int ligneTabDep = this.fenetre.getVuePIs().getLignePIDepSelect();

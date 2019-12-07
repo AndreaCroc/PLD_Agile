@@ -41,7 +41,6 @@ public class EtatLivraison implements Etat {
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
         
-        fenetre.afficherOuCacherMessageTournee(false);
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
@@ -80,7 +79,7 @@ public class EtatLivraison implements Etat {
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,2));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
-                fenetre.afficherOuCacherMessageLivraison(false);
+                
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
             } else {

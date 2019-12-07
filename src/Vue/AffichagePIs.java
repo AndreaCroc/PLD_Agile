@@ -248,14 +248,10 @@ public class AffichagePIs extends AbstractTableModel {
                 }
             } else {
                 this.fenetre.cacherPanneauPI();
-                //this.fenetre.cacherTablePI();
-                this.fenetre.afficherOuCacherMessageLivraison(true);
             }
 
         } else {
             this.fenetre.cacherPanneauPI();
-            //this.fenetre.cacherTablePI();
-            this.fenetre.afficherOuCacherMessageLivraison(true);
         }
 
     }

@@ -120,7 +120,7 @@ public class EtatTournee implements Etat {
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
-                fenetre.afficherOuCacherMessageLivraison(false);
+                
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
