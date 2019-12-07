@@ -236,10 +236,11 @@ public class AffichagePIs extends AbstractTableModel {
                         type = "Entrepot";
                         dureePt = "";
                         System.out.println("IF");
-                        //Recuperer le numero de la demande du point d interet
+                        
                     } else {
+                        //Recuperer le numero de la demande du point d interet
                         System.out.println("ELSE");
-                        //num = pt.getNumeroDemande();
+                        num = pt.getNumeroDemande();
                     }
                     //Afficher les details des points d interets
                     this.fenetre.setPanneauPIs(num, type, nomRue, dureePt);
