@@ -318,10 +318,6 @@ public class Carte {
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
-        for (int i = 1; i < nbSommets; i++) {
-                System.out.println("Duree " + listePointsInteret.get(i).getDuree() + " Num " + listePointsInteret.get(i).getNumeroDemande());
-                //System.out.println("Duree " + listePointsInteret.get(i).get + " Num " + listePointsInteret.get(i).getNumeroDemande());
-        }
         
         
         //Creation de la tournée
@@ -329,14 +325,15 @@ public class Carte {
         Integer indPointCourant = 0;
         Integer indPointPrec;
         Chemin chemin;
+        unTSP = new TSP2();
         
+        creerGraphePCC();
         
         //Cas où il n'y a aucune demande de livraisons
         if (nbSommets == 1) {
             tournee.ajouterPointInteret(listePointsInteret.get(0));
             this.setUneTournee(tournee);
         } else {
-            creerGraphePCC();
 
             //Initialisation des durees
             Integer[] duree = new Integer[nbSommets];
@@ -353,6 +350,8 @@ public class Carte {
             for (int i = 1; i < nbSommets; i++) {
                 //System.out.println("Duree " + listePointsInteret.get(i).getDuree() + " Num " + listePointsInteret.get(i).getNumeroDemande());
                 indPointCourant = unTSP.getMeilleureSolution(i);
+                System.out.println("ind point prec : "+indPointPrec);
+                System.out.println("ind point courant : "+indPointCourant);
                 chemin = chemins[indPointPrec][indPointCourant];
                 System.out.println("I : "+i+" chemin : "+ chemin);
                 pointCourant = listePointsInteret.get(indPointPrec);
