@@ -1,13 +1,4 @@
-/*
- * EtatSupprimer
- *
- * Version 1
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package controleur;
 
 import Vue.Fenetre;
@@ -19,10 +10,22 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
+ * EtatSupprimer
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
+
+public class EtatSupprimer implements Etat {
+/**
  *
  * Classe EtatSupprimer quand on veut supprimer un point d interet
  */
-public class EtatSupprimer implements Etat {
 
     /**
      * Supprimer un point d interet de la tournee et son point correspondant

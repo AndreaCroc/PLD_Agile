@@ -1,4 +1,11 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import modele.Carte;
+import modele.Tournee;
+
+/**
  * Etat
  *
  * Version 1
@@ -8,17 +15,11 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
-
-import Vue.Fenetre;
-import modele.Carte;
-import modele.Tournee;
-
+public interface Etat {
 /**
  * Interface Etat permettant de gerer les differents etats de lapplication
  * 
  */
-public interface Etat {
         
     public default void chargerPageInit(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
     public default void chargerPageDeBase(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};

@@ -1,4 +1,12 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
+
+/**
  * EtatInit
  *
  * Version 1
@@ -8,18 +16,12 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
 
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
-
+public class EtatInit implements Etat {
 /**
  *
  * Classe EtatInit qui correspond a la page d accueil
  */
-public class EtatInit implements Etat {
 
     /**
      * Charger la premiere carte

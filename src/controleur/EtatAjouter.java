@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controleur;
 
 import Vue.Fenetre;
@@ -14,10 +10,20 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
+ * EtatAjouter
  *
- * @author labou
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 public class EtatAjouter implements Etat {
+/**
+ * Classe EtatAjouter permettant d ajouter un point dinteret a la tournee
+ * 
+ */
 
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {

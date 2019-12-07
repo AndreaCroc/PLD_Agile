@@ -1,4 +1,11 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+
+/**
  * EtatDeBase
  *
  * Version 1
@@ -8,18 +15,13 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
 
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-
+public class EtatDeBase implements Etat {
 /**
  * Classe EtatDeBase qui correspond a l affichage de la carte sans rien dessus
  * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
  *
  */
-public class EtatDeBase implements Etat {
 
     /**
      * Changer la carte deja chargee Dans tous les cas (succes ou echec) on

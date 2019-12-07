@@ -1,4 +1,12 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
+
+/**
  * EtatLivraison
  *
  * Version 1
@@ -8,19 +16,14 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
 
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
 
+public class EtatLivraison implements Etat {
 /**
  *
  * Classe EtatLivraison qui correspond a laffichage des points d interets dune
  * livraison sur la carte
  */
-public class EtatLivraison implements Etat {
 
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee

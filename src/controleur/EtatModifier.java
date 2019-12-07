@@ -1,4 +1,7 @@
-/*
+
+package controleur;
+
+/**
  * EtatModifier
  *
  * Version 1
@@ -8,8 +11,6 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
-
 public class EtatModifier implements Etat{
     
     @Override

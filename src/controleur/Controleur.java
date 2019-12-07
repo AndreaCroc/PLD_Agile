@@ -1,4 +1,12 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import modele.Carte;
+import modele.PointInteret;
+import modele.Tournee;
+
+/**
  * Controleur
  *
  * Version 1
@@ -8,22 +16,16 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
 
-import Vue.Fenetre;
-import modele.Carte;
-import modele.PointInteret;
-import modele.Tournee;
-
+public class Controleur {
 /**
  * Classe Controleur qui permet de faire le lien entre la vue et le modele
  */
-public class Controleur {
 
-    private Fenetre fenetre;
-    private Carte carte;
-    private Tournee tournee;
-    private Etat etatCourant = new EtatInit();
+    private Fenetre fenetre; //Fenetre qui traite actions recuperees par controleur
+    private Carte carte; //Carte
+    private Tournee tournee; //Tournee realisee
+    private Etat etatCourant = new EtatInit(); //Etat du controleur
 
     // Instances associees a chaque etat possible du controleur
     protected final EtatInit etatInit = new EtatInit();
@@ -34,6 +36,9 @@ public class Controleur {
     protected final EtatAjouter etatAjouter = new EtatAjouter();
     protected final EtatModifier etatModifier = new EtatModifier();
 
+    /**
+     * Constructeur de la classe du Controleur
+     */
     public Controleur() {
         carte = new Carte();
         tournee = new Tournee();
@@ -89,6 +94,9 @@ public class Controleur {
         etatCourant.annuler(this, fenetre);
     }
 
+    /**
+     * Ajouter un point dinteret a la tournee
+     */
     public void ajouter() {
         etatCourant.ajouter(this, fenetre, carte, tournee);
     }
@@ -126,10 +134,18 @@ public class Controleur {
         fenetre.repaint();
     }
 
+    /**
+     * Recuperer la tournee
+     * @return tournee
+     */
     public Tournee getTournee() {
         return this.tournee;
     }
 
+    /**
+     * Modifier la tournee
+     * @param tournee nouvelle tournee
+     */
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }

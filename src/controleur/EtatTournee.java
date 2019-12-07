@@ -1,4 +1,12 @@
-/*
+
+package controleur;
+
+import Vue.Fenetre;
+import Vue.JCarte;
+import modele.Carte;
+import modele.Tournee;
+
+/**
  * EtatTournee
  *
  * Version 1
@@ -8,19 +16,12 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package controleur;
-
-import Vue.Fenetre;
-import Vue.JCarte;
-import modele.Carte;
-import modele.Tournee;
-
+public class EtatTournee implements Etat {
 /**
  *
  * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et sur
  * les tableaux de gauche) a une tournee calculee
  */
-public class EtatTournee implements Etat {
 
     /**
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l
@@ -160,7 +161,6 @@ public class EtatTournee implements Etat {
      * @param fenetre
      * @param carte
      * @param tournee
-     * @param index
      */
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
