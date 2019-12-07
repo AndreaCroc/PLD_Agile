@@ -12,6 +12,7 @@ package controleur;
 
 import Vue.Fenetre;
 import modele.Carte;
+import modele.PointInteret;
 import modele.Tournee;
 
 /**
@@ -100,23 +101,28 @@ public class Controleur {
         etatCourant = etat;
     }
 
+   
     /**
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee
      *
-     * @param index indice du point d interet clique
+     * @param ptI indice du point d interet clique
      */
-    public void surbrillanceTableau(int index) {
-        fenetre.surbrillanceLigneTab(index);
+    public void surbrillerTables(PointInteret ptI) {
+        fenetre.surbrillerLigneTabPI(ptI);
+        if(tournee!=null && !tournee.getSuccessionPointsInteret().isEmpty()){
+           fenetre.surbrillerLigneTabEtapes(ptI); 
+        }
+        
         fenetre.repaint();
     }
-
+    
     /**
      * Encadrer un point d interet de la tournee
      *
-     * @param ligne ligne du tableau selectionnee
+     * @param p
      */
-    public void surbrillancePI(int ligne) {
-        fenetre.entourerPI(ligne);
+    public void surbrillerPI(PointInteret p) {
+        fenetre.surbrillerPI(p);
         fenetre.repaint();
     }
 
@@ -126,10 +132,6 @@ public class Controleur {
 
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
-    }
-
-    public void setFenetreSurbrillance(boolean surb) {
-        this.fenetre.setSurbrillance(surb);
     }
 
 }

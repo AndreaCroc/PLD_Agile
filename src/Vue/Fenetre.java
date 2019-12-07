@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,9 +52,6 @@ public class Fenetre extends JFrame {
 
     //Tabeau contenant une vue generale des points d'interets de la tournee
     private JTable tableauPIs;
-
-    //Savoir si un element est deja mis en surbrillance
-    private boolean surbrillance;
 
     //Savoir si le bouton supprime a ete clique
     private boolean clicSupp;
@@ -137,6 +135,9 @@ public class Fenetre extends JFrame {
     private EcouteurSouris ecouteurSouris;
     private EcouteurListSelection ecouteurListSelect;
 
+    private ListSelectionModel listSelectModelPI;
+    private ListSelectionModel listSelectModelEtapes;
+
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int height = (int) dimension.getHeight();
@@ -154,7 +155,6 @@ public class Fenetre extends JFrame {
         this.carte = carte;
         this.tournee = tournee;
 
-        this.surbrillance = false;
         this.clicSupp = false;
 
         this.vueTournee = new AffichageTournee(tournee, this);
@@ -213,7 +213,7 @@ public class Fenetre extends JFrame {
         /* Fin PanneauLivraison */
  /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1, 1), this.carte, this);
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1, -1, 1), this.carte, this);
         //Tableau contenant les details des points d interets
         tableauPIs = new JTable(vuePIs);
         //Ajuster la taille des lignes
@@ -232,9 +232,9 @@ public class Fenetre extends JFrame {
             }
         }
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ListSelectionModel listSelectModel = tableauPIs.getSelectionModel();
+        listSelectModelPI = tableauPIs.getSelectionModel();
         //Ajouter un evenement sur les lignes du tableau
-        listSelectModel.addListSelectionListener(this.ecouteurListSelect);
+        listSelectModelPI.addListSelectionListener(this.ecouteurListSelect);
 
         scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -283,7 +283,7 @@ public class Fenetre extends JFrame {
         etapesTitre.setForeground(COULEUR_ECRITURE);
 
         //Vue sur les etapes d une tournee
-        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1, 2), this, this.tournee);
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1, -1, 2), this, this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(30);
@@ -294,9 +294,9 @@ public class Fenetre extends JFrame {
             tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        /*ListSelectionModel listSelectionModel = tableauEtapes.getSelectionModel();
+        listSelectModelEtapes = tableauEtapes.getSelectionModel();
         //Ajouter un evenement sur les lignes du tableau
-        listSelectionModel.addListSelectionListener(this.ecouteurListSelect);*/
+        listSelectModelEtapes.addListSelectionListener(this.ecouteurListSelect);
 
         scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -427,7 +427,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee, this,1.0);
+        panneauCarte = new JCarte(this.carte, this.tournee, this, 1.0);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
@@ -637,8 +637,8 @@ public class Fenetre extends JFrame {
     public void cacherTablePI() {
         this.tableauPIs.setVisible(false);
     }
-    
-    public void cacherTableEtapes(){
+
+    public void cacherTableEtapes() {
         this.tableauEtapes.setVisible(false);
     }
 
@@ -660,37 +660,110 @@ public class Fenetre extends JFrame {
         vuePIs.afficherPIs(afficher);
     }
 
-    /**
-     * Mettre en surbrillance la ligne du tableau correspondant a l index du
-     * point d interet clique
-     *
-     * @param index : ligne du tableau a encadrer
-     */
-    public void surbrillanceLigneTab(int index) {
-        //Si on clique sur un point d interet alors qu il y en avait deja un  
-        //encadre en rouge, enlever le cadre autour de ce point
-        /*if (this.surbrillance) {
-            this.vueEtapes.setLigneSelect(-1);
-            this.vuePIs.setLigneSelect(-1);
-            this.panneauCarte.setFenetre(this);
-            this.panneauCarte.updateUI();
-            this.surbrillance = false;
-        }*/
 
- /*if (tableauEtapes.getRowCount() != 0) {
-            for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
-                //Encadrer en rouge la ligne correspond a l index
-                this.vueEtapes.getFormatcell().setIndex(index);
-                tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
-            }
-        }*/
-        if (tableauPIs.getRowCount() != 0) {
-            for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
-                //Encadrer en rouge la ligne correspond a l index
-                this.vuePIs.getFormatcell().setIndex(index);
-                tableauPIs.getColumnModel().getColumn(j).setCellRenderer(this.vuePIs.getFormatcell());
+
+    /**
+     * Mettre en surbrillance la ligne du tableau correspondant au
+     * point d interet clique
+     * 
+     * @param ptI 
+     */
+    public void surbrillerLigneTabPI(PointInteret ptI) {
+        System.out.println("surbrillerlignetabPI");
+        if (carte != null) {
+            ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
+            System.out.println("index formatcell : " + this.vuePIs.getFormatcell().getIndexPI());
+            System.out.println("ligne select : " + this.vuePIs.getLignePISelect());
+
+            if (listePtI != null && !listePtI.isEmpty()) {
+                int indexPI = listePtI.indexOf(ptI);
+                System.out.println("index : " + indexPI);
+                if (indexPI != -1 && tableauPIs.getRowCount() != 0) {
+                    PointInteret ptIDep = new PointInteret();
+                    int indexPIDep = 0;
+
+                    //Ce n est pas l entrepot qui est selectionne
+                    if (indexPI != 0) {
+                        ptIDep = ptI.getPointDependance();
+                        indexPIDep = listePtI.indexOf(ptIDep);
+                    }
+                    for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
+                        //Encadrer en rouge la ligne correspond a l index
+                        this.vuePIs.getFormatcell().setIndexPI(indexPI);
+                        this.vuePIs.getFormatcell().setIndexPIDep(indexPIDep);
+                        tableauPIs.getColumnModel().getColumn(j).setCellRenderer(this.vuePIs.getFormatcell());
+                    }
+                }
             }
         }
+
+    }
+
+    public void surbrillerLigneTabEtapes(PointInteret ptI) {
+        System.out.println("surbrillerlignetabEtapes");
+        System.out.println("tournee : " + tournee);
+        if (tournee != null) {
+            ArrayList<PointInteret> listePtEtapes = tournee.getSuccessionPointsInteret();
+            if (listePtEtapes != null && !listePtEtapes.isEmpty()) {
+                int indexPI = listePtEtapes.indexOf(ptI);
+                System.out.println("index : " + indexPI);
+                if (indexPI != -1 && tableauEtapes.getRowCount() != 0) {
+                    PointInteret ptIDep = new PointInteret();
+                    int indexPIDep = 0;
+                    if (indexPI != 0) {
+                        ptIDep = ptI.getPointDependance();
+                        indexPIDep = listePtEtapes.indexOf(ptIDep);
+                    }
+                    for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
+                        //Encadrer en rouge la ligne correspond a l index
+                        this.vueEtapes.getFormatcell().setIndexPI(indexPI);
+                        this.vueEtapes.getFormatcell().setIndexPIDep(indexPIDep);
+                        tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
+                    }
+
+                }
+
+            }
+        }
+    }
+    
+     /**
+     * Entourer le point d interet correspondant a la ligne du tableau
+     * selectionnee
+     *
+     * @param pi
+     */
+    public void surbrillerPI(PointInteret pi) {
+        System.out.println("surbrillerPi");
+        ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
+
+        //La liste n est pas nulle ni vide
+        if (listePtI != null && !listePtI.isEmpty()) {
+            int lignePi = listePtI.indexOf(pi);
+            System.out.println("ligne : " + lignePi);
+            System.out.println("index formatcell : " + this.vuePIs.getFormatcell().getIndexPI());
+            System.out.println("ligne select : " + this.vuePIs.getLignePISelect());
+
+            //Le point d interet fait partie de la liste
+            if (lignePi != -1) {
+                PointInteret piDep = new PointInteret();
+                int ligneDep = 0;
+
+                //Ce n est pas l entrepot qui est selectionne
+                if (lignePi != 0) {
+                    piDep = pi.getPointDependance();
+                    ligneDep = listePtI.indexOf(piDep);
+                }
+                System.out.println("if");
+                this.vueEtapes.setLignePISelect(lignePi);
+                this.vuePIs.setLignePISelect(lignePi);
+                this.vueEtapes.setLignePIDepSelect(ligneDep);
+                this.vuePIs.setLignePIDepSelect(ligneDep);
+                this.panneauCarte.setFenetre(this);
+                this.panneauCarte.updateUI();
+            }
+        }
+
     }
 
     /**
@@ -818,8 +891,10 @@ public class Fenetre extends JFrame {
      */
     public void viderPanneauEtapes() {
         this.vueEtapes.clearSteps();
-        this.vueEtapes.getFormatcell().setIndex(-1);
-        this.vueEtapes.setLigneSelect(-1);
+        this.vueEtapes.getFormatcell().setIndexPI(-1);
+        this.vueEtapes.getFormatcell().setIndexPIDep(-1);
+        this.vueEtapes.setLignePISelect(-1);
+        this.vueEtapes.setLignePIDepSelect(-1);
         this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
@@ -829,8 +904,10 @@ public class Fenetre extends JFrame {
      */
     public void viderPanneauPIs() {
         this.vuePIs.clearPIs();
-        this.vuePIs.getFormatcell().setIndex(-1);
-        this.vuePIs.setLigneSelect(-1);
+        this.vuePIs.getFormatcell().setIndexPI(-1);
+        this.vuePIs.getFormatcell().setIndexPIDep(-1);
+        this.vuePIs.setLignePISelect(-1);
+        this.vuePIs.setLignePIDepSelect(-1);
         this.panneauCarte.setFenetre(this);
         this.panneauCarte.updateUI();
     }
@@ -841,29 +918,7 @@ public class Fenetre extends JFrame {
 
     }
 
-    public void setSurbrillance(boolean surb) {
-        this.surbrillance = surb;
-    }
-
-    /**
-     * Entourer le point d interet correspond a la ligne du tableau selectionnee
-     *
-     * @param ligne ligne du tableau selectionnee
-     */
-    public void entourerPI(int ligne) {
-        //Si une ligne du tableau etait deja en surbrillance au moment du clic sur une ligne
-        //Enlever le contour rouge de cette ligne du tableau
-        /*if (this.surbrillance) {
-            System.out.println("surbrillance");
-            this.vueEtapes.getFormatcell().setIndex(-1);
-            this.vuePIs.getFormatcell().setIndex(-1);
-            this.surbrillance = false;
-        }*/
-        this.vueEtapes.setLigneSelect(ligne);
-        this.vuePIs.setLigneSelect(ligne);
-        this.panneauCarte.setFenetre(this);
-        this.panneauCarte.updateUI();
-    }
+   
 
     public int getWidthPanneauGauche() {
         return this.panneauGauche.getWidth();
@@ -919,9 +974,18 @@ public class Fenetre extends JFrame {
         return vuePIs;
     }
 
+    public ListSelectionModel getListSelectModelPI() {
+        return listSelectModelPI;
+    }
+
+    public ListSelectionModel getListSelectModelEtapes() {
+        return listSelectModelEtapes;
+    }
+
     /**
      * Afficher une popup pour valider la suppression d un point d interet
      *
+     * @param pti point d interet a supprimer
      * @return option choisie par l utilisateur
      */
     public int afficherPopSuppression(PointInteret pti) {

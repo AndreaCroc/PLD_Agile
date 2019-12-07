@@ -28,7 +28,8 @@ public class AffichageEtapes extends AbstractTableModel {
 
     private final ArrayList<LigneEtapes> steps;
     private final String header[];
-    private int ligneSelect;
+    private int lignePISelect;
+    private int lignePIDepSelect;
     private FormatCellRenderer formatcell;
     private Fenetre fenetre;
     private Tournee tournee;
@@ -36,7 +37,8 @@ public class AffichageEtapes extends AbstractTableModel {
     public AffichageEtapes(FormatCellRenderer format, Fenetre fenetre, Tournee tournee) {
         this.header = new String[]{"Ordre", "Demande", "Type", "Rue", "Arrivée prévue", "Départ prévu", "Durée prévue"};
         this.steps = new ArrayList<>();
-        this.ligneSelect = -1;
+        this.lignePISelect = -1;
+        this.lignePIDepSelect = -1;
         this.formatcell = format;
         this.fenetre = fenetre;
         this.tournee = tournee;
@@ -104,13 +106,23 @@ public class AffichageEtapes extends AbstractTableModel {
         return header[columnIndex];
     }
 
-    public int getLigneSelect() {
-        return this.ligneSelect;
+    public int getLignePISelect() {
+        return lignePISelect;
     }
 
-    public void setLigneSelect(int ligne) {
-        this.ligneSelect = ligne;
+    public void setLignePISelect(int lignePISelect) {
+        this.lignePISelect = lignePISelect;
     }
+
+    public int getLignePIDepSelect() {
+        return lignePIDepSelect;
+    }
+
+    public void setLignePIDepSelect(int lignePIDepSelect) {
+        this.lignePIDepSelect = lignePIDepSelect;
+    }
+    
+    
 
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;

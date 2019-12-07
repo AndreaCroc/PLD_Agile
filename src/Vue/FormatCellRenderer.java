@@ -27,17 +27,31 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class FormatCellRenderer extends DefaultTableCellRenderer {
 
-    private int index;
+    private int indexPI;
+    private int indexPIDep;
     private int tableau;
 
-    public FormatCellRenderer(int index, int table) {
-        this.index = index;
+    public FormatCellRenderer(int indexPI, int indexPIDep, int table) {
+        this.indexPI = indexPI;
+        this.indexPIDep = indexPIDep;
         this.tableau = table;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public int getIndexPI() {
+        return indexPI;
     }
+
+    public void setIndexPI(int indexPI) {
+        this.indexPI = indexPI;
+    }
+
+    public int getIndexPIDep() {
+        return indexPIDep;
+    }
+
+    public void setIndexPIDep(int indexPIDep) {
+        this.indexPIDep = indexPIDep;
+    }  
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
@@ -48,16 +62,30 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         //Si on veut encadrer une ligne du tableauPIs
         if (tableau == 1) {
             //Si on a clique sur un point d interet
-            if (index != -1) {
-                if (row == this.index || row == this.index - table.getRowCount()) {
+            if (indexPI != -1) {
+                if (row == this.indexPI || row == this.indexPI - table.getRowCount()) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.red));
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
-                        textArea.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.red));
+                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.red));
                         return textArea;
                     } else {
-                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.red));
+                    }
+                }
+            }
+            
+            if (indexPI != 0 && indexPIDep != -1) {
+                if (row == this.indexPIDep || row == this.indexPIDep - table.getRowCount()) {
+                    if (column == 0) {
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.ORANGE));
+                    } else if (value instanceof JTextArea) {
+                        JTextArea textArea = (JTextArea) value;
+                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.ORANGE));
+                        return textArea;
+                    } else {
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.ORANGE));
                     }
                 }
             }
@@ -69,16 +97,25 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
             }
             //Si on veut encadrer une ligne du tableauEtapes
         } else {
-            if (index != -1) {
+            if (indexPI != -1) {
                 int nbLignes = table.getRowCount() - 1;
                 //Encadrer chaque cellule de la ligne associee au point d interet
-                if (row == this.index || row - nbLignes == index || row == index - nbLignes) {
+                if (row == this.indexPI || row - nbLignes == indexPI || row == indexPI - nbLignes) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.red));
                     } else if (column == table.getColumnCount() - 1) {
-                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.red));
                     } else {
-                        this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.red));
+                    }
+                }
+            }
+            if (indexPI != 0 && indexPIDep != -1) {
+                if (row == this.indexPIDep) {
+                    if (column == 0) {
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.ORANGE));
+                    }else {
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.ORANGE));
                     }
                 }
             }

@@ -11,8 +11,10 @@
  */
 package Vue;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,26 +35,28 @@ public class JCarte extends JPanel {
     private Carte carte;
     private Tournee tournee;
     private ArrayList<Point> coorPtInterets;
+    private ArrayList<CoordPointInteret> listeCoordPtI;
     private Fenetre fenetre;
     private double zoom;
 
-    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre,double zoom) {
+    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre, double zoom) {
         this.carte = carte;
         this.tournee = tournee;
         this.coorPtInterets = new ArrayList<>();
+        this.listeCoordPtI = new ArrayList<>();
         this.fenetre = fenetre;
-        this.zoom=zoom;
+        this.zoom = zoom;
         this.repaint();
     }
 
-    public void setZoom(double z){
-        this.zoom=z;
+    public void setZoom(double z) {
+        this.zoom = z;
     }
-    
-    public double getZoom(){
+
+    public double getZoom() {
         return zoom;
     }
-    
+
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
         this.repaint();
@@ -77,8 +81,22 @@ public class JCarte extends JPanel {
         this.coorPtInterets.add(p);
     }
 
+    /**
+     * Ajouter un point au tableau stockant les coordonnees des points d
+     * interets de la tournee
+     *
+     * @param p point a ajouter
+     */
+    public void ajouterCoordPtI(CoordPointInteret p) {
+        this.listeCoordPtI.add(p);
+    }
+
     public ArrayList<Point> getCoorPtInterets() {
         return this.coorPtInterets;
+    }
+
+    public ArrayList<CoordPointInteret> getCoordPtInterets() {
+        return this.listeCoordPtI;
     }
 
     /*Recupère la latitude maximale présente sur la carte*/
@@ -192,8 +210,7 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        proportionalY*=zoom;
-       
+        proportionalY *= zoom;
 
         return proportionalY;
     }
@@ -220,9 +237,9 @@ public class JCarte extends JPanel {
         } else if (proportionalY >= hauteurPanel) {
             proportionalY = hauteurPanel - 12;
         }
-        
-        proportionalY*=zoom;
-        
+
+        proportionalY *= zoom;
+
         return proportionalY;
     }
 
@@ -248,9 +265,9 @@ public class JCarte extends JPanel {
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-        
-        proportionalX*=zoom;
-        
+
+        proportionalX *= zoom;
+
         return proportionalX;
     }
 
@@ -275,9 +292,9 @@ public class JCarte extends JPanel {
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-        
-        proportionalX*=zoom;
-        
+
+        proportionalX *= zoom;
+
         return proportionalX;
     }
 
@@ -306,9 +323,10 @@ public class JCarte extends JPanel {
                 }*/
             }
         }
-        
+
         if (carte.getDemandesLivraisons() != null) {
             this.coorPtInterets.clear();
+            this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
             //ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
@@ -323,7 +341,9 @@ public class JCarte extends JPanel {
 
             //Ajouter le point du depot dans la liste
             Point ptDepot = new Point(xDepot, yDepot);
+            CoordPointInteret cptI = new CoordPointInteret(ptDepot, depot);
             this.ajouterPoint(ptDepot);
+            this.ajouterCoordPtI(cptI);
 
             if (PIs != null) {
                 for (PointInteret i : PIs) {
@@ -348,6 +368,11 @@ public class JCarte extends JPanel {
                         //Ajout des points a la liste stockant les coordonnees des points d interets
                         this.ajouterPoint(ptRect);
                         this.ajouterPoint(ptOval);
+
+                        CoordPointInteret cdPtIRect = new CoordPointInteret(ptRect, i);
+                        CoordPointInteret cdPtIOval = new CoordPointInteret(ptOval, i.getPointDependance());
+                        this.ajouterCoordPtI(cdPtIRect);
+                        this.ajouterCoordPtI(cdPtIOval);
 
                     }
 
@@ -391,7 +416,7 @@ public class JCarte extends JPanel {
 
             }
         }
-        if (this.fenetre != null) {
+        /*if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVuePIs().getLigneSelect();
             //Si une ligne du tableau des etapes de la tournee a ete selectionnee
             if (ligneTab != -1) {
@@ -416,6 +441,72 @@ public class JCarte extends JPanel {
                     g.drawLine(xPI - 5, yPI + 15, xPI + 15, yPI + 15);
                     g.drawLine(xPI + 15, yPI + 15, xPI + 15, yPI - 5);
                     g.drawLine(xPI + 15, yPI - 5, xPI - 5, yPI - 5);
+                }
+
+            }
+        }*/
+        if (this.fenetre != null) {
+            int ligneTab = this.fenetre.getVuePIs().getLignePISelect();
+            int ligneTabDep = this.fenetre.getVuePIs().getLignePIDepSelect();
+            //Si une ligne du tableau des etapes de la tournee a ete selectionnee
+            if (ligneTab != -1 && ligneTabDep != -1) {
+                int xPI = 0;
+                int yPI = 0;
+                int xPIDep = 0;
+                int yPIDep = 0;
+                boolean select = false;
+                boolean piDep = false;
+                if (ligneTab < this.listeCoordPtI.size()) {
+                    //Recuperer les coordonnes du point d interet associe a la ligne du tableau
+                    xPI = this.listeCoordPtI.get(ligneTab).getPoint().getX();
+                    yPI = this.listeCoordPtI.get(ligneTab).getPoint().getY();
+                    select = true;
+                    //Si le point selectionne est l entrepot
+                } else if (ligneTab == this.listeCoordPtI.size()) {
+                    xPI = this.listeCoordPtI.get(0).getPoint().getX();
+                    yPI = this.listeCoordPtI.get(0).getPoint().getY();
+                    select = true;
+                }
+                if (select) {
+                    BasicStroke line = new BasicStroke(3.5f);
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setStroke(line);
+                    g2.setColor(Color.RED);
+                    if (ligneTab == 0) {
+                        //Faire un carre rouge autour du point d interet
+                        g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 14);
+                        g2.drawLine(xPI - 3, yPI + 14, xPI + 14, yPI + 14);
+                        g2.drawLine(xPI + 14, yPI + 14, xPI + 14, yPI - 3);
+                        g2.drawLine(xPI + 14, yPI - 3, xPI - 3, yPI - 3);
+
+                    } else {
+                        //Faire un carre rouge autour du point d interet
+                        g2.drawLine(xPI - 4, yPI - 4, xPI - 4, yPI + 13);
+                        g2.drawLine(xPI - 4, yPI + 13, xPI + 13, yPI + 13);
+                        g2.drawLine(xPI + 13, yPI + 13, xPI + 13, yPI - 4);
+                        g2.drawLine(xPI + 13, yPI - 4, xPI - 4, yPI - 4);
+                    }
+
+                }
+
+                if (ligneTabDep < this.listeCoordPtI.size() && ligneTabDep != 0) {
+                    xPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint().getX();
+                    yPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint().getY();
+                    piDep = true;
+                }
+
+                if (piDep) {
+                    BasicStroke line = new BasicStroke(3.5f);
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setStroke(line);
+                    g2.setColor(Color.ORANGE);
+
+                    //Faire un carre rouge autour du point d interet
+                    g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep + 13);
+                    g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep + 13);
+                    g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep - 4);
+                    g2.drawLine(xPIDep + 13, yPIDep - 4, xPIDep - 4, yPIDep - 4);
+
                 }
 
             }

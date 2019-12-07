@@ -30,7 +30,8 @@ public class AffichagePIs extends AbstractTableModel {
 
     private final ArrayList<LignePI> lignePIs;
     private final String header[];
-    private int ligneSelect;
+    private int lignePISelect;
+    private int lignePIDepSelect;
     private FormatCellRenderer formatcell;
     private Carte carte;
     private Fenetre fenetre;
@@ -38,7 +39,8 @@ public class AffichagePIs extends AbstractTableModel {
     public AffichagePIs(FormatCellRenderer formatcell, Carte carte, Fenetre fenetre) {
         this.lignePIs = new ArrayList<>();
         this.header = new String[]{"Numéro demande", "Type", "Durée", "Rue(s)"};
-        this.ligneSelect = -1;
+        this.lignePISelect = -1;
+        this.lignePIDepSelect = -1;
         this.formatcell = formatcell;
         this.carte = carte;
         this.fenetre = fenetre;
@@ -116,13 +118,23 @@ public class AffichagePIs extends AbstractTableModel {
         }
     }
 
-    public int getLigneSelect() {
-        return this.ligneSelect;
+    public int getLignePISelect() {
+        return lignePISelect;
     }
 
-    public void setLigneSelect(int ligne) {
-        this.ligneSelect = ligne;
+    public void setLignePISelect(int lignePISelect) {
+        this.lignePISelect = lignePISelect;
     }
+
+    public int getLignePIDepSelect() {
+        return lignePIDepSelect;
+    }
+
+    public void setLignePIDepSelect(int lignePIDepSelect) {
+        this.lignePIDepSelect = lignePIDepSelect;
+    }
+
+
 
     public FormatCellRenderer getFormatcell() {
         return formatcell;
