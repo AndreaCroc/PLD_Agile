@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import modele.PointInteret;
 import modele.Tournee;
 
-/*
+/**
  * AffichageTournee
  *
  * Version 1

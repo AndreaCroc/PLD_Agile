@@ -1,14 +1,4 @@
-/*
- * EcouteurSouris
- *
- * Version 1
- * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package Vue;
 
 import controleur.Controleur;
@@ -19,26 +9,47 @@ import modele.Carte;
 import modele.PointInteret;
 
 /**
+ * EcouteurSouris
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
+public class EcouteurSouris extends MouseAdapter {
+/**
  *
  * Classe EcouteurSouris permettant de recuperer et de gerer les evenements lies
  * a la souris et ici sur un clic
  *
  */
-public class EcouteurSouris extends MouseAdapter {
 
-    private Controleur controleur;
-    private JCarte vueCarte;
-    private Fenetre fenetre;
+    private Controleur controleur; //Controleur pour traiter les evenemtns
+    private JCarte vueCarte; //Panneau de la carte
+    private Fenetre fenetre; //Fenetre ouverte
 
+    /**
+     * Constructeur de la classe EcouteurSouris
+     * @param controleur
+     * @param vueCarte
+     * @param fenetre 
+     */
     public EcouteurSouris(Controleur controleur, JCarte vueCarte, Fenetre fenetre) {
         this.controleur = controleur;
         this.vueCarte = vueCarte;
         this.fenetre = fenetre;
     }
 
+    /**
+     * Traiter les evenements sur un clic de la souris
+     * @param evt evenement
+     */
     @Override
     public void mouseClicked(MouseEvent evt) {
-        System.out.println("ecouteur souris");
         if (this.fenetre != null) {
             //Recuperer la largeur du panneau gauche
             int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
@@ -47,7 +58,6 @@ public class EcouteurSouris extends MouseAdapter {
 
             if (this.vueCarte != null) {
                 //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
-                ArrayList<Point> coordPis = vueCarte.getCoorPtInterets();
                 ArrayList<CoordPointInteret> listeCoordPtI = vueCarte.getCoordPtInterets();
                 Carte carte = fenetre.getCarte();
                 if (carte != null) {
@@ -68,9 +78,7 @@ public class EcouteurSouris extends MouseAdapter {
                             if (x >= nvXpt - 5 && x <= nvXpt + 5 && y >= nvYpt - 5 && y <= nvYpt + 5) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
-                                    System.out.println("index : " + index);
                                     if (index < listePtI.size() && index != -1) {
-                                        System.out.println("if");
                                         //Mettre en surbrillance la ligne du tableau correspondante
                                         this.controleur.surbrillerTables(pi);
                                         //Surbriller le point sur lequel on vient de cliquer

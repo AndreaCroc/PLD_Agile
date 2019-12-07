@@ -1,13 +1,4 @@
-/*
- * Fenetre
- *
- * Version 1
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package Vue;
 
 import controleur.Controleur;
@@ -34,18 +25,29 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
+ * Fenetre
+ *
+ * Version 1
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
+public class Fenetre extends JFrame {
+/**
  *
  * Classe Fenetre permettant d'afficher notre application
  */
-public class Fenetre extends JFrame {
 
-    private Controleur controleur;
-    private Carte carte;
-    private Tournee tournee;
-    private AffichageTournee vueTournee;
-    private JCarte panneauCarte;
-    private AffichageEtapes vueEtapes;
-    private AffichagePIs vuePIs;
+    private Controleur controleur; //Controleur entre la vue et le modele
+    private Carte carte; //Carte a afficher
+    private Tournee tournee; //Tournee realisee
+    private AffichageTournee vueTournee; //Afficher la tournee
+    private JCarte panneauCarte; //Afficher la carte
+    private AffichageEtapes vueEtapes; //Afficher les etapes
+    private AffichagePIs vuePIs; //Afficher les points dinterets generaux
 
     //Tableau contenant le details des etapes de la tournee
     private JTable tableauEtapes;
@@ -644,8 +646,6 @@ public class Fenetre extends JFrame {
         vuePIs.afficherPIs(afficher);
     }
 
-
-
     /**
      * Mettre en surbrillance la ligne du tableau correspondant au
      * point d interet clique
@@ -683,6 +683,12 @@ public class Fenetre extends JFrame {
 
     }
 
+     /**
+     * Mettre en surbrillance la ligne du tableau correspondant au
+     * point d interet clique
+     * 
+     * @param ptI 
+     */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
         System.out.println("surbrillerlignetabEtapes");
         System.out.println("tournee : " + tournee);
@@ -771,20 +777,36 @@ public class Fenetre extends JFrame {
     }
 
 
+    /**
+     * Recuperer le panneau de la carte
+     * @return pannneau carte
+     */
     public JCarte getPanneauCarte() {
         return this.panneauCarte;
     }
 
+    /**
+     * Modifier le panneau de la carte
+     * @param nouvelleCarte nouveau panneau carte
+     */
     public void setPanneauCarte(JCarte nouvelleCarte) {
         this.panneauCarte = nouvelleCarte;
         this.panneauCarte.updateUI();
 
     }
 
+    /**
+     * Recuperer l ecouteur de boutons
+     * @return ecouteur boutons
+     */
     public EcouteurBoutons getEcouteurBoutons() {
         return this.ecouteurBoutons;
     }
 
+    /**
+     * Recuperer la vue sur les etapes
+     * @return vue etapes
+     */
     public AffichageEtapes getVueEtapes() {
         return this.vueEtapes;
     }
@@ -877,18 +899,28 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
     }
 
+    /**
+     * Modifier la tournee
+     * @param tournee nouvelle tournee
+     */
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
         this.panneauCarte.updateUI();
 
     }
 
-   
-
+    /**
+     * Recuperer la largeur du panneau gauche
+     * @return largeur
+     */
     public int getWidthPanneauGauche() {
         return this.panneauGauche.getWidth();
     }
 
+    /**
+     * Recuperer la hauteur du panneau de legende
+     * @return hauteur
+     */
     public int getHeightPanneauLegende() {
         return this.panneauLegende.getHeight();
     }
@@ -911,38 +943,74 @@ public class Fenetre extends JFrame {
         repChangeCarte.setVisible(false);
     }
 
+    /**
+     * Modifier le clic sur le bouton supprimer
+     * @param clic nouveau clic
+     */
     public void setClicSupp(boolean clic) {
         this.clicSupp = clic;
     }
 
+    /**
+     * Recuperer la valeur du clic sur le bouton supprimer
+     * @return clic
+     */
     public boolean getClicSupp() {
         return this.clicSupp;
     }
 
+    /**
+     * Recuperer le chemin vers le fichier XML de la carte
+     * @return valeur input
+     */
     public String getInputChargeCarte() {
         return inputChargeCarte.getText();
     }
 
+    /**
+     * Recuperer le chemin vers le fichier XML des livraisons
+     * @return valeur input
+     */
     public String getInputChargeLiv() {
         return inputChargeLiv.getText();
     }
 
+    /**
+     * Recuperer la carte
+     * @return carte
+     */
     public Carte getCarte() {
         return carte;
     }
 
+    /**
+     * Recuperer la tournee
+     * @return tournee
+     */
     public Tournee getTournee() {
         return tournee;
     }
 
+    /**
+     * Recuperer la vue sur les points dinteret
+     * @return vuePIs
+     */
     public AffichagePIs getVuePIs() {
         return vuePIs;
     }
 
+    /**
+     * Recuperer le modele de la liste de selection des points dinteret
+     * @return modele liste selection point dinteret
+     */
     public ListSelectionModel getListSelectModelPI() {
         return listSelectModelPI;
     }
 
+    /**
+     * Recuperer le modele de la liste de selection des etapes
+     * @return modele de la liste de selection des etapes
+     */
     public ListSelectionModel getListSelectModelEtapes() {
         return listSelectModelEtapes;
     }

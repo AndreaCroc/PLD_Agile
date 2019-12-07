@@ -8,7 +8,7 @@ import modele.PointInteret;
 import modele.Tournee;
 import modele.Troncon;
 
-/*
+/**
  * AffichageEtapes
  *
  * Version 1

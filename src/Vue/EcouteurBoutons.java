@@ -1,4 +1,11 @@
-/*
+
+package Vue;
+
+import controleur.Controleur;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
  * EcouteurBoutons
  *
  * Version 1
@@ -8,25 +15,28 @@
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-package Vue;
 
-import controleur.Controleur;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+public class EcouteurBoutons implements ActionListener {
 /**
  * Classe EcouteurBoutons pour recuperer et gerer les evenements sur les boutons
  * de la fenetre
  *
  */
-public class EcouteurBoutons implements ActionListener {
 
-    private Controleur controleur;
+    private Controleur controleur; //Controleur entre le modele et la vue
 
+    /**
+     * Constructeur de la classe EcouteurBoutons
+     * @param controleur 
+     */
     public EcouteurBoutons(Controleur controleur) {
         this.controleur = controleur;
     }
 
+    /**
+     * Traiter les evenements lies a un clic sur un bouton
+     * @param e evenement
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         //Quand on clique sur un bouton, on fait le bon traitement
@@ -55,6 +65,7 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.ANNULER:
                 controleur.annuler();
                 break;
+            //Si on veut ajouter un point dinteret
             case Fenetre.AJOUTER:
                 controleur.ajouter();
                 break;

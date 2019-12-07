@@ -10,7 +10,7 @@ import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
 
-/*
+/**
  * AffichagePIs
  *
  * Version 1

@@ -1,14 +1,4 @@
-/*
- * FormatCellRenderer
- *
- * Version 1
- * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package Vue;
 
 import java.awt.Color;
@@ -20,39 +10,83 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
+ * FormatCellRenderer
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
+public class FormatCellRenderer extends DefaultTableCellRenderer {
+/**
  *
  * Classe FormatCellRenderer permettant de mettre tous les elements du tableau
  * au centre de la cellule et d encadrer en rouge la ligne en cas de clic sur un
  * point d interet
  */
-public class FormatCellRenderer extends DefaultTableCellRenderer {
 
-    private int indexPI;
-    private int indexPIDep;
-    private int tableau;
+    private int indexPI; //Index du point dinteret selectionne
+    private int indexPIDep; //Index du poitn d interet dependant
+    private int tableau; //Connaitre le tableau 
 
+    /**
+     * Constructeur de la classe FormatCellRenderer
+     * @param indexPI index du point dinteret
+     * @param indexPIDep index du point d interet dependant
+     * @param table numero du tableua
+     */
     public FormatCellRenderer(int indexPI, int indexPIDep, int table) {
         this.indexPI = indexPI;
         this.indexPIDep = indexPIDep;
         this.tableau = table;
     }
 
+    /**
+     * Recuperer lindex du point d interet
+     * @return index point interet
+     */
     public int getIndexPI() {
         return indexPI;
     }
 
+    /**
+     * Modifier l index du point d interet
+     * @param indexPI nouvel index
+     */
     public void setIndexPI(int indexPI) {
         this.indexPI = indexPI;
     }
 
+    /**
+     * Recuperer lindex du point dinteret dependant
+     * @return index point dependant
+     */
     public int getIndexPIDep() {
         return indexPIDep;
     }
 
+    /**
+     * Modifier lindex du point dependant
+     * @param indexPIDep nouvel index
+     */
     public void setIndexPIDep(int indexPIDep) {
         this.indexPIDep = indexPIDep;
     }  
 
+    /**
+     * Modifier l affichage d une cellule du tableau
+     * @param table tableau 
+     * @param value valeur de la cellule
+     * @param isSelected indique si la case est selectionnee
+     * @param hasFocus indique si la cellule est focalisee
+     * @param row indique la ligne de la cellule
+     * @param column indique la colonne de la cellule
+     * @return nouveauu composant de la cellule
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
@@ -61,11 +95,12 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
 
         //Si on veut encadrer une ligne du tableauPIs
         if (tableau == 1) {
-            //Si on a clique sur un point d interet
+            //Encadrer la ligne correspondante au point dinteret selectionne
             if (indexPI != -1) {
                 if (row == this.indexPI || row == this.indexPI - table.getRowCount()) {
                     if (column == 0) {
                         this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.red));
+                    //Si la cellule est de type textArea
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
                         textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.red));
@@ -76,6 +111,7 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
                 }
             }
             
+            //Encadrer la ligne ou se trouve le point dinteret dependant
             if (indexPI != 0 && indexPIDep != -1) {
                 if (row == this.indexPIDep || row == this.indexPIDep - table.getRowCount()) {
                     if (column == 0) {

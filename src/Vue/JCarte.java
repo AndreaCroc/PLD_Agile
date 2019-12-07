@@ -1,14 +1,4 @@
-/*
- * JCarte
- *
- * Version 1
- * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package Vue;
 
 import java.awt.BasicStroke;
@@ -27,59 +17,86 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
+ * JCarte
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+public class JCarte extends JPanel {
+/**
  *
  * Classe JCarte permet d afficher la carte, les points d interets, la tournee
  */
-public class JCarte extends JPanel {
 
-    private Carte carte;
-    private Tournee tournee;
-    private ArrayList<Point> coorPtInterets;
-    private ArrayList<CoordPointInteret> listeCoordPtI;
-    private Fenetre fenetre;
-    private double zoom;
+    private Carte carte; //Carte possedant les points dinteret
+    private Tournee tournee; //les points dinteret faisant partie de la tournee
+    private ArrayList<CoordPointInteret> listeCoordPtI; //liste des point dinerets de la carte
+    private Fenetre fenetre; //fenetre de lapplication
+    private double zoom; //zoom a appliquer sur la carte
 
+    /**
+     * Constructeur de la classe JCarte
+     * @param carte
+     * @param tournee
+     * @param fenetre
+     * @param zoom 
+     */
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre, double zoom) {
         this.carte = carte;
         this.tournee = tournee;
-        this.coorPtInterets = new ArrayList<>();
         this.listeCoordPtI = new ArrayList<>();
         this.fenetre = fenetre;
         this.zoom = zoom;
         this.repaint();
     }
 
+    /**
+     * Modifier le zoom
+     * @param z nouveau zoom
+     */
     public void setZoom(double z) {
         this.zoom = z;
     }
 
+    /**
+     * Recuperer le zoom
+     * @return zoom
+     */
     public double getZoom() {
         return zoom;
     }
 
+    /**
+     * Modifier la tournee de la carte
+     * @param nouvelleTournee 
+     */
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
         this.repaint();
     }
 
+    /**
+     * Modifier la fenetre
+     * @param fenetre nouvelle fenetre
+     */
     public void setFenetre(Fenetre fenetre) {
         this.fenetre = fenetre;
         this.repaint();
     }
 
+    /**
+     * Recuperer la tournee
+     * @return tournee
+     */
     public Tournee getTournee() {
         return this.tournee;
     }
 
-    /**
-     * Ajouter un point au tableau stockant les coordonnees des points d
-     * interets de la tournee
-     *
-     * @param p point a ajouter
-     */
-    public void ajouterPoint(Point p) {
-        this.coorPtInterets.add(p);
-    }
 
     /**
      * Ajouter un point au tableau stockant les coordonnees des points d
@@ -91,10 +108,10 @@ public class JCarte extends JPanel {
         this.listeCoordPtI.add(p);
     }
 
-    public ArrayList<Point> getCoorPtInterets() {
-        return this.coorPtInterets;
-    }
-
+    /**
+     * Recuperer la liste des points dinteret et leurs coordonnees sur la carte
+     * @return liste 
+     */
     public ArrayList<CoordPointInteret> getCoordPtInterets() {
         return this.listeCoordPtI;
     }
@@ -325,7 +342,6 @@ public class JCarte extends JPanel {
         }
 
         if (carte.getDemandesLivraisons() != null) {
-            this.coorPtInterets.clear();
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
             //ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
@@ -342,7 +358,6 @@ public class JCarte extends JPanel {
             //Ajouter le point du depot dans la liste
             Point ptDepot = new Point(xDepot, yDepot);
             CoordPointInteret cptI = new CoordPointInteret(ptDepot, depot);
-            this.ajouterPoint(ptDepot);
             this.ajouterCoordPtI(cptI);
 
             if (PIs != null) {
@@ -365,10 +380,8 @@ public class JCarte extends JPanel {
                         Point ptOval = new Point(xOval, yOval);
                         g.fillRect(xRect, yRect, 9, 9);
                         g.fillOval(xOval, yOval, 9, 9);
+                        
                         //Ajout des points a la liste stockant les coordonnees des points d interets
-                        this.ajouterPoint(ptRect);
-                        this.ajouterPoint(ptOval);
-
                         CoordPointInteret cdPtIRect = new CoordPointInteret(ptRect, i);
                         CoordPointInteret cdPtIOval = new CoordPointInteret(ptOval, i.getPointDependance());
                         this.ajouterCoordPtI(cdPtIRect);
@@ -472,7 +485,7 @@ public class JCarte extends JPanel {
                     g2.setStroke(line);
                     g2.setColor(Color.ORANGE);
 
-                    //Faire un carre rouge autour du point d interet
+                    //Faire un carre orange autour du point d interet dependant
                     g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep + 13);
                     g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep + 13);
                     g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep - 4);
