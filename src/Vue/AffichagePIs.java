@@ -1,14 +1,4 @@
-/*
- * AffichagePIs
- *
- * Version 1
- * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
- *
- */
+
 package Vue;
 
 import java.text.DecimalFormat;
@@ -20,22 +10,40 @@ import modele.Intersection;
 import modele.PointInteret;
 import modele.Troncon;
 
+/*
+ * AffichagePIs
+ *
+ * Version 1
+ * 
+ *
+ * 
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
+public class AffichagePIs extends AbstractTableModel {
 /**
  *
  * Classe AffichagePIs permet d afficher les informations d un point d interet
  * lors du chargement des livraisons
  *
  */
-public class AffichagePIs extends AbstractTableModel {
 
-    private final ArrayList<LignePI> lignePIs;
-    private final String header[];
-    private int lignePISelect;
-    private int lignePIDepSelect;
-    private FormatCellRenderer formatcell;
-    private Carte carte;
-    private Fenetre fenetre;
+    private final ArrayList<LignePI> lignePIs; //Liste des points d interet 
+    private final String header[]; //En tete du tableau
+    private int lignePISelect; //Numero de la ligne selectionnee
+    private int lignePIDepSelect; //Numero de la ligne du point dependant de la lgine selectionnee
+    private FormatCellRenderer formatcell; //Format a appliquer au tableau
+    private Carte carte; //Carte
+    private Fenetre fenetre; //Fenetre ou se trouve le tableau
 
+    /**
+     * Constructeur de la classe AffichagePIS
+     * @param formatcell format a appliquer au tableau
+     * @param carte carte qui possede la liste des points d interet
+     * @param fenetre fenetre ou afficher le tableau
+     */
     public AffichagePIs(FormatCellRenderer formatcell, Carte carte, Fenetre fenetre) {
         this.lignePIs = new ArrayList<>();
         this.header = new String[]{"Numéro demande", "Type", "Durée", "Rue(s)"};
@@ -118,32 +126,59 @@ public class AffichagePIs extends AbstractTableModel {
         }
     }
 
+    /**
+     * Recuperer le numero de ligne du tableau selectionnee
+     * @return numero de la ligne
+     */
     public int getLignePISelect() {
         return lignePISelect;
     }
 
+    /**
+     * Modifier la ligne du tabelau selectionnee
+     * @param lignePISelect nouveau numero de la ligne
+     */
     public void setLignePISelect(int lignePISelect) {
         this.lignePISelect = lignePISelect;
     }
 
+    /**
+     * Recuperer la ligne possedant le point dependant de celui
+     * de la ligne qui a ete selectionnee
+     * @return numero ligne du point dependant
+     */
     public int getLignePIDepSelect() {
         return lignePIDepSelect;
     }
 
+    /**
+     * Modifier la ligne du point dependant
+     * @param lignePIDepSelect nouveau numero de la ligne 
+     */
     public void setLignePIDepSelect(int lignePIDepSelect) {
         this.lignePIDepSelect = lignePIDepSelect;
     }
 
-
-
+    /**
+     * Recuperer le format des cellules
+     * @return format cellule
+     */
     public FormatCellRenderer getFormatcell() {
         return formatcell;
     }
 
+    /**
+     * Modifier le format du tableau
+     * @param formatcell nouveau format 
+     */
     public void setFormatcell(FormatCellRenderer formatcell) {
         this.formatcell = formatcell;
     }
 
+    /**
+     * Modifier la carte associee au tableau
+     * @param carte nouvelle carte
+     */
     public void setCarte(Carte carte) {
         this.carte = carte;
     }
@@ -186,24 +221,25 @@ public class AffichagePIs extends AbstractTableModel {
      * @param afficher savoir si la liste a afficher est non vide
      */
     public void afficherPIs(boolean afficher) {
-        System.out.println("AFFICHER PIS");
         if (afficher) {
             //Recuperer les points d interets
             this.setCarte(fenetre.getCarte());
             
+            //Liste des points d interet de la carte
             ArrayList<PointInteret> listePIs = this.carte.getListePointsInteretActuelle();
             System.out.println("carte pi : "+listePIs);
-            String nomRue = "";
-            String type = "";
-            int duree = 0;
-            String dureePt = "";
-            int num = 0;
-            Intersection intersection;
-            ArrayList<Troncon> listeT;
+            String nomRue = ""; //Nom de la rue ou se trouve le point d interet
+            String type = ""; //Type du point d interet
+            int duree = 0; //Duree au point d interet
+            String dureePt = ""; //Duree du point d interet
+            int num = 0; //Numero de la demande de livraison
+            Intersection intersection; //Intersection du point d interet
+            ArrayList<Troncon> listeT; //Liste des troncons de l intersection
+            
+            //Si la carte possede au moins deux points
             if (listePIs.size() > 1) {
                 for (PointInteret pt : listePIs) {
                     nomRue = "";
-                    System.out.println("INFO 2 : " + pt.getDuree());
                     
                     intersection = pt.getIntersection();
                     listeT = intersection.getTronconsDepart();
@@ -230,7 +266,6 @@ public class AffichagePIs extends AbstractTableModel {
                     } else {
                         type = "Livraison";
                     }
-                    System.out.println("NOM : "+ nomRue + " DUREE : "+ dureePt +" TYPE : " + type);
                     
                     if (listePIs.indexOf(pt) == 0) {
                         type = "Entrepot";
@@ -239,7 +274,6 @@ public class AffichagePIs extends AbstractTableModel {
                         
                     } else {
                         //Recuperer le numero de la demande du point d interet
-                        System.out.println("ELSE");
                         num = pt.getNumeroDemande();
                     }
                     //Afficher les details des points d interets

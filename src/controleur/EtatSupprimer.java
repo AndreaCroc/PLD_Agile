@@ -26,7 +26,7 @@ public class EtatSupprimer implements Etat {
 
     /**
      * Supprimer un point d interet de la tournee et son point correspondant
-     * Dans tous les cas, on repasse a l etat EtatTournee
+     * On repasse soit a l etat tournee soit a l etat de base
      *
      * @param controleur
      * @param fenetre
