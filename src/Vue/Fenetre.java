@@ -1,4 +1,3 @@
-
 package Vue;
 
 import controleur.Controleur;
@@ -17,9 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -29,18 +30,17 @@ import modele.Tournee;
  *
  * Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class Fenetre extends JFrame {
-/**
- *
- * Classe Fenetre permettant d'afficher notre application
- */
 
+    /**
+     *
+     * Classe Fenetre permettant d'afficher notre application
+     */
     private Controleur controleur; //Controleur entre la vue et le modele
     private Carte carte; //Carte a afficher
     private Tournee tournee; //Tournee realisee
@@ -57,7 +57,7 @@ public class Fenetre extends JFrame {
 
     //Savoir si le bouton supprimer a ete clique
     private boolean clicSupp;
-    
+
     //Savoir si le bouton modifier a ete clique
     private boolean clicModif;
 
@@ -656,10 +656,10 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Mettre en surbrillance la ligne du tableau correspondant au
-     * point d interet clique
-     * 
-     * @param ptI 
+     * Mettre en surbrillance la ligne du tableau correspondant au point d
+     * interet clique
+     *
+     * @param ptI
      */
     public void surbrillerLigneTabPI(PointInteret ptI) {
         System.out.println("surbrillerlignetabPI");
@@ -692,11 +692,11 @@ public class Fenetre extends JFrame {
 
     }
 
-     /**
-     * Mettre en surbrillance la ligne du tableau correspondant au
-     * point d interet clique
-     * 
-     * @param ptI 
+    /**
+     * Mettre en surbrillance la ligne du tableau correspondant au point d
+     * interet clique
+     *
+     * @param ptI
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
         System.out.println("surbrillerlignetabEtapes");
@@ -725,8 +725,8 @@ public class Fenetre extends JFrame {
             }
         }
     }
-    
-     /**
+
+    /**
      * Entourer le point d interet correspondant a la ligne du tableau
      * selectionnee
      *
@@ -785,9 +785,9 @@ public class Fenetre extends JFrame {
         repChargeLiv.setVisible(true);
     }
 
-
     /**
      * Recuperer le panneau de la carte
+     *
      * @return pannneau carte
      */
     public JCarte getPanneauCarte() {
@@ -796,6 +796,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Modifier le panneau de la carte
+     *
      * @param nouvelleCarte nouveau panneau carte
      */
     public void setPanneauCarte(JCarte nouvelleCarte) {
@@ -806,6 +807,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer l ecouteur de boutons
+     *
      * @return ecouteur boutons
      */
     public EcouteurBoutons getEcouteurBoutons() {
@@ -814,6 +816,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la vue sur les etapes
+     *
      * @return vue etapes
      */
     public AffichageEtapes getVueEtapes() {
@@ -910,6 +913,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Modifier la tournee
+     *
      * @param tournee nouvelle tournee
      */
     public void setTournee(Tournee tournee) {
@@ -920,6 +924,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la largeur du panneau gauche
+     *
      * @return largeur
      */
     public int getWidthPanneauGauche() {
@@ -928,6 +933,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la hauteur du panneau de legende
+     *
      * @return hauteur
      */
     public int getHeightPanneauLegende() {
@@ -954,6 +960,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Modifier la valeur du clic sur le bouton supprimer
+     *
      * @param clic nouveau clic
      */
     public void setClicSupp(boolean clic) {
@@ -962,6 +969,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Savoir si on a clique sur le bouton supprimer
+     *
      * @return clic
      */
     public boolean isClicSupp() {
@@ -970,6 +978,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Savoir si on a clique sur le bouton modifier
+     *
      * @return clic modifier
      */
     public boolean isClicModif() {
@@ -978,16 +987,16 @@ public class Fenetre extends JFrame {
 
     /**
      * Modifier la valeur du clic sur le bouton modifier
+     *
      * @param clicModif nouveau clic
      */
     public void setClicModif(boolean clicModif) {
         this.clicModif = clicModif;
     }
-    
-    
 
     /**
      * Recuperer le chemin vers le fichier XML de la carte
+     *
      * @return valeur input
      */
     public String getInputChargeCarte() {
@@ -996,6 +1005,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer le chemin vers le fichier XML des livraisons
+     *
      * @return valeur input
      */
     public String getInputChargeLiv() {
@@ -1004,6 +1014,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la carte
+     *
      * @return carte
      */
     public Carte getCarte() {
@@ -1012,6 +1023,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la tournee
+     *
      * @return tournee
      */
     public Tournee getTournee() {
@@ -1020,6 +1032,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer la vue sur les points dinteret
+     *
      * @return vuePIs
      */
     public AffichagePIs getVuePIs() {
@@ -1028,6 +1041,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer le modele de la liste de selection des points dinteret
+     *
      * @return modele liste selection point dinteret
      */
     public ListSelectionModel getListSelectModelPI() {
@@ -1036,6 +1050,7 @@ public class Fenetre extends JFrame {
 
     /**
      * Recuperer le modele de la liste de selection des etapes
+     *
      * @return modele de la liste de selection des etapes
      */
     public ListSelectionModel getListSelectModelEtapes() {
@@ -1080,7 +1095,7 @@ public class Fenetre extends JFrame {
         jop.showMessageDialog(null, "Vous ne pouvez pas supprimer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
 
     }
-    
+
     /**
      * Afficher une popup pour prevenir que plus de points dans la liste
      *
@@ -1090,7 +1105,7 @@ public class Fenetre extends JFrame {
         jop.showMessageDialog(null, "La tournée ne possède plus de points", "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }
-    
+
     /**
      * Afficher une popup pour prevenir que la suppression n a pas ete effectuee
      *
@@ -1099,5 +1114,43 @@ public class Fenetre extends JFrame {
         JOptionPane jop = new JOptionPane();
         jop.showMessageDialog(null, "La suppression n'a pas pu être effectuée ", "Information", JOptionPane.INFORMATION_MESSAGE);
 
+    }
+
+    /**
+     * Afficher une popup d erreur dans le cas ou l utilisateur veut deplacer l
+     * entrepot
+     *
+     */
+    public void afficherPopDeplacerErreur() {
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "Vous ne pouvez pas déplacer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    /**
+     * Afficher une popup pour savoir de combien deplacer le point d interet
+     * @param min
+     * @param max
+     * @return 
+     */
+    public ArrayList<Integer> afficherPopModification(int min, int max) {
+        SpinnerNumberModel sModel = new SpinnerNumberModel(0, min, max, 1);
+        JSpinner spinner = new JSpinner(sModel);
+
+        int option = JOptionPane.showOptionDialog(null, spinner, "Déplacement d'un point d'intérêt", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        int value = ((Integer) spinner.getValue()).intValue();
+        ArrayList<Integer> choix = new ArrayList();
+        choix.add(option);
+        choix.add(value);
+        return choix;
+    }
+    
+    /**
+     * Afficher une popup pour prevenir que la contrainte de precedence
+     * n est pas respectee
+     */
+    public void afficherPopPrevenirModification(){
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'intérêt dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 }

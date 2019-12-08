@@ -1,7 +1,12 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modele.Carte;
 import modele.PointInteret;
+import modele.Tournee;
 
 /**
  * EtatModifier
@@ -17,16 +22,86 @@ public class EtatModifier implements Etat {
 
     /**
      * Modifier l ordre de passage d un point d interet dans la tournee
-     * 
+     *
      * @param controleur
      * @param fenetre
+     * @param tournee
+     * @param carte
      * @param index
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, int index) {
-        fenetre.afficherBoutonSupprimer();
-        fenetre.griserBoutonCalcul();
+    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index) {
+
+        if (index != 0) {
+            ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
+            //Recuperer le point d interet que l utilisateur veut deplacer
+            System.out.println("index deplacer : " + index);
+            System.out.println("deplacer : " + listePIs);
+            int option = 1; //choix de valider ou non le deplacement 
+            int decalage = 0; //de combien a ete deplace le point d interet
+            boolean modifOk = false; //si le deplacement s'est bien passee
+            PointInteret ptI = new PointInteret(); //point d interet qu on veut deplacer
+            int pos = 0; //Position du point d interet dan sla tournee
+            int min = 0; //deplacement max au plus tot
+            int max = 0; //deplacement max au plus tard
+            ArrayList<Integer>choix = new ArrayList(); //Retour methode classe Fenetre
+            ArrayList<PointInteret> listeTournee = new ArrayList(); //liste de la classe Tournee
+            
+            //Si l index est inferieur a la taille de la liste de la carte
+            if (index < listePIs.size()) {
+                ptI = listePIs.get(index);
+                listeTournee = tournee.getSuccessionPointsInteret();
+                pos = listeTournee.indexOf(ptI);
+                min = (-1) * (pos - 1);
+                max = listeTournee.size() - pos - 1;
+                
+                //Afficher une popup de modification
+                choix = fenetre.afficherPopModification(min, max);
+                option = choix.get(0);
+                decalage = choix.get(1);
+                //Si on confirme la modification
+                if (option == JOptionPane.OK_OPTION) {
+                    System.out.println("Point d'interet deplace");
+                    modifOk = carte.deplacerPointInteret(ptI,decalage);
+                    tournee = carte.getTournee();
+
+                    fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
+                    fenetre.setTournee(tournee);
+                    controleur.setTournee(tournee);
+                    fenetre.viderPanneauEtapes();
+                    fenetre.viderPanneauPIs();
+                    fenetre.afficherBoutonSupprimer();
+                    fenetre.griserBoutonCalcul();
+                    fenetre.repaint();
+
+                    fenetre.afficherEtapesTour(true);
+                    fenetre.afficherPanneauPI(true);
+
+                    //Si modification effectuee mais non respect contrainte
+                    if (!modifOk) {
+                        //Afficher popup pour prevenir modification ne respecte pas contrainte
+                        fenetre.afficherPopPrevenirModification();
+                    }
+
+                    //Si on annule la modification via la popup
+                } else {
+                    fenetre.afficherBoutonSupprimer();
+                    fenetre.griserBoutonCalcul();
+                }
+            } else {
+                fenetre.afficherBoutonSupprimer();
+                fenetre.griserBoutonCalcul();
+            }
+
+        } else {
+            //Afficher popup d erreur car pas possible de deplacer l entrepot
+            fenetre.afficherPopDeplacerErreur();
+            fenetre.afficherBoutonSupprimer();
+            fenetre.griserBoutonCalcul();
+        }
+
         controleur.setEtat(controleur.etatTournee);
+        fenetre.repaint();
         fenetre.setClicModif(false);
     }
 

@@ -75,7 +75,7 @@ public class Controleur {
     }
     
     public void modifier(int index){
-        etatCourant.modifier(this, fenetre, index);
+        etatCourant.modifier(this, fenetre, tournee, carte,index);
     }
 
     /**

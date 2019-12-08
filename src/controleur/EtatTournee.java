@@ -175,10 +175,12 @@ public class EtatTournee implements Etat {
      *
      * @param controleur
      * @param fenetre
+     * @param tournee
+     * @param carte
      * @param index
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, int index) {
+    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index) {
         fenetre.setClicModif(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatModifier);
