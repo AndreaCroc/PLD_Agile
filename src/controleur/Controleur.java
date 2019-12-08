@@ -112,26 +112,21 @@ public class Controleur {
    
     /**
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     * et du tableau d informations generales sur un point d interet
      *
-     * @param ptI indice du point d interet clique
+     * @param ptI point d interet clique
      */
     public void surbrillerTables(PointInteret ptI) {
-        fenetre.surbrillerLigneTabPI(ptI);
-        if(tournee!=null && !tournee.getSuccessionPointsInteret().isEmpty()){
-           fenetre.surbrillerLigneTabEtapes(ptI); 
-        }
-        
-        fenetre.repaint();
+        etatCourant.surbrillerTables(fenetre, tournee, ptI);
     }
     
     /**
-     * Encadrer un point d interet de la tournee
+     * Encadrer un point d interet present sur la carte
      *
-     * @param p
+     * @param p point d interet clique
      */
     public void surbrillerPI(PointInteret p) {
-        fenetre.surbrillerPI(p);
-        fenetre.repaint();
+        etatCourant.surbrillerPI(fenetre, tournee, p);
     }
 
     /**

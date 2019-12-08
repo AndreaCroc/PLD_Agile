@@ -127,5 +127,35 @@ public class EtatSupprimer implements Etat {
         fenetre.afficherBoutonSupprimer();
         controleur.setEtat(controleur.etatTournee);
     }
+    
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     * et du tableau d informations generales sur un point d interet
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param ptI point d interet selectionne
+     */
+    @Override
+    public void surbrillerTables(Fenetre fenetre, Tournee tournee, PointInteret ptI) {
+        fenetre.surbrillerLigneTabPI(ptI);
+        if (tournee != null && !tournee.getSuccessionPointsInteret().isEmpty()) {
+            fenetre.surbrillerLigneTabEtapes(ptI);
+        }
+        fenetre.repaint();
+    }
+
+    /**
+     * Encadrer un point d interet present sur la carte
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param p poitn d interet selectionne
+     */
+    @Override
+    public void surbrillerPI(Fenetre fenetre, Tournee tournee, PointInteret p) {
+        fenetre.surbrillerPI(p);
+        fenetre.repaint();
+    }
 
 }

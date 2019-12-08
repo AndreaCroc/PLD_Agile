@@ -1,9 +1,9 @@
-
 package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
+import modele.PointInteret;
 import modele.Tournee;
 
 /**
@@ -11,19 +11,18 @@ import modele.Tournee;
  *
  * Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * Grazia RIBBENI, Fatoumata WADE
  *
  */
-
-
 public class EtatLivraison implements Etat {
-/**
- *
- * Classe EtatLivraison qui correspond a laffichage des points d interets dune
- * livraison sur la carte
- */
+
+    /**
+     *
+     * Classe EtatLivraison qui correspond a laffichage des points d interets
+     * dune livraison sur la carte
+     */
 
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
@@ -40,10 +39,10 @@ public class EtatLivraison implements Etat {
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
         tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre,2));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, 2));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
-        
+
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
@@ -79,10 +78,10 @@ public class EtatLivraison implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,2));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
-                
+
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
             } else {
@@ -122,12 +121,11 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,2));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
-                
 
             } else {
                 //Sinon, on affiche un message d erreur
@@ -140,7 +138,7 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 
@@ -151,6 +149,33 @@ public class EtatLivraison implements Etat {
             fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
         }
 
+    }
+
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     * et du tableau d informations generales sur un point d interet
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param ptI point d interet selectionne
+     */
+    @Override
+    public void surbrillerTables(Fenetre fenetre, Tournee tournee, PointInteret ptI) {
+        fenetre.surbrillerLigneTabPI(ptI);
+        fenetre.repaint();
+    }
+    
+    /**
+     * Encadrer un point d interet present sur la carte
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param p point d interet selectionne
+     */
+    @Override
+        public void surbrillerPI(Fenetre fenetre, Tournee tournee, PointInteret p) {
+        fenetre.surbrillerPI(p);
+        fenetre.repaint();
     }
 
 }

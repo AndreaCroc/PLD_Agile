@@ -1,9 +1,9 @@
-
 package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
 import modele.Carte;
+import modele.PointInteret;
 import modele.Tournee;
 
 /**
@@ -11,18 +11,18 @@ import modele.Tournee;
  *
  * Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatTournee implements Etat {
-/**
- *
- * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et sur
- * les tableaux de gauche) a une tournee calculee
- */
 
+    /**
+     *
+     * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et
+     * sur les tableaux de gauche) a une tournee calculee
+     */
     /**
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l
      * EtatDeBase
@@ -50,7 +50,7 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
@@ -67,7 +67,7 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 
@@ -118,10 +118,10 @@ public class EtatTournee implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre,fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
-                
+
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
@@ -135,10 +135,10 @@ public class EtatTournee implements Etat {
             fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
         }
     }
-   
+
     /**
-     * Supprimer un point d interet de la tournee 
-     * Dans tous les cas, on passe dans l etat EtatSupprimer
+     * Supprimer un point d interet de la tournee Dans tous les cas, on passe
+     * dans l etat EtatSupprimer
      *
      * @param controleur
      * @param fenetre
@@ -152,7 +152,7 @@ public class EtatTournee implements Etat {
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
     }
-    
+
     /**
      * Supprimer un point d interet de la tournee Dans tous les cas, on passe
      * dans l etat EtatSupprimer
@@ -167,6 +167,36 @@ public class EtatTournee implements Etat {
         controleur.setEtat(controleur.etatAjouter);
         fenetre.griserBoutonsSupprimer();
         controleur.ajouter();
+    }
+
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
+     * et du tableau d informations generales sur un point d interet
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param ptI point d interet selectionne
+     */
+    @Override
+    public void surbrillerTables(Fenetre fenetre, Tournee tournee, PointInteret ptI) {
+        fenetre.surbrillerLigneTabPI(ptI);
+        if (tournee != null && !tournee.getSuccessionPointsInteret().isEmpty()) {
+            fenetre.surbrillerLigneTabEtapes(ptI);
+        }
+        fenetre.repaint();
+    }
+
+    /**
+     * Encadrer un point d interet present sur la carte
+     * 
+     * @param fenetre
+     * @param tournee
+     * @param p point d interet selectionne
+     */
+    @Override
+    public void surbrillerPI(Fenetre fenetre, Tournee tournee, PointInteret p) {
+        fenetre.surbrillerPI(p);
+        fenetre.repaint();
     }
 
 }
