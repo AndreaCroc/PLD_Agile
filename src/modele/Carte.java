@@ -473,27 +473,27 @@ public class Carte {
         if (decalage == 0) {
             return true;
         }
+        
         //Vérification de la contrainte de dépendance
         if (pointADeplacer.isEnlevement()) {
-            if (positionPointDep < nouvPosition) {
+            if (positionPointDep <= nouvPosition) {
                 contraintePrec = false;
             }
         } else {
-            if (positionPointDep > nouvPosition) {
+            if (positionPointDep >= nouvPosition) {
                 contraintePrec = false;
             }
         }
+       
         //Récupération des points d'intérêt à modifier
         ancienPointPrecedent = successionPointsInteret.get(positionInitiale - 1);
         indAncienPointPrec = listePointsInteret.indexOf(ancienPointPrecedent);
-        System.out.println("ancienPointPrec : "+ ancienPointPrecedent.getIntersection().getId());
         if (positionInitiale == successionPointsInteret.size()-1) {
             //Le point suivant est l'entrepôt
             ancienPointSuivant = successionPointsInteret.get(0);
         } else {
             ancienPointSuivant = successionPointsInteret.get(positionInitiale+1);
         }
-        System.out.println("ancienPointSuivant : "+ ancienPointSuivant.getIntersection().getId());
         indAncienPointSuiv = listePointsInteret.indexOf(ancienPointSuivant);
         
         
@@ -511,8 +511,6 @@ public class Carte {
         }
         indNouvPointPrec = listePointsInteret.indexOf(nouvPointPrecedent);
         indNouvPointSuiv = listePointsInteret.indexOf(nouvPointSuivant);
-        System.out.println("nouvPointPrec : "+ nouvPointPrecedent.getIntersection().getId());
-        System.out.println("nouvPointSuivant : "+ nouvPointSuivant.getIntersection().getId());
         
         //Deplacement du point dans la tournee
         successionPointsInteret.remove(pointADeplacer);
@@ -525,6 +523,8 @@ public class Carte {
         
         //Mise à jour des heures
         calculerHeuresTournee();
+        
+         
         
         return contraintePrec;
     }
