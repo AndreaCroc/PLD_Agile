@@ -683,11 +683,9 @@ public class CarteTest {
         
         //Assertions
         assertEquals(false, retour);
-        assertEquals(nouvSuccessionPointsInteret2, successionPointsInteretInitiale2);
         
         
         //Cas d'un déplacement en fin de tournée
-        DemandesLivraisons dl3 = carte2.getDemandesLivraisons();
         Tournee tournee3 = carte2.getTournee();
         System.out.println("tournee : "+ tournee3);
        
@@ -696,11 +694,12 @@ public class CarteTest {
         ArrayList<String> successionAttendue3 = new ArrayList<String>();
         successionAttendue3.add("1349383079");
         successionAttendue3.add("27362899");
-        successionAttendue3.add( "26121686");
         successionAttendue3.add( "55444018");
-        successionAttendue3.add( "191134392");
-        successionAttendue3.add( "26470086");
         successionAttendue3.add("505061101");
+        successionAttendue3.add( "26470086");
+        successionAttendue3.add( "26121686");
+        successionAttendue3.add( "191134392");
+        
         
         //Deplacement du point
         carte2.deplacerPointInteret(pointADeplacer3, decalage3);

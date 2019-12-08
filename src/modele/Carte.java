@@ -474,7 +474,7 @@ public class Carte {
             if (positionPointDep < nouvPosition) {
                 contraintePrec = false;
             }
-        } else if (!pointADeplacer.isEnlevement()) {
+        } else {
             if (positionPointDep > nouvPosition) {
                 contraintePrec = false;
             }
