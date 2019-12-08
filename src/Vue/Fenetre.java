@@ -1151,6 +1151,6 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopPrevenirModification(){
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'intérêt dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'enlèvement dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 }
