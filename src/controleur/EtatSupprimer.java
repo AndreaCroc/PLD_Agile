@@ -44,9 +44,10 @@ public class EtatSupprimer implements Etat {
             //Recuperer le point d interet que l utilisateur veut supprimer
             System.out.println("index supprimer : " + index);
             System.out.println("supprimer : " + listePIs);
-            int option = 1;
-            boolean suppOk = false;
-            PointInteret ptI = new PointInteret();
+            int option = 1; //choix de valider ou non la suppression
+            boolean suppOk = false; //si la suppression s'est bien passee
+            PointInteret ptI = new PointInteret(); //point d interet qu on veut supprimer
+            
             //Si il y a plus d un element dans la liste de la carte
             if (listePIs.size() > 1) {
                 ptI = listePIs.get(index);
@@ -92,7 +93,7 @@ public class EtatSupprimer implements Etat {
                         }
 
                     }
-
+                //Si on annule la suppression
                 } else {
                     fenetre.afficherBoutonSupprimer();
                     fenetre.griserBoutonCalcul();
