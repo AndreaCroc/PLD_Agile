@@ -449,9 +449,10 @@ public class Carte {
      * nouvelle position
      * @param pointADeplacer
      * @param decalage
-     * @return 
+     * @return vrai si la contrainte de précédence est encore respectée, faux sinon
      */
     public boolean deplacerPointInteret(PointInteret pointADeplacer, int decalage) {
+        boolean contraintePrec = true;
         ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int positionInitiale = successionPointsInteret.indexOf(pointADeplacer);
@@ -471,11 +472,11 @@ public class Carte {
         //Vérification de la contrainte de dépendance
         if (pointADeplacer.isEnlevement()) {
             if (positionPointDep < nouvPosition) {
-                return false;
+                contraintePrec = false;
             }
         } else if (!pointADeplacer.isEnlevement()) {
             if (positionPointDep > nouvPosition) {
-                return false;
+                contraintePrec = false;
             }
         }
         //Récupération des points d'intérêt à modifier
@@ -521,7 +522,7 @@ public class Carte {
         //Mise à jour des heures
         calculerHeuresTournee();
         
-        return true;
+        return contraintePrec;
     }
 
     /**
