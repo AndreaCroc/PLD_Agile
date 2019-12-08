@@ -469,6 +469,10 @@ public class Carte {
         int indNouvPointPrec; //Indice du nouveau point précédent dans la liste des points interet
         int positionPointDep = successionPointsInteret.indexOf(pointDependance);
         
+        //Cas où on a pas besoin de déplacer
+        if (decalage == 0) {
+            return true;
+        }
         //Vérification de la contrainte de dépendance
         if (pointADeplacer.isEnlevement()) {
             if (positionPointDep < nouvPosition) {
