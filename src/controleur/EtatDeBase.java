@@ -109,7 +109,6 @@ public class EtatDeBase implements Etat {
             //Throwable t = e.getCause();
             //StackTraceElement[] ste = t.getStackTrace();
             //int line = ste[0].getLineNumber();
-            System.out.println("LIGNE LUI : "+e.getLocalizedMessage());
         }
     }
 

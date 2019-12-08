@@ -317,7 +317,6 @@ public class JCarte extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        System.out.println("paint");
         super.paintComponent(g);
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
@@ -363,7 +362,6 @@ public class JCarte extends JPanel {
             if (PIs != null) {
                 for (PointInteret i : PIs) {
                     g.setColor(Color.BLACK);
-                    System.out.println(i.isEnlevement());
                     Random rand = new Random();
                     float r = rand.nextFloat();
                     float gg = rand.nextFloat();
@@ -408,7 +406,6 @@ public class JCarte extends JPanel {
 
                         if (t.getLongueur() > 120) {
                             int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
-                            System.out.println("x = " + x);
                             int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
                             double k = ((double) (this.getProportionalY(t.getDestination(), intersections) - this.getProportionalY(t.getOrigine(), intersections))) / ((double) (this.getProportionalX(t.getDestination(), intersections) - this.getProportionalX(t.getOrigine(), intersections)));
                             int r = 6;      // taille de fleche

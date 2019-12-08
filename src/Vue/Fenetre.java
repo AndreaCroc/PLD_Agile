@@ -571,7 +571,6 @@ public class Fenetre extends JFrame {
      * Pour rendre non cliquable le bouton pour calculer une tournee
      */
     public void griserBoutonCalcul() {
-        System.out.println("griser");
         this.boutonCalculerTournee.setEnabled(false);
     }
 
@@ -624,7 +623,6 @@ public class Fenetre extends JFrame {
      * Pour cacher les panneaux etapes et tournee
      */
     public void cacherPanneauEtapesEtTour() {
-        System.out.println("cacher panneau etapes et tour");
         this.panneauEtapes.setVisible(false);
         this.panneauTournee.setVisible(false);
     }
@@ -662,15 +660,11 @@ public class Fenetre extends JFrame {
      * @param ptI
      */
     public void surbrillerLigneTabPI(PointInteret ptI) {
-        System.out.println("surbrillerlignetabPI");
         if (carte != null) {
             ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
-            System.out.println("index formatcell : " + this.vuePIs.getFormatcell().getIndexPI());
-            System.out.println("ligne select : " + this.vuePIs.getLignePISelect());
 
             if (listePtI != null && !listePtI.isEmpty()) {
                 int indexPI = listePtI.indexOf(ptI);
-                System.out.println("index : " + indexPI);
                 if (indexPI != -1 && tableauPIs.getRowCount() != 0) {
                     PointInteret ptIDep = new PointInteret();
                     int indexPIDep = 0;
@@ -699,13 +693,10 @@ public class Fenetre extends JFrame {
      * @param ptI
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
-        System.out.println("surbrillerlignetabEtapes");
-        System.out.println("tournee : " + tournee);
         if (tournee != null) {
             ArrayList<PointInteret> listePtEtapes = tournee.getSuccessionPointsInteret();
             if (listePtEtapes != null && !listePtEtapes.isEmpty()) {
                 int indexPI = listePtEtapes.indexOf(ptI);
-                System.out.println("index : " + indexPI);
                 if (indexPI != -1 && tableauEtapes.getRowCount() != 0) {
                     PointInteret ptIDep = new PointInteret();
                     int indexPIDep = 0;
@@ -733,15 +724,11 @@ public class Fenetre extends JFrame {
      * @param pi
      */
     public void surbrillerPI(PointInteret pi) {
-        System.out.println("surbrillerPi");
         ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
 
         //La liste n est pas nulle ni vide
         if (listePtI != null && !listePtI.isEmpty()) {
             int lignePi = listePtI.indexOf(pi);
-            System.out.println("ligne : " + lignePi);
-            System.out.println("index formatcell : " + this.vuePIs.getFormatcell().getIndexPI());
-            System.out.println("ligne select : " + this.vuePIs.getLignePISelect());
 
             //Le point d interet fait partie de la liste
             if (lignePi != -1) {
@@ -753,7 +740,6 @@ public class Fenetre extends JFrame {
                     piDep = pi.getPointDependance();
                     ligneDep = listePtI.indexOf(piDep);
                 }
-                System.out.println("if");
                 this.vueEtapes.setLignePISelect(lignePi);
                 this.vuePIs.setLignePISelect(lignePi);
                 this.vueEtapes.setLignePIDepSelect(ligneDep);

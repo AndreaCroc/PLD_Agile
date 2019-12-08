@@ -35,8 +35,6 @@ public class EtatModifier implements Etat {
         if (index != 0) {
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut deplacer
-            System.out.println("index deplacer : " + index);
-            System.out.println("deplacer : " + listePIs);
             int option = 1; //choix de valider ou non le deplacement 
             int decalage = 0; //de combien a ete deplace le point d interet
             boolean modifOk = false; //si le deplacement s'est bien passee
@@ -61,7 +59,6 @@ public class EtatModifier implements Etat {
                 decalage = choix.get(1);
                 //Si on confirme la modification
                 if (option == JOptionPane.OK_OPTION) {
-                    System.out.println("Point d'interet deplace");
                     modifOk = carte.deplacerPointInteret(ptI,decalage);
                     tournee = carte.getTournee();
 

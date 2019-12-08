@@ -36,13 +36,11 @@ public class EtatSupprimer implements Etat {
      */
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
-        System.out.println("index : " + index);
 
+        //Si ce n est pas l entrepot
         if (index != 0) {
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut supprimer
-            System.out.println("index supprimer : " + index);
-            System.out.println("supprimer : " + listePIs);
             int option = 1; //choix de valider ou non la suppression
             boolean suppOk = false; //si la suppression s'est bien passee
             PointInteret ptI = new PointInteret(); //point d interet qu on veut supprimer
@@ -55,7 +53,6 @@ public class EtatSupprimer implements Etat {
 
                 //Si on confirme la suppression
                 if (option == JOptionPane.OK_OPTION) {
-                    System.out.println("Point d'interet supprime");
 
                     suppOk = carte.supprimerPointInteret(ptI);
                     tournee = carte.getTournee();

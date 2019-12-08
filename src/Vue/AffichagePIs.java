@@ -227,7 +227,6 @@ public class AffichagePIs extends AbstractTableModel {
             
             //Liste des points d interet de la carte
             ArrayList<PointInteret> listePIs = this.carte.getListePointsInteretActuelle();
-            System.out.println("carte pi : "+listePIs);
             String nomRue = ""; //Nom de la rue ou se trouve le point d interet
             String type = ""; //Type du point d interet
             int duree = 0; //Duree au point d interet
@@ -270,7 +269,6 @@ public class AffichagePIs extends AbstractTableModel {
                     if (listePIs.indexOf(pt) == 0) {
                         type = "Entrepot";
                         dureePt = "";
-                        System.out.println("IF");
                         
                     } else {
                         //Recuperer le numero de la demande du point d interet
