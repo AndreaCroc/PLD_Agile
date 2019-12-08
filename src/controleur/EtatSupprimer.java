@@ -124,6 +124,7 @@ public class EtatSupprimer implements Etat {
     public void annuler(Controleur controleur, Fenetre fenetre
     ) {
         fenetre.afficherBoutonSupprimer();
+        fenetre.griserBoutonCalcul();
         controleur.setEtat(controleur.etatTournee);
     }
 

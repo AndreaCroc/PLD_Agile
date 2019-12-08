@@ -170,6 +170,21 @@ public class EtatTournee implements Etat {
     }
 
     /**
+     * Modifier l ordre de passage d un point d interet dans la tournee On passe
+     * dans l etat EtatModifier
+     *
+     * @param controleur
+     * @param fenetre
+     * @param index
+     */
+    @Override
+    public void modifier(Controleur controleur, Fenetre fenetre, int index) {
+        fenetre.setClicModif(true);
+        fenetre.griserBoutonsSupprimer();
+        controleur.setEtat(controleur.etatModifier);
+    }
+
+    /**
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *

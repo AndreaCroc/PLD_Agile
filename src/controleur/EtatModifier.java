@@ -2,7 +2,6 @@ package controleur;
 
 import Vue.Fenetre;
 import modele.PointInteret;
-import modele.Tournee;
 
 /**
  * EtatModifier
@@ -16,9 +15,19 @@ import modele.Tournee;
  */
 public class EtatModifier implements Etat {
 
+    /**
+     * Modifier l ordre de passage d un point d interet dans la tournee
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param index
+     */
     @Override
-    public void modifier(Controleur controleur, int bouton, int index) {
-
+    public void modifier(Controleur controleur, Fenetre fenetre, int index) {
+        fenetre.afficherBoutonSupprimer();
+        fenetre.griserBoutonCalcul();
+        controleur.setEtat(controleur.etatTournee);
+        fenetre.setClicModif(false);
     }
 
     /**
@@ -45,5 +54,19 @@ public class EtatModifier implements Etat {
     public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
+    }
+
+    /**
+     * Annuler le mode modification d un point d interet On repasse dans l etat
+     * EtatTournee
+     *
+     * @param controleur
+     * @param fenetre
+     */
+    @Override
+    public void annuler(Controleur controleur, Fenetre fenetre) {
+        fenetre.afficherBoutonSupprimer();
+        fenetre.griserBoutonCalcul();
+        controleur.setEtat(controleur.etatTournee);
     }
 }

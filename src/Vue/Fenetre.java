@@ -55,8 +55,11 @@ public class Fenetre extends JFrame {
     //Tabeau contenant une vue generale des points d'interets de la tournee
     private JTable tableauPIs;
 
-    //Savoir si le bouton supprime a ete clique
+    //Savoir si le bouton supprimer a ete clique
     private boolean clicSupp;
+    
+    //Savoir si le bouton modifier a ete clique
+    private boolean clicModif;
 
     //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
@@ -156,6 +159,7 @@ public class Fenetre extends JFrame {
         this.tournee = tournee;
 
         this.clicSupp = false;
+        this.clicModif = false;
 
         this.vueTournee = new AffichageTournee(tournee, this);
 
@@ -301,6 +305,11 @@ public class Fenetre extends JFrame {
         boutonSupprimer.addActionListener(ecouteurBoutons);
 
         //Bouton pour modifier  la tournee
+        /*ImageIcon flecheApres = new ImageIcon("fleche-apres.png");
+        Image imgF = flecheApres.getImage();
+        Image newimgF = imgF.getScaledInstance(127, 45, Image.SCALE_SMOOTH);
+        flecheApres = new ImageIcon(newimgF);
+        boutonModifier = new JButton(flecheApres);*/
         boutonModifier = new JButton(MODIFIER);
         boutonModifier.setFont(new Font("Arial", Font.BOLD, 14));
         boutonModifier.setForeground(COULEUR_ECRITURE);
@@ -944,7 +953,7 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Modifier le clic sur le bouton supprimer
+     * Modifier la valeur du clic sur le bouton supprimer
      * @param clic nouveau clic
      */
     public void setClicSupp(boolean clic) {
@@ -952,12 +961,30 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Recuperer la valeur du clic sur le bouton supprimer
+     * Savoir si on a clique sur le bouton supprimer
      * @return clic
      */
-    public boolean getClicSupp() {
+    public boolean isClicSupp() {
         return this.clicSupp;
     }
+
+    /**
+     * Savoir si on a clique sur le bouton modifier
+     * @return clic modifier
+     */
+    public boolean isClicModif() {
+        return clicModif;
+    }
+
+    /**
+     * Modifier la valeur du clic sur le bouton modifier
+     * @param clicModif nouveau clic
+     */
+    public void setClicModif(boolean clicModif) {
+        this.clicModif = clicModif;
+    }
+    
+    
 
     /**
      * Recuperer le chemin vers le fichier XML de la carte

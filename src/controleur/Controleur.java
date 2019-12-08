@@ -74,8 +74,8 @@ public class Controleur {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
     
-    public void modifier(int bouton, int index){
-        etatCourant.modifier(this, bouton, index);
+    public void modifier(int index){
+        etatCourant.modifier(this, fenetre, index);
     }
 
     /**

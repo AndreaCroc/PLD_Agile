@@ -83,8 +83,10 @@ public class EcouteurSouris extends MouseAdapter {
                                         this.controleur.surbrillerTables(pi);
                                         //Surbriller le point sur lequel on vient de cliquer
                                         this.controleur.surbrillerPI(pi);
-                                        if (this.fenetre.getClicSupp()) {
+                                        if (this.fenetre.isClicSupp()) {
                                             this.controleur.supprimer(index);
+                                        } else if(this.fenetre.isClicModif()){
+                                            this.controleur.modifier(index);
                                         }
                                         break;
                                     }
