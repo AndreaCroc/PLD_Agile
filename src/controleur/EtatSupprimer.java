@@ -1,4 +1,3 @@
-
 package controleur;
 
 import Vue.Fenetre;
@@ -14,22 +13,21 @@ import modele.Tournee;
  *
  * Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * Grazia RIBBENI, Fatoumata WADE
  *
  */
-
-
 public class EtatSupprimer implements Etat {
-/**
- *
- * Classe EtatSupprimer quand on veut supprimer un point d interet
- */
 
     /**
-     * Supprimer un point d interet de la tournee et son point correspondant
-     * On repasse soit a l etat tournee soit a l etat de base
+     *
+     * Classe EtatSupprimer quand on veut supprimer un point d interet
+     */
+
+    /**
+     * Supprimer un point d interet de la tournee et son point correspondant On
+     * repasse soit a l etat tournee soit a l etat de base
      *
      * @param controleur
      * @param fenetre
@@ -127,33 +125,29 @@ public class EtatSupprimer implements Etat {
         fenetre.afficherBoutonSupprimer();
         controleur.setEtat(controleur.etatTournee);
     }
-    
+
     /**
-     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
-     * et du tableau d informations generales sur un point d interet
-     * 
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
+     * tableau d informations generales sur un point d interet
+     *
      * @param fenetre
-     * @param tournee
      * @param ptI point d interet selectionne
      */
     @Override
-    public void surbrillerTables(Fenetre fenetre, Tournee tournee, PointInteret ptI) {
+    public void surbrillerTables(Fenetre fenetre, PointInteret ptI) {
         fenetre.surbrillerLigneTabPI(ptI);
-        if (tournee != null && !tournee.getSuccessionPointsInteret().isEmpty()) {
-            fenetre.surbrillerLigneTabEtapes(ptI);
-        }
+        fenetre.surbrillerLigneTabEtapes(ptI);
         fenetre.repaint();
     }
 
     /**
      * Encadrer un point d interet present sur la carte
-     * 
+     *
      * @param fenetre
-     * @param tournee
      * @param p poitn d interet selectionne
      */
     @Override
-    public void surbrillerPI(Fenetre fenetre, Tournee tournee, PointInteret p) {
+    public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
     }

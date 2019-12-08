@@ -117,7 +117,7 @@ public class Controleur {
      * @param ptI point d interet clique
      */
     public void surbrillerTables(PointInteret ptI) {
-        etatCourant.surbrillerTables(fenetre, tournee, ptI);
+        etatCourant.surbrillerTables(fenetre, ptI);
     }
     
     /**
@@ -126,7 +126,7 @@ public class Controleur {
      * @param p point d interet clique
      */
     public void surbrillerPI(PointInteret p) {
-        etatCourant.surbrillerPI(fenetre, tournee, p);
+        etatCourant.surbrillerPI(fenetre, p);
     }
 
     /**

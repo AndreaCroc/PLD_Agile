@@ -170,31 +170,27 @@ public class EtatTournee implements Etat {
     }
 
     /**
-     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
-     * et du tableau d informations generales sur un point d interet
-     * 
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
+     * tableau d informations generales sur un point d interet
+     *
      * @param fenetre
-     * @param tournee
      * @param ptI point d interet selectionne
      */
     @Override
-    public void surbrillerTables(Fenetre fenetre, Tournee tournee, PointInteret ptI) {
+    public void surbrillerTables(Fenetre fenetre, PointInteret ptI) {
         fenetre.surbrillerLigneTabPI(ptI);
-        if (tournee != null && !tournee.getSuccessionPointsInteret().isEmpty()) {
-            fenetre.surbrillerLigneTabEtapes(ptI);
-        }
+        fenetre.surbrillerLigneTabEtapes(ptI);
         fenetre.repaint();
     }
 
     /**
      * Encadrer un point d interet present sur la carte
-     * 
+     *
      * @param fenetre
-     * @param tournee
      * @param p point d interet selectionne
      */
     @Override
-    public void surbrillerPI(Fenetre fenetre, Tournee tournee, PointInteret p) {
+    public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
     }
