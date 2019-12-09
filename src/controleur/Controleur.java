@@ -176,6 +176,9 @@ public class Controleur {
     public void deZoomer(){
         if(this.fenetre.getZoom()-0.5>=1){
             this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
+            this.fenetre.setDeplX(this.fenetre.getDeplX()-100*
+                    (this.fenetre.getPanneauCarte().getWidth()));
+            this.fenetre.setDeplY(this.fenetre.getDeplY()-100*(this.fenetre.getPanneauCarte().getWidth()));
             fenetre.repaint();
         }
     }
