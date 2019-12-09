@@ -46,6 +46,7 @@ public class EcouteurSouris extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent evt) {
+        System.out.println("Mouse clicked");
         if (this.fenetre != null) {
             //Recuperer la largeur du panneau gauche
             int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
@@ -62,7 +63,7 @@ public class EcouteurSouris extends MouseAdapter {
                     //Recuperer les coordonnees de la souris lors du clic
                     int x = evt.getX() - 8;
                     int y = evt.getY() - 8;
-
+                    System.out.println("x : "+x+" y : "+y);
                     //Si il y a bien des points d interets sur la carte
                     if (listeCoordPtI != null && !listeCoordPtI.isEmpty()) {
                         int index = 0;
@@ -70,6 +71,7 @@ public class EcouteurSouris extends MouseAdapter {
                             //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
                             int nvXpt = p.getPoint().getX() + xPanneauGauche + 5;
                             int nvYpt = p.getPoint().getY() + yPanneauLegende + 25;
+                            System.out.println("nvX : "+nvXpt + " nvY : "+nvYpt);
                             PointInteret pi = p.getPtI();
                             //Si le clic se trouve sur une figure d un point d interet
                             if (x >= nvXpt - 5 && x <= nvXpt + 5 && y >= nvYpt - 5 && y <= nvYpt + 5) {
@@ -132,28 +134,4 @@ public class EcouteurSouris extends MouseAdapter {
 
     }
     
-    /**
-     * Traiter les evenements sur le roulement de la molette de la souris
-     * @param evt evenement
-     */
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent evt) {
-        int notches = evt.getWheelRotation();
-        if (notches < 0) {
-             controleur.zoomer();
-        } else {
-             controleur.deZoomer();
-        }
-    }
-    
-    /**
-     * Traiter un glissement de la souris sur l ecran
-     * @param evt evenement
-     */
-    @Override
-     public void mouseDragged(MouseEvent evt){
-         System.out.println("glissement souris");
-         controleur.decalage();
-     }
-
 }

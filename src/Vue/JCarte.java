@@ -218,7 +218,7 @@ public class JCarte extends JPanel {
         //System.out.println("deplacement y " +fenetre.getDeplY());
         proportionalY *= fenetre.getZoom();
         proportionalY-=(fenetre.getDeplY());
-        System.out.println("nouveau Y " +proportionalY);
+        //System.out.println("nouveau Y " +proportionalY);
 
         return proportionalY;
     }
