@@ -73,7 +73,9 @@ public class Fenetre extends JFrame {
     protected final static String AJOUTER = "Ajouter";
     protected final static String ZOOMER = "+";
     protected final static String DEZOOMER = "-";
-
+    protected final static String UNDO = "Undo";
+    protected final static String REDO = "Redo";
+    
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
     protected final static String DUREE = "Durée prévue : ";
@@ -94,6 +96,8 @@ public class Fenetre extends JFrame {
     private JButton boutonAjouterPoints;
     private JButton boutonZoomer;
     private JButton boutonDezoomer;
+    private JButton boutonUndo;
+    private JButton boutonRedo;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -167,7 +171,7 @@ public class Fenetre extends JFrame {
 
         this.vueTournee = new AffichageTournee(tournee, this);
 
-        this.ecouteurBoutons = new EcouteurBoutons(this.controleur);
+        this.ecouteurBoutons = new EcouteurBoutons(this.controleur,this);
 
         this.ecouteurListSelect = new EcouteurListSelection(this.controleur, this);
 
@@ -191,6 +195,22 @@ public class Fenetre extends JFrame {
         boutonChargerLivraisons.setForeground(COULEUR_ECRITURE);
         boutonChargerLivraisons.setBackground(COULEUR_BOUTON);
         boutonChargerLivraisons.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour faire un undo
+        ImageIcon undo = new ImageIcon("undo.png");
+        Image imgUndo = undo.getImage();
+        Image newimgUndo = imgUndo.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        undo = new ImageIcon(newimgUndo);
+        boutonUndo = new JButton(undo);
+        boutonUndo.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour faire un redo
+        ImageIcon redo = new ImageIcon("redo.png");
+        Image imgRedo = redo.getImage();
+        Image newimgRedo = imgRedo.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        redo = new ImageIcon(newimgRedo);
+        boutonRedo = new JButton(redo);
+        boutonRedo.addActionListener(ecouteurBoutons);
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
@@ -215,6 +235,8 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(inputChargeLiv);
         panneauLivraisons.add(boutonChargerLivraisons);
         panneauLivraisons.add(boutonCalculerTournee);
+        panneauLivraisons.add(boutonUndo);
+        panneauLivraisons.add(boutonRedo);
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
@@ -309,11 +331,6 @@ public class Fenetre extends JFrame {
         boutonSupprimer.addActionListener(ecouteurBoutons);
 
         //Bouton pour modifier  la tournee
-        /*ImageIcon flecheApres = new ImageIcon("fleche-apres.png");
-        Image imgF = flecheApres.getImage();
-        Image newimgF = imgF.getScaledInstance(127, 45, Image.SCALE_SMOOTH);
-        flecheApres = new ImageIcon(newimgF);
-        boutonModifier = new JButton(flecheApres);*/
         boutonModifier = new JButton(MODIFIER);
         boutonModifier.setFont(new Font("Arial", Font.BOLD, 14));
         boutonModifier.setForeground(COULEUR_ECRITURE);
@@ -537,9 +554,9 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
-        boutonZoomer.setBounds((int) 86 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonDezoomer.setBounds((int) 92 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonZoomer.setBounds((int) 80 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonDezoomer.setBounds((int) 87 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonChangerCarte.setBounds((int) 5 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
 
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
@@ -559,7 +576,9 @@ public class Fenetre extends JFrame {
         boutonChargerLivraisons.setBounds(70 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
         boutonCalculerTournee.setBounds(45 * ((int) panneauLivraisons.getWidth() / 100), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
-
+        boutonUndo.setBounds(80 * ((int) panneauLivraisons.getWidth() / 100),6 * (int) panneauLivraisons.getHeight() / 10,1 * (int) panneauLivraisons.getWidth() / 15,1 * (int) panneauLivraisons.getHeight() / 3);
+        boutonRedo.setBounds(90 * ((int) panneauLivraisons.getWidth() / 100),6 * (int) panneauLivraisons.getHeight() / 10,1 * (int) panneauLivraisons.getWidth() / 15,1 * (int) panneauLivraisons.getHeight() / 3);
+        
         labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
         labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
 
@@ -1080,6 +1099,25 @@ public class Fenetre extends JFrame {
     public ListSelectionModel getListSelectModelEtapes() {
         return listSelectModelEtapes;
     }
+    
+    /**
+     * Recuperer le boutonUndo pour savoir quand est ce qu il est clique
+     * 
+     * @return boutonUndo
+     */
+    public JButton getBoutonUndo(){
+        return boutonUndo;
+    }
+    
+    /**
+     * Recuperer le boutonRedo pour savoir quand est ce qu il est clique
+     * 
+     * @return boutonRedo
+     */
+    public JButton getBoutonRedo(){
+        return boutonRedo;
+    }
+    
 
     /**
      * Afficher une popup pour valider la suppression d un point d interet

@@ -144,7 +144,7 @@ public class EtatTournee implements Etat {
      * @param index
      */
     @Override
-    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
         fenetre.setClicSupp(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
@@ -177,7 +177,7 @@ public class EtatTournee implements Etat {
      * @param index
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index) {
+    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
         fenetre.setClicModif(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatModifier);
@@ -207,6 +207,16 @@ public class EtatTournee implements Etat {
     public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
+    }
+    
+    @Override
+    public void undo(ListeCdesTournee liste){
+        liste.undo();
+    }
+    
+    @Override
+    public void redo(ListeCdesTournee liste){
+        liste.redo();
     }
 
 }

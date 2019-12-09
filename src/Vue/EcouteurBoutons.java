@@ -23,14 +23,17 @@ public class EcouteurBoutons implements ActionListener {
      */
 
     private Controleur controleur; //Controleur entre le modele et la vue
+    private Fenetre fenetre; //Fenetre de l application
 
     /**
      * Constructeur de la classe EcouteurBoutons
      *
      * @param controleur
+     * @param fenetre
      */
-    public EcouteurBoutons(Controleur controleur) {
+    public EcouteurBoutons(Controleur controleur, Fenetre fenetre) {
         this.controleur = controleur;
+        this.fenetre = fenetre;
     }
 
     /**
@@ -84,6 +87,14 @@ public class EcouteurBoutons implements ActionListener {
                 System.out.println("Je veux dezoomer !");
                 controleur.deZoomer();
                 break;
+        }
+        
+        if(e.getSource() == fenetre.getBoutonRedo()){
+            controleur.redo();
+        }
+        
+        if(e.getSource() == fenetre.getBoutonUndo()){
+            controleur.undo();
         }
 
     }

@@ -1,4 +1,3 @@
-
 package controleur;
 
 import Vue.Fenetre;
@@ -12,21 +11,22 @@ import modele.Tournee;
  *
  * Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class Controleur {
-/**
- * Classe Controleur qui permet de faire le lien entre la vue et le modele
- */
+
+    /**
+     * Classe Controleur qui permet de faire le lien entre la vue et le modele
+     */
 
     private Fenetre fenetre; //Fenetre qui traite actions recuperees par controleur
     private Carte carte; //Carte
     private Tournee tournee; //Tournee realisee
     private Etat etatCourant = new EtatInit(); //Etat du controleur
+    private ListeCdesTournee listeCommandes;
 
     // Instances associees a chaque etat possible du controleur
     protected final EtatInit etatInit = new EtatInit();
@@ -44,6 +44,7 @@ public class Controleur {
         carte = new Carte();
         tournee = new Tournee();
         fenetre = new Fenetre(this, carte, tournee); //lui passer this
+        listeCommandes = new ListeCdesTournee(carte, tournee,fenetre, this);
     }
 
     /**
@@ -74,9 +75,9 @@ public class Controleur {
     public void calculerTournee() {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
-    
-    public void modifier(int index){
-        etatCourant.modifier(this, fenetre, tournee, carte,index);
+
+    public void modifier(int index) {
+        etatCourant.modifier(this, fenetre, tournee, carte, index, listeCommandes);
     }
 
     /**
@@ -85,7 +86,7 @@ public class Controleur {
      * @param index : numero du point d interet a supprimer
      */
     public void supprimer(int index) {
-        etatCourant.supprimer(this, fenetre, carte, tournee, index);
+        etatCourant.supprimer(this, fenetre, carte, tournee, index, listeCommandes);
     }
 
     /**
@@ -110,17 +111,33 @@ public class Controleur {
         etatCourant = etat;
     }
 
-   
     /**
-     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
-     * et du tableau d informations generales sur un point d interet
+     * Methode appelee par la fenetre quand l'utilisateur clique sur le bouton
+     * "Undo"
+     * Code source : PlaCo
+     */
+    public void undo() {
+        etatCourant.undo(listeCommandes);
+    }
+
+    /**
+     * Methode appelee par fenetre apres un clic sur le bouton "Redo"
+     * Code source : PlaCo
+     */
+    public void redo() {
+        etatCourant.redo(listeCommandes);
+    }
+
+    /**
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
+     * tableau d informations generales sur un point d interet
      *
      * @param ptI point d interet clique
      */
     public void surbrillerTables(PointInteret ptI) {
         etatCourant.surbrillerTables(fenetre, ptI);
     }
-    
+
     /**
      * Encadrer un point d interet present sur la carte
      *
@@ -132,6 +149,7 @@ public class Controleur {
 
     /**
      * Recuperer la tournee
+     *
      * @return tournee
      */
     public Tournee getTournee() {
@@ -140,6 +158,7 @@ public class Controleur {
 
     /**
      * Modifier la tournee
+     *
      * @param tournee nouvelle tournee
      */
     public void setTournee(Tournee tournee) {
@@ -164,5 +183,8 @@ public class Controleur {
  
         }
     }
+=======
+  
+>>>>>>> 496ccc5157d07b6aa14cc0765db3a7ccbe876bcf
 
 }

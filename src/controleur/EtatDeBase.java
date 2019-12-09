@@ -103,7 +103,7 @@ public class EtatDeBase implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur liee a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("LUI Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
             //Throwable t = e.getCause();
             //StackTraceElement[] ste = t.getStackTrace();
             //int line = ste[0].getLineNumber();
