@@ -9,22 +9,16 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * AffichageEtapes
+ * AffichageEtapes permet d afficher les details des etapes d une tournee
+ * dans un tableau
  *
- * Version 1
- * 
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class AffichageEtapes extends AbstractTableModel {
-/**
- *
- * Classe AffichageEtapes permet d afficher les details des etapes d une tournee
- * dans un tableau
- */
 
     private final ArrayList<LigneEtapes> steps; //Lisste des etapes de la tournee
     private final String header[]; //En tete du tableau

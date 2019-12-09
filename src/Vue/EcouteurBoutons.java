@@ -5,22 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * EcouteurBoutons
+ * EcouteurBoutons permet de recuperer et gerer les evenements sur les
+ * boutons de la fenetre
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EcouteurBoutons implements ActionListener {
-
-    /**
-     * Classe EcouteurBoutons pour recuperer et gerer les evenements sur les
-     * boutons de la fenetre
-     *
-     */
 
     private Controleur controleur; //Controleur entre le modele et la vue
     private Fenetre fenetre; //Fenetre de l application
@@ -87,10 +81,12 @@ public class EcouteurBoutons implements ActionListener {
                 break;
         }
         
+        //Recuperer un clic sur le bouton redo
         if(e.getSource() == fenetre.getBoutonRedo()){
             controleur.redo();
         }
         
+        //Recuperer un clic sur le bouton undo
         if(e.getSource() == fenetre.getBoutonUndo()){
             controleur.undo();
         }

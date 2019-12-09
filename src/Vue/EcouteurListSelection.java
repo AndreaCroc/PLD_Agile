@@ -10,25 +10,17 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EcouteurListSelection
+ * EcouteurListSelection permet de recuperer les evenements
+ * associes a la selection d une ligne d un tableau
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class EcouteurListSelection implements ListSelectionListener {
-
-    /**
-     *
-     * Classe EcouteurListSelection permettant de recuperer les evenements
-     * associes a la selection d une ligne d un tableau
-     *
-     */
 
     private Controleur controleur; //permet d appeler les traitements suivant les actions
     private Fenetre fenetre; //Fenetre depuis laquelle les actions sont faites

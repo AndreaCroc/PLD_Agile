@@ -26,21 +26,16 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * Fenetre
+ * Fenetre permet d'afficher notre application
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class Fenetre extends JFrame {
 
-    /**
-     *
-     * Classe Fenetre permettant d'afficher notre application
-     */
     private Controleur controleur; //Controleur entre la vue et le modele
     private Carte carte; //Carte a afficher
     private Tournee tournee; //Tournee realisee

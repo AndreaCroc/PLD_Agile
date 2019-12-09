@@ -2,21 +2,16 @@
 package Vue;
 
 /**
- * Point
+ * Point permet de representer un point sur la fenetre
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class Point {
-/**
- *
- * Classe Point permet de representer un point sur la fenetre
- */
+
     private int x; //Coordoonees sur l axe des abscisses
     private int y; //Coordonnees sur l axe des ordonnees
     
