@@ -5,9 +5,7 @@ import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Map;
 import modele.Carte;
-import modele.Intersection;
 import modele.PointInteret;
 
 /**
@@ -61,7 +59,6 @@ public class EcouteurSouris extends MouseAdapter {
             if (this.vueCarte != null) {
                 //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
                 ArrayList<CoordPointInteret> listeCoordPtI = vueCarte.getCoordPtInterets();
-                Map<Intersection, Point> mesCoordIntersections = vueCarte.getIntersectionsMap();
                 Carte carte = fenetre.getCarte();
                 if (carte != null) {
                     ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
@@ -97,36 +94,6 @@ public class EcouteurSouris extends MouseAdapter {
                                 }
 
                             }
-                        }
-
-                    }
-                    
-                    // si tableau des intersections non vide et non null
-                    if(!mesCoordIntersections.isEmpty()) {
-                        //test x y sont sur pt intersect coord 
-                        for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
-                            //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
-                            Intersection key = iEntry.getKey();
-                            Point value = iEntry.getValue();
-
-                            //coordonnées adaptees des points d'intersections
-                            int nvXpt2 = value.getX()+ xPanneauGauche+5;
-                            int nvYpt2 = value.getY() + yPanneauLegende+45;
-
-                            //System.out.println("Intersection : "+ key.getId());
-                            //System.out.println("ix:"+nvXpt2);
-                            //System.out.println("iy:"+nvYpt2);
-
-                            if(x >= nvXpt2 && x <= nvXpt2+5 && y >= nvYpt2-5 && y <= nvYpt2+5) {
-                                //les coordonnées correspondent
-                                System.out.println("Clique sur intersection numero : " + key.getId());
-                                System.out.println("Coordonnees cliquees par utilisateur x : " + x + " / y : " + y);
-
-                                //On recupere la liste des troncons dans le but d'afficher leur noms
-                                //key.getTronconsDepart();
-
-                            }
-
                         }
 
                     }

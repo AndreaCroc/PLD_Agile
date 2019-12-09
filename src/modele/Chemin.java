@@ -103,8 +103,13 @@ public class Chemin {
 
     @Override
     public String toString() {
-        String out = "Chemin de " + depart.getId() + " à " + arrivee.getId();
+        String out="Chemin de "+depart.getId()+" à "+arrivee.getId();
+        
         return out;
+    
     }
+    
+    
+
     
 }
