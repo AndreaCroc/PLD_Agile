@@ -4,6 +4,7 @@ package Vue;
 import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Map;
 import modele.Carte;
@@ -137,5 +138,21 @@ public class EcouteurSouris extends MouseAdapter {
         }
 
     }
+    
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent evt) {
+        int notches = evt.getWheelRotation();
+        if (notches < 0) {
+             controleur.zoomer();
+        } else {
+             controleur.deZoomer();
+        }
+    }
+    
+    @Override
+     public void mouseDragged(MouseEvent evt){
+         System.out.println("glissement souris");
+         controleur.decalage();
+     }
 
 }

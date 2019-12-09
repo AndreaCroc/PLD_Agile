@@ -325,8 +325,6 @@ public class JCarte extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        System.out.println("Repaint JCarte, ici le zoom est : "+fenetre.getZoom());
-        
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {

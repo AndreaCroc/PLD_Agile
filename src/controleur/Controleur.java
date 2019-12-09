@@ -7,7 +7,7 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * Controleur
+ * Controleur permet de faire le lien entre la vue et le modele
  *
  * Version 1
  *
@@ -17,10 +17,6 @@ import modele.Tournee;
  *
  */
 public class Controleur {
-
-    /**
-     * Classe Controleur qui permet de faire le lien entre la vue et le modele
-     */
 
     private Fenetre fenetre; //Fenetre qui traite actions recuperees par controleur
     private Carte carte; //Carte
@@ -104,7 +100,8 @@ public class Controleur {
     }
 
     /**
-     *
+     * Modifier l etat courant du controleur
+     * 
      * @param etat
      */
     public void setEtat(Etat etat) {
@@ -166,24 +163,26 @@ public class Controleur {
     }
     
 
+    /**
+     * Effectue un zoom sur une zone de la carte
+     */
     public void zoomer(){
- 
-        
         this.fenetre.setZoom(this.fenetre.getZoom()+0.5);
-       
-        System.out.println("apres le set pc "+this.fenetre.getZoom());
-
         fenetre.repaint();
  
     }
     
+    /**
+     * Effectue un dezoome sur la zone de la carte qui etait zoomee
+     */
     public void deZoomer(){
         if(this.fenetre.getZoom()-0.5>=1){
             this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
             fenetre.repaint();
- 
         }
     }
-
-
+    
+    public void decalage(){
+        System.out.println("decalage controleur");
+    }
 }

@@ -469,14 +469,16 @@ public class Fenetre extends JFrame {
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
         panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
         //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
-        JScrollPane scrollPane = new JScrollPane(panneauCarte);
+        //JScrollPane scrollPane = new JScrollPane(panneauCarte);
         //setPreferredSize(new Dimension(450, 110));
         //add(scrollPane, BorderLayout.CENTER);
         panneauDroite.add(panneauCarte);
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
         addMouseListener(ecouteurSouris);
-
+        panneauCarte.addMouseWheelListener(ecouteurSouris);
+        panneauCarte.addMouseMotionListener(ecouteurSouris);
+        
         /* Fin panneauCarte */
  /* Fin panneauDroite */
 
