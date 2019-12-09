@@ -533,10 +533,8 @@ public class Carte {
      * Méthode permettant d'ajouter une nouvelle livraison (point enlevement +
      * point de livraison) à une tournee
      *
-     * @param latitudeEnlvt latitude du point d'enlèvement
-     * @param longitudeEnlvt longitude du point d'enlèvement
-     * @param latitudeLivr latitude du point de livraison
-     * @param longitudeLivr longitude du point de livraison
+     * @param pointEnlevement  point d'enlévement à ajouter
+     * @param pointLivraison  point de livraison à ajouter
      * @param pointAvantEnlevement point d'intérêt après lequel on souhaite
      * placer le point d'enlèvement
      * @param pointAvantLivraison point d'intérêt après lequel on souhaite
@@ -545,43 +543,18 @@ public class Carte {
      * @param dureeLivraison durée de livraison
      * @return vrai si l'ajout a été effectué, faux sinon
      */
-    public boolean ajouterLivraison(Double latitudeEnlvt, Double longitudeEnlvt,
-            Double latitudeLivr, Double longitudeLivr, PointInteret pointAvantEnlevement,
-            PointInteret pointAvantLivraison, int dureeEnlevement, int dureeLivraison) {
+    public boolean ajouterLivraison(PointInteret pointEnlevement, PointInteret pointLivraison,
+            PointInteret pointAvantEnlevement, PointInteret pointAvantLivraison, 
+            int dureeEnlevement, int dureeLivraison) {
 
         ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
-        Intersection intersectionEnlvt = null; //Intersection correspondant au premier point (enlévement)
-        Intersection intersectionLivr = null; ////Intersection correspondant au second point (livraison)
-        PointInteret pointEnlevement; //Le point d'enlévement à ajouter
-        PointInteret pointLivraison; //Le point de livraison à ajouter
         //Indice du point précédant l'enlevement dans la tournee
         int indPointAvantEnlvt = successionPointsInteret.indexOf(pointAvantEnlevement);
         //Indice du point précédant la livraison dans la tournee
         int indPointAvantLivr = successionPointsInteret.indexOf(pointAvantLivraison);
         //Numéro de la demande de livraison
         int numeroDemande = (listePointsInteret.size() - 1) / 2 + 1;
-
-        //Recherche des intersections correspondants aux coordonnées 
-        for (Intersection i : listeIntersections) {
-            if ((i.getLatitude()).toString().equals(latitudeEnlvt.toString())
-                    && (i.getLongitude()).toString().equals(longitudeEnlvt.toString())) {
-                intersectionEnlvt = i;
-            }
-            if ((i.getLatitude()).toString().equals(latitudeLivr.toString())
-                    && (i.getLongitude()).toString().equals(longitudeLivr.toString())) {
-                intersectionLivr = i;
-            }
-        }
-        //Création des points d'intérêt
-        pointEnlevement = new PointInteret(intersectionEnlvt, dureeEnlevement);
-        pointEnlevement.setEnlevement(true);
-        pointEnlevement.setEntrepot(false);
-        pointLivraison = new PointInteret(intersectionLivr, dureeLivraison);
-        pointLivraison.setEnlevement(false);
-        pointLivraison.setEntrepot(false);
-        pointEnlevement.setPointDependance(pointLivraison);
-        pointLivraison.setPointDependance(pointEnlevement);
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
 

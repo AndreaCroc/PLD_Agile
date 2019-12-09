@@ -26,21 +26,16 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * Fenetre
+ * Fenetre permet d'afficher notre application
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class Fenetre extends JFrame {
 
-    /**
-     *
-     * Classe Fenetre permettant d'afficher notre application
-     */
     private Controleur controleur; //Controleur entre la vue et le modele
     private Carte carte; //Carte a afficher
     private Tournee tournee; //Tournee realisee
@@ -473,14 +468,16 @@ public class Fenetre extends JFrame {
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
         panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
         //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
-        JScrollPane scrollPane = new JScrollPane(panneauCarte);
+        //JScrollPane scrollPane = new JScrollPane(panneauCarte);
         //setPreferredSize(new Dimension(450, 110));
         //add(scrollPane, BorderLayout.CENTER);
         panneauDroite.add(panneauCarte);
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
         addMouseListener(ecouteurSouris);
-
+        panneauCarte.addMouseWheelListener(ecouteurSouris);
+        panneauCarte.addMouseMotionListener(ecouteurSouris);
+        
         /* Fin panneauCarte */
  /* Fin panneauDroite */
 

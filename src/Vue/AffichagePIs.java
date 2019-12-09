@@ -11,24 +11,17 @@ import modele.PointInteret;
 import modele.Troncon;
 
 /**
- * AffichagePIs
+ * AffichagePIs permet d afficher les informations d un point d interet
+ * lors du chargement des livraisons
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class AffichagePIs extends AbstractTableModel {
-/**
- *
- * Classe AffichagePIs permet d afficher les informations d un point d interet
- * lors du chargement des livraisons
- *
- */
 
     private final ArrayList<LignePI> lignePIs; //Liste des points d interet 
     private final String header[]; //En tete du tableau

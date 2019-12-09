@@ -4,6 +4,7 @@ package Vue;
 import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Map;
 import modele.Carte;
@@ -11,24 +12,17 @@ import modele.Intersection;
 import modele.PointInteret;
 
 /**
- * EcouteurSouris
+ * EcouteurSouris permet de recuperer et de gerer les evenements lies
+ * a la souris
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class EcouteurSouris extends MouseAdapter {
-/**
- *
- * Classe EcouteurSouris permettant de recuperer et de gerer les evenements lies
- * a la souris et ici sur un clic
- *
- */
 
     private Controleur controleur; //Controleur pour traiter les evenemtns
     private JCarte vueCarte; //Panneau de la carte
@@ -137,5 +131,29 @@ public class EcouteurSouris extends MouseAdapter {
         }
 
     }
+    
+    /**
+     * Traiter les evenements sur le roulement de la molette de la souris
+     * @param evt evenement
+     */
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent evt) {
+        int notches = evt.getWheelRotation();
+        if (notches < 0) {
+             controleur.zoomer();
+        } else {
+             controleur.deZoomer();
+        }
+    }
+    
+    /**
+     * Traiter un glissement de la souris sur l ecran
+     * @param evt evenement
+     */
+    @Override
+     public void mouseDragged(MouseEvent evt){
+         System.out.println("glissement souris");
+         controleur.decalage();
+     }
 
 }

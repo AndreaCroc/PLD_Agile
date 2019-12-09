@@ -4,21 +4,15 @@ package Vue;
 import javax.swing.JTextArea;
 
 /**
- * LignePIs
+ * LignePIs correspond a une ligne du tableauPIs
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class LignePI {
-/**
- *
- * Classe LignePI correspond a un eligne du tableauPIs
- */
 
     private int numeroDemande; //numero de la demande de livraison
     private String type; //type du point dinteret

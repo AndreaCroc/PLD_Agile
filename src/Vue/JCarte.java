@@ -19,21 +19,15 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * JCarte
+ * JCarte permet d afficher la carte, les points d interets, la tournee
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class JCarte extends JPanel {
-/**
- *
- * Classe JCarte permet d afficher la carte, les points d interets, la tournee
- */
 
     private Carte carte; //Carte possedant les points dinteret
     private Tournee tournee; //les points dinteret faisant partie de la tournee
@@ -318,8 +312,6 @@ public class JCarte extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        System.out.println("Repaint JCarte, ici le zoom est : "+fenetre.getZoom());
         
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 

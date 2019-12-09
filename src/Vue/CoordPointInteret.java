@@ -4,18 +4,18 @@ package Vue;
 import modele.PointInteret;
 
 /**
- * CoordPointInteret
+ * CoordPointInteret represente un point d interet et ses coordonnes a l echelle
+ * de la fenetre
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class CoordPointInteret {
-    private Point point; //coordonnees du point d interet a l echelle de la fenetre
+     //coordonnees du point d interet a l echelle de la fenetre
+    private Point point;
     private PointInteret ptI; //point d interet
 
     /**

@@ -10,24 +10,18 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * FormatCellRenderer
+ * FormatCellRenderer permet de mettre tous les elements du tableau
+ * au centre de la cellule et d encadrer en rouge la ligne en cas de clic 
+ * sur un point d interet
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class FormatCellRenderer extends DefaultTableCellRenderer {
-/**
- *
- * Classe FormatCellRenderer permettant de mettre tous les elements du tableau
- * au centre de la cellule et d encadrer en rouge la ligne en cas de clic sur un
- * point d interet
- */
 
     private int indexPI; //Index du point dinteret selectionne
     private int indexPIDep; //Index du poitn d interet dependant

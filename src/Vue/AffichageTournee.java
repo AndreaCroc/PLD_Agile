@@ -7,23 +7,17 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * AffichageTournee
+ * AffichageTournee permet d'afficher les donnees globales d'une
+ * tournee
  *
- * Version 1
- * 
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class AffichageTournee {
-/**
- *
- * Classe AffichageTournee permettant d'afficher les donnes globales d'une
- * tournee
- */
 
     private Tournee tournee; //Tournee avec tous les points d interets par lesquels on passe
     private Fenetre fenetre; //Fenetre ou se trouve la tournee

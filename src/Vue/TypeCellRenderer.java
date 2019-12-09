@@ -7,22 +7,16 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * TypeCellRenderer
+ * TypeCellRenderer permet d afficher un element objet du tableau
+ * tel qu un bouton ou un textarea en prenant en compte le type de l objet
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class TypeCellRenderer extends DefaultTableCellRenderer {
-/**
- *
- * Classe TypeCellRenderer permet d afficher un element objet du tableau
- * tel qu un bouton ou un textarea en prenant en compte le type de l objet
- */
 
     /**
      * Afficher une case du tableau en appliquant un format
