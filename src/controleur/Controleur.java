@@ -183,7 +183,7 @@ public class Controleur {
         }
     }
     
-    public void decalage(){
+    public void decalage(int val){
         System.out.println("decalage controleur");
         //this.fenetre.setDeplX(this.fenetre.getDeplX()+0.5);
         //this.fenetre.setDeplY(this.fenetre.getDeplY()+0.5);

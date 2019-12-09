@@ -142,6 +142,7 @@ public class Fenetre extends JFrame {
     private EcouteurBoutons ecouteurBoutons;
     private EcouteurSouris ecouteurSouris;
     private EcouteurListSelection ecouteurListSelect;
+    private EcouteurClavier ecouteurClavier;
 
     private ListSelectionModel listSelectModelPI;
     private ListSelectionModel listSelectModelEtapes;
@@ -158,6 +159,7 @@ public class Fenetre extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setFocusable(true);
 
         this.controleur = controleur;
         this.carte = carte;
@@ -169,8 +171,10 @@ public class Fenetre extends JFrame {
         this.vueTournee = new AffichageTournee(tournee, this);
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur,this);
+        this.ecouteurClavier = new EcouteurClavier(this.controleur,this);
 
         this.ecouteurListSelect = new EcouteurListSelection(this.controleur, this);
+        this.addKeyListener(ecouteurClavier);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
@@ -185,7 +189,7 @@ public class Fenetre extends JFrame {
 
         //Input pour ecrire le nom du fichier XML souhaite
         inputChargeLiv = new JTextField();
-
+        
         //Bouton pour demander a charger un fichier XML contenant des livraisons
         boutonChargerLivraisons = new JButton(CHARGER_LIVRAISONS);
         boutonChargerLivraisons.setFont(new Font("Arial", Font.BOLD, 14));
@@ -457,9 +461,9 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        this.setZoom(3.0);
-        this.setDeplX(200);
-        this.setDeplY(100);
+        this.setZoom(1.0);
+        this.setDeplX(0);
+        this.setDeplY(0);
         System.out.println("Dans la creation de la fenetre : "+zoom);
         
         panneauCarte = new JCarte(this.carte, this.tournee, this);
@@ -467,16 +471,11 @@ public class Fenetre extends JFrame {
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
         panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
-        //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
-        //JScrollPane scrollPane = new JScrollPane(panneauCarte);
-        //setPreferredSize(new Dimension(450, 110));
-        //add(scrollPane, BorderLayout.CENTER);
+        
         panneauDroite.add(panneauCarte);
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
-        addMouseListener(ecouteurSouris);
-        panneauCarte.addMouseWheelListener(ecouteurSouris);
-        panneauCarte.addMouseMotionListener(ecouteurSouris);
+        this.addMouseListener(ecouteurSouris);
         
         /* Fin panneauCarte */
  /* Fin panneauDroite */
