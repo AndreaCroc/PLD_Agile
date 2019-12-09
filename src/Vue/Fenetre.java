@@ -424,14 +424,14 @@ public class Fenetre extends JFrame {
 
         //Bouton pour zoomer sur la carte
         boutonZoomer = new JButton(ZOOMER);
-        boutonZoomer.setFont(new Font("Arial", Font.BOLD, 10));
+        boutonZoomer.setFont(new Font("Arial", Font.BOLD, 14));
         boutonZoomer.setForeground(COULEUR_ECRITURE);
         boutonZoomer.setBackground(COULEUR_BOUTON);
         boutonZoomer.addActionListener(ecouteurBoutons);
 
         //Bouton pour dézoomer sur la carte
         boutonDezoomer = new JButton(DEZOOMER);
-        boutonDezoomer.setFont(new Font("Arial", Font.BOLD, 10));
+        boutonDezoomer.setFont(new Font("Arial", Font.BOLD, 14));
         boutonDezoomer.setForeground(COULEUR_ECRITURE);
         boutonDezoomer.setBackground(COULEUR_BOUTON);
         boutonDezoomer.addActionListener(ecouteurBoutons);
@@ -548,9 +548,9 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
-        boutonZoomer.setBounds((int) 86 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonDezoomer.setBounds((int) 92 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonZoomer.setBounds((int) 80 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonDezoomer.setBounds((int) 87 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonChangerCarte.setBounds((int) 5 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
 
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
