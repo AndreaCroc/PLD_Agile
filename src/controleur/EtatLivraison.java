@@ -35,7 +35,7 @@ public class EtatLivraison implements Etat {
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
         tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, 2));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
 
@@ -74,7 +74,7 @@ public class EtatLivraison implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
 
@@ -117,7 +117,7 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
@@ -134,7 +134,7 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 

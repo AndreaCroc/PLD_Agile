@@ -2,6 +2,7 @@
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -143,6 +144,25 @@ public class Controleur {
      */
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
+    }
+    
+    public void zoomer(){
+ 
+        
+        this.fenetre.setZoom(this.fenetre.getZoom()+0.5);
+       
+        System.out.println("apres le set pc "+this.fenetre.getZoom());
+
+        fenetre.repaint();
+ 
+    }
+    
+    public void deZoomer(){
+        if(this.fenetre.getZoom()-0.5>=1){
+            this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
+            fenetre.repaint();
+ 
+        }
     }
 
 }

@@ -64,7 +64,7 @@ public class EtatModifier implements Etat {
                     modifOk = carte.deplacerPointInteret(ptI,decalage);
                     tournee = carte.getTournee();
 
-                    fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
+                    fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                     fenetre.setTournee(tournee);
                     controleur.setTournee(tournee);
                     fenetre.viderPanneauEtapes();

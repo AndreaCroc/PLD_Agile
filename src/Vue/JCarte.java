@@ -39,9 +39,8 @@ public class JCarte extends JPanel {
     private Tournee tournee; //les points dinteret faisant partie de la tournee
     private ArrayList<CoordPointInteret> listeCoordPtI; //liste des point dinerets de la carte
     private Map<Intersection, Point> intersectionsMap;
-    private Fenetre fenetre; //fenetre de lapplication
-    private double zoom; //zoom a appliquer sur la carte
-
+    private Fenetre fenetre; //fenetre de l application
+    
     /**
      * Constructeur de la classe JCarte
      * @param carte
@@ -49,13 +48,12 @@ public class JCarte extends JPanel {
      * @param fenetre
      * @param zoom 
      */
-    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre, double zoom) {
+    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
         this.tournee = tournee;
         this.listeCoordPtI = new ArrayList<>();
         this.intersectionsMap = new HashMap<>();
         this.fenetre = fenetre;
-        this.zoom = zoom;
         this.repaint();
     }
 
@@ -63,17 +61,13 @@ public class JCarte extends JPanel {
      * Modifier le zoom
      * @param z nouveau zoom
      */
-    public void setZoom(double z) {
-        this.zoom = z;
-    }
+   
 
     /**
      * Recuperer le zoom
      * @return zoom
      */
-    public double getZoom() {
-        return zoom;
-    }
+    
 
     /**
      * Modifier la tournee de la carte
@@ -239,7 +233,7 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        proportionalY *= zoom;
+        proportionalY *= fenetre.getZoom();
 
         return proportionalY;
     }
@@ -267,7 +261,7 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        proportionalY *= zoom;
+        proportionalY *= fenetre.getZoom();
 
         return proportionalY;
     }
@@ -295,7 +289,7 @@ public class JCarte extends JPanel {
             proportionalX = largeurPanel - 12;
         }
 
-        proportionalX *= zoom;
+        proportionalX *= fenetre.getZoom();
 
         return proportionalX;
     }
@@ -322,7 +316,7 @@ public class JCarte extends JPanel {
             proportionalX = largeurPanel - 12;
         }
 
-        proportionalX *= zoom;
+        proportionalX *= fenetre.getZoom();
 
         return proportionalX;
     }
@@ -330,6 +324,9 @@ public class JCarte extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        System.out.println("Repaint JCarte, ici le zoom est : "+fenetre.getZoom());
+        
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {

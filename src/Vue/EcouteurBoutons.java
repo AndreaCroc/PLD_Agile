@@ -77,10 +77,12 @@ public class EcouteurBoutons implements ActionListener {
                 //Si on veut modifier l ordre d un point d interet
             case Fenetre.ZOOMER:
                 System.out.println("Je veux zoomer !");
+                controleur.zoomer();
                 break;
                 //Si on veut modifier l ordre d un point d interet
             case Fenetre.DEZOOMER:
                 System.out.println("Je veux dezoomer !");
+                controleur.deZoomer();
                 break;
         }
 

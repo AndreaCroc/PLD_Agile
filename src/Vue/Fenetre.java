@@ -48,7 +48,7 @@ public class Fenetre extends JFrame {
     private JCarte panneauCarte; //Afficher la carte
     private AffichageEtapes vueEtapes; //Afficher les etapes
     private AffichagePIs vuePIs; //Afficher les points dinterets generaux
-
+    private double zoom;
     //Tableau contenant le details des etapes de la tournee
     private JTable tableauEtapes;
 
@@ -443,12 +443,18 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        panneauCarte = new JCarte(this.carte, this.tournee, this, 1.0);
+        this.setZoom(1.0);
+        System.out.println("Dans la creation de la fenetre : "+zoom);
+        
+        panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
         panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
         //panneauCarte.setBounds((int)(this.getWidth()*0.3), (int)(this.getHeight()*0.3), (int)(this.getWidth()*0.8), (int)(this.getHeight()*0.8));
+        JScrollPane scrollPane = new JScrollPane(panneauCarte);
+        //setPreferredSize(new Dimension(450, 110));
+        //add(scrollPane, BorderLayout.CENTER);
         panneauDroite.add(panneauCarte);
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
@@ -813,6 +819,15 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
+    
+    public void setZoom(double z){
+        this.zoom=z;
+    }
+    
+    public double getZoom(){
+        return zoom;
+        
+    }
 
     /**
      * Recuperer l ecouteur de boutons
@@ -1154,6 +1169,8 @@ public class Fenetre extends JFrame {
         choix.add(value);
         return choix;
     }
+    
+    
 
     /**
      * Afficher une popup pour prevenir que la contrainte de precedence n est

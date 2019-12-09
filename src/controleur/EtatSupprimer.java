@@ -59,7 +59,7 @@ public class EtatSupprimer implements Etat {
                         tournee = null;
                         carte.setUneTournee(null);
                     }
-                    fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
+                    fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                     fenetre.setTournee(tournee);
                     controleur.setTournee(tournee);
                     fenetre.viderPanneauEtapes();
