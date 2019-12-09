@@ -247,7 +247,7 @@ public class AffichageEtapes extends AbstractTableModel {
                         DecimalFormat df = new DecimalFormat("0.00");
                         duree = pt.getDuree();
                         dureeMin = df.format(duree / 60);
-                        dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf("."));
+                        dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf(","));
                         //Recuperer l heure d arrivee au point d interet
                         heureArrivee = pt.getHeureArrivee();
                         heureArrivee = heureArrivee.substring(0, heureArrivee.lastIndexOf(":"));

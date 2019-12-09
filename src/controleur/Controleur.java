@@ -187,17 +187,17 @@ public class Controleur {
     public void decalage(int decalage){
         if(decalage==1 || decalage==-1){
 
-            if(this.fenetre.getDeplX()+decalage*50>=0 &&
-            this.fenetre.getDeplX()+decalage*50<=this.fenetre.getPanneauCarte().getWidth()){
+            //if(this.fenetre.getDeplX()+decalage*50>=0 &&
+            //this.fenetre.getDeplX()+decalage*50<=this.fenetre.getPanneauCarte().getWidth()){
                 this.fenetre.setDeplX(this.fenetre.getDeplX()+decalage*50);//test
                 this.fenetre.repaint();
-            }
+            //}
         }else{
-            if(this.fenetre.getDeplY()+decalage*50>=0 &&
-            this.fenetre.getDeplY()+decalage*50<=this.fenetre.getPanneauCarte().getHeight()){
+            //if(this.fenetre.getDeplY()+decalage*50>=0 &&
+            //this.fenetre.getDeplY()+decalage*50<=this.fenetre.getPanneauCarte().getHeight()){
                 this.fenetre.setDeplY(this.fenetre.getDeplY()+((int)(decalage/2))*50);//test
                 this.fenetre.repaint();
-            }
+            //}
 
         }
     }
