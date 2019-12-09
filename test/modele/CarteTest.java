@@ -451,6 +451,7 @@ public class CarteTest {
         
         DemandesLivraisons dl = carte.getDemandesLivraisons();
         Tournee tournee = carte.getTournee();
+        System.out.println("tournee : "+tournee);
         ArrayList<PointInteret> listePointsInteretInitiale = dl.getListePointsInteret();
         ArrayList<PointInteret> successionPointsInteretInitiale = tournee.getSuccessionPointsInteret();
         ArrayList<Intersection> listeIntersections = carte.getListeIntersections();
@@ -468,14 +469,18 @@ public class CarteTest {
         Intersection intersectionLivr = null;
         //Recherche des interesections correspondants aux coordonnées 
         for (Intersection i : listeIntersections) {
-            if (i.getLatitude() == latitudeEnlvt && i.getLongitude() == longitudeEnlvt) {
+            System.out.println("boucle for");
+            if (i.getLatitude().equals(latitudeEnlvt) && i.getLongitude().equals(longitudeEnlvt)) {
                 intersectionEnlvt = i;
-            } else if (i.getLatitude() == latitudeLivr && i.getLongitude() == longitudeLivr) {
+            } else if (i.getLatitude().equals(latitudeLivr) && i.getLongitude().equals(longitudeLivr)) {
                 intersectionLivr = i;
+            }
+            if (intersectionEnlvt != null && intersectionLivr != null) {
+                break;
             }
         }
         int numeroDemande = (listePointsInteretInitiale.size()-1)/2 +1;
-        System.out.println("numero demande : "+numeroDemande);
+        
         //Création des points d'intérêt
         PointInteret pointEnlevement = new PointInteret(intersectionEnlvt, dureeEnlevement);
         pointEnlevement.setEnlevement(true);
@@ -492,10 +497,8 @@ public class CarteTest {
         PointInteret pointAvantLivraison = pointAvantEnlevement;
         
         
-        
         //Ajout des points
-        carte.ajouterLivraison(latitudeEnlvt, longitudeEnlvt, 
-                latitudeLivr, longitudeLivr, pointAvantEnlevement, pointAvantLivraison, 
+        carte.ajouterLivraison(pointEnlevement, pointLivraison, pointAvantEnlevement, pointAvantLivraison, 
                 dureeEnlevement, dureeLivraison);
         Tournee nouvTournee = carte.getTournee();
         ArrayList<PointInteret> nouvListePointsInteret = carte.getDemandesLivraisons().getListePointsInteret();
@@ -520,78 +523,100 @@ public class CarteTest {
 
         
         //Cas d'un ajout en milieu de tournée et où il faut agrandir les matrices de coûts
-        Tournee tourneeInitiale = nouvTournee;
-        listePointsInteretInitiale=nouvListePointsInteret;
-        tailleInitiale = nouvTaille;
-        //Initialisation des paramétres
-        latitudeEnlvt = 45.750404;
-        longitudeEnlvt = 4.8744674;
-        latitudeLivr = 45.73208;
-        longitudeLivr = 4.902046;
-        dureeEnlevement = 120;
-        dureeLivraison = 600;
+        Carte carte2 = new Carte();
+        carte2.construireCarteAPartirDeDOMXML(racine2);
+        carte2.construireLivraisonAPartirDeDOMXML(racine);
+        carte2.calculerTournee();
         
-        intersectionEnlvt = null;
-        intersectionLivr = null;
+        DemandesLivraisons dl2 = carte2.getDemandesLivraisons();
+        Tournee tournee2 = carte2.getTournee();
+        Tournee nouvTournee2;
+        System.out.println("tournee 2 : "+ tournee2);
+        ArrayList<PointInteret> successionPointsInteretInitiale2 = tournee2.getSuccessionPointsInteret();
+        ArrayList<PointInteret> listePointsInteretInitiale2=dl2.getListePointsInteret();
+        ArrayList<Intersection> listeIntersections2=carte2.getListeIntersections();
+        ArrayList<PointInteret> nouvSuccessionPointsInteret2;
+        ArrayList<PointInteret> nouvListePointsInteret2;
+        int tailleInitiale2 = successionPointsInteretInitiale2.size();
+        System.out.println("tailleInitiale2 : "+tailleInitiale2);
+        int numeroDemande2;
+        PointInteret pointEnlevement2;
+        PointInteret pointLivraison2;
+        PointInteret pointAvantEnlevement2;
+        PointInteret pointAvantLivraison2;
+        
+        //Initialisation des paramétres
+        Double latitudeEnlvt2 = 45.750404;
+        Double longitudeEnlvt2 = 4.8744674;
+        Double latitudeLivr2 = 45.73208;
+        Double longitudeLivr2 = 4.902046;
+        int dureeEnlevement2 = 120;
+        int dureeLivraison2 = 600;
+        
+        Intersection intersectionEnlvt2 = null;
+        Intersection intersectionLivr2 = null;
         //Recherche des interesections correspondants aux coordonnées 
-        for (Intersection i : listeIntersections) {
-            if (i.getLatitude() == latitudeEnlvt && i.getLongitude() == longitudeEnlvt) {
-                intersectionEnlvt = i;
-            } else if (i.getLatitude() == latitudeLivr && i.getLongitude() == longitudeLivr) {
-                intersectionLivr = i;
+        for (Intersection i : listeIntersections2) {
+            if (i.getLatitude().equals(latitudeEnlvt2) && i.getLongitude().equals(longitudeEnlvt2)) {
+                intersectionEnlvt2 = i;
+            } else if (i.getLatitude().equals(latitudeLivr2) && i.getLongitude().equals(longitudeLivr2)) {
+                intersectionLivr2 = i;
+            }
+            if (intersectionEnlvt2 != null && intersectionLivr2 != null) {
+                break;
             }
         }
-        numeroDemande = (listePointsInteretInitiale.size()-1)/2 +1;
+        numeroDemande2 = (listePointsInteretInitiale2.size()-1)/2 +1;
         //Création des points d'intérêt
-        pointEnlevement = new PointInteret(intersectionEnlvt, dureeEnlevement);
-        pointEnlevement.setEnlevement(true);
-        pointEnlevement.setEntrepot(false);
-        pointLivraison = new PointInteret(intersectionLivr, dureeLivraison);
-        pointLivraison.setEnlevement(false);
-        pointLivraison.setEntrepot(false);
-        pointEnlevement.setPointDependance(pointLivraison);
-        pointLivraison.setPointDependance(pointEnlevement);
-        pointEnlevement.setNumeroDemande(numeroDemande);
-        pointLivraison.setNumeroDemande(numeroDemande);
+        pointEnlevement2 = new PointInteret(intersectionEnlvt2, dureeEnlevement2);
+        pointEnlevement2.setEnlevement(true);
+        pointEnlevement2.setEntrepot(false);
+        pointLivraison2 = new PointInteret(intersectionLivr2, dureeLivraison2);
+        pointLivraison2.setEnlevement(false);
+        pointLivraison2.setEntrepot(false);
+        pointEnlevement2.setPointDependance(pointLivraison2);
+        pointLivraison2.setPointDependance(pointEnlevement2);
+        pointEnlevement2.setNumeroDemande(numeroDemande2);
+        pointLivraison2.setNumeroDemande(numeroDemande2);
         
-        pointAvantEnlevement = nouvSuccessionPointsInteret.get(1);
-        pointAvantLivraison = nouvSuccessionPointsInteret.get(3);
+        pointAvantEnlevement2 = listePointsInteretInitiale2.get(0);
+        pointAvantLivraison2 = listePointsInteretInitiale2.get(1);
         
         
-        System.out.println("first tournee "+ tourneeInitiale);
+        System.out.println("first tournee "+ tournee2);
+        
         //Ajout des points
-        carte.ajouterLivraison(latitudeEnlvt, longitudeEnlvt, 
-                latitudeLivr, longitudeLivr, pointAvantEnlevement, pointAvantLivraison, 
+        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
+                pointAvantEnlevement2, pointAvantLivraison2, 
                 dureeEnlevement, dureeLivraison);
-        carte.ajouterLivraison(latitudeEnlvt, longitudeEnlvt, 
-                latitudeLivr, longitudeLivr, pointAvantEnlevement, pointAvantLivraison, 
+        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
+                pointAvantEnlevement2, pointAvantLivraison2, 
                 dureeEnlevement, dureeLivraison);
-        carte.ajouterLivraison(latitudeEnlvt, longitudeEnlvt, 
-                latitudeLivr, longitudeLivr, pointAvantEnlevement, pointAvantLivraison, 
+        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
+                pointAvantEnlevement2, pointAvantLivraison2, 
                 dureeEnlevement, dureeLivraison);
-        carte.ajouterLivraison(latitudeEnlvt, longitudeEnlvt, 
-                latitudeLivr, longitudeLivr, pointAvantEnlevement, pointAvantLivraison, 
+        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
+                pointAvantEnlevement2, pointAvantLivraison2, 
                 dureeEnlevement, dureeLivraison);
-        nouvTournee = carte.getTournee();
-        nouvListePointsInteret = carte.getDemandesLivraisons().getListePointsInteret();
-        nouvSuccessionPointsInteret = nouvTournee.getSuccessionPointsInteret();
-        listePointsInteretInitiale.add(pointEnlevement);
-        listePointsInteretInitiale.add(pointLivraison);
-        nouvTaille = nouvSuccessionPointsInteret.size();
+        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
+                pointAvantEnlevement2, pointAvantLivraison2, 
+                dureeEnlevement, dureeLivraison);
+        nouvTournee2 = carte2.getTournee();
+        nouvSuccessionPointsInteret2 = nouvTournee2.getSuccessionPointsInteret();
+        nouvListePointsInteret2 = carte.getDemandesLivraisons().getListePointsInteret();
+        int nouvTaille2 = nouvSuccessionPointsInteret2.size();
         
-        System.out.println("nouv tournee "+ nouvTournee);
-        
+        System.out.println("nouv tournee 2 "+ nouvTournee2);
         //Assertions
-        assertEquals(listePointsInteretInitiale, nouvListePointsInteret);
-        assertEquals(nouvTaille, tailleInitiale+8);
+        assertEquals(nouvTaille2, tailleInitiale2+10);
         
         //Vérifications des chemins
         for (int i=0; i < nouvTaille-1;i++) {
-            assertEquals(nouvSuccessionPointsInteret.get(i).getCheminDepart().getArrivee(),
-                    nouvSuccessionPointsInteret.get(i+1).getIntersection());
+            assertEquals(nouvSuccessionPointsInteret2.get(i).getCheminDepart().getArrivee(),
+                    nouvSuccessionPointsInteret2.get(i+1).getIntersection());
         }
-        assertEquals(nouvSuccessionPointsInteret.get(nouvTaille - 1).getCheminDepart().getArrivee(),
-                nouvSuccessionPointsInteret.get(0).getIntersection());
+        assertEquals(nouvSuccessionPointsInteret2.get(nouvTaille - 1).getCheminDepart().getArrivee(),
+                nouvSuccessionPointsInteret2.get(0).getIntersection());
         
         
         
