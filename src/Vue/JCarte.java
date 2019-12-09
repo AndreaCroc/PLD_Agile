@@ -328,7 +328,8 @@ public class JCarte extends JPanel {
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
                 g.drawLine(this.getProportionalX(i, intersections) + 1, this.getProportionalY(i, intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
-                //ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
+    
+//ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
                 /*
                 if(t.getNomRue().contains("Avenue")||t.getNomRue().contains("Cours")){
                     Graphics2D g2 = (Graphics2D)g; //cast for java2
@@ -337,6 +338,9 @@ public class JCarte extends JPanel {
                     g2.drawString(t.getNomRue(), this.getProportionalX(t.getDestination(), intersections),this.getProportionalY(t.getDestination(), intersections));// S, left, BOTTOM
                 }*/
             }
+            g.setColor(Color.red);
+            g.fillOval((int)((1*fenetre.getZoom())-fenetre.getDeplX()), (int)((1*fenetre.getZoom())-fenetre.getDeplY()),20, 20);
+            g.fillOval((int)((100*fenetre.getZoom())-fenetre.getDeplX()), (int)((100*fenetre.getZoom())-fenetre.getDeplY()),20, 20);
         }
 
         if (carte.getDemandesLivraisons() != null) {

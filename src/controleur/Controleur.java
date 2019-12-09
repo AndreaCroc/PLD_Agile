@@ -166,6 +166,8 @@ public class Controleur {
      */
     public void zoomer(){
         this.fenetre.setZoom(this.fenetre.getZoom()+0.5);
+        //this.fenetre.setDeplX(this.fenetre.getDeplX()+50);//test 
+        //this.fenetre.setDeplY(this.fenetre.getDeplY()+50);//test
         fenetre.repaint();
  
     }
@@ -178,14 +180,16 @@ public class Controleur {
             this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
             this.fenetre.setDeplX(this.fenetre.getDeplX()-100*
                     (this.fenetre.getPanneauCarte().getWidth()));
-            this.fenetre.setDeplY(this.fenetre.getDeplY()-100*(this.fenetre.getPanneauCarte().getWidth()));
+            this.fenetre.setDeplY(this.fenetre.getDeplY()-100*(this.fenetre.getPanneauCarte().getHeight()));
+            //this.fenetre.setDeplX(this.fenetre.getDeplX()-50);//test
+            //this.fenetre.setDeplY(this.fenetre.getDeplY()-50);//test
             fenetre.repaint();
         }
     }
     
-    public void decalage(){
+    public void decalage(int x, int y){
         System.out.println("decalage controleur");
-        //this.fenetre.setDeplX(this.fenetre.getDeplX()+0.5);
-        //this.fenetre.setDeplY(this.fenetre.getDeplY()+0.5);
+        this.fenetre.setDeplX(this.fenetre.getDeplX()+x*50);//test 
+        this.fenetre.setDeplY(this.fenetre.getDeplY()+((int)(y/2))*50);//test
     }
 }

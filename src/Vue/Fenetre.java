@@ -457,12 +457,15 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
+        
         this.setZoom(3.0);
-        this.setDeplX(200);
-        this.setDeplY(100);
-        System.out.println("Dans la creation de la fenetre : "+zoom);
+        this.setDeplX(0);
+        this.setDeplY(0);
         
         panneauCarte = new JCarte(this.carte, this.tournee, this);
+        
+        
+        
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
