@@ -208,5 +208,13 @@ public class EtatTournee implements Etat {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
     }
+    
+    public void undo(ListeCdesTournee liste){
+        liste.undo();
+    }
+    
+    public void redo(ListeCdesTournee liste){
+        liste.redo();
+    }
 
 }

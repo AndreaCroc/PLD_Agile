@@ -1,6 +1,10 @@
 
 package controleur;
 
+import Vue.Fenetre;
+import modele.Carte;
+import modele.Tournee;
+
 /**
  * CdeModif
  *
@@ -13,8 +17,12 @@ package controleur;
  */
 public class CdeModif implements CommandeTournee{
 
+    public CdeModif() {
+        
+    }
+    
     @Override
-    public void doCde() {
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
     }
 
     @Override

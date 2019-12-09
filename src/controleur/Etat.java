@@ -30,5 +30,7 @@ public interface Etat {
     public default void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
     public default void surbrillerTables(Fenetre fenetre, PointInteret ptI){};
     public default void surbrillerPI(Fenetre fenetre, PointInteret p) {};
+    public default void undo(ListeCdesTournee liste){};
+    public default void redo(ListeCdesTournee liste){};
     
 }
