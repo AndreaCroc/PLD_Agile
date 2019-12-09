@@ -76,7 +76,7 @@ public class Controleur {
     }
 
     public void modifier(int index) {
-        etatCourant.modifier(this, fenetre, tournee, carte, index);
+        etatCourant.modifier(this, fenetre, tournee, carte, index, listeCommandes);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Controleur {
      * @param index : numero du point d interet a supprimer
      */
     public void supprimer(int index) {
-        etatCourant.supprimer(this, fenetre, carte, tournee, index);
+        etatCourant.supprimer(this, fenetre, carte, tournee, index, listeCommandes);
     }
 
     /**
@@ -163,5 +163,7 @@ public class Controleur {
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }
+    
+  
 
 }

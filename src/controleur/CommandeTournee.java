@@ -26,5 +26,5 @@ public interface CommandeTournee {
     /**
      * Realiser la commande inverse
      */
-    public void undoCde();
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur);
 }

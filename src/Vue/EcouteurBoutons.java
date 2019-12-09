@@ -88,11 +88,11 @@ public class EcouteurBoutons implements ActionListener {
         }
         
         if(e.getSource() == fenetre.getBoutonRedo()){
-            System.out.println("Redo");
+            controleur.redo();
         }
         
         if(e.getSource() == fenetre.getBoutonUndo()){
-            System.out.println("Undo");
+            controleur.undo();
         }
 
     }

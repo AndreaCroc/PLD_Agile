@@ -20,10 +20,19 @@ import modele.Tournee;
 public class CdeSupprime implements CommandeTournee {
 
     private PointInteret pi;
+    private PointInteret pD;
+    private PointInteret pAvantEnlevement;
+    private PointInteret pAvantLivraison;
 
-    public CdeSupprime(PointInteret pi) {
+
+    public CdeSupprime(PointInteret pi, PointInteret pD, PointInteret pAvantEnlevement, PointInteret pAvantLivraison) {
         this.pi = pi;
+        this.pD = pD;
+        this.pAvantEnlevement = pAvantEnlevement;
+        this.pAvantLivraison = pAvantLivraison;
     }
+    
+    
 
     @Override
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
@@ -69,7 +78,30 @@ public class CdeSupprime implements CommandeTournee {
     }
 
     @Override
-    public void undoCde() {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+        Double latitudeEnlvt;
+        Double longitudeEnlvt;
+        Double latitudeLivr;
+        Double longitudeLivr;
+        int dureeEnlevement;
+        int dureeLivraison;
+        
+        if (pi.isEnlevement()) {
+            latitudeEnlvt = pi.getIntersection().getLatitude();
+            longitudeEnlvt = pi.getIntersection().getLongitude();
+            latitudeLivr = pD.getIntersection().getLatitude();
+            longitudeLivr = pD.getIntersection().getLongitude();
+            dureeEnlevement = pi.getDuree();
+            dureeLivraison = pD.getDuree();
+        } else {
+            latitudeEnlvt = pD.getIntersection().getLatitude();
+            longitudeEnlvt = pD.getIntersection().getLongitude();
+            latitudeLivr = pi.getIntersection().getLatitude();
+            longitudeLivr = pi.getIntersection().getLongitude();
+            dureeEnlevement = pD.getDuree();
+            dureeLivraison = pi.getDuree();
+        }
+        
         
         
         

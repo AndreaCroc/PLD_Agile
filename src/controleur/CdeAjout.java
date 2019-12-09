@@ -46,7 +46,7 @@ public class CdeAjout implements CommandeTournee{
     }
 
     @Override
-    public void undoCde() {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
     }
     
 }

@@ -32,8 +32,8 @@ public class EtatModifier implements Etat {
      * @param index
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index) {
-
+    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
+        System.out.println("LAA");
         if (index != 0) {
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut deplacer
@@ -46,7 +46,7 @@ public class EtatModifier implements Etat {
             int max = 0; //deplacement max au plus tard
             ArrayList<Integer>choix = new ArrayList(); //Retour methode classe Fenetre
             ArrayList<PointInteret> listeTournee = new ArrayList(); //liste de la classe Tournee
-            
+            CdeModif commande;
             //Si l index est inferieur a la taille de la liste de la carte
             if (index < listePIs.size()) {
                 ptI = listePIs.get(index);
@@ -81,7 +81,8 @@ public class EtatModifier implements Etat {
                         //Afficher popup pour prevenir modification ne respecte pas contrainte
                         fenetre.afficherPopPrevenirModification();
                     }
-
+                    commande = new CdeModif(ptI, decalage);
+                    listeCommandes.ajouterCommande(commande);
                     //Si on annule la modification via la popup
                 } else {
                     fenetre.afficherBoutonSupprimer();

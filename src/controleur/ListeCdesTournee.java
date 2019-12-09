@@ -47,7 +47,7 @@ public class ListeCdesTournee {
         }
         indiceActuel++;
         listeCommandes.add(indiceActuel, commande);
-        commande.doCde(carte, tournee, fenetre, controleur);
+        //commande.doCde(carte, tournee, fenetre, controleur);
     }
     
     /**
@@ -58,7 +58,7 @@ public class ListeCdesTournee {
         if (indiceActuel >= 0){
                 CommandeTournee cde = listeCommandes.get(indiceActuel);
                 indiceActuel--;
-                cde.undoCde();
+                cde.undoCde(carte, tournee, fenetre, controleur);
         }
     }
     
