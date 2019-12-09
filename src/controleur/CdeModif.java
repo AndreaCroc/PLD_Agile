@@ -28,9 +28,10 @@ public class CdeModif implements CommandeTournee {
 
     @Override
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+        //On deplace le point
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage);
         tournee = carte.getTournee();
-
+        //On met a jour la fenetre
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
@@ -53,10 +54,10 @@ public class CdeModif implements CommandeTournee {
 
     @Override
     public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
-        
+        //On deplace le point
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage*(-1));
         tournee = carte.getTournee();
-
+        //On met a jour la vue
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
