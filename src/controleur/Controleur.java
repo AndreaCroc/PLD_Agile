@@ -187,8 +187,14 @@ public class Controleur {
         }
     }
     
+
+
+    public void decalage(int decalage){
         System.out.println("decalage controleur");
-        this.fenetre.setDeplX(this.fenetre.getDeplX()+x*50);//test 
-        this.fenetre.setDeplY(this.fenetre.getDeplY()+((int)(y/2))*50);//test
+        if(decalage==1 || decalage==-1){
+            this.fenetre.setDeplX(this.fenetre.getDeplX()+decalage*50);//test
+        }else{
+            this.fenetre.setDeplY(this.fenetre.getDeplY()+((int)(decalage/2))*50);//test
+        }
     }
 }
