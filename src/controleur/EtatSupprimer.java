@@ -9,7 +9,8 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatSupprimer
+ * EtatSupprimer quand on veut supprimer un point d interet
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -20,10 +21,6 @@ import modele.Tournee;
  */
 public class EtatSupprimer implements Etat {
 
-    /**
-     *
-     * Classe EtatSupprimer quand on veut supprimer un point d interet
-     */
     /**
      * Supprimer un point d interet de la tournee et son point correspondant On
      * repasse soit a l etat tournee soit a l etat de base

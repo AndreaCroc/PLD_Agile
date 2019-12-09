@@ -9,7 +9,8 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatAjouter
+ * EtatAjouter permettant d ajouter un point dinteret a la tournee
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -20,10 +21,6 @@ import modele.Tournee;
  */
 public class EtatAjouter implements Etat {
 
-    /**
-     * Classe EtatAjouter permettant d ajouter un point dinteret a la tournee
-     *
-     */
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         Intersection iE = null;

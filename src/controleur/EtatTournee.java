@@ -7,7 +7,9 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatTournee
+ * EtatTournee quand on affiche toutes les donnees (sur la carte et
+ * sur les tableaux de gauche) a une tournee calculee
+ * Code inspire de PlaCo
  *
  * Version 1
  *
@@ -18,11 +20,6 @@ import modele.Tournee;
  */
 public class EtatTournee implements Etat {
 
-    /**
-     *
-     * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et
-     * sur les tableaux de gauche) a une tournee calculee
-     */
     /**
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l
      * EtatDeBase
