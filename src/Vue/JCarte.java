@@ -46,7 +46,6 @@ public class JCarte extends JPanel {
      * @param carte
      * @param tournee
      * @param fenetre
-     * @param zoom 
      */
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
@@ -57,17 +56,6 @@ public class JCarte extends JPanel {
         this.repaint();
     }
 
-    /**
-     * Modifier le zoom
-     * @param z nouveau zoom
-     */
-   
-
-    /**
-     * Recuperer le zoom
-     * @return zoom
-     */
-    
 
     /**
      * Modifier la tournee de la carte
@@ -232,8 +220,11 @@ public class JCarte extends JPanel {
         } else if (proportionalY >= hauteurPanel) {
             proportionalY = hauteurPanel - 12;
         }
-
+        
+        //System.out.println("deplacement y " +fenetre.getDeplY());
         proportionalY *= fenetre.getZoom();
+        proportionalY-=(fenetre.getDeplY());
+        System.out.println("nouveau Y " +proportionalY);
 
         return proportionalY;
     }
@@ -262,6 +253,7 @@ public class JCarte extends JPanel {
         }
 
         proportionalY *= fenetre.getZoom();
+        proportionalY-=(fenetre.getDeplY());
 
         return proportionalY;
     }
@@ -283,13 +275,14 @@ public class JCarte extends JPanel {
 
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
-        if (proportionalX == 0) {
+        /*if (proportionalX == 0) {
             proportionalX = 2;
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
-        }
+        }*/
 
         proportionalX *= fenetre.getZoom();
+        proportionalX-=(fenetre.getDeplX());
 
         return proportionalX;
     }
@@ -317,6 +310,7 @@ public class JCarte extends JPanel {
         }
 
         proportionalX *= fenetre.getZoom();
+        proportionalX-=fenetre.getDeplX();
 
         return proportionalX;
     }

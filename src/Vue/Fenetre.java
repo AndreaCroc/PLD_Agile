@@ -49,6 +49,8 @@ public class Fenetre extends JFrame {
     private AffichageEtapes vueEtapes; //Afficher les etapes
     private AffichagePIs vuePIs; //Afficher les points dinterets generaux
     private double zoom;
+    private double deplacementX;
+    private double deplacementY;
     //Tableau contenant le details des etapes de la tournee
     private JTable tableauEtapes;
 
@@ -460,7 +462,9 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauLegende */
  /* PanneauCarte (bas droit) */
-        this.setZoom(1.0);
+        this.setZoom(3.0);
+        this.setDeplX(200);
+        this.setDeplY(100);
         System.out.println("Dans la creation de la fenetre : "+zoom);
         
         panneauCarte = new JCarte(this.carte, this.tournee, this);
@@ -838,14 +842,53 @@ public class Fenetre extends JFrame {
         this.panneauCarte.updateUI();
 
     }
-    
+    /**
+     * 
+     * @param z 
+     */
     public void setZoom(double z){
         this.zoom=z;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public double getZoom(){
         return zoom;
         
+    }
+    
+    /**
+     * 
+     * @param dx 
+     */
+    public void setDeplX(double dx){
+        this.deplacementX=dx;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getDeplX(){
+        return this.deplacementX;
+    }
+    
+    /**
+     * 
+     * @param dy 
+     */
+    public void setDeplY(double dy){
+        this.deplacementY=dy;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getDeplY(){
+        return this.deplacementY;
     }
 
     /**
