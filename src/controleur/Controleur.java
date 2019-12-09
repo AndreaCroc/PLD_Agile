@@ -165,7 +165,7 @@ public class Controleur {
         this.tournee = tournee;
     }
     
-<<<<<<< HEAD
+
     public void zoomer(){
  
         
@@ -184,8 +184,6 @@ public class Controleur {
  
         }
     }
-=======
-  
->>>>>>> 496ccc5157d07b6aa14cc0765db3a7ccbe876bcf
+
 
 }

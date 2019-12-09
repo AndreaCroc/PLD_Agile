@@ -32,7 +32,7 @@ public class CdeModif implements CommandeTournee {
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage);
         tournee = carte.getTournee();
         //On met a jour la fenetre
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
         fenetre.viderPanneauEtapes();
@@ -58,7 +58,7 @@ public class CdeModif implements CommandeTournee {
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage*(-1));
         tournee = carte.getTournee();
         //On met a jour la vue
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, fenetre.getPanneauCarte().getZoom()));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
         fenetre.viderPanneauEtapes();
