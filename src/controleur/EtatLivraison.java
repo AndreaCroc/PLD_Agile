@@ -7,7 +7,9 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatLivraison
+ * EtatLivraison qui correspond a laffichage des points d interets
+ * dune livraison sur la carte
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -17,12 +19,6 @@ import modele.Tournee;
  *
  */
 public class EtatLivraison implements Etat {
-
-    /**
-     *
-     * Classe EtatLivraison qui correspond a laffichage des points d interets
-     * dune livraison sur la carte
-     */
 
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee

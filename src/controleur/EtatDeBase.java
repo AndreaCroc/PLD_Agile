@@ -6,7 +6,10 @@ import Vue.JCarte;
 import modele.Carte;
 
 /**
- * EtatDeBase
+ * EtatDeBase qui correspond a l affichage de la carte sans rien dessus
+ * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
+ * permettant d ajouter un point dinteret a la tournee
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -17,11 +20,6 @@ import modele.Carte;
  */
 
 public class EtatDeBase implements Etat {
-/**
- * Classe EtatDeBase qui correspond a l affichage de la carte sans rien dessus
- * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
- *
- */
 
     /**
      * Changer la carte deja chargee Dans tous les cas (succes ou echec) on

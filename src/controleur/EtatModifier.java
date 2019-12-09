@@ -9,7 +9,9 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatModifier
+ * EtatModifier pour modifier l ordre de passage d un point 
+ * d interet dans la tournee
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -21,7 +23,7 @@ import modele.Tournee;
 public class EtatModifier implements Etat {
 
     /**
-     * Modifier l ordre de passage d un point d interet dans la tournee
+     * 
      *
      * @param controleur
      * @param fenetre

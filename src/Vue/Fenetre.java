@@ -71,6 +71,8 @@ public class Fenetre extends JFrame {
     protected final static String SUPPRIMER = "Supprimer";
     protected final static String ANNULER = "Annuler";
     protected final static String AJOUTER = "Ajouter";
+    protected final static String ZOOMER = "+";
+    protected final static String DEZOOMER = "-";
 
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -90,6 +92,8 @@ public class Fenetre extends JFrame {
     private JButton boutonSupprimer;
     private JButton boutonAnnuler;
     private JButton boutonAjouterPoints;
+    private JButton boutonZoomer;
+    private JButton boutonDezoomer;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -401,6 +405,20 @@ public class Fenetre extends JFrame {
         repChangeCarte.setForeground(COULEUR_ERREUR);
         repChangeCarte.setVisible(false);
 
+        //Bouton pour zoomer sur la carte
+        boutonZoomer = new JButton(ZOOMER);
+        boutonZoomer.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonZoomer.setForeground(COULEUR_ECRITURE);
+        boutonZoomer.setBackground(COULEUR_BOUTON);
+        boutonZoomer.addActionListener(ecouteurBoutons);
+
+        //Bouton pour dézoomer sur la carte
+        boutonDezoomer = new JButton(DEZOOMER);
+        boutonDezoomer.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonDezoomer.setForeground(COULEUR_ECRITURE);
+        boutonDezoomer.setBackground(COULEUR_BOUTON);
+        boutonDezoomer.addActionListener(ecouteurBoutons);
+
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
@@ -412,6 +430,8 @@ public class Fenetre extends JFrame {
         panneauLegende.add(labelTriangle);
         panneauLegende.add(legendeTriangle);
         panneauLegende.add(boutonChangerCarte);
+        panneauLegende.add(boutonZoomer);
+        panneauLegende.add(boutonDezoomer);
         panneauLegende.add(repChangeCarte);
         panneauLegende.setBackground(COULEUR_FOND);
 
@@ -511,7 +531,10 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
+        boutonZoomer.setBounds((int) 86 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonDezoomer.setBounds((int) 92 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 20, 4 * (int) panneauLegende.getHeight() / 10);
         boutonChangerCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
+
         repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
@@ -1115,9 +1138,10 @@ public class Fenetre extends JFrame {
 
     /**
      * Afficher une popup pour savoir de combien deplacer le point d interet
+     *
      * @param min
      * @param max
-     * @return 
+     * @return
      */
     public ArrayList<Integer> afficherPopModification(int min, int max) {
         SpinnerNumberModel sModel = new SpinnerNumberModel(0, min, max, 1);
@@ -1130,12 +1154,12 @@ public class Fenetre extends JFrame {
         choix.add(value);
         return choix;
     }
-    
+
     /**
-     * Afficher une popup pour prevenir que la contrainte de precedence
-     * n est pas respectee
+     * Afficher une popup pour prevenir que la contrainte de precedence n est
+     * pas respectee
      */
-    public void afficherPopPrevenirModification(){
+    public void afficherPopPrevenirModification() {
         JOptionPane jop = new JOptionPane();
         jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'enlèvement dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
     }

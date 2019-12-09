@@ -7,7 +7,8 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * Etat
+ * Etat - Interface Etat permettant de gerer les differents etats de 
+ * lapplication : Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -17,10 +18,6 @@ import modele.Tournee;
  *
  */
 public interface Etat {
-/**
- * Interface Etat permettant de gerer les differents etats de lapplication
- * 
- */
         
     public default void chargerPageInit(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
     public default void chargerPageDeBase(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};

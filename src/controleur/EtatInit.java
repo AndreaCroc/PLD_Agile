@@ -7,7 +7,8 @@ import modele.Carte;
 import modele.Tournee;
 
 /**
- * EtatInit
+ * EtatInit qui correspond a la page d accueil
+ * Code inspire de l application PlaCo
  *
  * Version 1
  *
@@ -18,10 +19,6 @@ import modele.Tournee;
  */
 
 public class EtatInit implements Etat {
-/**
- *
- * Classe EtatInit qui correspond a la page d accueil
- */
 
     /**
      * Charger la premiere carte
