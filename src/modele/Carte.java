@@ -195,15 +195,17 @@ public class Carte {
     public Chemin plusCourtChemin(Intersection depart, Intersection arrivee) {
         Chemin chemin = null;
         Intersection intersectionCourante = arrivee;
+        Intersection intersectionPrec;
         ArrayList<Troncon> cheminInverse = new ArrayList<Troncon>(); //on parcourt
         //le chemin dans le sens inverse en utilisant les prédécesseurs
+        
  
         if (depart == arrivee) {
             chemin =  new Chemin(depart, arrivee, cheminInverse);
         }
         while (intersectionCourante.getPredecesseur() != null) {
             //Tant qu'on est pas au sommet de départ 
-            Intersection intersectionPrec = intersectionCourante;
+            intersectionPrec = intersectionCourante;
             intersectionCourante = intersectionCourante.getPredecesseur();
 
             ArrayList<Troncon> tronconsDepart = intersectionCourante.getTronconsDepart();
@@ -219,7 +221,6 @@ public class Carte {
 
             //S'il n'y a pas de chemin, retourner null
             if (cheminInverse.size() == 0) {
-                System.out.println("if chiant");
                 return null;
             }
 
@@ -268,8 +269,6 @@ public class Carte {
 
         //plus court chemin de chaque point d'intéràªt vers tous les autres 
         //(y compris l'entrepot)
-        long debut = System.currentTimeMillis();
-        System.out.println("DEBUT DIKSTRA : ");
         for (int i = 0; i < nbSommets; i++) {
             intersectionCourante = listePointsInteret.get(i).getIntersection();
             dijkstra(intersectionCourante);
@@ -401,7 +400,6 @@ public class Carte {
 
         //Récupération de la position du points dans la tournee
         indPointTournee = successionPointsInteret.indexOf(pointInteret);
-
         //Recuperation du point d'intérêt précédent 
         pointPrec = successionPointsInteret.get(indPointTournee - 1);
         //Recuperation de l'indice du point prec dans la liste des points d'intérêts
@@ -496,9 +494,6 @@ public class Carte {
         }
         indAncienPointSuiv = listePointsInteret.indexOf(ancienPointSuivant);
         
-        
-        
-        
 
         if (nouvPosition == successionPointsInteret.size()-1) {
             nouvPointPrecedent = successionPointsInteret.get(nouvPosition);
@@ -523,8 +518,6 @@ public class Carte {
         
         //Mise à jour des heures
         calculerHeuresTournee();
-        
-         
         
         return contraintePrec;
     }
@@ -1102,20 +1095,6 @@ public class Carte {
         return result;
     }
 
-//    // Les methodes d'affichage ne servent qu'à vérifier les résultats de la lecture
-//    public void AfficherIntersections() {
-//        for (Intersection i : listeIntersections) {
-//            System.out.println("id:" + i.getId() + " latitude:" + i.getLatitude() + " longitude:" + i.getLongitude());
-//            System.out.println("listeTronconDepart:" + i.getTronconsDepart());
-//            System.out.println();
-//        }
-//    }
-//
-//    public void AfficherLivraisons() {
-//        DemandesLivraisons dl = this.demandesLivraisons;
-//        System.out.println("adresseDepart:" + dl.getAdresseDepart() + " heureDepart:" + dl.getHeureDepart());
-//        for (PointInteret pI : dl.getListePointsInteret()) {
-//            System.out.println("adresse:" + pI.getIntersection().getId() + " duree:" + pI.getDuree() + ((pI.isEnlevement()) ? " estEnlevement" : " estLivraison"));
-//        }
-//    }
 }
+
+
