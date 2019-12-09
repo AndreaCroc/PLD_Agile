@@ -248,7 +248,7 @@ public class AffichagePIs extends AbstractTableModel {
                     DecimalFormat df = new DecimalFormat("0.00");
                     duree = pt.getDuree();
                     dureePt = df.format(duree / 60);
-                    dureePt = dureePt.substring(0, dureePt.lastIndexOf(",")) + " min";
+                    dureePt = dureePt.substring(0, dureePt.lastIndexOf(".")) + " min";
                     
                     
 

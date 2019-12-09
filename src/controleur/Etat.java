@@ -5,6 +5,7 @@ import Vue.Fenetre;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
+import modele.Intersection;
 
 /**
  * Etat - Interface Etat permettant de gerer les differents etats de 
@@ -27,6 +28,8 @@ public interface Etat {
     public default void supprimer(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes){};
     public default void annuler (Controleur controleur,Fenetre fenetre){};
     public default void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interE){};
+    public default void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){}; 
     public default void surbrillerTables(Fenetre fenetre, PointInteret ptI){};
     public default void surbrillerPI(Fenetre fenetre, PointInteret p) {};
     public default void undo(ListeCdesTournee liste){};

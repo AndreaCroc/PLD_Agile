@@ -9,6 +9,8 @@ import java.util.Map;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
+import javax.swing.JOptionPane;
+import controleur.EtatAjouter;
 
 /**
  * EcouteurSouris permet de recuperer et de gerer les evenements lies
@@ -54,6 +56,8 @@ public class EcouteurSouris extends MouseAdapter {
             if (this.vueCarte != null) {
                 //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
                 ArrayList<CoordPointInteret> listeCoordPtI = vueCarte.getCoordPtInterets();
+                //Recuperer les coordonnees de toutes les intersections qui sont sur la carte
+                ArrayList<Point> coordI = vueCarte.getCoorIntersections();
                 Map<Intersection, Point> mesCoordIntersections = vueCarte.getIntersectionsMap();
                 Carte carte = fenetre.getCarte();
                 if (carte != null) {
@@ -82,6 +86,26 @@ public class EcouteurSouris extends MouseAdapter {
                                             this.controleur.supprimer(index);
                                         } else if(this.fenetre.isClicModif()){
                                             this.controleur.modifier(index);
+                                        }
+                                        
+                                        if (controleur.getEtatCourant() instanceof EtatAjouter) {
+                                            if (fenetre.getAvantPE() == null && fenetre.getPE() != null) {
+                                                int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer si c'est le point que vous voulez");
+                                                if (value == JOptionPane.YES_OPTION) {
+                                                    fenetre.setAvantPEParIndex(index);
+                                                    JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point de livraison");
+                                                    break;
+                                                }
+                                            } else if(fenetre.getAvantPE()!=null && fenetre.getPE()!=null){
+                                                if ( fenetre.getPL() != null) {
+                                                    int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer si c'est le point que vous voulez");
+                                                    if (value == JOptionPane.YES_OPTION) {
+                                                        fenetre.setAvantPLParIndex(index);
+                                                        controleur.ajouter();
+                                                        break;
+                                                    }
+                                                }
+                                            }
                                         }
                                         break;
                                     }
@@ -114,6 +138,33 @@ public class EcouteurSouris extends MouseAdapter {
 
                         }
 
+                    }
+                    
+                     if (coordI != null && !coordI.isEmpty()) {
+                        int index = 0;
+                        for (Point p : coordI) {
+                            index = coordI.indexOf(p);
+                            //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
+                            int nvXpt = p.getX() + xPanneauGauche + 5;
+                            int nvYpt = p.getY() + yPanneauLegende + 25;
+
+                            //Si le clic se trouve sur une intersection
+                            if (x >= nvXpt - 5 && x <= nvXpt + 5 && y >= nvYpt - 5 && y <= nvYpt + 5) {
+                                if (controleur.getEtatCourant() instanceof EtatAjouter) {
+                                    if (fenetre.getPE() == null) {
+                                        this.controleur.ajouterPointEnlevement(controleur.getIntersectionByIndex(index));
+                                        break;
+                                    } else {
+                                        if (fenetre.getAvantPE() != null && fenetre.getPL() == null) {
+                                            this.controleur.ajouterPointLivraison(controleur.getIntersectionByIndex(index));
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+
+                        }
                     }
                 }
 

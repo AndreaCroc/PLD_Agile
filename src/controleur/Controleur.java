@@ -2,6 +2,7 @@ package controleur;
 
 import Vue.Fenetre;
 import modele.Carte;
+import modele.Intersection;
 import modele.PointInteret;
 import modele.Tournee;
 
@@ -199,5 +200,21 @@ public class Controleur {
             }
 
         }
+    }
+    
+    public void ajouterPointEnlevement(Intersection interE) {
+        etatCourant.ajouterPointEnlevement(this, fenetre, carte, interE);
+    }
+
+    public void ajouterPointLivraison(Intersection interL) {
+        etatCourant.ajouterPointLivraison(this, fenetre, carte, interL);
+    }
+
+     public Intersection getIntersectionByIndex(int index){
+        return carte.getListeIntersections().get(index);
+    }
+    
+    public Etat getEtatCourant(){
+        return this.etatCourant;
     }
 }

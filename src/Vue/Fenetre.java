@@ -157,6 +157,9 @@ public class Fenetre extends JFrame {
 
     private ListSelectionModel listSelectModelPI;
     private ListSelectionModel listSelectModelEtapes;
+    
+    //Permettre de reprendre le point d'enlevement
+    private PointInteret pE,avantPE,pL,avantPL;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -1326,5 +1329,46 @@ public class Fenetre extends JFrame {
     public void afficherPopPrevenirModification() {
         JOptionPane jop = new JOptionPane();
         jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'enlèvement dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+        public void setPE(PointInteret pE){
+        this.pE = pE;
+    }
+    
+    public void setAvantPEParIndex(int index){
+        this.avantPE = carte.getDemandesLivraisons().getListePointsInteret().get(index);
+        System.out.println("pAE dans setter:"+avantPE.getIntersection().getId());
+    }    
+    
+    public void setPL(PointInteret pL){
+        this.pL = pL;
+    }
+    
+    public void setAvantPLParIndex(int index){
+        this.avantPL = carte.getDemandesLivraisons().getListePointsInteret().get(index);
+        System.out.println("pAL dans setter:"+avantPL.getIntersection().getId());
+    }
+    
+    public void clearAllPointsAjoutes(){
+        this.pE = null;
+        this.pL = null;
+        this.avantPE = null;
+        this.avantPL = null;
+    }
+    
+    public PointInteret getPE(){
+        return this.pE;
+    }
+    
+    public PointInteret getAvantPE(){
+        return this.avantPE;
+    }
+    
+    public PointInteret getPL(){
+        return this.pL;
+    }
+    
+    public PointInteret getAvantPL(){
+        return this.avantPL;
     }
 }

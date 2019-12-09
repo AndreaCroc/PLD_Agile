@@ -2,6 +2,7 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -163,7 +164,9 @@ public class EtatTournee implements Etat {
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         controleur.setEtat(controleur.etatAjouter);
         fenetre.griserBoutonsSupprimer();
-        controleur.ajouter();
+                //controleur.ajouter();
+        fenetre.clearAllPointsAjoutes();
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point d'enlevement");
     }
 
     /**

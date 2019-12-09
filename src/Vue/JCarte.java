@@ -35,6 +35,7 @@ public class JCarte extends JPanel {
     private Map<Intersection, Point> intersectionsMap;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
+    private ArrayList<Point> coorIntersections = new ArrayList<>();
     /**
      * Constructeur de la classe JCarte
      * @param carte
@@ -48,6 +49,7 @@ public class JCarte extends JPanel {
         this.intersectionsMap = new HashMap<>();
         this.fenetre = fenetre;
         this.palette=this.fenetre.getPalette();
+        this.coorIntersections = new ArrayList<>();
         this.repaint();
     }
 
@@ -95,6 +97,10 @@ public class JCarte extends JPanel {
     
     public Map<Intersection, Point> getIntersectionsMap() {
         return this.intersectionsMap;
+    }
+    
+    public ArrayList<Point> getCoorIntersections() {
+        return coorIntersections;
     }
 
     /**
@@ -349,6 +355,8 @@ public class JCarte extends JPanel {
             g.setColor(Color.BLACK);
 
             g.fillOval(this.getProportionalX(i, intersections), this.getProportionalY(i, intersections), 2, 2);
+            
+            this.coorIntersections.add(new Point(getProportionalX(i,intersections),getProportionalY(i,intersections)));
 
             ArrayList<Troncon> iTroncons = i.getTronconsDepart();
             for (Troncon t : iTroncons) {
