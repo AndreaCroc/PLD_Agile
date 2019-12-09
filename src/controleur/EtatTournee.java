@@ -209,10 +209,12 @@ public class EtatTournee implements Etat {
         fenetre.repaint();
     }
     
+    @Override
     public void undo(ListeCdesTournee liste){
         liste.undo();
     }
     
+    @Override
     public void redo(ListeCdesTournee liste){
         liste.redo();
     }
