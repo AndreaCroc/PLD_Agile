@@ -75,6 +75,10 @@ public class Fenetre extends JFrame {
     protected final static String DEZOOMER = "-";
     protected final static String UNDO = "Undo";
     protected final static String REDO = "Redo";
+    protected final static String DROITE = "→";
+    protected final static String GAUCHE = "←";
+    protected final static String HAUT = "↑";
+    protected final static String BAS = "↓";
     
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -98,6 +102,10 @@ public class Fenetre extends JFrame {
     private JButton boutonDezoomer;
     private JButton boutonUndo;
     private JButton boutonRedo;
+    private JButton boutonDirDroite;
+    private JButton boutonDirGauche;
+    private JButton boutonDirHaut;
+    private JButton boutonDirBas;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -253,7 +261,6 @@ public class Fenetre extends JFrame {
         //Ajuster la taille des lignes
         tableauPIs.setRowHeight(40);
         //Ajuster la taille des colonnes
-        //tableauPIs.getColumnModel().getColumn(0).setPreferredWidth(40);
         tableauPIs.getColumnModel().getColumn(3).setPreferredWidth(250);
 
         for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
@@ -439,6 +446,34 @@ public class Fenetre extends JFrame {
         boutonDezoomer.setForeground(COULEUR_ECRITURE);
         boutonDezoomer.setBackground(COULEUR_BOUTON);
         boutonDezoomer.addActionListener(ecouteurBoutons);
+        
+                 //Bouton pour decaler la carte vers la droite
+        boutonDirDroite = new JButton(DROITE);
+        boutonDirDroite.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonDirDroite.setForeground(COULEUR_ECRITURE);
+        boutonDirDroite.setBackground(COULEUR_BOUTON);
+        boutonDirDroite.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour decaler la carte vers la gauche
+        boutonDirGauche = new JButton(GAUCHE);
+        boutonDirGauche.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonDirGauche.setForeground(COULEUR_ECRITURE);
+        boutonDirGauche.setBackground(COULEUR_BOUTON);
+        boutonDirGauche.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour decaler la carte vers le haut
+        boutonDirHaut = new JButton(HAUT);
+        boutonDirHaut.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonDirHaut.setForeground(COULEUR_ECRITURE);
+        boutonDirHaut.setBackground(COULEUR_BOUTON);
+        boutonDirHaut.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour decaler la carte vers le bas
+        boutonDirBas = new JButton(BAS);
+        boutonDirBas.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonDirBas.setForeground(COULEUR_ECRITURE);
+        boutonDirBas.setBackground(COULEUR_BOUTON);
+        boutonDirBas.addActionListener(ecouteurBoutons);
 
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
@@ -454,6 +489,10 @@ public class Fenetre extends JFrame {
         panneauLegende.add(boutonZoomer);
         panneauLegende.add(boutonDezoomer);
         panneauLegende.add(repChangeCarte);
+        panneauLegende.add(boutonDirDroite);
+        panneauLegende.add(boutonDirGauche);
+        panneauLegende.add(boutonDirBas);
+        panneauLegende.add(boutonDirHaut);
         panneauLegende.setBackground(COULEUR_FOND);
 
         legende = new JLabel("Légende");
@@ -471,11 +510,10 @@ public class Fenetre extends JFrame {
         this.setDeplY(0);
         System.out.println("Dans la creation de la fenetre : "+zoom);
 
+
         this.makePalette();
+
         panneauCarte = new JCarte(this.carte, this.tournee, this);
-        
-        
-        
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
         panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
@@ -485,6 +523,8 @@ public class Fenetre extends JFrame {
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
         this.addMouseListener(ecouteurSouris);
+        
+
         
         /* Fin panneauCarte */
  /* Fin panneauDroite */
@@ -563,16 +603,20 @@ public class Fenetre extends JFrame {
         panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
         panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
 
-        boutonZoomer.setBounds((int) 80 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonDezoomer.setBounds((int) 87 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonChangerCarte.setBounds((int) 5 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonZoomer.setBounds((int) 76 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonDezoomer.setBounds((int) 83 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonChangerCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
+        boutonDirGauche.setBounds((int) 69 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
+        boutonDirDroite.setBounds((int) 76 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
+        boutonDirHaut.setBounds((int) 83 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
+        boutonDirBas.setBounds((int) 90 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
 
-        repChangeCarte.setBounds((int) 6 * panneauLegende.getWidth() / 10, (int) 2 * panneauLegende.getHeight() / 3, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
+        repChangeCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, 0, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
 
         int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
         panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
-
-        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth(), 1 * (int) panneauLegende.getHeight() / 4);
+        
+        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth()/6, 1 * (int) panneauLegende.getHeight() / 4);
         labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
         legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
         labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);

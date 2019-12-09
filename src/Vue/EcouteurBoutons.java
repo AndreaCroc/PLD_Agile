@@ -79,6 +79,22 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.DEZOOMER:
                 controleur.deZoomer();
                 break;
+                            //Si on veut ajouter un point dinteret
+            case Fenetre.DROITE:
+                controleur.decalage(1);
+                break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.GAUCHE:
+                controleur.decalage(-1);
+                break;
+                //Si on veut modifier l ordre d un point d interet
+            case Fenetre.HAUT:
+                controleur.decalage(-2);
+                break;
+                //Si on veut modifier l ordre d un point d interet
+            case Fenetre.BAS:
+                controleur.decalage(2);
+                break;
         }
         
         //Recuperer un clic sur le bouton redo
@@ -90,7 +106,7 @@ public class EcouteurBoutons implements ActionListener {
         if(e.getSource() == fenetre.getBoutonUndo()){
             controleur.undo();
         }
-
+        
     }
 
 }

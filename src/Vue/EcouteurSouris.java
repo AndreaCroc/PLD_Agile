@@ -4,7 +4,6 @@ package Vue;
 import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Map;
 import modele.Carte;
@@ -46,7 +45,6 @@ public class EcouteurSouris extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent evt) {
-        System.out.println("Mouse clicked");
         if (this.fenetre != null) {
             //Recuperer la largeur du panneau gauche
             int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
@@ -63,7 +61,6 @@ public class EcouteurSouris extends MouseAdapter {
                     //Recuperer les coordonnees de la souris lors du clic
                     int x = evt.getX() - 8;
                     int y = evt.getY() - 8;
-                    System.out.println("x : "+x+" y : "+y);
                     //Si il y a bien des points d interets sur la carte
                     if (listeCoordPtI != null && !listeCoordPtI.isEmpty()) {
                         int index = 0;
@@ -71,7 +68,6 @@ public class EcouteurSouris extends MouseAdapter {
                             //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
                             int nvXpt = p.getPoint().getX() + xPanneauGauche + 5;
                             int nvYpt = p.getPoint().getY() + yPanneauLegende + 25;
-                            System.out.println("nvX : "+nvXpt + " nvY : "+nvYpt);
                             PointInteret pi = p.getPtI();
                             //Si le clic se trouve sur une figure d un point d interet
                             if (x >= nvXpt - 5 && x <= nvXpt + 5 && y >= nvYpt - 5 && y <= nvYpt + 5) {
@@ -108,15 +104,8 @@ public class EcouteurSouris extends MouseAdapter {
                             //coordonnées adaptees des points d'intersections
                             int nvXpt2 = value.getX()+ xPanneauGauche+5;
                             int nvYpt2 = value.getY() + yPanneauLegende+45;
-
-                            //System.out.println("Intersection : "+ key.getId());
-                            //System.out.println("ix:"+nvXpt2);
-                            //System.out.println("iy:"+nvYpt2);
-
                             if(x >= nvXpt2 && x <= nvXpt2+5 && y >= nvYpt2-5 && y <= nvYpt2+5) {
                                 //les coordonnées correspondent
-                                System.out.println("Clique sur intersection numero : " + key.getId());
-                                System.out.println("Coordonnees cliquees par utilisateur x : " + x + " / y : " + y);
 
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
                                 //key.getTronconsDepart();
