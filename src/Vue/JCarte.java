@@ -34,7 +34,7 @@ public class JCarte extends JPanel {
     private ArrayList<CoordPointInteret> listeCoordPtI; //liste des point dinerets de la carte
     private Map<Intersection, Point> intersectionsMap;
     private Fenetre fenetre; //fenetre de l application
-    
+    private ArrayList<Color> palette;
     /**
      * Constructeur de la classe JCarte
      * @param carte
@@ -47,6 +47,7 @@ public class JCarte extends JPanel {
         this.listeCoordPtI = new ArrayList<>();
         this.intersectionsMap = new HashMap<>();
         this.fenetre = fenetre;
+        this.palette=this.fenetre.getPalette();
         this.repaint();
     }
 
@@ -308,11 +309,36 @@ public class JCarte extends JPanel {
 
         return proportionalX;
     }
+    
+    
+    /*public void makePalette(){
+        ArrayList<Color> palette=new ArrayList<Color>();
+        
+        if(carte.getListePointsInteretActuelle() != null)
+        {
+            System.out.println("iciiiiiiii");
+            ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
+            palette=new ArrayList<Color>();
+            
+            for (int c=0;c<(PIs.size()-1)/2;c++) {
+                Random rand = new Random();
+                    float r = rand.nextFloat();
+                    float gg = rand.nextFloat();
+                    float b = rand.nextFloat();
+                    Color randomColor = new Color(r, gg, b);
+                    palette.add(randomColor);
+            }
+        }
+        System.out.println(palette.size());
+        this.palette=palette;
+        System.out.println(this.palette.size());
+    }*/
+    
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+       
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
@@ -361,18 +387,20 @@ public class JCarte extends JPanel {
             Point ptDepot = new Point(xDepot, yDepot);
             CoordPointInteret cptI = new CoordPointInteret(ptDepot, depot);
             this.ajouterCoordPtI(cptI);
-
+            
+            int indiceC=0;
             if (PIs != null) {
+                
                 for (PointInteret i : PIs) {
                     g.setColor(Color.BLACK);
-                    Random rand = new Random();
-                    float r = rand.nextFloat();
-                    float gg = rand.nextFloat();
-                    float b = rand.nextFloat();
-                    Color randomColor = new Color(r, gg, b);
-                    g.setColor(randomColor);
-
+                   
+                    
                     if (i.isEnlevement()) {
+                        
+                        
+                        g.setColor(this.palette.get(indiceC));
+                        if(indiceC<this.palette.size())indiceC++;
+                        
                         int xRect = this.getProportionalXPIs(i.getIntersection(), PIs, intersections) - 2;
                         int yRect = this.getProportionalYPIs(i.getIntersection(), PIs, intersections) - 2;
                         int xOval = this.getProportionalXPIs(i.getPointDependance().getIntersection(), PIs, intersections) - 2;

@@ -73,6 +73,7 @@ public class EtatLivraison implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
+                fenetre.makePalette();
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();

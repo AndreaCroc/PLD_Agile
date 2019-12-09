@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +58,8 @@ public class Fenetre extends JFrame {
 
     //Savoir si le bouton modifier a ete clique
     private boolean clicModif;
+    
+    private ArrayList<Color> palette=new ArrayList<Color>();
 
     //Constantes utilisee pour l affichage
     private static final long serialVersionUID = 1L;
@@ -468,7 +471,7 @@ public class Fenetre extends JFrame {
         this.setDeplY(0);
         System.out.println("Dans la creation de la fenetre : "+zoom);
 
-        
+        this.makePalette();
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         
         
@@ -833,6 +836,7 @@ public class Fenetre extends JFrame {
     public JCarte getPanneauCarte() {
         return this.panneauCarte;
     }
+    
 
     /**
      * Modifier le panneau de la carte
@@ -841,6 +845,7 @@ public class Fenetre extends JFrame {
      */
     public void setPanneauCarte(JCarte nouvelleCarte) {
         this.panneauCarte = nouvelleCarte;
+        //this.panneauCarte.makePalette();
         this.panneauCarte.updateUI();
 
     }
@@ -891,6 +896,21 @@ public class Fenetre extends JFrame {
      */
     public double getDeplY(){
         return this.deplacementY;
+    }
+    
+    public void makePalette(){
+        for (int c=0;c<50;c++) {
+                Random rand = new Random();
+                float r = rand.nextFloat();
+                float gg = rand.nextFloat();
+                float b = rand.nextFloat();
+                Color randomColor = new Color(r, gg, b);
+                this.palette.add(randomColor);
+            }
+    }
+    
+    public ArrayList<Color> getPalette(){
+        return this.palette;
     }
 
     /**
