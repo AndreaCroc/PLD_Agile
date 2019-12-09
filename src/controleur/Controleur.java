@@ -1,7 +1,6 @@
 package controleur;
 
 import Vue.Fenetre;
-import Vue.JCarte;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -9,11 +8,10 @@ import modele.Tournee;
 /**
  * Controleur permet de faire le lien entre la vue et le modele
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class Controleur {

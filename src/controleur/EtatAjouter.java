@@ -12,11 +12,11 @@ import modele.Tournee;
  * EtatAjouter permettant d ajouter un point dinteret a la tournee
  * Code inspire de l application PlaCo
  *
- * Version 1
+ * @version Version 1
  *
  *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatAjouter implements Etat {

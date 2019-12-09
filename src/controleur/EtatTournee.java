@@ -11,11 +11,10 @@ import modele.Tournee;
  * sur les tableaux de gauche) a une tournee calculee
  * Code inspire de PlaCo
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatTournee implements Etat {
