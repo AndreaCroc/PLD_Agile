@@ -255,8 +255,6 @@ public class Carte {
         for (int i = 0; i < nbSommets + 5; i++) {
             cout[i] = new Double[nbSommets + 5];
         }
-        
-        mapPredecesseur = new TreeMap<>();
         //Initialisation de la matrice des plus courts chemins (avec des colonnes
         //et lignes supplémentaires)
         chemins = new Chemin[nbSommets + 5][nbSommets + 5];
@@ -292,21 +290,18 @@ public class Carte {
                     }
                 } else if (i == j) {
 
-                    if (!listePointsInteret.get(i).isEnlevement() && i!=0)
-                    {
+                    if (!listePointsInteret.get(i).isEnlevement() && i != 0) {
+                        double numPredecesseurs = 0.0;
                         String idJ = listePointsInteret.get(i).getPointDependance().getIntersection().getId();
-                        for (int k = 0; k < nbSommets; k++)
-                        {
-                            String IdK= listePointsInteret.get(k).getIntersection().getId();
-                            if (idJ==IdK)
-                            {
-                                mapPredecesseur.put(i, k);
+                        for (int k = 0; k < nbSommets; k++) {
+                            String IdK = listePointsInteret.get(k).getIntersection().getId();
+                            if (idJ == IdK) {
+                                numPredecesseurs = (double) k;
                             }
                         }
-                       
-                        cout[i][j] = 0.0;
-                    }
-                    else {
+
+                        cout[i][j] = numPredecesseurs;
+                    } else {
                         cout[i][j] = 0.0;
                     }
                     chemins[i][j] = null;
@@ -350,7 +345,7 @@ public class Carte {
             }
 
             //Execution du TSP
-            unTSP.chercheSolution2(1000000, nbSommets, cout, duree,this.mapPredecesseur);
+            unTSP.chercheSolution(1000000, nbSommets, cout, duree);
 
             indPointPrec = unTSP.getMeilleureSolution(0);
 
