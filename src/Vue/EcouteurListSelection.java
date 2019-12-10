@@ -10,27 +10,18 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EcouteurListSelection
+ * EcouteurListSelection permet de recuperer les evenements associes a la
+ * selection d une ligne d un tableau
  *
- * Version 1
- * 
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-
 public class EcouteurListSelection implements ListSelectionListener {
 
-    /**
-     *
-     * Classe EcouteurListSelection permettant de recuperer les evenements
-     * associes a la selection d une ligne d un tableau
-     *
-     */
-
-    private Controleur controleur; //permet d appeler les traitements suivant les actions
+    private Controleur controleur; //permet d appeler les traitements actions
     private Fenetre fenetre; //Fenetre depuis laquelle les actions sont faites
 
     /**
@@ -67,11 +58,14 @@ public class EcouteurListSelection implements ListSelectionListener {
                         Carte carte = fenetre.getCarte();
                         if (carte != null) {
                             //Recuperer la liste des points dinteret actuelle
-                            ArrayList<PointInteret> listePiCarte = carte.getListePointsInteretActuelle();
-                            if (listePiCarte != null && !listePiCarte.isEmpty()) {
+                            ArrayList<PointInteret> listePiCarte
+                                    = carte.getListePointsInteretActuelle();
+                            if ((listePiCarte != null)
+                                    && (!listePiCarte.isEmpty())) {
                                 if (i < listePiCarte.size()) {
                                     PointInteret pi = listePiCarte.get(i);
-                                    //Afficher la point d interet correspondant a la ligne en surbrillance
+                                    //Afficher la point d interet correspondant 
+                                    //a la ligne en surbrillance
                                     this.controleur.surbrillerPI(pi);
                                     this.controleur.surbrillerTables(pi);
                                     lsm.clearSelection();
@@ -84,18 +78,21 @@ public class EcouteurListSelection implements ListSelectionListener {
                         Tournee tournee = fenetre.getTournee();
                         if (tournee != null) {
                             //Recuperer les points dinteret de la tournee
-                            ArrayList<PointInteret> listePiTournee = tournee.getSuccessionPointsInteret();
-                            if (listePiTournee != null && !listePiTournee.isEmpty()) {
+                            ArrayList<PointInteret> listePiTournee
+                                    = tournee.getSuccessionPointsInteret();
+                            if ((listePiTournee != null)
+                                    && (!listePiTournee.isEmpty())) {
                                 PointInteret pi = new PointInteret();
                                 if (i < listePiTournee.size()) {
                                     pi = listePiTournee.get(i);
                                 }
                                 //Si la derniere ligne du tableau est cliquee
                                 if (i == listePiTournee.size()) {
-                                    //Prendre la ligne du point d interet de l entrepot
+                                    //Prendre point d interet de l entrepot
                                     pi = listePiTournee.get(0);
                                 }
-                                //Afficher la point d interet correspond a la ligne en surbrillance
+                                //Afficher la point d interet correspond 
+                                //a la ligne en surbrillance
                                 this.controleur.surbrillerPI(pi);
                                 this.controleur.surbrillerTables(pi);
                                 lsm.clearSelection();

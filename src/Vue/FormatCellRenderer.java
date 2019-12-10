@@ -10,24 +10,18 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * FormatCellRenderer
+ * FormatCellRenderer permet de mettre tous les elements du tableau
+ * au centre de la cellule et d encadrer en rouge la ligne en cas de clic 
+ * sur un point d interet
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class FormatCellRenderer extends DefaultTableCellRenderer {
-/**
- *
- * Classe FormatCellRenderer permettant de mettre tous les elements du tableau
- * au centre de la cellule et d encadrer en rouge la ligne en cas de clic sur un
- * point d interet
- */
 
     private int indexPI; //Index du point dinteret selectionne
     private int indexPIDep; //Index du poitn d interet dependant
@@ -97,31 +91,39 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         if (tableau == 1) {
             //Encadrer la ligne correspondante au point dinteret selectionne
             if (indexPI != -1) {
-                if (row == this.indexPI || row == this.indexPI - table.getRowCount()) {
+                if (row == this.indexPI || row == this.indexPI 
+                                                - table.getRowCount()) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
+                                                                0, Color.red));
                     //Si la cellule est de type textArea
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
-                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.red));
+                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 
+                                                              2, 2, Color.red));
                         return textArea;
                     } else {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
+                                                                 0, Color.red));
                     }
                 }
             }
             
             //Encadrer la ligne ou se trouve le point dinteret dependant
             if (indexPI != 0 && indexPIDep != -1) {
-                if (row == this.indexPIDep || row == this.indexPIDep - table.getRowCount()) {
+                if (row == this.indexPIDep || row == this.indexPIDep 
+                                                    - table.getRowCount()) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.ORANGE));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
+                                                              0, Color.ORANGE));
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
-                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.ORANGE));
+                        textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 
+                                                         2, 2, Color.ORANGE));
                         return textArea;
                     } else {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.ORANGE));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
+                                                        0, Color.ORANGE));
                     }
                 }
             }
@@ -136,22 +138,28 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
             if (indexPI != -1) {
                 int nbLignes = table.getRowCount() - 1;
                 //Encadrer chaque cellule de la ligne associee au point d interet
-                if (row == this.indexPI || row - nbLignes == indexPI || row == indexPI - nbLignes) {
+                if (row == this.indexPI || row - nbLignes == indexPI 
+                        || row == indexPI - nbLignes) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
+                                                                0, Color.red));
                     } else if (column == table.getColumnCount() - 1) {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
+                                                                2, Color.red));
                     } else {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.red));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
+                                                                0, Color.red));
                     }
                 }
             }
             if (indexPI != 0 && indexPIDep != -1) {
                 if (row == this.indexPIDep) {
                     if (column == 0) {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.ORANGE));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
+                                                            0, Color.ORANGE));
                     }else {
-                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.ORANGE));
+                        this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
+                                                            0, Color.ORANGE));
                     }
                 }
             }

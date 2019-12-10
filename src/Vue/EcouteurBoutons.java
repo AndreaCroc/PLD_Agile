@@ -5,32 +5,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * EcouteurBoutons
+ * EcouteurBoutons permet de recuperer et gerer les evenements sur les boutons
+ * de la fenetre
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EcouteurBoutons implements ActionListener {
 
-    /**
-     * Classe EcouteurBoutons pour recuperer et gerer les evenements sur les
-     * boutons de la fenetre
-     *
-     */
-
     private Controleur controleur; //Controleur entre le modele et la vue
+    private Fenetre fenetre; //Fenetre de l application
 
     /**
      * Constructeur de la classe EcouteurBoutons
      *
      * @param controleur
+     * @param fenetre
      */
-    public EcouteurBoutons(Controleur controleur) {
+    public EcouteurBoutons(Controleur controleur, Fenetre fenetre) {
         this.controleur = controleur;
+        this.fenetre = fenetre;
     }
 
     /**
@@ -74,6 +71,40 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.MODIFIER:
                 controleur.modifier(-1);
                 break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.ZOOMER:
+                controleur.zoomer();
+                break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.DEZOOMER:
+                controleur.deZoomer();
+                break;
+            //Si on veut ajouter un point dinteret
+            case Fenetre.DROITE:
+                controleur.decalage(1);
+                break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.GAUCHE:
+                controleur.decalage(-1);
+                break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.HAUT:
+                controleur.decalage(-2);
+                break;
+            //Si on veut modifier l ordre d un point d interet
+            case Fenetre.BAS:
+                controleur.decalage(2);
+                break;
+        }
+
+        //Recuperer un clic sur le bouton redo
+        if (e.getSource() == fenetre.getBoutonRedo()) {
+            controleur.redo();
+        }
+
+        //Recuperer un clic sur le bouton undo
+        if (e.getSource() == fenetre.getBoutonUndo()) {
+            controleur.undo();
         }
 
     }

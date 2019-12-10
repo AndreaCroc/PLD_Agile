@@ -2,22 +2,16 @@
 package Vue;
 
 /*
- * LigneEtapes
+ * LigneEtapes correspond a une ligne du tableauEtapes
  *
- * Version 1
+ * @version Version 1
  * 
- *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class LigneEtapes {
-/**
- *
- * Classe LigneEtapes correspond a une ligne du tableauEtapes
- */
 
     private int ordre; //numero de l etape dans la tournee
     private int numDemande; //numero de demande associe au point dinteret
@@ -37,7 +31,8 @@ public class LigneEtapes {
      * @param arrivee
      * @param duree 
      */
-    public LigneEtapes(int ordre,int numero, String type, String rue, String depart, String arrivee, String duree) {
+    public LigneEtapes(int ordre,int numero, String type, String rue, 
+                       String depart, String arrivee, String duree) {
         this.ordre = ordre;
         this.numDemande = numero;
         this.type = type;

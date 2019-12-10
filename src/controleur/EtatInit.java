@@ -7,21 +7,17 @@ import modele.Carte;
 import modele.Tournee;
 
 /**
- * EtatInit
+ * EtatInit qui correspond a la page d accueil
+ * Code inspire de l application PlaCo
  *
- * Version 1
- *
+ * @version Version 1
  * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class EtatInit implements Etat {
-/**
- *
- * Classe EtatInit qui correspond a la page d accueil
- */
 
     /**
      * Charger la premiere carte
@@ -47,7 +43,7 @@ public class EtatInit implements Etat {
             // on change de fenetre, on affiche la carte
             //et on change d etat
             if (chargerCarte) {
-                fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre,1.0));
+                fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);

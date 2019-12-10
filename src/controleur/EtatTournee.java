@@ -2,27 +2,24 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatTournee
+ * EtatTournee quand on affiche toutes les donnees (sur la carte et
+ * sur les tableaux de gauche) a une tournee calculee
+ * Code inspire de PlaCo
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatTournee implements Etat {
 
-    /**
-     *
-     * Classe EtatTournee quand on affiche toutes les donnees (sur la carte et
-     * sur les tableaux de gauche) a une tournee calculee
-     */
     /**
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l
      * EtatDeBase
@@ -50,7 +47,10 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.setZoom(1);
+                fenetre.setDeplX(0);
+                fenetre.setDeplY(0);
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
@@ -67,7 +67,7 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 
@@ -118,7 +118,8 @@ public class EtatTournee implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.makePalette();
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
 
@@ -145,9 +146,10 @@ public class EtatTournee implements Etat {
      * @param carte
      * @param tournee
      * @param index
+     * @param listeCommandes
      */
     @Override
-    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index) {
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
         fenetre.setClicSupp(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
@@ -166,7 +168,9 @@ public class EtatTournee implements Etat {
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         controleur.setEtat(controleur.etatAjouter);
         fenetre.griserBoutonsSupprimer();
-        controleur.ajouter();
+                //controleur.ajouter();
+        fenetre.clearAllPointsAjoutes();
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point d'enlevement");
     }
 
     /**
@@ -178,9 +182,10 @@ public class EtatTournee implements Etat {
      * @param tournee
      * @param carte
      * @param index
+     * @param listeCommandes
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index) {
+    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
         fenetre.setClicModif(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatModifier);
@@ -210,6 +215,24 @@ public class EtatTournee implements Etat {
     public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
+    }
+    
+    /**
+     * Retourner a l action precedente
+     * @param liste 
+     */
+    @Override
+    public void undo(ListeCdesTournee liste){
+        liste.undo();
+    }
+    
+    /**
+     * Refaire l action
+     * @param liste 
+     */
+    @Override
+    public void redo(ListeCdesTournee liste){
+        liste.redo();
     }
 
 }

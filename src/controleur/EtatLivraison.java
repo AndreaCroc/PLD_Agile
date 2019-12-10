@@ -7,22 +7,17 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatLivraison
+ * EtatLivraison qui correspond a laffichage des points d interets
+ * dune livraison sur la carte
+ * Code inspire de l application PlaCo
  *
- * Version 1
+ * @version Version 1
  *
- *
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
  * Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatLivraison implements Etat {
-
-    /**
-     *
-     * Classe EtatLivraison qui correspond a laffichage des points d interets
-     * dune livraison sur la carte
-     */
 
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
@@ -39,7 +34,7 @@ public class EtatLivraison implements Etat {
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
         tournee = carte.calculerTournee();
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre, 2));
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
         controleur.setTournee(tournee);
 
@@ -78,7 +73,8 @@ public class EtatLivraison implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
+                fenetre.makePalette();
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
 
@@ -121,7 +117,10 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, 2));
+                fenetre.setZoom(1);
+                fenetre.setDeplX(0);
+                fenetre.setDeplY(0);
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
@@ -138,7 +137,7 @@ public class EtatLivraison implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
 

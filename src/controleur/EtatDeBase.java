@@ -6,22 +6,19 @@ import Vue.JCarte;
 import modele.Carte;
 
 /**
- * EtatDeBase
+ * EtatDeBase qui correspond a l affichage de la carte sans rien dessus
+ * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
+ * permettant d ajouter un point dinteret a la tournee
+ * Code inspire de l application PlaCo
  *
- * Version 1
- *
+ * @version Version 1
  * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
 public class EtatDeBase implements Etat {
-/**
- * Classe EtatDeBase qui correspond a l affichage de la carte sans rien dessus
- * Depuis cet etat on peut charger une nouvelle carte ou charger une livraison
- *
- */
 
     /**
      * Changer la carte deja chargee Dans tous les cas (succes ou echec) on
@@ -49,8 +46,11 @@ public class EtatDeBase implements Etat {
                 fenetre.cacherPanneauPI();
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
+                fenetre.setZoom(1);
+                fenetre.setDeplX(0);
+                fenetre.setDeplY(0);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
@@ -92,7 +92,8 @@ public class EtatDeBase implements Etat {
                 fenetre.cacherPanneauEtapesEtTour();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
-                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre, fenetre.getPanneauCarte().getZoom()));
+                fenetre.makePalette();
+                fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.afficherBoutonCalcul();
                 fenetre.afficherPanneauPI(true);
@@ -105,7 +106,7 @@ public class EtatDeBase implements Etat {
 
         } catch (Exception e) {
             //En cas d erreur liee a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("LUI Erreur lors de la sélection du fichier");
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
             //Throwable t = e.getCause();
             //StackTraceElement[] ste = t.getStackTrace();
             //int line = ste[0].getLineNumber();

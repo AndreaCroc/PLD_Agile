@@ -9,24 +9,18 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * AffichageEtapes
+ * AffichageEtapes permet d afficher les details des etapes d une tournee dans
+ * un tableau
  *
- * Version 1
- * 
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class AffichageEtapes extends AbstractTableModel {
-/**
- *
- * Classe AffichageEtapes permet d afficher les details des etapes d une tournee
- * dans un tableau
- */
 
-    private final ArrayList<LigneEtapes> steps; //Lisste des etapes de la tournee
+    private final ArrayList<LigneEtapes> steps; //Lisste des etapes de tournee
     private final String header[]; //En tete du tableau
     private int lignePISelect; //numero de la ligne selectionnee
     private int lignePIDepSelect; //numero de la ligne du point dependant
@@ -36,12 +30,16 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Constructeur de la classe AffichageEtapes
+     *
      * @param format style a apliquer au cellule du tableau
      * @param fenetre la fenetre dans lequel est contenu le tableau
      * @param tournee la tournee faite
      */
-    public AffichageEtapes(FormatCellRenderer format, Fenetre fenetre, Tournee tournee) {
-        this.header = new String[]{"Ordre", "Demande", "Type", "Rue", "Arrivée prévue", "Départ prévu", "Durée prévue"};
+    public AffichageEtapes(FormatCellRenderer format, Fenetre fenetre,
+            Tournee tournee) {
+        this.header = new String[]{"Ordre", "Demande", "Type", "Rue",
+            "Arrivée prévue", "Départ prévu",
+            "Durée prévue"};
         this.steps = new ArrayList<>();
         this.lignePISelect = -1;
         this.lignePIDepSelect = -1;
@@ -114,6 +112,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Recuperer la ligne du tableau selectionnee
+     *
      * @return ligne selectionnee
      */
     public int getLignePISelect() {
@@ -122,6 +121,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Modifier la ligne du tableau selectionnee
+     *
      * @param lignePISelect nouvelle ligne selectionnee
      */
     public void setLignePISelect(int lignePISelect) {
@@ -130,6 +130,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Recuperer la ligne du point dependant du point selectionne
+     *
      * @return ligne du point dependant
      */
     public int getLignePIDepSelect() {
@@ -138,6 +139,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Modifier la ligne du point dependant du point selectionne
+     *
      * @param lignePIDepSelect nouveau numero de ligne du point dependant
      */
     public void setLignePIDepSelect(int lignePIDepSelect) {
@@ -146,6 +148,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Modifier la tournee
+     *
      * @param tournee nouvelle tournee
      */
     public void setTournee(Tournee tournee) {
@@ -154,6 +157,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Recuperer le style a appliquer au tableau
+     *
      * @return style
      */
     public FormatCellRenderer getFormatcell() {
@@ -162,6 +166,7 @@ public class AffichageEtapes extends AbstractTableModel {
 
     /**
      * Modifier le format a appliquer au tableau
+     *
      * @param formatcell nouveau format
      */
     public void setFormatcell(FormatCellRenderer formatcell) {
@@ -177,7 +182,8 @@ public class AffichageEtapes extends AbstractTableModel {
         this.steps.add(step);
 
         //Prevenir le tableau qu une ligne a ete ajoutee a la liste
-        this.fireTableRowsInserted(this.steps.size() - 1, this.steps.size() - 1);
+        this.fireTableRowsInserted(this.steps.size() - 1,
+                this.steps.size() - 1);
     }
 
     /**
@@ -207,7 +213,8 @@ public class AffichageEtapes extends AbstractTableModel {
     public void afficherEtapes(boolean afficher) {
         if (afficher) {
             //Liste des points d interets de la tournee
-            ArrayList<PointInteret> successionPointsInteret = tournee.getSuccessionPointsInteret();
+            ArrayList<PointInteret> successionPointsInteret
+                    = tournee.getSuccessionPointsInteret();
             String nomRue = ""; //Nom de la rue ou se trouve un point d interet
             String heureArrivee = ""; //Heure d arrivee au point d interet
             String heureDepart = ""; //Heure de depart du point d interet
@@ -221,7 +228,8 @@ public class AffichageEtapes extends AbstractTableModel {
             int numDemande = 0; //Numero de demande de la livraison
 
             //S assurer que la liste contient des points d'interet
-            if (successionPointsInteret != null && successionPointsInteret.size() > 1) {
+            if ((successionPointsInteret != null)
+                    && (successionPointsInteret.size() > 1)) {
                 for (PointInteret pt : successionPointsInteret) {
                     //Recuperer le numero de l etape
                     ordre = successionPointsInteret.indexOf(pt);
@@ -235,13 +243,17 @@ public class AffichageEtapes extends AbstractTableModel {
                         nomRueEntrepot = nomRue;
                         numDemande = 0;
                         heureDeb = pt.getHeureDepart();
-                        heureDeb = heureDeb.substring(0, heureDeb.lastIndexOf(":"));
+                        heureDeb = heureDeb.substring(0,
+                                heureDeb.lastIndexOf(":"));
                         heureDeb = heureDeb.replace(":", "h");
                         heureFin = pt.getHeureArrivee();
-                        heureFin = heureFin.substring(0, heureFin.lastIndexOf(":"));
+                        heureFin = heureFin.substring(0,
+                                heureFin.lastIndexOf(":"));
                         heureFin = heureFin.replace(":", "h");
                         //Afficher le depart de l'entrepot
-                        fenetre.setPanneauEtapesEntrepot(ordre, numDemande, nomRueEntrepot, heureDeb);
+                        fenetre.setPanneauEtapesEntrepot(ordre, numDemande,
+                                nomRueEntrepot,
+                                heureDeb);
                     } else {
                         numDemande = pt.getNumeroDemande();
                         if (pt.isEnlevement()) {
@@ -253,21 +265,27 @@ public class AffichageEtapes extends AbstractTableModel {
                         DecimalFormat df = new DecimalFormat("0.00");
                         duree = pt.getDuree();
                         dureeMin = df.format(duree / 60);
-                        dureeMin = dureeMin.substring(0, dureeMin.lastIndexOf(","));
+                        dureeMin = dureeMin.substring(0,
+                                dureeMin.lastIndexOf(","));
                         //Recuperer l heure d arrivee au point d interet
                         heureArrivee = pt.getHeureArrivee();
-                        heureArrivee = heureArrivee.substring(0, heureArrivee.lastIndexOf(":"));
+                        heureArrivee = heureArrivee.substring(0,
+                                heureArrivee.lastIndexOf(":"));
                         heureArrivee = heureArrivee.replace(":", "h");
                         //Recuperer l heure de depart du point d interet
                         heureDepart = pt.getHeureDepart();
-                        heureDepart = heureDepart.substring(0, heureDepart.lastIndexOf(":"));
+                        heureDepart = heureDepart.substring(0,
+                                heureDepart.lastIndexOf(":"));
                         heureDepart = heureDepart.replace(":", "h");
                         //Afficher les etapes dans la fenetre
-                        fenetre.setPanneauEtapes(ordre, numDemande, type, nomRue, heureDepart, heureArrivee, dureeMin);
+                        fenetre.setPanneauEtapes(ordre, numDemande, type,
+                                nomRue, heureDepart,
+                                heureArrivee, dureeMin);
                     }
                 }
                 //Afficher le retour a l'entrepot
-                fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot, heureFin);
+                fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot,
+                        heureFin);
 
             } else {
                 fenetre.cacherPanneauEtapesEtTour();
