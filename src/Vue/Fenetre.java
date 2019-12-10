@@ -1520,7 +1520,7 @@ public class Fenetre extends JFrame {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, 
                 null, null, null);
         int value = ((Integer) spinner.getValue()).intValue();
-        ArrayList<Integer> choix = new ArrayList();
+        ArrayList<Integer> choix = new ArrayList<Integer>();
         choix.add(option);
         choix.add(value);
         return choix;

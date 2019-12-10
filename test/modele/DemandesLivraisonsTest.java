@@ -107,7 +107,7 @@ public class DemandesLivraisonsTest {
     @Test
     public void testGetListePointsInteret() {
         System.out.println("getListePointsInteret");
-        ArrayList<PointInteret> pi = new ArrayList();
+        ArrayList<PointInteret> pi = new ArrayList<PointInteret>();
         assertEquals("Résultat ",pi, demandesLivraisons.getListePointsInteret());
     }
 
@@ -119,7 +119,7 @@ public class DemandesLivraisonsTest {
         System.out.println("ajouterPointInteret");
         PointInteret pI = new PointInteret();
         demandesLivraisons.ajouterPointInteret(pI);
-        ArrayList<PointInteret> listePi = new ArrayList();
+        ArrayList<PointInteret> listePi = new ArrayList<PointInteret>();
         listePi.add(pI);
         assertEquals("Résultat ",listePi, demandesLivraisons.getListePointsInteret());
     }
@@ -133,7 +133,7 @@ public class DemandesLivraisonsTest {
         PointInteret pI = new PointInteret();
         demandesLivraisons.ajouterPointInteret(pI);
         demandesLivraisons.supprimerLivraison();
-        ArrayList<PointInteret> listePi = new ArrayList();
+        ArrayList<PointInteret> listePi = new ArrayList<PointInteret>();
         assertEquals("Résultat ",listePi, demandesLivraisons.getListePointsInteret());
     }
 
@@ -145,7 +145,7 @@ public class DemandesLivraisonsTest {
         System.out.println("getPis");
         PointInteret pi1 = new PointInteret();
         PointInteret pi2 = new PointInteret();
-        ArrayList<PointInteret> listePi = new ArrayList();
+        ArrayList<PointInteret> listePi = new ArrayList<PointInteret>();
         listePi.add(pi1);
         listePi.add(pi2);
         demandesLivraisons.ajouterPointInteret(pi1);
@@ -154,3 +154,4 @@ public class DemandesLivraisonsTest {
     }
     
 }
+

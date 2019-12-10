@@ -105,7 +105,7 @@ public class TourneeTest {
         System.out.println("getSuccessionPointsInteret");
         
         //Test 1 : La liste des points d interets est vide
-        ArrayList<PointInteret> expResult = new ArrayList();
+        ArrayList<PointInteret> expResult = new ArrayList<PointInteret>();
         ArrayList<PointInteret> result = tournee.getSuccessionPointsInteret();
         assertEquals("La liste de succession de points d'intérêts est incorrecte",expResult, result);
         
@@ -164,7 +164,7 @@ public class TourneeTest {
         assertEquals("La liste de la tournée n'a pas été modifiée",expResult, result);
         
         //Test 2 : La liste des points d interets est vide
-        successionPointsInteret = new ArrayList();
+        successionPointsInteret = new ArrayList<PointInteret>();
         tournee.setSuccessionPointsInteret(successionPointsInteret);
         expResult = successionPointsInteret;
         result = tournee.getSuccessionPointsInteret();
@@ -211,7 +211,7 @@ public class TourneeTest {
         Double longitude3 = 5.6;
         Intersection arrivee = new Intersection(id3, latitude3, longitude3);
         
-        ArrayList<Troncon> successionTroncons = new ArrayList();
+        ArrayList<Troncon> successionTroncons = new ArrayList<Troncon>();
         Chemin chemin = new Chemin(depart, arrivee,successionTroncons);
         ptI.setCheminDepart(chemin);
         tournee.ajouterPointInteret(ptI);

@@ -32,42 +32,82 @@ public class Chemin {
         this.dureeTrajet=this.calculerDureeTrajet();
     }
 
+    /**
+     * Retourne l intersection de depart
+     * @return intersection de depart
+     */
     public Intersection getDepart() {
         return depart;
     }
-
+    
+    /**
+     * Modifie l intersection de depart du chemin
+     * @param depart intersection de depart
+     */
     public void setDepart(Intersection depart) {
         this.depart = depart;
     }
 
+    /**
+     * Renvoie l intersection d arrivee du chemin
+     * @return intersection d arrivee du chemin
+     */
     public Intersection getArrivee() {
         return arrivee;
     }
 
+    /**
+     * Modifie l arrivee du chemin
+     * @param arrivee intersection d arrivee du chemin
+     */
     public void setArrivee(Intersection arrivee) {
         this.arrivee = arrivee;
     }
 
+    /**
+     * Renvoie la longueur du chemin
+     * @return longueur de type Double
+     */
     public Double getLongueur() {
         return longueur;
     }
 
+    /**
+     * Modifie la longueur du chemin
+     * @param longueur nouvelle longueur du chemin
+     */
     public void setLongueur(Double longueur) {
         this.longueur = longueur;
     }
 
+    /**
+     * Renvoie la duree de parcours du chemin
+     * @return duree du trajet
+     */
     public Integer getDureeTrajet() {
         return dureeTrajet;
     }
 
+    /**
+     * Modifie la duree de parcours du chemin
+     * @param dureeTrajet nouvelle duree du trajet
+     */
     public void setDureeTrajet(Integer dureeTrajet) {
         this.dureeTrajet = dureeTrajet;
     }
 
+    /**
+     * Renvoie la liste des troncons qui composent le chemin
+     * @return liste des troncons qui composent le chemin
+     */
     public ArrayList<Troncon> getSuccessionTroncons() {
         return successionTroncons;
     }
 
+    /**
+     * Ajout d un troncon au chemin
+     * @param troncon troncon a ajouter
+     */
     public void ajouterTroncon(Troncon troncon) {
         this.successionTroncons.add(troncon);
         //mise a jour du depart et de l'arrivee
@@ -80,8 +120,11 @@ public class Chemin {
         calculerDureeTrajet();
     }
     
-    //Méthode permettant de calculer mettre à jour la longueur du chemin à partir
-    //des troncons qui le composent
+    /**
+     * Methode permettant de calculer mettre a jour la longueur du chemin
+     * a partir des troncons qui le composent
+     * @return longueur calculee
+     */
     public Double calculerLongueur() {
         Double longueur = 0.0;
         for (Troncon troncon : this.successionTroncons) {
@@ -91,8 +134,11 @@ public class Chemin {
         return longueur;
     }
     
-    //Méthode permettant de calculer et mettre à jour la durée du trajet pour un 
-    //chemin à partir des troncons qui le composent
+    /**
+     * Methode permettant de calculer et mettre a jour la durée du trajet pour 
+     * un chemin a partir des troncons qui le composent
+     * @return duree calculee
+     */
     public Integer calculerDureeTrajet() {
         Integer dureeChemin = 0;
         Double dureeDouble = longueur;
@@ -101,6 +147,10 @@ public class Chemin {
         return dureeTrajet;
     }
 
+    /**
+     * Retourne une chaine de carcteres definissant le chemin
+     * @return chaine de carcteres definissant le chemin
+     */
     @Override
     public String toString() {
         String out = "Chemin de " + depart.getId() + " à " + arrivee.getId();

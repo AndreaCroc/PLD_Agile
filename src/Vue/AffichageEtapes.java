@@ -40,7 +40,7 @@ public class AffichageEtapes extends AbstractTableModel {
         this.header = new String[]{"Ordre", "Demande", "Type", "Rue",
             "Arrivée prévue", "Départ prévu",
             "Durée prévue"};
-        this.steps = new ArrayList<>();
+        this.steps = new ArrayList<LigneEtapes>();
         this.lignePISelect = -1;
         this.lignePIDepSelect = -1;
         this.formatcell = format;

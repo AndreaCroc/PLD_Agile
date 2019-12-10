@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +34,10 @@ public class JCarte extends JPanel {
     //liste des point dinerets de la carte
     private ArrayList<CoordPointInteret> listeCoordPtI;
     private Map<Intersection, Point> intersectionsMap;
+    private ArrayList<Troncon> tronconsNomsRues;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
-    private ArrayList<Point> coorIntersections = new ArrayList<>();
+    private ArrayList<Point> coorIntersections = new ArrayList<Point>();
 
     /**
      * Constructeur de la classe JCarte
@@ -47,11 +49,14 @@ public class JCarte extends JPanel {
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
         this.tournee = tournee;
-        this.listeCoordPtI = new ArrayList<>();
-        this.intersectionsMap = new HashMap<>();
+
+        this.listeCoordPtI = new ArrayList<CoordPointInteret>();
+        this.intersectionsMap = new HashMap<Intersection, Point>();
+        this.tronconsNomsRues = new ArrayList<Troncon>();
+        
         this.fenetre = fenetre;
         this.palette = this.fenetre.getPalette();
-        this.coorIntersections = new ArrayList<>();
+        this.coorIntersections = new ArrayList<Point>();
         this.repaint();
     }
 
@@ -113,6 +118,14 @@ public class JCarte extends JPanel {
      */
     public ArrayList<CoordPointInteret> getCoordPtInterets() {
         return this.listeCoordPtI;
+    }
+    
+    /**
+     * Modifier la liste des troncons dont on veut afficher le nom de la rue
+     * @param lTroncons liste de troncons
+     */
+    public void setTronconsNomsRues(ArrayList<Troncon> lTroncons) {
+        this.tronconsNomsRues = lTroncons;
     }
 
     /*Recupère la latitude maximale présente sur la carte*/
@@ -374,6 +387,40 @@ public class JCarte extends JPanel {
                     (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);*/
         }
 
+        for (Troncon tRues : tronconsNomsRues) {
+            System.out.println(tRues.getNomRue());
+            Graphics2D g2 = (Graphics2D)g.create();
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+            g2.setColor(new Color(0,0,0));
+
+            //rotation du texte selon l'angle de la rue affichée
+            //k est la pente
+            //System.out.println(((double) (this.getProportionalY(tRues.getDestination(), intersections)) + "-"  +this.getProportionalY(tRues.getOrigine(), intersections) + " / " + this.getProportionalX(tRues.getDestination(), intersections) + "-"+this.getProportionalX(tRues.getOrigine(), intersections)));
+            double xDest = this.getProportionalX(tRues.getDestination(), intersections);
+            double yDest = this.getProportionalY(tRues.getDestination(), intersections);
+            double xOrig = this.getProportionalX(tRues.getOrigine(), intersections);
+            double yOrig = this.getProportionalY(tRues.getOrigine(), intersections);
+
+            double numerateur = (yDest - yOrig);
+            double denom = (xDest - xOrig);
+            double k;
+            if(denom != 0) {
+                k = numerateur / denom;
+            } else {
+                k = numerateur / 0.001;
+            }
+
+            int nvX = (this.getProportionalX(tRues.getDestination(), intersections) + this.getProportionalX(tRues.getOrigine(), intersections))/2;
+            int nvY = (this.getProportionalY(tRues.getDestination(), intersections) + this.getProportionalY(tRues.getOrigine(), intersections))/2;
+
+            double radian = Math.atan(k);
+            System.out.println(radian);
+
+            g2.rotate(radian,nvX, nvY); //mieux avec x et y précisees
+            g2.drawString(tRues.getNomRue(), nvX,nvY);// S, left, BOTTOM
+            g2.dispose();
+        }
+        
         if (carte.getDemandesLivraisons() != null) {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
@@ -528,18 +575,18 @@ public class JCarte extends JPanel {
                     g2.setStroke(line);
                     g2.setColor(Color.blue);
                     if (ligneTab == 0) {
-                        //Faire un carre rouge autour du point d interet
+                        //Faire un carre bleu autour entrepot
                         g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 14);
                         g2.drawLine(xPI - 3, yPI + 14, xPI + 14, yPI + 14);
                         g2.drawLine(xPI + 14, yPI + 14, xPI + 14, yPI - 3);
                         g2.drawLine(xPI + 14, yPI - 3, xPI - 3, yPI - 3);
 
                     } else {
-                        //Faire un carre rouge autour du point d interet
-                        g2.drawLine(xPI - 4, yPI - 4, xPI - 4, yPI + 13);
-                        g2.drawLine(xPI - 4, yPI + 13, xPI + 13, yPI + 13);
-                        g2.drawLine(xPI + 13, yPI + 13, xPI + 13, yPI - 4);
-                        g2.drawLine(xPI + 13, yPI - 4, xPI - 4, yPI - 4);
+                        //Faire un carre bleu autour du point d interet
+                        g2.drawLine(xPI - 4, yPI - 4, xPI - 4, yPI + 16);
+                        g2.drawLine(xPI - 4, yPI + 16, xPI + 16, yPI + 16);
+                        g2.drawLine(xPI + 16, yPI + 16, xPI + 16, yPI - 4);
+                        g2.drawLine(xPI + 16, yPI - 4, xPI - 4, yPI - 4);
                     }
 
                 }
@@ -560,12 +607,12 @@ public class JCarte extends JPanel {
 
                     //Faire un carre orange autour du point d interet dependant
                     g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep
-                            + 13);
-                    g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep
-                            + 13);
-                    g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep
+                            + 16);
+                    g2.drawLine(xPIDep - 4, yPIDep + 16, xPIDep + 16, yPIDep
+                            + 16);
+                    g2.drawLine(xPIDep + 16, yPIDep + 16, xPIDep + 16, yPIDep
                             - 4);
-                    g2.drawLine(xPIDep + 13, yPIDep - 4, xPIDep - 4, yPIDep
+                    g2.drawLine(xPIDep + 16, yPIDep - 4, xPIDep - 4, yPIDep
                             - 4);
 
                 }
