@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * EcouteurBoutons permet de recuperer et gerer les evenements sur les
- * boutons de la fenetre
+ * EcouteurBoutons permet de recuperer et gerer les evenements sur les boutons
+ * de la fenetre
  *
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EcouteurBoutons implements ActionListener {
@@ -71,15 +71,15 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.MODIFIER:
                 controleur.modifier(-1);
                 break;
-                //Si on veut modifier l ordre d un point d interet
+            //Si on veut modifier l ordre d un point d interet
             case Fenetre.ZOOMER:
                 controleur.zoomer();
                 break;
-                //Si on veut modifier l ordre d un point d interet
+            //Si on veut modifier l ordre d un point d interet
             case Fenetre.DEZOOMER:
                 controleur.deZoomer();
                 break;
-                            //Si on veut ajouter un point dinteret
+            //Si on veut ajouter un point dinteret
             case Fenetre.DROITE:
                 controleur.decalage(1);
                 break;
@@ -87,26 +87,26 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.GAUCHE:
                 controleur.decalage(-1);
                 break;
-                //Si on veut modifier l ordre d un point d interet
+            //Si on veut modifier l ordre d un point d interet
             case Fenetre.HAUT:
                 controleur.decalage(-2);
                 break;
-                //Si on veut modifier l ordre d un point d interet
+            //Si on veut modifier l ordre d un point d interet
             case Fenetre.BAS:
                 controleur.decalage(2);
                 break;
         }
-        
+
         //Recuperer un clic sur le bouton redo
-        if(e.getSource() == fenetre.getBoutonRedo()){
+        if (e.getSource() == fenetre.getBoutonRedo()) {
             controleur.redo();
         }
-        
+
         //Recuperer un clic sur le bouton undo
-        if(e.getSource() == fenetre.getBoutonUndo()){
+        if (e.getSource() == fenetre.getBoutonUndo()) {
             controleur.undo();
         }
-        
+
     }
 
 }

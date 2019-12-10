@@ -243,17 +243,17 @@ public class AffichageEtapes extends AbstractTableModel {
                         nomRueEntrepot = nomRue;
                         numDemande = 0;
                         heureDeb = pt.getHeureDepart();
-                        heureDeb = heureDeb.substring(0, 
-                                   heureDeb.lastIndexOf(":"));
+                        heureDeb = heureDeb.substring(0,
+                                heureDeb.lastIndexOf(":"));
                         heureDeb = heureDeb.replace(":", "h");
                         heureFin = pt.getHeureArrivee();
-                        heureFin = heureFin.substring(0, 
-                                            heureFin.lastIndexOf(":"));
+                        heureFin = heureFin.substring(0,
+                                heureFin.lastIndexOf(":"));
                         heureFin = heureFin.replace(":", "h");
                         //Afficher le depart de l'entrepot
-                        fenetre.setPanneauEtapesEntrepot(ordre, numDemande, 
-                                                         nomRueEntrepot, 
-                                                         heureDeb);
+                        fenetre.setPanneauEtapesEntrepot(ordre, numDemande,
+                                nomRueEntrepot,
+                                heureDeb);
                     } else {
                         numDemande = pt.getNumeroDemande();
                         if (pt.isEnlevement()) {
@@ -265,27 +265,27 @@ public class AffichageEtapes extends AbstractTableModel {
                         DecimalFormat df = new DecimalFormat("0.00");
                         duree = pt.getDuree();
                         dureeMin = df.format(duree / 60);
-                        dureeMin = dureeMin.substring(0, 
-                                   dureeMin.lastIndexOf(","));
+                        dureeMin = dureeMin.substring(0,
+                                dureeMin.lastIndexOf(","));
                         //Recuperer l heure d arrivee au point d interet
                         heureArrivee = pt.getHeureArrivee();
-                        heureArrivee = heureArrivee.substring(0, 
-                                       heureArrivee.lastIndexOf(":"));
+                        heureArrivee = heureArrivee.substring(0,
+                                heureArrivee.lastIndexOf(":"));
                         heureArrivee = heureArrivee.replace(":", "h");
                         //Recuperer l heure de depart du point d interet
                         heureDepart = pt.getHeureDepart();
-                        heureDepart = heureDepart.substring(0, 
-                                      heureDepart.lastIndexOf(":"));
+                        heureDepart = heureDepart.substring(0,
+                                heureDepart.lastIndexOf(":"));
                         heureDepart = heureDepart.replace(":", "h");
                         //Afficher les etapes dans la fenetre
-                        fenetre.setPanneauEtapes(ordre, numDemande, type, 
-                                                 nomRue, heureDepart, 
-                                                 heureArrivee, dureeMin);
+                        fenetre.setPanneauEtapes(ordre, numDemande, type,
+                                nomRue, heureDepart,
+                                heureArrivee, dureeMin);
                     }
                 }
                 //Afficher le retour a l'entrepot
-                fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot, 
-                                                 heureFin);
+                fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot,
+                        heureFin);
 
             } else {
                 fenetre.cacherPanneauEtapesEtTour();
