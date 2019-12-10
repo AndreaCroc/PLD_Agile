@@ -397,7 +397,7 @@ public class JCarte extends JPanel {
                     
                     if (i.isEnlevement()) {
                         
-                        
+                        System.out.println("laaaaa "+this.palette.size());
                         g.setColor(this.palette.get(indiceC));
                         if(indiceC<this.palette.size())indiceC++;
                         
