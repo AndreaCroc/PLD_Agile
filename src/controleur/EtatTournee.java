@@ -253,6 +253,7 @@ public class EtatTournee implements Etat {
         fenetre.afficherBoutonSupprimer();
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
+        controleur.annulerAnciennesCommandes();
     }
 
 }

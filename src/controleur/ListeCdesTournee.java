@@ -26,7 +26,7 @@ public class ListeCdesTournee {
     private Fenetre fenetre;
 
     public ListeCdesTournee(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
-        listeCommandes = new ArrayList();
+        listeCommandes = new ArrayList<CommandeTournee>();
         indiceActuel = -1;
         this.carte = carte;
         this.tournee = tournee;

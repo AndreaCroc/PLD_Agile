@@ -39,7 +39,7 @@ public class AffichagePIs extends AbstractTableModel {
      */
     public AffichagePIs(FormatCellRenderer formatcell, Carte carte,
             Fenetre fenetre) {
-        this.lignePIs = new ArrayList<>();
+        this.lignePIs = new ArrayList<LignePI>();
         this.header = new String[]{"Numéro demande", "Type", "Durée", "Rue(s)"};
         this.lignePISelect = -1;
         this.lignePIDepSelect = -1;

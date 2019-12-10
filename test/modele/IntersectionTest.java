@@ -144,7 +144,7 @@ public class IntersectionTest {
         System.out.println("getTronconsDepart");
         Troncon t = new Troncon();
         intersection.ajouterTronconDepart(t);
-        ArrayList<Troncon> expect =  new ArrayList();
+        ArrayList<Troncon> expect =  new ArrayList<Troncon>();
         expect.add(t);
         ArrayList<Troncon> result = intersection.getTronconsDepart();
         assertEquals(expect, result);
@@ -159,7 +159,7 @@ public class IntersectionTest {
         System.out.println("ajouterTronconDepart");
         Troncon t = new Troncon();
         intersection.ajouterTronconDepart(t);
-        ArrayList<Troncon> expect =  new ArrayList();
+        ArrayList<Troncon> expect =  new ArrayList<Troncon>();
         expect.add(t);
         ArrayList<Troncon> result = intersection.getTronconsDepart();
         assertEquals(expect, result);

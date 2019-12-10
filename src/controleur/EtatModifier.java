@@ -42,8 +42,8 @@ public class EtatModifier implements Etat {
             int pos = 0; //Position du point d interet dan sla tournee
             int min = 0; //deplacement max au plus tot
             int max = 0; //deplacement max au plus tard
-            ArrayList<Integer>choix = new ArrayList(); //Retour methode classe Fenetre
-            ArrayList<PointInteret> listeTournee = new ArrayList(); //liste de la classe Tournee
+            ArrayList<Integer>choix = new ArrayList<Integer>(); //Retour methode classe Fenetre
+            ArrayList<PointInteret> listeTournee = new ArrayList<PointInteret>(); //liste de la classe Tournee
             CdeModif commande;
             //Si l index est inferieur a la taille de la liste de la carte
             if (index < listePIs.size()) {

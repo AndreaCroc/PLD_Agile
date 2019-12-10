@@ -35,7 +35,7 @@ public class JCarte extends JPanel {
     private Map<Intersection, Point> intersectionsMap;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
-    private ArrayList<Point> coorIntersections = new ArrayList<>();
+    private ArrayList<Point> coorIntersections = new ArrayList<Point>();
 
     /**
      * Constructeur de la classe JCarte
@@ -47,11 +47,11 @@ public class JCarte extends JPanel {
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
         this.tournee = tournee;
-        this.listeCoordPtI = new ArrayList<>();
-        this.intersectionsMap = new HashMap<>();
+        this.listeCoordPtI = new ArrayList<CoordPointInteret>();
+        this.intersectionsMap = new HashMap<Intersection, Point>();
         this.fenetre = fenetre;
         this.palette = this.fenetre.getPalette();
-        this.coorIntersections = new ArrayList<>();
+        this.coorIntersections = new ArrayList<Point>();
         this.repaint();
     }
 
@@ -528,18 +528,18 @@ public class JCarte extends JPanel {
                     g2.setStroke(line);
                     g2.setColor(Color.blue);
                     if (ligneTab == 0) {
-                        //Faire un carre rouge autour du point d interet
+                        //Faire un carre bleu autour entrepot
                         g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 14);
                         g2.drawLine(xPI - 3, yPI + 14, xPI + 14, yPI + 14);
                         g2.drawLine(xPI + 14, yPI + 14, xPI + 14, yPI - 3);
                         g2.drawLine(xPI + 14, yPI - 3, xPI - 3, yPI - 3);
 
                     } else {
-                        //Faire un carre rouge autour du point d interet
-                        g2.drawLine(xPI - 4, yPI - 4, xPI - 4, yPI + 13);
-                        g2.drawLine(xPI - 4, yPI + 13, xPI + 13, yPI + 13);
-                        g2.drawLine(xPI + 13, yPI + 13, xPI + 13, yPI - 4);
-                        g2.drawLine(xPI + 13, yPI - 4, xPI - 4, yPI - 4);
+                        //Faire un carre bleu autour du point d interet
+                        g2.drawLine(xPI - 4, yPI - 4, xPI - 4, yPI + 16);
+                        g2.drawLine(xPI - 4, yPI + 16, xPI + 16, yPI + 16);
+                        g2.drawLine(xPI + 16, yPI + 16, xPI + 16, yPI - 4);
+                        g2.drawLine(xPI + 16, yPI - 4, xPI - 4, yPI - 4);
                     }
 
                 }
@@ -560,12 +560,12 @@ public class JCarte extends JPanel {
 
                     //Faire un carre orange autour du point d interet dependant
                     g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep
-                            + 13);
-                    g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep
-                            + 13);
-                    g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep
+                            + 16);
+                    g2.drawLine(xPIDep - 4, yPIDep + 16, xPIDep + 16, yPIDep
+                            + 16);
+                    g2.drawLine(xPIDep + 16, yPIDep + 16, xPIDep + 16, yPIDep
                             - 4);
-                    g2.drawLine(xPIDep + 13, yPIDep - 4, xPIDep - 4, yPIDep
+                    g2.drawLine(xPIDep + 16, yPIDep - 4, xPIDep - 4, yPIDep
                             - 4);
 
                 }
