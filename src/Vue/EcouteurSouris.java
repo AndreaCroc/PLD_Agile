@@ -10,6 +10,7 @@ import modele.Intersection;
 import modele.PointInteret;
 import javax.swing.JOptionPane;
 import controleur.EtatAjouter;
+import modele.Troncon;
 
 /**
  * EcouteurSouris permet de recuperer et de gerer les evenements lies a la
@@ -143,7 +144,10 @@ public class EcouteurSouris extends MouseAdapter {
                                 //les coordonnées correspondent
 
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
-                                //key.getTronconsDepart();
+                                ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
+                                System.out.println(key.getTronconsDepart().size());
+                                vueCarte.setTronconsNomsRues(listeTroncons);
+                                vueCarte.repaint();
                             }
 
                         }
