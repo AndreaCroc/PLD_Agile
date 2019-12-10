@@ -523,23 +523,20 @@ public class Carte {
         return contraintePrec;
     }
 
-    /**
+   /**
      * Méthode permettant d'ajouter une nouvelle livraison (point enlevement +
      * point de livraison) à une tournee
      *
-     * @param pointEnlevement  point d'enlévement à ajouter
-     * @param pointLivraison  point de livraison à ajouter
+     * @param pointEnlevement point d'enlévement à ajouter
+     * @param pointLivraison point de livraison à ajouter
      * @param pointAvantEnlevement point d'intérêt après lequel on souhaite
      * placer le point d'enlèvement
      * @param pointAvantLivraison point d'intérêt après lequel on souhaite
      * placer le point de livraison
-     * @param dureeEnlevement durée d'enlèvement
-     * @param dureeLivraison durée de livraison
      * @return vrai si l'ajout a été effectué, faux sinon
      */
     public boolean ajouterLivraison(PointInteret pointEnlevement, PointInteret pointLivraison,
-            PointInteret pointAvantEnlevement, PointInteret pointAvantLivraison, 
-            int dureeEnlevement, int dureeLivraison) {
+            PointInteret pointAvantEnlevement, PointInteret pointAvantLivraison) {
 
         ArrayList<PointInteret> successionPointsInteret = uneTournee.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
@@ -551,31 +548,37 @@ public class Carte {
         int numeroDemande = (listePointsInteret.size() - 1) / 2 + 1;
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
-        
+
         //
         pointEnlevement.setEnlevement(true);
         pointLivraison.setEnlevement(false);
         pointEnlevement.setPointDependance(pointLivraison);
         pointLivraison.setPointDependance(pointEnlevement);
 
-        //Ajout aux listes de points d'intérêt
-        listePointsInteret.add(pointEnlevement);
-        listePointsInteret.add(pointLivraison);
-        listePointsInteretActuelle.add(pointEnlevement);
-        listePointsInteretActuelle.add(pointLivraison);
-
         //Vérification de la contrainte de précédence
         if (indPointAvantLivr < indPointAvantEnlvt) {
             return false;
         } //Cas où l'enlèvement doit être placé juste avant la livraison
         else if (indPointAvantLivr == indPointAvantEnlvt) {
+            //Ajout aux listes de points d'intérêt
+            listePointsInteret.add(pointEnlevement);
+            listePointsInteret.add(pointLivraison);
+            listePointsInteretActuelle.add(pointEnlevement);
+            listePointsInteretActuelle.add(pointLivraison);
             this.ajouterPointInteret(pointEnlevement, pointAvantEnlevement);
             this.ajouterPointInteret(pointLivraison, pointEnlevement);
+            
         } else {
+            //Ajout aux listes de points d'intérêt
+            listePointsInteret.add(pointEnlevement);
+            listePointsInteret.add(pointLivraison);
+            listePointsInteretActuelle.add(pointEnlevement);
+            listePointsInteretActuelle.add(pointLivraison);
             ajouterPointInteret(pointEnlevement, pointAvantEnlevement);
             ajouterPointInteret(pointLivraison, pointAvantLivraison);
+            
         }
-
+        
         //Mise à jour des heures de départ et d'arrivée
         this.calculerHeuresTournee();
 
