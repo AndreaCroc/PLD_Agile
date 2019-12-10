@@ -30,7 +30,7 @@ public class Carte {
 
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
-    private TSP2 unTSP;
+    private TSP3 unTSP;
     private Tournee uneTournee;
     public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
@@ -46,7 +46,7 @@ public class Carte {
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.listePointsInteretActuelle = new ArrayList<PointInteret>();
-        this.unTSP = new TSP2();
+        this.unTSP = new TSP3();
         this.uneTournee = new Tournee();
     }
 
@@ -326,14 +326,20 @@ public class Carte {
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
+        double nbPheromone=15;
         
-        
+        Double[][] matricePheromone = new Double[nbSommets + 5][nbSommets + 5];
         //Creation de la tournée
+        for (int i=0; i<nbSommets;i++){
+             for (int j=0; j<nbSommets;j++){
+                matricePheromone[i][j]=nbPheromone;
+             }
+        }
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         Integer indPointPrec;
         Chemin chemin;
-        unTSP = new TSP2();
+        unTSP = new TSP3();
         
         creerGraphePCC();
         
@@ -350,13 +356,14 @@ public class Carte {
             }
 
             //Execution du TSP
-            unTSP.chercheSolution2(1000000, nbSommets, cout, duree,this.mapPredecesseur);
+            unTSP.chercheSolution3(1000000, nbSommets, cout, duree,this.mapPredecesseur,matricePheromone);
 
             indPointPrec = unTSP.getMeilleureSolution(0);
 
             PointInteret pointCourant = new PointInteret();
             for (int i = 1; i < nbSommets; i++) {
                 indPointCourant = unTSP.getMeilleureSolution(i);
+                System.out.println("l 366");
                 chemin = chemins[indPointPrec][indPointCourant];
                 pointCourant = listePointsInteret.get(indPointPrec);
                 pointCourant.setCheminDepart(chemin);
