@@ -332,28 +332,6 @@ public class JCarte extends JPanel {
         return proportionalX;
     }
 
-    /*public void makePalette(){
-        ArrayList<Color> palette=new ArrayList<Color>();
-        
-        if(carte.getListePointsInteretActuelle() != null)
-        {
-            System.out.println("iciiiiiiii");
-            ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
-            palette=new ArrayList<Color>();
-            
-            for (int c=0;c<(PIs.size()-1)/2;c++) {
-                Random rand = new Random();
-                    float r = rand.nextFloat();
-                    float gg = rand.nextFloat();
-                    float b = rand.nextFloat();
-                    Color randomColor = new Color(r, gg, b);
-                    palette.add(randomColor);
-            }
-        }
-        System.out.println(palette.size());
-        this.palette=palette;
-        System.out.println(this.palette.size());
-    }*/
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -379,6 +357,7 @@ public class JCarte extends JPanel {
             ArrayList<Troncon> iTroncons = i.getTronconsDepart();
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
+                
                 g.drawLine(this.getProportionalX(i, intersections) + 1,
                         this.getProportionalY(i, intersections) + 1,
                         this.getProportionalX(t.getDestination(),
@@ -386,26 +365,18 @@ public class JCarte extends JPanel {
                         this.getProportionalY(t.getDestination(),
                                 intersections) + 1);
 
-//ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
-                /*
-                if(t.getNomRue().contains("Avenue")||t.getNomRue().contains("Cours")){
-                    Graphics2D g2 = (Graphics2D)g; //cast for java2
-                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-                    g2.setColor(new Color(0,0,0));
-                    g2.drawString(t.getNomRue(), this.getProportionalX(t.getDestination(), intersections),this.getProportionalY(t.getDestination(), intersections));// S, left, BOTTOM
-                }*/
             }
-            g.setColor(Color.red);
+            //test zoom
+            /*g.setColor(Color.red);
             g.fillOval((int) ((1 * fenetre.getZoom()) - fenetre.getDeplX()),
                     (int) ((1 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);
             g.fillOval((int) ((100 * fenetre.getZoom()) - fenetre.getDeplX()),
-                    (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);
+                    (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);*/
         }
 
         if (carte.getDemandesLivraisons() != null) {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
-            //ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
             int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs,
@@ -437,19 +408,19 @@ public class JCarte extends JPanel {
                         }
 
                         int xRect = this.getProportionalXPIs(i
-                                .getIntersection(), PIs, intersections) - 2;
+                                .getIntersection(), PIs, intersections) -4;
                         int yRect = this.getProportionalYPIs(i
-                                .getIntersection(), PIs, intersections) - 2;
+                                .getIntersection(), PIs, intersections) -4;
                         int xOval = this.getProportionalXPIs(i
                                 .getPointDependance().getIntersection(),
-                                PIs, intersections) - 2;
+                                PIs, intersections) -5;
                         int yOval = this.getProportionalYPIs(i
                                 .getPointDependance().getIntersection(),
-                                PIs, intersections) - 2;
+                                PIs, intersections) -5;
                         Point ptRect = new Point(xRect, yRect);
                         Point ptOval = new Point(xOval, yOval);
-                        g.fillRect(xRect, yRect, 9, 9);
-                        g.fillOval(xOval, yOval, 9, 9);
+                        g.fillRect(xRect, yRect, 12, 12);
+                        g.fillOval(xOval, yOval,12, 12);
 
                         //Ajout des points a la liste stockant 
                         //les coordonnees des points d interets
@@ -476,15 +447,18 @@ public class JCarte extends JPanel {
                     ArrayList<Troncon> iTroncons = chemin
                             .getSuccessionTroncons();
                     for (Troncon t : iTroncons) {
-                        g.setColor(Color.RED);
-                        g.drawLine(this.getProportionalX(t.getOrigine(),
-                                intersections) + 1, this.getProportionalY(
-                                        t.getOrigine(), intersections) + 1,
+                        
+                        Graphics2D g1 = (Graphics2D) g;
+                        g1.setStroke( new BasicStroke(3.0f));
+                        g1.setColor(Color.RED);
+                        g1.drawLine(this.getProportionalX(t.getOrigine(),
+                                intersections) , this.getProportionalY(
+                                        t.getOrigine(), intersections) ,
                                 this.getProportionalX(t.getDestination(),
-                                        intersections) + 1, this
+                                        intersections) , this
                                         .getProportionalY(
                                                 t.getDestination(),
-                                                intersections) + 1);
+                                                intersections) );
 
                         if (t.getLongueur() > 120) {
                             int x = (int) (Math.abs((this.getProportionalX(
@@ -552,7 +526,7 @@ public class JCarte extends JPanel {
                     BasicStroke line = new BasicStroke(3.5f);
                     Graphics2D g2 = (Graphics2D) g;
                     g2.setStroke(line);
-                    g2.setColor(Color.RED);
+                    g2.setColor(Color.blue);
                     if (ligneTab == 0) {
                         //Faire un carre rouge autour du point d interet
                         g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 14);

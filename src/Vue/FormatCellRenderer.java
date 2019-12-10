@@ -95,16 +95,16 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
                                                 - table.getRowCount()) {
                     if (column == 0) {
                         this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
-                                                                0, Color.red));
+                                                                0, Color.blue));
                     //Si la cellule est de type textArea
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
                         textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 
-                                                              2, 2, Color.red));
+                                                              2, 2, Color.blue));
                         return textArea;
                     } else {
                         this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
-                                                                 0, Color.red));
+                                                                 0, Color.blue));
                     }
                 }
             }
@@ -142,13 +142,13 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
                         || row == indexPI - nbLignes) {
                     if (column == 0) {
                         this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 
-                                                                0, Color.red));
+                                                                0, Color.blue));
                     } else if (column == table.getColumnCount() - 1) {
                         this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
-                                                                2, Color.red));
+                                                                2, Color.blue));
                     } else {
                         this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
-                                                                0, Color.red));
+                                                                0, Color.blue));
                     }
                 }
             }
