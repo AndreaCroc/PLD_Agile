@@ -23,141 +23,141 @@ public class EtatAjouter implements Etat {
 
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
-        Intersection iE = null;
-        Integer dureeE = null;
-        Double laE = null;
-        Double loE = null;
+         System.out.println("pAE dans etatAj:"+fenetre.getAvantPE().getIntersection().getId()+" pAL dans etatAj:"+fenetre.getAvantPL().getIntersection().getId());
+        if(carte.ajouterLivraison(fenetre.getPE(), fenetre.getPL(), fenetre.getAvantPE(), fenetre.getAvantPL(), 100, 100)){
+            tournee = carte.getTournee();
+            fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+            fenetre.setTournee(tournee);
+            controleur.setTournee(tournee);
 
-        Intersection iL = null;
-        Integer dureeL = null;
-        Double laL = null;
-        Double loL = null;
+            fenetre.viderPanneauEtapes();
+            fenetre.viderPanneauPIs();
+            fenetre.afficherEtapesTour(true);
+            fenetre.afficherPanneauPI(true);
 
-        while (true) {
-            while (iE == null) {
-                try {
-                    laE = Double.valueOf(JOptionPane.showInputDialog("Merci de saisir la latitude du point d'enlevement"));
-                    loE = Double.valueOf(JOptionPane.showInputDialog("Merci de saisir la longitude du point d'enlevement"));
-                    // chercher l'intersection dans la liste
-                    for (Intersection i : carte.getListeIntersections()) {
-                        if (i.getLatitude().compareTo(laE) == 0 && i.getLongitude().compareTo(loE) == 0) {
-                            iE = i;
-                            break;
-                        }
-                    }
-                    // si on n'a pas trouve l'intersection
-                    if (iE == null) {
-                        JOptionPane.showMessageDialog(fenetre, "L'intersection n'existe pas, merci de saisir des coordonnees valides");
-                        continue;
-                    } else {
-                        boolean existeDansListePI = false;
-                        for (PointInteret pI : carte.getDemandesLivraisons().getListePointsInteret()) {
-                            if (pI.getIntersection().getLatitude().compareTo(laE) == 0 && pI.getIntersection().getLongitude().compareTo(loE) == 0) {
-                                JOptionPane.showMessageDialog(fenetre, "Le point d'interet existe deja, merci de saisir d'autres coordonnees");
-                                existeDansListePI = true;
-                                break;
-                            }
-                        }
-                        if (existeDansListePI) {
-                            iE = null;
-                            continue;
-                        }
-                    }
-
-                    dureeE = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree du point d'enlevement"));
-
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(fenetre, "Erreur du format, merci de re-saisir les coordonnees");
-                    // si on détecte une erreur de format, on passe a la prochaine iteration
-                    iE = null;
-                    continue;
-
-                }
-            }
-
-            while (iL == null) {
-                try {
-                    laL = Double.parseDouble(JOptionPane.showInputDialog("Merci de saisir la latitude du point de livraison"));
-                    loL = Double.parseDouble(JOptionPane.showInputDialog("Merci de saisir la longitude du point de livraison"));
-
-                    if (laL.compareTo(laE) == 0 && loL.compareTo(loE) == 0) {
-                        JOptionPane.showMessageDialog(fenetre, "Le point de livraison doit etre different du point d'enlevement, merci de saisir d'autres coordonnees");
-                        continue;
-                    }
-
-                    for (Intersection i : carte.getListeIntersections()) {
-                        if (i.getLatitude().compareTo(laL) == 0 && i.getLongitude().compareTo(loL) == 0) {
-                            iL = i;
-                            break;
-                        }
-                    }
-
-                    if (iL == null) {
-                        JOptionPane.showMessageDialog(fenetre, "L'intersection n'existe pas, merci de saisir des coordonnees valides");
-                        continue;
-                    } else {
-                        boolean existeDansListePI = false;
-                        for (PointInteret pI : carte.getDemandesLivraisons().getListePointsInteret()) {
-                            if (pI.getIntersection().getLatitude().compareTo(laL) == 0 && pI.getIntersection().getLongitude().compareTo(loL) == 0) {
-                                JOptionPane.showMessageDialog(fenetre, "Le point d'interet existe deja, merci de saisir d'autres coordonnees");
-                                existeDansListePI = true;
-                                break;
-                            }
-                        }
-                        if (existeDansListePI) {
-                            continue;
-                        }
-                    }
-
-                    dureeL = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree du point de livraison"));
-
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(fenetre, "Erreur du format, merci de re-saisir les coordonnees");
-                    // si on détecte une erreur de format, on passe a la prochaine itération
-                    iE = null;
-                    continue;
-                }
-            }
-
-            // confirmation des informations
-            int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations:\nPointEnlevement Latitude: " + laE + " Longitude: " + loE + " duree:" + dureeE
-                    + "\nPointLivraison Latitude: " + laL + " Longitude: " + loL + " duree: " + dureeL);
-            // si les infos ne sont pas confirmées, on re-saisit les coorsdonnées
-            if (value == JOptionPane.NO_OPTION) {
-                iE = null;
-                iL = null;
-                continue;
-                // si oui
-            } else if (value == JOptionPane.YES_OPTION || value == JOptionPane.CANCEL_OPTION) {
-                break;
-            }
-        }
-        if (iE != null || iL != null) {
-            PointInteret pE = new PointInteret(iE, dureeE);
-            PointInteret pL = new PointInteret(iL, dureeL);
-            pE.setEnlevement(true);
-            pL.setEnlevement(false);
-            pE.setPointDependance(pL);
-            pL.setPointDependance(pE);
-            carte.getDemandesLivraisons().ajouterPointInteret(pE);
-            carte.getDemandesLivraisons().ajouterPointInteret(pL);
-            carte.ajouterIntersection2(pE);
-            carte.ajouterIntersection2(pL);
             fenetre.repaint();
+            fenetre.afficherBoutonSupprimer();
+            controleur.setEtat(controleur.etatTournee);
+            
+        }else if(tournee.getSuccessionPointsInteret().indexOf(fenetre.getAvantPE())>tournee.getSuccessionPointsInteret().indexOf(fenetre.getAvantPL())){
+            JOptionPane.showMessageDialog(fenetre, "Erreur contrainte de precedence");
         }
-        tournee = carte.getTournee();
-        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
-        fenetre.setTournee(tournee);
-        controleur.setTournee(tournee);
-        fenetre.viderPanneauEtapes();
-        fenetre.viderPanneauPIs();
-        fenetre.afficherEtapesTour(true);
-        fenetre.afficherPanneauPI(true);
+    }
+    
+    @Override
+    public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interE){
+        int duree = 0;
+        
+        // Si le point choisi est un point d'interet existant
+        for(PointInteret p:carte.getDemandesLivraisons().getListePointsInteret()){
+            if(p.getIntersection() == interE){
+                JOptionPane.showMessageDialog(fenetre, "Vous ne pouvez pas choisir un point d'interet existant,"
+                        + "\nmerci de cliquer sur un autre point.");
+                return;
+            }
+        }
+        
+        // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
+        boolean dansLaListe = false;
+        for(Intersection i:carte.getListeIntersections()){
+            if(i == interE){
+                dansLaListe = true;
+            }
+        }
+        if(!dansLaListe){
+            JOptionPane.showMessageDialog(fenetre, "Le point choisi n'existe pas dans la liste");
+            return;
+        }
+        
+        // Saisir la duree
+        while(duree <= 0){
+            try{
+                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree du point d'enlevement"));
+                if(duree<=0){
+                    JOptionPane.showMessageDialog(fenetre, "la duree doit etre superieur a 0, merci de resaisir une duree valide");
+                }
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(fenetre, "le format du chiffre n'est pas bon, merci de resaisir une duree valide");
+                duree = 0;
+            }
+        }
+               
+        // Verification des infos du point
+        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point d'enlevement:"
+                + "\nid: "+interE.getId()
+                + "\nlatitude: "+interE.getLatitude()
+                + "\nlongitude: "+interE.getLongitude()
+                + "\nduree: "+duree);
+
+        if (value == JOptionPane.NO_OPTION || value == JOptionPane.CANCEL_OPTION) {
+            return;
+        }
+       
+        // Enregistrer le point d'enlevement dans le Fenetre
+        fenetre.setPE(new PointInteret(interE,duree));
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point d'avant");
+    }
+    
+    @Override
+    public void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){
+        int duree = 0;
+        
+        // Si c'est le meme point que le point d'enlevement
+        if(interL == fenetre.getPE().getIntersection()){
+            JOptionPane.showMessageDialog(fenetre, "Le point de livraison ne peut pas etre le meme que celui d'enlevement,merci de re-choisir un autre point");
+            return;
+        }
+        
+        // Si le point choisi est un point d'interet existant
+        for(PointInteret p:carte.getDemandesLivraisons().getListePointsInteret()){
+            if(p.getIntersection() == interL){
+                JOptionPane.showMessageDialog(fenetre, "Vous ne pouvez pas choisir un point d'interet existant,"
+                        + "\nmerci de cliquer sur un autre point.");
+                return;
+            }
+        }
+        
+        // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
+        boolean dansLaListe = false;
+        for(Intersection i:carte.getListeIntersections()){
+            if(i == interL){
+                dansLaListe = true;
+            }
+        }
+        if(!dansLaListe){
+            return;
+        }
+        
+        // Saisir la duree
+        while(duree <= 0){
+            try{
+                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree du point de livraison"));
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(fenetre, "le format du chiffre n'est pas bon, merci de resaisir une duree valide");
+                duree = 0;
+            }
+        }
+               
+        // Verification des infos du point
+        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point de livraison:"
+                + "\nid: "+interL.getId()
+                + "\nlatitude: "+interL.getLatitude()
+                + "\nlongitude: "+interL.getLongitude()
+                + "\nduree: "+duree);
+
+        if (value == JOptionPane.NO_OPTION || value == JOptionPane.CANCEL_OPTION) {
+            return;
+        }
+        
+        fenetre.setPL(new PointInteret(interL,duree));
+        
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir le point d'avant");
+    }
+    
+    @Override
+    public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();
-        fenetre.repaint();
-
         controleur.setEtat(controleur.etatTournee);
-
     }
 
     /**

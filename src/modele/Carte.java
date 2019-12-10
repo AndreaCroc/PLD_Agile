@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.swing.JOptionPane;
 
 /*
  * Carte
@@ -550,6 +551,12 @@ public class Carte {
         int numeroDemande = (listePointsInteret.size() - 1) / 2 + 1;
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
+        
+        //
+        pointEnlevement.setEnlevement(true);
+        pointLivraison.setEnlevement(false);
+        pointEnlevement.setPointDependance(pointLivraison);
+        pointLivraison.setPointDependance(pointEnlevement);
 
         //Ajout aux listes de points d'intérêt
         listePointsInteret.add(pointEnlevement);

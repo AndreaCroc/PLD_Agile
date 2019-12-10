@@ -2,6 +2,7 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -46,6 +47,9 @@ public class EtatTournee implements Etat {
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
                 carte.setUneTournee(null);
+                fenetre.setZoom(1);
+                fenetre.setDeplX(0);
+                fenetre.setDeplY(0);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.afficherConteneur2();
                 fenetre.retireMessageErreur3();
@@ -142,6 +146,7 @@ public class EtatTournee implements Etat {
      * @param carte
      * @param tournee
      * @param index
+     * @param listeCommandes
      */
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
@@ -163,7 +168,9 @@ public class EtatTournee implements Etat {
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         controleur.setEtat(controleur.etatAjouter);
         fenetre.griserBoutonsSupprimer();
-        controleur.ajouter();
+                //controleur.ajouter();
+        fenetre.clearAllPointsAjoutes();
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point d'enlevement");
     }
 
     /**
@@ -175,6 +182,7 @@ public class EtatTournee implements Etat {
      * @param tournee
      * @param carte
      * @param index
+     * @param listeCommandes
      */
     @Override
     public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
@@ -209,11 +217,19 @@ public class EtatTournee implements Etat {
         fenetre.repaint();
     }
     
+    /**
+     * Retourner a l action precedente
+     * @param liste 
+     */
     @Override
     public void undo(ListeCdesTournee liste){
         liste.undo();
     }
     
+    /**
+     * Refaire l action
+     * @param liste 
+     */
     @Override
     public void redo(ListeCdesTournee liste){
         liste.redo();

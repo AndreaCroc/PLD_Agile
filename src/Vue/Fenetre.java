@@ -157,9 +157,13 @@ public class Fenetre extends JFrame {
 
     private ListSelectionModel listSelectModelPI;
     private ListSelectionModel listSelectModelEtapes;
+    
+    //Permettre de reprendre le point d'enlevement
+    private PointInteret pE,avantPE,pL,avantPL;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit()
+                              .getScreenSize();
         int height = (int) dimension.getHeight();
         int width = (int) dimension.getWidth();
 
@@ -184,7 +188,8 @@ public class Fenetre extends JFrame {
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur,this);
         this.ecouteurClavier = new EcouteurClavier(this.controleur,this);
 
-        this.ecouteurListSelect = new EcouteurListSelection(this.controleur, this);
+        this.ecouteurListSelect = new EcouteurListSelection(this.controleur, 
+                                                            this);
         this.addKeyListener(ecouteurClavier);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
@@ -196,7 +201,8 @@ public class Fenetre extends JFrame {
         panneauLivraisons = new JPanel();
         panneauLivraisons.setLayout(null);
         panneauLivraisons.setBackground(COULEUR_FOND);
-        panneauLivraisons.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COULEUR_BOUTON));
+        panneauLivraisons.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, 
+                                                               COULEUR_BOUTON));
 
         //Input pour ecrire le nom du fichier XML souhaite
         inputChargeLiv = new JTextField();
@@ -211,7 +217,8 @@ public class Fenetre extends JFrame {
         //Bouton pour faire un undo
         ImageIcon undo = new ImageIcon("undo.png");
         Image imgUndo = undo.getImage();
-        Image newimgUndo = imgUndo.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image newimgUndo = imgUndo.getScaledInstance(40, 40, 
+                                                     Image.SCALE_SMOOTH);
         undo = new ImageIcon(newimgUndo);
         boutonUndo = new JButton(undo);
         boutonUndo.addActionListener(ecouteurBoutons);
@@ -219,7 +226,8 @@ public class Fenetre extends JFrame {
         //Bouton pour faire un redo
         ImageIcon redo = new ImageIcon("redo.png");
         Image imgRedo = redo.getImage();
-        Image newimgRedo = imgRedo.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image newimgRedo = imgRedo.getScaledInstance(40, 40, 
+                                                     Image.SCALE_SMOOTH);
         redo = new ImageIcon(newimgRedo);
         boutonRedo = new JButton(redo);
         boutonRedo.addActionListener(ecouteurBoutons);
@@ -242,7 +250,7 @@ public class Fenetre extends JFrame {
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
         livraisons.setForeground(COULEUR_ECRITURE);
 
-        //Remplissage du panneauLivraison et ajout de ce dernier au panneauGauche
+        //Remplissage du panneauLivraison + ajout de ce dernier au panneauGauche
         panneauLivraisons.add(livraisons);
         panneauLivraisons.add(inputChargeLiv);
         panneauLivraisons.add(boutonChargerLivraisons);
@@ -255,7 +263,8 @@ public class Fenetre extends JFrame {
         /* Fin PanneauLivraison */
  /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
-        vuePIs = new AffichagePIs(new FormatCellRenderer(-1, -1, 1), this.carte, this);
+        vuePIs = new AffichagePIs(new FormatCellRenderer(-1, -1, 1), this.carte, 
+                                  this);
         //Tableau contenant les details des points d interets
         tableauPIs = new JTable(vuePIs);
         //Ajuster la taille des lignes
@@ -266,10 +275,12 @@ public class Fenetre extends JFrame {
         for (int i = 0; i < tableauPIs.getColumnModel().getColumnCount(); i++) {
             if (i < 3) {
                 //Appliquer un formatage a certaines colonnes du tableau
-                tableauPIs.getColumnModel().getColumn(i).setCellRenderer(this.vuePIs.getFormatcell());
+                tableauPIs.getColumnModel().getColumn(i).setCellRenderer(
+                                                this.vuePIs.getFormatcell());
             } else {
                 //Appliquer un formatage a certaines colonnes du tableau
-                this.tableauPIs.setDefaultRenderer(JComponent.class, new TypeCellRenderer());
+                this.tableauPIs.setDefaultRenderer(JComponent.class, 
+                                                   new TypeCellRenderer());
             }
         }
         tableauPIs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -277,13 +288,16 @@ public class Fenetre extends JFrame {
         //Ajouter un evenement sur les lignes du tableau
         listSelectModelPI.addListSelectionListener(this.ecouteurListSelect);
 
-        scrollPIs = new JScrollPane(tableauPIs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPIs = new JScrollPane(tableauPIs, JScrollPane
+                .VERTICAL_SCROLLBAR_ALWAYS, JScrollPane
+                        .HORIZONTAL_SCROLLBAR_NEVER);
 
         // PanneauPIs (milieu haut gauche)
         panneauPIs = new JPanel();
         panneauPIs.setLayout(null);
         panneauPIs.setBackground(COULEUR_FOND);
-        panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COULEUR_BOUTON));
+        panneauPIs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, 
+                                                             COULEUR_BOUTON));
         panneauPIs.setVisible(false);
         panneauPIs.add(scrollPIs);
         panneauGauche.add(panneauPIs);
@@ -303,7 +317,8 @@ public class Fenetre extends JFrame {
         panneauTournee = new JPanel();
         panneauTournee.setLayout(null);
         panneauTournee.setBackground(COULEUR_FOND);
-        panneauTournee.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, COULEUR_BOUTON));
+        panneauTournee.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, 
+                                                               COULEUR_BOUTON));
         panneauTournee.add(labelTitreTournee);
         panneauTournee.add(labelTournee);
         panneauTournee.setVisible(false);
@@ -317,22 +332,27 @@ public class Fenetre extends JFrame {
         etapesTitre.setForeground(COULEUR_ECRITURE);
 
         //Vue sur les etapes d une tournee
-        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1, -1, 2), this, this.tournee);
+        vueEtapes = new AffichageEtapes(new FormatCellRenderer(-1, -1, 2), this, 
+                                        this.tournee);
         //Tableau contenant les informatiosn sur les etapes
         tableauEtapes = new JTable(vueEtapes);
         tableauEtapes.setRowHeight(30);
         //tableauEtapes.getColumnModel().getColumn(0).setPreferredWidth(50);
         tableauEtapes.getColumnModel().getColumn(3).setPreferredWidth(150);
-        for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); i++) {
+        for (int i = 0; i < tableauEtapes.getColumnModel().getColumnCount(); 
+                i++) {
             //Appliquer un format aux colonnes du tableau
-            tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(this.vueEtapes.getFormatcell());
+            tableauEtapes.getColumnModel().getColumn(i).setCellRenderer(
+                                                this.vueEtapes.getFormatcell());
         }
         tableauEtapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listSelectModelEtapes = tableauEtapes.getSelectionModel();
         //Ajouter un evenement sur les lignes du tableau
         listSelectModelEtapes.addListSelectionListener(this.ecouteurListSelect);
 
-        scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollEtapes = new JScrollPane(tableauEtapes, JScrollPane
+                        .VERTICAL_SCROLLBAR_ALWAYS, JScrollPane
+                        .HORIZONTAL_SCROLLBAR_NEVER);
 
         //Bouton pour supprimer un point d interet de la tournee
         boutonSupprimer = new JButton(SUPPRIMER);
@@ -363,7 +383,8 @@ public class Fenetre extends JFrame {
         //boutonAjouterPoints.setEnabled(false);
         boutonAjouterPoints.addActionListener(ecouteurBoutons);
 
-        //Ajout des elements a panneauEtapes et ajout de ce dernier a panneauGauche
+        //Ajout des elements a panneauEtapes et ajout de ce dernier 
+        //a panneauGauche
         panneauEtapes = new JPanel();
         panneauEtapes.setLayout(null);
         panneauEtapes.setBackground(COULEUR_FOND);
@@ -381,7 +402,8 @@ public class Fenetre extends JFrame {
         panneauDroite = new JPanel();
         panneauDroite.setLayout(null);
         panneauDroite.setBackground(COULEUR_FOND);
-        panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
+        panneauDroite.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, 
+                                                              COULEUR_BOUTON));
 
         /* PanneauLegende(haut droit)*/
         //Logo rond de la legende
@@ -416,7 +438,8 @@ public class Fenetre extends JFrame {
 
         labelTriangle = new JLabel(triangle);
 
-        legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de tous les livreurs");
+        legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de "
+                                     + "tous les livreurs");
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
         legendeTriangle.setForeground(COULEUR_ECRITURE);
 
@@ -478,7 +501,8 @@ public class Fenetre extends JFrame {
         //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
-        panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, COULEUR_BOUTON));
+        panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, 
+                                                              COULEUR_BOUTON));
         panneauLegende.add(labelRond);
         panneauLegende.add(legendeRond);
         panneauLegende.add(labelCarre);
@@ -516,8 +540,10 @@ public class Fenetre extends JFrame {
         panneauCarte = new JCarte(this.carte, this.tournee, this);
         panneauCarte.setLayout(null);
         panneauCarte.setBackground(COULEUR_ECRITURE);
-        panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, COULEUR_BOUTON));
-        panneauCarte.setSize((int) (this.getWidth() * 0.95), (int) (this.getHeight() * 0.2));
+        panneauCarte.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, 
+                                                              COULEUR_BOUTON));
+        panneauCarte.setSize((int) (this.getWidth() * 0.95),
+                             (int) (this.getHeight() * 0.2));
         
         panneauDroite.add(panneauCarte);
 
@@ -547,7 +573,7 @@ public class Fenetre extends JFrame {
         //Pour entrer le chemin vers un fichier XML
         inputChargeCarte = new JTextField();
 
-        //Pour afficher une erreur en cas de probleme lors du chargement du fichier
+        //afficher une erreur en cas de probleme lors du chargement du fichier
         repChargeCarte = new JLabel("Erreur dans le chargement du fichier");
         repChargeCarte.setFont(new Font("Arial", Font.BOLD, 16));
         repChargeCarte.setForeground(COULEUR_ERREUR);
@@ -582,68 +608,218 @@ public class Fenetre extends JFrame {
      * Placement des elements de la premiere fenetre
      */
     public void placeObjet1() {
-        panneauGlobal1.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
+        panneauGlobal1.setBounds(0, 0, ((int) getSize().width), 
+                                ((int) getSize().height));
 
-        titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 1 * (int) panneauGlobal1.getHeight() / 6, 1 * (int) panneauGlobal1.getWidth(), 1 * (int) panneauGlobal1.getHeight() / 10);
-        inputChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 20);
-        boutonChargerCarte.setBounds(60 * ((int) panneauGlobal1.getWidth() / 100), 1 * (int) panneauGlobal1.getHeight() / 3, 1 * (int) panneauGlobal1.getWidth() / 8, 1 * (int) panneauGlobal1.getHeight() / 20);
-        repChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 35 * (int) panneauGlobal1.getHeight() / 100, 1 * (int) panneauGlobal1.getWidth() / 4, 1 * (int) panneauGlobal1.getHeight() / 10);
+        titreAppli.setBounds(26 * (int) panneauGlobal1.getWidth() / 100, 
+                             1 * (int) panneauGlobal1.getHeight() / 6, 
+                             1 * (int) panneauGlobal1.getWidth(), 
+                             1 * (int) panneauGlobal1.getHeight() / 10);
+        
+        inputChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 
+                                   1 * (int) panneauGlobal1.getHeight() / 3, 
+                                   1 * (int) panneauGlobal1.getWidth() / 4, 
+                                   1 * (int) panneauGlobal1.getHeight() / 20);
+        
+        boutonChargerCarte.setBounds(6 * ((int) panneauGlobal1.getWidth() / 10), 
+                                     1 * (int) panneauGlobal1.getHeight() / 3, 
+                                     1 * (int) panneauGlobal1.getWidth() / 8, 
+                                     1 * (int) panneauGlobal1.getHeight() / 20);
+        
+        repChargeCarte.setBounds(3 * (int) panneauGlobal1.getWidth() / 10, 
+                                 35 * (int) panneauGlobal1.getHeight() / 100, 
+                                 1 * (int) panneauGlobal1.getWidth() / 4, 
+                                 1 * (int) panneauGlobal1.getHeight() / 10);
     }
 
     /**
      * Placement des elements de la deuxieme fenetre
      */
     public void placeObjet2() {
-        panneauGlobal2.setBounds(0, 0, ((int) getSize().width), ((int) getSize().height));
-        panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() / 100, (int) panneauGlobal2.getHeight());
-        panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 53 * (int) panneauGlobal2.getWidth() / 100, 1 * (int) panneauGlobal2.getHeight());
-        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 1 * (int) panneauGauche.getHeight() / 6);
-        panneauPIs.setBounds(0, 1 * (int) panneauGauche.getHeight() / 6, (int) panneauGauche.getWidth(), 30 * (int) panneauGauche.getHeight() / 100);
-        panneauTournee.setBounds(0, 47 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 1 * (int) panneauGauche.getHeight() / 20);
-        panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 1 * ((int) panneauGauche.getWidth()), 40 * (int) panneauGauche.getHeight() / 100);
-        panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 1 * (int) panneauDroite.getHeight() / 10);
-
-        boutonZoomer.setBounds((int) 76 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonDezoomer.setBounds((int) 83 * panneauLegende.getWidth() / 100, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 15, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonChangerCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 4, 4 * (int) panneauLegende.getHeight() / 10);
-        boutonDirGauche.setBounds((int) 69 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
-        boutonDirDroite.setBounds((int) 76 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
-        boutonDirHaut.setBounds((int) 83 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
-        boutonDirBas.setBounds((int) 90 * panneauLegende.getWidth() / 100, 7*(int) panneauLegende.getHeight() / 10, (int) panneauLegende.getWidth() / 15, 25 * (int) panneauLegende.getHeight() / 100);
-
-        repChangeCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, 0, (int) panneauLegende.getWidth() / 2, (int) panneauLegende.getHeight() / 4);
-
-        int largeurCarte = (int) panneauDroite.getHeight() - (int) panneauLegende.getHeight();
-        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, largeurCarte, 81 * (int) panneauDroite.getHeight() / 100);
+        panneauGlobal2.setBounds(0, 0, ((int) getSize().width), 
+                                ((int) getSize().height));
         
-        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 1 * (int) panneauLegende.getWidth()/6, 1 * (int) panneauLegende.getHeight() / 4);
-        labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
-        legendeRond.setBounds((int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
-        labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
-        legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, (int) 2 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 5, (int) panneauLegende.getHeight() / 4);
-        labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth() / 25, (int) panneauLegende.getHeight() / 4);
-        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, (int) 3 * panneauLegende.getHeight() / 4, (int) panneauLegende.getWidth(), (int) panneauLegende.getHeight() / 4);
-
-        livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 5);
-        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 5, 55 * (int) panneauLivraisons.getWidth() / 100, 1 * (int) panneauLivraisons.getHeight() / 3);
-        boutonChargerLivraisons.setBounds(70 * ((int) panneauLivraisons.getWidth() / 100), 1 * (int) panneauLivraisons.getHeight() / 5, 3 * (int) panneauLivraisons.getWidth() / 10, 1 * (int) panneauLivraisons.getHeight() / 3);
-        boutonCalculerTournee.setBounds(45 * ((int) panneauLivraisons.getWidth() / 100), 6 * (int) panneauLivraisons.getHeight() / 10, 1 * (int) panneauLivraisons.getWidth() / 4, 1 * (int) panneauLivraisons.getHeight() / 3);
-        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 1 * (int) panneauLivraisons.getHeight() / 2, 1 * (int) panneauLivraisons.getWidth(), 1 * (int) panneauLivraisons.getHeight() / 4);
-        boutonUndo.setBounds(80 * ((int) panneauLivraisons.getWidth() / 100),6 * (int) panneauLivraisons.getHeight() / 10,1 * (int) panneauLivraisons.getWidth() / 15,1 * (int) panneauLivraisons.getHeight() / 3);
-        boutonRedo.setBounds(90 * ((int) panneauLivraisons.getWidth() / 100),6 * (int) panneauLivraisons.getHeight() / 10,1 * (int) panneauLivraisons.getWidth() / 15,1 * (int) panneauLivraisons.getHeight() / 3);
+        panneauGauche.setBounds(0, 0, 47 * (int) panneauGlobal2.getWidth() 
+                                / 100, (int) panneauGlobal2.getHeight());
         
-        labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
-        labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 1 * (int) panneauTournee.getWidth(), 1 * (int) panneauTournee.getHeight() / 2);
+        panneauDroite.setBounds(47 * (int) panneauGlobal2.getWidth() / 100, 0, 
+                                53 * (int) panneauGlobal2.getWidth() / 100, 
+                                1 * (int) panneauGlobal2.getHeight());
+        
+        panneauLivraisons.setBounds(0, 0, (int) panneauGauche.getWidth(), 
+                                    1 * (int) panneauGauche.getHeight() / 6);
+        
+        panneauPIs.setBounds(0, 1 * (int) panneauGauche.getHeight() / 6, 
+                            (int) panneauGauche.getWidth(), 
+                             30 * (int) panneauGauche.getHeight() / 100);
+       
+        panneauTournee.setBounds(0, 47 * (int) panneauGauche.getHeight() / 100, 
+                                 1 * ((int) panneauGauche.getWidth()), 
+                                 1 * (int) panneauGauche.getHeight() / 20);
+        
+        panneauEtapes.setBounds(0, 52 * (int) panneauGauche.getHeight() / 100, 
+                                1 * ((int) panneauGauche.getWidth()), 
+                                40 * (int) panneauGauche.getHeight() / 100);
+       
+        panneauLegende.setBounds(0, 0, (int) panneauDroite.getWidth(), 
+                                 1 * (int) panneauDroite.getHeight() / 10);
 
-        etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 1 * (int) panneauEtapes.getWidth(), 1 * (int) panneauEtapes.getHeight() / 20);
-        tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 1 * (int) panneauEtapes.getWidth(), 75 * (int) panneauEtapes.getHeight() / 100);
-        boutonAjouterPoints.setBounds(1 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonSupprimer.setBounds(7 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonModifier.setBounds(13 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
-        boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 81 * (int) panneauEtapes.getHeight() / 100, 1 * (int) panneauEtapes.getWidth() / 5, 15 * (int) panneauEtapes.getHeight() / 100);
+        boutonZoomer.setBounds((int) 76 * panneauLegende.getWidth() / 100, 
+                               (int) panneauLegende.getHeight() / 4, 
+                               (int) panneauLegende.getWidth() / 15, 
+                               4 * (int) panneauLegende.getHeight() / 10);
+        
+        boutonDezoomer.setBounds((int) 83 * panneauLegende.getWidth() / 100, 
+                                 (int) panneauLegende.getHeight() / 4, 
+                                 (int) panneauLegende.getWidth() / 15, 
+                                 4 * (int) panneauLegende.getHeight() / 10);
+        
+        boutonChangerCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, 
+                                     (int) panneauLegende.getHeight() / 4, 
+                                     (int) panneauLegende.getWidth() / 4, 4 * 
+                                             (int) panneauLegende.getHeight() / 10);
+        
+        boutonDirGauche.setBounds((int) 69 * panneauLegende.getWidth() / 100, 
+                                  7*(int) panneauLegende.getHeight() / 10, 
+                                  (int) panneauLegende.getWidth() / 15, 
+                                  25 * (int) panneauLegende.getHeight() / 100);
+        
+        boutonDirDroite.setBounds((int) 76 * panneauLegende.getWidth() / 100, 
+                                   7*(int) panneauLegende.getHeight() / 10, 
+                                   (int) panneauLegende.getWidth() / 15, 
+                                   25 * (int) panneauLegende.getHeight() / 100);
+        
+        boutonDirHaut.setBounds((int) 83 * panneauLegende.getWidth() / 100,
+                                7*(int) panneauLegende.getHeight() / 10, 
+                                (int) panneauLegende.getWidth() / 15, 
+                                25 * (int) panneauLegende.getHeight() / 100);
+        
+        boutonDirBas.setBounds((int) 90 * panneauLegende.getWidth() / 100, 
+                               7*(int) panneauLegende.getHeight() / 10, 
+                               (int) panneauLegende.getWidth() / 15, 
+                               25 * (int) panneauLegende.getHeight() / 100);
 
-        scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), (int) panneauPIs.getHeight());
+        repChangeCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, 0, 
+                                 (int) panneauLegende.getWidth() / 2, 
+                                 (int) panneauLegende.getHeight() / 4);
+
+        int largeurCarte = (int) panneauDroite.getHeight() 
+                         - (int) panneauLegende.getHeight();
+        panneauCarte.setBounds(0, 1 * (int) panneauDroite.getHeight() / 10, 
+                               largeurCarte, 81 * (int) panneauDroite
+                                       .getHeight() / 100);
+        
+        legende.setBounds(1 * (int) panneauLegende.getWidth() / 10, 0, 
+                          1 * (int) panneauLegende.getWidth()/6, 
+                          1 * (int) panneauLegende.getHeight() / 4);
+        
+        labelRond.setBounds(0, (int) panneauLegende.getHeight() / 4, 
+                            (int) panneauLegende.getWidth() / 25, 
+                            (int) panneauLegende.getHeight() / 4);
+        
+        legendeRond.setBounds((int) panneauLegende.getWidth() / 25, 
+                              (int) panneauLegende.getHeight() / 4, 
+                              (int) panneauLegende.getWidth() / 5, 
+                              (int) panneauLegende.getHeight() / 4);
+        
+        labelCarre.setBounds(0, (int) 2 * panneauLegende.getHeight() / 4, 
+                            (int) panneauLegende.getWidth() / 25, 
+                            (int) panneauLegende.getHeight() / 4);
+        
+        legendeCarre.setBounds((int) panneauLegende.getWidth() / 25, 
+                               (int) 2 * panneauLegende.getHeight() / 4, 
+                               (int) panneauLegende.getWidth() / 5, 
+                               (int) panneauLegende.getHeight() / 4);
+        
+        labelTriangle.setBounds(0, (int) 3 * panneauLegende.getHeight() / 4, 
+                                (int) panneauLegende.getWidth() / 25, 
+                                (int) panneauLegende.getHeight() / 4);
+        
+        legendeTriangle.setBounds((int) panneauLegende.getWidth() / 25, 
+                                  (int) 3 * panneauLegende.getHeight() / 4, 
+                                  (int) panneauLegende.getWidth(), 
+                                  (int) panneauLegende.getHeight() / 4);
+
+        livraisons.setBounds(4 * ((int) panneauLivraisons.getWidth() / 10), 0, 
+                             1 * (int) panneauLivraisons.getWidth(), 
+                             1 * (int) panneauLivraisons.getHeight() / 5);
+        
+        inputChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 
+                                 1 * (int) panneauLivraisons.getHeight() / 5, 
+                                 55 * (int) panneauLivraisons.getWidth() / 100, 
+                                 1 * (int) panneauLivraisons.getHeight() / 3);
+        
+        boutonChargerLivraisons.setBounds(70 
+                                          * ((int) panneauLivraisons.getWidth() 
+                                          / 100), 1 * (int) panneauLivraisons
+                                                  .getHeight() / 5, 
+                                          3 * (int) panneauLivraisons.getWidth() 
+                                              / 10, 1 * (int) panneauLivraisons
+                                                          .getHeight() / 3);
+        
+        boutonCalculerTournee.setBounds(45 * ((int) panneauLivraisons.getWidth() 
+                                        / 100), 6 * (int) panneauLivraisons
+                                        .getHeight() / 10, 
+                                        1 * (int) panneauLivraisons.getWidth() 
+                                        / 4, 1 * (int) panneauLivraisons
+                                                        .getHeight() / 3);
+        
+        repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 
+                               1 * (int) panneauLivraisons.getHeight() / 2, 
+                               1 * (int) panneauLivraisons.getWidth(), 
+                               1 * (int) panneauLivraisons.getHeight() / 4);
+        
+        boutonUndo.setBounds(80 * ((int) panneauLivraisons.getWidth() / 100),
+                             6 * (int) panneauLivraisons.getHeight() / 10,
+                             1 * (int) panneauLivraisons.getWidth() / 15,
+                             1 * (int) panneauLivraisons.getHeight() / 3);
+        
+        boutonRedo.setBounds(90 * ((int) panneauLivraisons.getWidth() / 100),
+                             6 * (int) panneauLivraisons.getHeight() / 10,
+                             1 * (int) panneauLivraisons.getWidth() / 15,
+                             1 * (int) panneauLivraisons.getHeight() / 3);
+        
+        labelTitreTournee.setBounds(4 * (int) panneauTournee.getWidth() / 10, 0, 
+                                    1 * (int) panneauTournee.getWidth(), 
+                                    1 * (int) panneauTournee.getHeight() / 2);
+        
+        labelTournee.setBounds(0, 1 * (int) panneauTournee.getHeight() / 2, 
+                               1 * (int) panneauTournee.getWidth(), 
+                               1 * (int) panneauTournee.getHeight() / 2);
+
+        etapesTitre.setBounds(4 * (int) panneauEtapes.getWidth() / 10, 0, 
+                              1 * (int) panneauEtapes.getWidth(), 
+                              1 * (int) panneauEtapes.getHeight() / 20);
+        tableauEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 
+                                1 * (int) panneauEtapes.getWidth(), 
+                                75 * (int) panneauEtapes.getHeight() / 100);
+        
+        scrollEtapes.setBounds(0, 1 * (int) panneauEtapes.getHeight() / 20, 
+                               1 * (int) panneauEtapes.getWidth(), 
+                               75 * (int) panneauEtapes.getHeight() / 100);
+        
+        boutonAjouterPoints.setBounds(1 * (int) panneauEtapes.getWidth() / 25, 
+                                     81 * (int) panneauEtapes.getHeight() / 100, 
+                                     1 * (int) panneauEtapes.getWidth() / 5, 
+                                    15 * (int) panneauEtapes.getHeight() / 100);
+        
+        boutonSupprimer.setBounds(7 * (int) panneauEtapes.getWidth() / 25, 
+                                  81 * (int) panneauEtapes.getHeight() / 100, 
+                                  1 * (int) panneauEtapes.getWidth() / 5, 
+                                  15 * (int) panneauEtapes.getHeight() / 100);
+        
+        boutonModifier.setBounds(13 * (int) panneauEtapes.getWidth() / 25, 
+                                 81 * (int) panneauEtapes.getHeight() / 100, 
+                                 1 * (int) panneauEtapes.getWidth() / 5, 
+                                 15 * (int) panneauEtapes.getHeight() / 100);
+        
+        boutonAnnuler.setBounds(19 * (int) panneauEtapes.getWidth() / 25, 
+                                81 * (int) panneauEtapes.getHeight() / 100, 
+                                1 * (int) panneauEtapes.getWidth() / 5, 
+                                15 * (int) panneauEtapes.getHeight() / 100);
+
+        scrollPIs.setBounds(0, 0, (int) panneauPIs.getWidth(), 
+                            (int) panneauPIs.getHeight());
 
     }
 
@@ -704,7 +880,7 @@ public class Fenetre extends JFrame {
         this.boutonModifier.setEnabled(true);
         this.boutonAjouterPoints.setEnabled(true);
     }
-
+    
     /**
      * Pour afficher les details d une tournee
      *
@@ -762,7 +938,8 @@ public class Fenetre extends JFrame {
      */
     public void surbrillerLigneTabPI(PointInteret ptI) {
         if (carte != null) {
-            ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
+            ArrayList<PointInteret> listePtI = carte
+                                               .getListePointsInteretActuelle();
 
             if (listePtI != null && !listePtI.isEmpty()) {
                 int indexPI = listePtI.indexOf(ptI);
@@ -775,11 +952,13 @@ public class Fenetre extends JFrame {
                         ptIDep = ptI.getPointDependance();
                         indexPIDep = listePtI.indexOf(ptIDep);
                     }
-                    for (int j = 0; j < tableauPIs.getColumnModel().getColumnCount(); j++) {
+                    for (int j = 0; j < tableauPIs.getColumnModel()
+                            .getColumnCount(); j++) {
                         //Encadrer en rouge la ligne correspond a l index
                         this.vuePIs.getFormatcell().setIndexPI(indexPI);
                         this.vuePIs.getFormatcell().setIndexPIDep(indexPIDep);
-                        tableauPIs.getColumnModel().getColumn(j).setCellRenderer(this.vuePIs.getFormatcell());
+                        tableauPIs.getColumnModel().getColumn(j)
+                                .setCellRenderer(this.vuePIs.getFormatcell());
                     }
                 }
             }
@@ -795,7 +974,8 @@ public class Fenetre extends JFrame {
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
         if (tournee != null) {
-            ArrayList<PointInteret> listePtEtapes = tournee.getSuccessionPointsInteret();
+            ArrayList<PointInteret> listePtEtapes = tournee
+                                    .getSuccessionPointsInteret();
             if (listePtEtapes != null && !listePtEtapes.isEmpty()) {
                 int indexPI = listePtEtapes.indexOf(ptI);
                 if (indexPI != -1 && tableauEtapes.getRowCount() != 0) {
@@ -805,11 +985,13 @@ public class Fenetre extends JFrame {
                         ptIDep = ptI.getPointDependance();
                         indexPIDep = listePtEtapes.indexOf(ptIDep);
                     }
-                    for (int j = 0; j < tableauEtapes.getColumnModel().getColumnCount(); j++) {
+                    for (int j = 0; j < tableauEtapes.getColumnModel()
+                         .getColumnCount(); j++) {
                         //Encadrer en rouge la ligne correspond a l index
                         this.vueEtapes.getFormatcell().setIndexPI(indexPI);
                         this.vueEtapes.getFormatcell().setIndexPIDep(indexPIDep);
-                        tableauEtapes.getColumnModel().getColumn(j).setCellRenderer(this.vueEtapes.getFormatcell());
+                        tableauEtapes.getColumnModel().getColumn(j)
+                               .setCellRenderer(this.vueEtapes.getFormatcell());
                     }
 
                 }
@@ -825,7 +1007,8 @@ public class Fenetre extends JFrame {
      * @param pi
      */
     public void surbrillerPI(PointInteret pi) {
-        ArrayList<PointInteret> listePtI = carte.getListePointsInteretActuelle();
+        ArrayList<PointInteret> listePtI = carte
+                                           .getListePointsInteretActuelle();
 
         //La liste n est pas nulle ni vide
         if (listePtI != null && !listePtI.isEmpty()) {
@@ -983,7 +1166,9 @@ public class Fenetre extends JFrame {
      * @param duree duree de la tournee
      */
     public void setPanneauTournee(String heureDeb, String heureFin, String duree) {
-        this.labelTournee.setText("   " + HEURE_DEBUT + heureDeb + "      " + HEURE_FIN + heureFin + "      " + DUREE + duree);
+        this.labelTournee.setText("   " + HEURE_DEBUT + heureDeb + "      " 
+                                  + HEURE_FIN + heureFin + "      " 
+                                  + DUREE + duree);
     }
 
     /**
@@ -998,8 +1183,11 @@ public class Fenetre extends JFrame {
      * @param heureArr l heure d arrivee de l etape
      * @param duree duree de l etape
      */
-    public void setPanneauEtapes(int ordre, int numDemande, String type, String adresse, String heureDep, String heureArr, String duree) {
-        LigneEtapes step = new LigneEtapes(ordre, numDemande, type, adresse, heureDep, heureArr, duree + " min");
+    public void setPanneauEtapes(int ordre, int numDemande, String type, 
+                                 String adresse, String heureDep, 
+                                 String heureArr, String duree) {
+        LigneEtapes step = new LigneEtapes(ordre, numDemande, type, adresse, 
+                                           heureDep, heureArr, duree + " min");
         this.vueEtapes.addStep(step);
     }
 
@@ -1012,7 +1200,8 @@ public class Fenetre extends JFrame {
      * @param adresse adresse de l etape
      * @param duree duree de l etape
      */
-    public void setPanneauPIs(int numEtape, String type, String adresse, String duree) {
+    public void setPanneauPIs(int numEtape, String type, String adresse, 
+                              String duree) {
         LignePI pi = new LignePI(numEtape, type, adresse, duree);
         this.vuePIs.addPI(pi);
     }
@@ -1025,13 +1214,16 @@ public class Fenetre extends JFrame {
      * @param adresse l adresse de l etape
      * @param heure l heure de depart ou d arrivee de l entrepot
      */
-    public void setPanneauEtapesEntrepot(int ordre, int numDemande, String adresse, String heure) {
+    public void setPanneauEtapesEntrepot(int ordre, int numDemande, 
+                                         String adresse, String heure) {
         LigneEtapes step;
         if (ordre == 0) {
-            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, heure, "", "");
+            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, 
+                                   heure, "", "");
 
         } else {
-            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, "", heure, "");
+            step = new LigneEtapes(ordre, numDemande, "Entrepot", adresse, "", 
+                                   heure, "");
         }
 
         this.vueEtapes.addStep(step);
@@ -1249,9 +1441,13 @@ public class Fenetre extends JFrame {
                 type = "livraison";
                 typeAssocie = "enlèvement";
             }
-            message += type + "\n" + "correspondant à la demande de livraison " + num + "\n" + "en sachant que le point d'intérêt de type " + typeAssocie + "\n" + "associé sera également supprimé ?";
+            message += type + "\n" + "correspondant à la demande de livraison " 
+                    + num + "\n" + "en sachant que le point d'intérêt de type " 
+                    + typeAssocie + "\n" + "associé sera également supprimé ?";
         }
-        int option = jop.showConfirmDialog(null, message, "Suppression d'un point d 'intérêt", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int option = jop.showConfirmDialog(null, message, 
+                "Suppression d'un point d 'intérêt", JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
 
         return option;
     }
@@ -1263,7 +1459,8 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopSuppressionErreur() {
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "Vous ne pouvez pas supprimer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
+        jop.showMessageDialog(null, "Vous ne pouvez pas supprimer l'entrepôt", 
+                              "Erreur", JOptionPane.ERROR_MESSAGE);
 
     }
 
@@ -1273,7 +1470,8 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopSuppressionVide() {
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "La tournée ne possède plus de points", "Information", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "La tournée ne possède plus de points", 
+                              "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -1283,7 +1481,8 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopSuppressionAnnulee() {
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "La suppression n'a pas pu être effectuée ", "Information", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "La suppression n'a pas pu être effectuée ", 
+                              "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -1294,7 +1493,8 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopDeplacerErreur() {
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "Vous ne pouvez pas déplacer l'entrepôt", "Erreur", JOptionPane.ERROR_MESSAGE);
+        jop.showMessageDialog(null, "Vous ne pouvez pas déplacer l'entrepôt", 
+                              "Erreur", JOptionPane.ERROR_MESSAGE);
 
     }
 
@@ -1309,7 +1509,10 @@ public class Fenetre extends JFrame {
         SpinnerNumberModel sModel = new SpinnerNumberModel(0, min, max, 1);
         JSpinner spinner = new JSpinner(sModel);
 
-        int option = JOptionPane.showOptionDialog(null, spinner, "Déplacement d'un point d'intérêt", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        int option = JOptionPane.showOptionDialog(null, spinner, 
+                "Déplacement d'un point d'intérêt", 
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, 
+                null, null, null);
         int value = ((Integer) spinner.getValue()).intValue();
         ArrayList<Integer> choix = new ArrayList();
         choix.add(option);
@@ -1325,6 +1528,52 @@ public class Fenetre extends JFrame {
      */
     public void afficherPopPrevenirModification() {
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'enlèvement dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "La modification a été effectuée même si \n"
+                + " point d'intérêt de livraison est placé\n avant le point "
+                + "d'enlèvement dans la tournée", "Information", 
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void setPE(PointInteret pE){
+        this.pE = pE;
+    }
+    
+    public void setAvantPEParIndex(int index){
+        this.avantPE = carte.getDemandesLivraisons().getListePointsInteret()
+                                                    .get(index);
+        System.out.println("pAE dans setter:"+avantPE.getIntersection()
+                                                     .getId());
+    }    
+    
+    public void setPL(PointInteret pL){
+        this.pL = pL;
+    }
+    
+    public void setAvantPLParIndex(int index){
+        this.avantPL = carte.getDemandesLivraisons().getListePointsInteret().get(index);
+        System.out.println("pAL dans setter:"+avantPL.getIntersection().getId());
+    }
+    
+    public void clearAllPointsAjoutes(){
+        this.pE = null;
+        this.pL = null;
+        this.avantPE = null;
+        this.avantPL = null;
+    }
+    
+    public PointInteret getPE(){
+        return this.pE;
+    }
+    
+    public PointInteret getAvantPE(){
+        return this.avantPE;
+    }
+    
+    public PointInteret getPL(){
+        return this.pL;
+    }
+    
+    public PointInteret getAvantPL(){
+        return this.avantPL;
     }
 }

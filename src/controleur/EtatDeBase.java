@@ -46,6 +46,9 @@ public class EtatDeBase implements Etat {
                 fenetre.cacherPanneauPI();
                 fenetre.griserBoutonCalcul();
                 fenetre.setTournee(null);
+                fenetre.setZoom(1);
+                fenetre.setDeplX(0);
+                fenetre.setDeplY(0);
                 carte.setUneTournee(null);
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();

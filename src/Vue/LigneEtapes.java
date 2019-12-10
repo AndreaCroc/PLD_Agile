@@ -31,7 +31,8 @@ public class LigneEtapes {
      * @param arrivee
      * @param duree 
      */
-    public LigneEtapes(int ordre,int numero, String type, String rue, String depart, String arrivee, String duree) {
+    public LigneEtapes(int ordre,int numero, String type, String rue, 
+                       String depart, String arrivee, String duree) {
         this.ordre = ordre;
         this.numDemande = numero;
         this.type = type;
