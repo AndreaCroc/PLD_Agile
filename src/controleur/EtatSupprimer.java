@@ -89,7 +89,6 @@ public class EtatSupprimer implements Etat {
                     fenetre.viderPanneauEtapes();
                     fenetre.viderPanneauPIs();
                     fenetre.afficherBoutonSupprimer();
-                    fenetre.griserBoutonCalcul();
                     fenetre.repaint();
 
                     //Plus que l entrepot dans la liste des points d interets de la carte
@@ -116,12 +115,10 @@ public class EtatSupprimer implements Etat {
                     //Si on annule la suppression
                 } else {
                     fenetre.afficherBoutonSupprimer();
-                    fenetre.griserBoutonCalcul();
                     controleur.setEtat(controleur.etatTournee);
                 }
             } else {
                 fenetre.afficherBoutonSupprimer();
-                fenetre.griserBoutonCalcul();
                 controleur.setEtat(controleur.etatTournee);
             }
 
@@ -129,7 +126,6 @@ public class EtatSupprimer implements Etat {
             //Afficher popup d erreur car pas possible de supprimer l entrepot
             fenetre.afficherPopSuppressionErreur();
             fenetre.afficherBoutonSupprimer();
-            fenetre.griserBoutonCalcul();
             controleur.setEtat(controleur.etatTournee);
         }
         fenetre.repaint();
@@ -148,7 +144,6 @@ public class EtatSupprimer implements Etat {
     public void annuler(Controleur controleur, Fenetre fenetre
     ) {
         fenetre.afficherBoutonSupprimer();
-        fenetre.griserBoutonCalcul();
         controleur.setEtat(controleur.etatTournee);
     }
 

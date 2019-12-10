@@ -32,7 +32,6 @@ public class EtatModifier implements Etat {
      */
     @Override
     public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
-        System.out.println("LAA");
         if (index != 0) {
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut deplacer
@@ -69,7 +68,6 @@ public class EtatModifier implements Etat {
                     fenetre.viderPanneauEtapes();
                     fenetre.viderPanneauPIs();
                     fenetre.afficherBoutonSupprimer();
-                    fenetre.griserBoutonCalcul();
                     fenetre.repaint();
 
                     fenetre.afficherEtapesTour(true);
@@ -85,18 +83,15 @@ public class EtatModifier implements Etat {
                     //Si on annule la modification via la popup
                 } else {
                     fenetre.afficherBoutonSupprimer();
-                    fenetre.griserBoutonCalcul();
                 }
             } else {
                 fenetre.afficherBoutonSupprimer();
-                fenetre.griserBoutonCalcul();
             }
 
         } else {
             //Afficher popup d erreur car pas possible de deplacer l entrepot
             fenetre.afficherPopDeplacerErreur();
             fenetre.afficherBoutonSupprimer();
-            fenetre.griserBoutonCalcul();
         }
 
         controleur.setEtat(controleur.etatTournee);
@@ -140,7 +135,6 @@ public class EtatModifier implements Etat {
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();
-        fenetre.griserBoutonCalcul();
         controleur.setEtat(controleur.etatTournee);
     }
 }

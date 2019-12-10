@@ -222,6 +222,7 @@ public class Fenetre extends JFrame {
         undo = new ImageIcon(newimgUndo);
         boutonUndo = new JButton(undo);
         boutonUndo.addActionListener(ecouteurBoutons);
+        boutonUndo.setVisible(false);
         
         //Bouton pour faire un redo
         ImageIcon redo = new ImageIcon("redo.png");
@@ -231,6 +232,7 @@ public class Fenetre extends JFrame {
         redo = new ImageIcon(newimgRedo);
         boutonRedo = new JButton(redo);
         boutonRedo.addActionListener(ecouteurBoutons);
+        boutonRedo.setVisible(false);
 
         //Pour afficher les messages d erreur lies au chargement du fichier
         repChargeLiv = new JLabel("Erreur dans le chargement du fichier");
@@ -864,6 +866,8 @@ public class Fenetre extends JFrame {
         this.boutonSupprimer.setEnabled(false);
         this.boutonModifier.setEnabled(false);
         this.boutonAjouterPoints.setEnabled(false);
+        this.boutonUndo.setVisible(false);
+        this.boutonRedo.setVisible(false);
     }
 
     /**
@@ -879,6 +883,8 @@ public class Fenetre extends JFrame {
         this.boutonSupprimer.setEnabled(true);
         this.boutonModifier.setEnabled(true);
         this.boutonAjouterPoints.setEnabled(true);
+        this.boutonUndo.setVisible(true);
+        this.boutonRedo.setVisible(true);
     }
     
     /**

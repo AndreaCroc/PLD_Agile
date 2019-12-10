@@ -41,7 +41,7 @@ public class EtatLivraison implements Etat {
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
-        fenetre.griserBoutonCalcul();
+        //fenetre.griserBoutonCalcul();
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
     }

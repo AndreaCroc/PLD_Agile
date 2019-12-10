@@ -55,6 +55,7 @@ public class EtatTournee implements Etat {
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
+                controleur.annulerAnciennesCommandes();
 
             } else {
                 //Sinon, on affiche un message d erreur
@@ -76,17 +77,6 @@ public class EtatTournee implements Etat {
         } catch (Exception e) {
             //En cas d erreur lie a la selection d un fichier, on affiche un message
             fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
-            /*carte.setDemandesLivraisons(null);
-            fenetre.viderPanneauEtapes();
-            fenetre.viderPanneauPIs();
-            fenetre.cacherPanneauEtapesEtTour();
-            fenetre.cacherPanneauPI();
-            fenetre.griserBoutonCalcul();
-            fenetre.setTournee(null);
-            carte.setUneTournee(null);
-            fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
-            fenetre.repaint();
-            controleur.setEtat(controleur.etatDeBase);*/
         }
     }
 
@@ -126,6 +116,8 @@ public class EtatTournee implements Etat {
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
+                controleur.annulerAnciennesCommandes();
+                
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
@@ -222,8 +214,9 @@ public class EtatTournee implements Etat {
      * @param liste 
      */
     @Override
-    public void undo(ListeCdesTournee liste){
+    public void undo(ListeCdesTournee liste, Fenetre fenetre){
         liste.undo();
+        fenetre.afficherBoutonCalcul();
     }
     
     /**
@@ -231,8 +224,35 @@ public class EtatTournee implements Etat {
      * @param liste 
      */
     @Override
-    public void redo(ListeCdesTournee liste){
+    public void redo(ListeCdesTournee liste, Fenetre fenetre){
         liste.redo();
+        fenetre.afficherBoutonCalcul();
+    }
+    
+    /**
+     * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
+     *
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param tournee
+     */
+    @Override
+    public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+
+        fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
+        fenetre.afficherMessageErreur3("");
+        tournee = carte.calculerTournee();
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
+
+        fenetre.afficherEtapesTour(true);
+        fenetre.afficherPanneauPI(true);
+        fenetre.afficherBoutonSupprimer();
+        fenetre.repaint();
+        controleur.setEtat(controleur.etatTournee);
     }
 
 }

@@ -72,4 +72,12 @@ public class ListeCdesTournee {
                 cde.doCde(carte, tournee, fenetre, controleur);
         }
     }
+    
+    /**
+     * Annule les commandes faites
+     */
+    public void annulerAnciennesCommandes() {
+        listeCommandes.clear();
+        indiceActuel = -1;
+    }
 }

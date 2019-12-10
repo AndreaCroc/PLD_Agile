@@ -32,7 +32,7 @@ public interface Etat {
     public default void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){}; 
     public default void surbrillerTables(Fenetre fenetre, PointInteret ptI){};
     public default void surbrillerPI(Fenetre fenetre, PointInteret p) {};
-    public default void undo(ListeCdesTournee liste){};
-    public default void redo(ListeCdesTournee liste){};
+    public default void undo(ListeCdesTournee liste, Fenetre fenetre){};
+    public default void redo(ListeCdesTournee liste, Fenetre fenetre){};
     
 }

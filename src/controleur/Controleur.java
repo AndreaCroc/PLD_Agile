@@ -113,7 +113,7 @@ public class Controleur {
      * Code source : PlaCo
      */
     public void undo() {
-        etatCourant.undo(listeCommandes);
+        etatCourant.undo(listeCommandes, fenetre);
     }
 
     /**
@@ -121,7 +121,14 @@ public class Controleur {
      * Code source : PlaCo
      */
     public void redo() {
-        etatCourant.redo(listeCommandes);
+        etatCourant.redo(listeCommandes, fenetre);
+    }
+    
+    /**
+     * Permet d annuler les commandes stockees precedemment
+     */
+    public void annulerAnciennesCommandes() {
+        listeCommandes.annulerAnciennesCommandes();
     }
 
     /**
