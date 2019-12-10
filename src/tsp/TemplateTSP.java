@@ -9,7 +9,7 @@ public abstract class TemplateTSP implements TSP {
     private Integer[] meilleureSolution;
     private Double coutMeilleureSolution = 0.0;
     private Boolean tempsLimiteAtteint;
-    private boolean nouvelleSolution=false;
+    public boolean nouvelleSolution=false;
     private boolean stop=false;
     
     public Boolean getTempsLimiteAtteint() {
