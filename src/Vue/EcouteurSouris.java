@@ -82,8 +82,8 @@ public class EcouteurSouris extends MouseAdapter {
                                         + 25;
                             PointInteret pi = p.getPtI();
                             //Si le clic se trouve sur une figure d un point d interet
-                            if ((x >= nvXpt - 5) && (x <= nvXpt + 5) 
-                                    && (y >= nvYpt - 5) && (y <= nvYpt + 5)) {
+                            if ((x >= nvXpt - 6) && (x <= nvXpt + 6) 
+                                    && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() && index != -1) {

@@ -19,26 +19,11 @@ public class IteratorSeq2 implements Iterator<Integer> {
 		nbCandidats = 0;
                 int num = 0;
 		for (Integer s : nonVus){
-                        //System.out.println(mapPredecesseur.containsKey(s));
-                        //System.out.println(mapPredecesseur.get(s));
-                        Boolean estPresent=mapPredecesseur.containsKey(s);
-                        if (estPresent)
+                        Integer predecesseur=mapPredecesseur.get(s);
+                        if (predecesseur!=null && !nonVus.contains(predecesseur))
                         {
-//                            System.out.println("est present");
-//                            System.out.println(s);
-                            Integer predecesseur = mapPredecesseur.get(s);
-//                            System.out.println("predecesseur");
-//                            System.out.println(predecesseur);
-                            //System.out.println(nonVus);
-                            if (!nonVus.contains(predecesseur))
-                            {
-//                                System.out.println("il n'y est pas");
-                                candidatsBis[num++] = s;
-                            }
-                        }
-                        else
-                        {
-                             candidatsBis[num++] = s;
+
+			candidatsBis[num++] = s;
                         }
 		}
 
@@ -48,6 +33,7 @@ public class IteratorSeq2 implements Iterator<Integer> {
                 for (int j = 0; j < num; j++)
                 {
 			candidats[nbCandidats++] = candidatsBis[j];
+                        
                 }
                 
 	}
