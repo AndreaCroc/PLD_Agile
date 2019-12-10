@@ -707,7 +707,7 @@ public class Fenetre extends JFrame {
         this.boutonModifier.setEnabled(true);
         this.boutonAjouterPoints.setEnabled(true);
     }
-
+    
     /**
      * Pour afficher les details d une tournee
      *
@@ -1331,7 +1331,7 @@ public class Fenetre extends JFrame {
         jop.showMessageDialog(null, "La modification a été effectuée même si \nle point d'intérêt de livraison est placé\n avant le point d'enlèvement dans la tournée", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
     
-        public void setPE(PointInteret pE){
+    public void setPE(PointInteret pE){
         this.pE = pE;
     }
     
