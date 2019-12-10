@@ -1,4 +1,3 @@
-
 package Vue;
 
 import java.awt.BasicStroke;
@@ -17,63 +16,52 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * JCarte
+ * JCarte permet d afficher la carte, les points d interets, la tournee
  *
- * Version 1
- * 
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class JCarte extends JPanel {
-/**
- *
- * Classe JCarte permet d afficher la carte, les points d interets, la tournee
- */
 
     private Carte carte; //Carte possedant les points dinteret
     private Tournee tournee; //les points dinteret faisant partie de la tournee
+<<<<<<< HEAD
     private ArrayList<CoordPointInteret> listeCoordPtI; //liste des point dinerets de la carte
     private Fenetre fenetre; //fenetre de lapplication
     private double zoom; //zoom a appliquer sur la carte
+=======
+    //liste des point dinerets de la carte
+    private ArrayList<CoordPointInteret> listeCoordPtI;
+    private Map<Intersection, Point> intersectionsMap;
+    private Fenetre fenetre; //fenetre de l application
+    private ArrayList<Color> palette;
+    private ArrayList<Point> coorIntersections = new ArrayList<>();
+>>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
 
     /**
      * Constructeur de la classe JCarte
+     *
      * @param carte
      * @param tournee
      * @param fenetre
-     * @param zoom 
      */
-    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre, double zoom) {
+    public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
         this.tournee = tournee;
         this.listeCoordPtI = new ArrayList<>();
         this.fenetre = fenetre;
-        this.zoom = zoom;
+        this.palette = this.fenetre.getPalette();
+        this.coorIntersections = new ArrayList<>();
         this.repaint();
     }
 
     /**
-     * Modifier le zoom
-     * @param z nouveau zoom
-     */
-    public void setZoom(double z) {
-        this.zoom = z;
-    }
-
-    /**
-     * Recuperer le zoom
-     * @return zoom
-     */
-    public double getZoom() {
-        return zoom;
-    }
-
-    /**
      * Modifier la tournee de la carte
-     * @param nouvelleTournee 
+     *
+     * @param nouvelleTournee
      */
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
@@ -82,6 +70,7 @@ public class JCarte extends JPanel {
 
     /**
      * Modifier la fenetre
+     *
      * @param fenetre nouvelle fenetre
      */
     public void setFenetre(Fenetre fenetre) {
@@ -91,12 +80,12 @@ public class JCarte extends JPanel {
 
     /**
      * Recuperer la tournee
+     *
      * @return tournee
      */
     public Tournee getTournee() {
         return this.tournee;
     }
-
 
     /**
      * Ajouter un point au tableau stockant les coordonnees des points d
@@ -107,10 +96,26 @@ public class JCarte extends JPanel {
     public void ajouterCoordPtI(CoordPointInteret p) {
         this.listeCoordPtI.add(p);
     }
+<<<<<<< HEAD
+=======
+
+    public void ajouterPointToIntersectionsMap(Intersection i, Point p) {
+        this.intersectionsMap.put(i, p);
+    }
+
+    public Map<Intersection, Point> getIntersectionsMap() {
+        return this.intersectionsMap;
+    }
+>>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
+
+    public ArrayList<Point> getCoorIntersections() {
+        return coorIntersections;
+    }
 
     /**
      * Recuperer la liste des points dinteret et leurs coordonnees sur la carte
-     * @return liste 
+     *
+     * @return liste
      */
     public ArrayList<CoordPointInteret> getCoordPtInterets() {
         return this.listeCoordPtI;
@@ -213,13 +218,16 @@ public class JCarte extends JPanel {
 
         Double distMinLatitude = (i.getLatitude() - minLatitude);
 
-        /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
+        /*A quel pourcentage de latitude se trouve l'intersection
+        par rapport à la carte*/
         Double pourcentageLatitude = ((distMinLatitude * 100 / hauteurCarte));
 
         int hauteurPanel = this.getHeight();
 
-        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java pour les y*/
-        int proportionalY = hauteurPanel - (int) (pourcentageLatitude * hauteurPanel / 100);
+        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé 
+        en Java pour les y*/
+        int proportionalY = hauteurPanel - (int) (pourcentageLatitude
+                * hauteurPanel / 100);
 
         if (proportionalY == 0) {
             proportionalY = 2;
@@ -227,12 +235,16 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        proportionalY *= zoom;
+        //System.out.println("deplacement y " +fenetre.getDeplY());
+        proportionalY *= fenetre.getZoom();
+        proportionalY -= (fenetre.getDeplY());
+        //System.out.println("nouveau Y " +proportionalY);
 
         return proportionalY;
     }
 
-    public int getProportionalYPIs(Intersection i, ArrayList<PointInteret> PIs, ArrayList<Intersection> intersections) {
+    public int getProportionalYPIs(Intersection i, ArrayList<PointInteret> PIs,
+            ArrayList<Intersection> intersections) {
 
         Double maxLatitude = this.maxLatitude(intersections);
         Double minLatitude = this.minLatitude(intersections);
@@ -241,12 +253,14 @@ public class JCarte extends JPanel {
 
         Double distMinLatitude = (i.getLatitude() - minLatitude);
 
-        /*A quel pourcentage de latitude se trouve l'intersection par rapport à la carte*/
+        /*A quel pourcentage de latitude se trouve l'intersection 
+        par rapport à la carte*/
         Double pourcentageLatitude = ((distMinLatitude * 100 / hauteurCarte));
 
         int hauteurPanel = this.getHeight();
 
-        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé en Java pour les y*/
+        /*Reporter ce pourcentage sur le panel, Attention, le sens est 
+        inversé en Java pour les y*/
         int proportionalY = hauteurPanel - (int) (pourcentageLatitude * hauteurPanel / 100);
 
         if (proportionalY == 0) {
@@ -255,13 +269,15 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        proportionalY *= zoom;
+        proportionalY *= fenetre.getZoom();
+        proportionalY -= (fenetre.getDeplY());
 
         return proportionalY;
     }
 
     /*Recupère la position en X de l'intersection sur le panel */
-    public int getProportionalX(Intersection i, ArrayList<Intersection> intersections) {
+    public int getProportionalX(Intersection i,
+            ArrayList<Intersection> intersections) {
 
         Double maxLongitude = this.maxLongitude(intersections);
         Double minLongitude = this.minLongitude(intersections);
@@ -270,8 +286,41 @@ public class JCarte extends JPanel {
 
         Double distMinLongitude = (i.getLongitude() - minLongitude);
 
-        /*A quel pourcentage de longitude se trouve l'intersection par rapport à la carte*/
-        int pourcentageLongitude = (int) (distMinLongitude * 100 / largeurCarte);
+        /*A quel pourcentage de longitude se trouve l'intersection 
+        par rapport à la carte*/
+        int pourcentageLongitude = (int) (distMinLongitude * 100
+                / largeurCarte);
+
+        int largeurPanel = this.getWidth();
+
+        /*Reporter ce pourcentage sur le panel.*/
+        int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
+        /*if (proportionalX == 0) {
+            proportionalX = 2;
+        } else if (proportionalX >= largeurPanel) {
+            proportionalX = largeurPanel - 12;
+        }*/
+
+        proportionalX *= fenetre.getZoom();
+        proportionalX -= (fenetre.getDeplX());
+
+        return proportionalX;
+    }
+
+    public int getProportionalXPIs(Intersection i, ArrayList<PointInteret> PIs,
+            ArrayList<Intersection> intersections) {
+
+        Double maxLongitude = this.maxLongitude(intersections);
+        Double minLongitude = this.minLongitude(intersections);
+
+        Double largeurCarte = (maxLongitude - minLongitude);
+
+        Double distMinLongitude = (i.getLongitude() - minLongitude);
+
+        /*A quel pourcentage de longitude se trouve l'intersection 
+        par rapport à la carte*/
+        int pourcentageLongitude = (int) (distMinLongitude * 100
+                / largeurCarte);
 
         int largeurPanel = this.getWidth();
 
@@ -283,53 +332,70 @@ public class JCarte extends JPanel {
             proportionalX = largeurPanel - 12;
         }
 
-        proportionalX *= zoom;
+        proportionalX *= fenetre.getZoom();
+        proportionalX -= fenetre.getDeplX();
 
         return proportionalX;
     }
 
-    public int getProportionalXPIs(Intersection i, ArrayList<PointInteret> PIs, ArrayList<Intersection> intersections) {
-
-        Double maxLongitude = this.maxLongitude(intersections);
-        Double minLongitude = this.minLongitude(intersections);
-
-        Double largeurCarte = (maxLongitude - minLongitude);
-
-        Double distMinLongitude = (i.getLongitude() - minLongitude);
-
-        /*A quel pourcentage de longitude se trouve l'intersection par rapport à la carte*/
-        int pourcentageLongitude = (int) (distMinLongitude * 100 / largeurCarte);
-
-        int largeurPanel = this.getWidth();
-
-        /*Reporter ce pourcentage sur le panel.*/
-        int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
-        if (proportionalX == 0) {
-            proportionalX = 2;
-        } else if (proportionalX >= largeurPanel) {
-            proportionalX = largeurPanel - 12;
+    /*public void makePalette(){
+        ArrayList<Color> palette=new ArrayList<Color>();
+        
+        if(carte.getListePointsInteretActuelle() != null)
+        {
+            System.out.println("iciiiiiiii");
+            ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
+            palette=new ArrayList<Color>();
+            
+            for (int c=0;c<(PIs.size()-1)/2;c++) {
+                Random rand = new Random();
+                    float r = rand.nextFloat();
+                    float gg = rand.nextFloat();
+                    float b = rand.nextFloat();
+                    Color randomColor = new Color(r, gg, b);
+                    palette.add(randomColor);
+            }
         }
-
-        proportionalX *= zoom;
-
-        return proportionalX;
-    }
-
+        System.out.println(palette.size());
+        this.palette=palette;
+        System.out.println(this.palette.size());
+    }*/
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
+<<<<<<< HEAD
+=======
+            //ajout de l'intersection et de ses coordonnees correspondantes dans la map
+            this.ajouterPointToIntersectionsMap(i, new Point(this
+                    .getProportionalX(i,
+                            intersections),
+                    this.getProportionalY(i,
+                            intersections)));
+
+>>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
             g.setColor(Color.BLACK);
 
-            g.fillOval(this.getProportionalX(i, intersections), this.getProportionalY(i, intersections), 2, 2);
+            g.fillOval(this.getProportionalX(i, intersections), this
+                    .getProportionalY(i, intersections), 2, 2);
+
+            this.coorIntersections.add(new Point(getProportionalX(i, intersections),
+                    getProportionalY(i, intersections)));
 
             ArrayList<Troncon> iTroncons = i.getTronconsDepart();
             for (Troncon t : iTroncons) {
                 g.setColor(Color.gray);
-                g.drawLine(this.getProportionalX(i, intersections) + 1, this.getProportionalY(i, intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
-                //ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
+                g.drawLine(this.getProportionalX(i, intersections) + 1,
+                        this.getProportionalY(i, intersections) + 1,
+                        this.getProportionalX(t.getDestination(),
+                                intersections) + 1,
+                        this.getProportionalY(t.getDestination(),
+                                intersections) + 1);
+
+//ça affiche 1 fois par tronçon, il faudrait le faire  seul fois par avenue
                 /*
                 if(t.getNomRue().contains("Avenue")||t.getNomRue().contains("Cours")){
                     Graphics2D g2 = (Graphics2D)g; //cast for java2
@@ -338,6 +404,11 @@ public class JCarte extends JPanel {
                     g2.drawString(t.getNomRue(), this.getProportionalX(t.getDestination(), intersections),this.getProportionalY(t.getDestination(), intersections));// S, left, BOTTOM
                 }*/
             }
+            g.setColor(Color.red);
+            g.fillOval((int) ((1 * fenetre.getZoom()) - fenetre.getDeplX()),
+                    (int) ((1 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);
+            g.fillOval((int) ((100 * fenetre.getZoom()) - fenetre.getDeplX()),
+                    (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);
         }
 
         if (carte.getDemandesLivraisons() != null) {
@@ -346,8 +417,10 @@ public class JCarte extends JPanel {
             //ArrayList<PointInteret> PIs = carte.getDemandesLivraisons().getListePointsInteret();
 
             PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
-            int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs, intersections) - 2;
-            int yDepot = this.getProportionalYPIs(depot.getIntersection(), PIs, intersections) - 2;
+            int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs,
+                    intersections) - 2;
+            int yDepot = this.getProportionalYPIs(depot.getIntersection(), PIs,
+                    intersections) - 2;
             int x[] = {xDepot, xDepot + 6, xDepot + 12};
             int y[] = {yDepot, yDepot + 12, yDepot};
             Polygon p = new Polygon(x, y, 3);
@@ -359,27 +432,36 @@ public class JCarte extends JPanel {
             CoordPointInteret cptI = new CoordPointInteret(ptDepot, depot);
             this.ajouterCoordPtI(cptI);
 
+            int indiceC = 0;
             if (PIs != null) {
+
                 for (PointInteret i : PIs) {
                     g.setColor(Color.BLACK);
-                    Random rand = new Random();
-                    float r = rand.nextFloat();
-                    float gg = rand.nextFloat();
-                    float b = rand.nextFloat();
-                    Color randomColor = new Color(r, gg, b);
-                    g.setColor(randomColor);
 
                     if (i.isEnlevement()) {
-                        int xRect = this.getProportionalXPIs(i.getIntersection(), PIs, intersections) - 2;
-                        int yRect = this.getProportionalYPIs(i.getIntersection(), PIs, intersections) - 2;
-                        int xOval = this.getProportionalXPIs(i.getPointDependance().getIntersection(), PIs, intersections) - 2;
-                        int yOval = this.getProportionalYPIs(i.getPointDependance().getIntersection(), PIs, intersections) - 2;
+
+                        g.setColor(this.palette.get(indiceC));
+                        if (indiceC < this.palette.size()) {
+                            indiceC++;
+                        }
+
+                        int xRect = this.getProportionalXPIs(i
+                                .getIntersection(), PIs, intersections) - 2;
+                        int yRect = this.getProportionalYPIs(i
+                                .getIntersection(), PIs, intersections) - 2;
+                        int xOval = this.getProportionalXPIs(i
+                                .getPointDependance().getIntersection(),
+                                PIs, intersections) - 2;
+                        int yOval = this.getProportionalYPIs(i
+                                .getPointDependance().getIntersection(),
+                                PIs, intersections) - 2;
                         Point ptRect = new Point(xRect, yRect);
                         Point ptOval = new Point(xOval, yOval);
                         g.fillRect(xRect, yRect, 9, 9);
                         g.fillOval(xOval, yOval, 9, 9);
-                        
-                        //Ajout des points a la liste stockant les coordonnees des points d interets
+
+                        //Ajout des points a la liste stockant 
+                        //les coordonnees des points d interets
                         CoordPointInteret cdPtIRect = new CoordPointInteret(ptRect, i);
                         CoordPointInteret cdPtIOval = new CoordPointInteret(ptOval, i.getPointDependance());
                         this.ajouterCoordPtI(cdPtIRect);
@@ -394,28 +476,54 @@ public class JCarte extends JPanel {
         tournee = carte.getTournee();
         if (this.tournee != null) {
 
-            ArrayList<PointInteret> PIs = this.tournee.getSuccessionPointsInteret();
+            ArrayList<PointInteret> PIs = this.tournee
+                    .getSuccessionPointsInteret();
 
             for (PointInteret i : PIs) {
                 Chemin chemin = i.getCheminDepart();
                 if (chemin != null) {
-                    ArrayList<Troncon> iTroncons = chemin.getSuccessionTroncons();
+                    ArrayList<Troncon> iTroncons = chemin
+                            .getSuccessionTroncons();
                     for (Troncon t : iTroncons) {
                         g.setColor(Color.RED);
-                        g.drawLine(this.getProportionalX(t.getOrigine(), intersections) + 1, this.getProportionalY(t.getOrigine(), intersections) + 1, this.getProportionalX(t.getDestination(), intersections) + 1, this.getProportionalY(t.getDestination(), intersections) + 1);
+                        g.drawLine(this.getProportionalX(t.getOrigine(),
+                                intersections) + 1, this.getProportionalY(
+                                        t.getOrigine(), intersections) + 1,
+                                this.getProportionalX(t.getDestination(),
+                                        intersections) + 1, this
+                                        .getProportionalY(
+                                                t.getDestination(),
+                                                intersections) + 1);
 
                         if (t.getLongueur() > 120) {
-                            int x = (int) (Math.abs((this.getProportionalX(t.getDestination(), intersections) + this.getProportionalX(t.getOrigine(), intersections))) / 2);
-                            int y = (int) (Math.abs((this.getProportionalY(t.getDestination(), intersections) + this.getProportionalY(t.getOrigine(), intersections))) / 2);
-                            double k = ((double) (this.getProportionalY(t.getDestination(), intersections) - this.getProportionalY(t.getOrigine(), intersections))) / ((double) (this.getProportionalX(t.getDestination(), intersections) - this.getProportionalX(t.getOrigine(), intersections)));
+                            int x = (int) (Math.abs((this.getProportionalX(
+                                    t.getDestination(), intersections)
+                                    + this.getProportionalX(t.getOrigine(),
+                                            intersections))) / 2);
+                            int y = (int) (Math.abs((this.getProportionalY(
+                                    t.getDestination(), intersections)
+                                    + this.getProportionalY(t.getOrigine(),
+                                            intersections))) / 2);
+                            double k = ((double) (this.getProportionalY(
+                                    t.getDestination(), intersections)
+                                    - this.getProportionalY(t.getOrigine(),
+                                            intersections))) / ((double) (this.getProportionalX(t.getDestination(),
+                                            intersections)
+                                    - this.getProportionalX(t.getOrigine(),
+                                            intersections)));
                             int r = 6;      // taille de fleche
-                            int sens = (t.getDestination().getLongitude() > t.getOrigine().getLongitude()) ? 1 : -1;  // sens de fleche
+                            // sens de fleche
+                            int sens = (t.getDestination().getLongitude()
+                                    > t.getOrigine().getLongitude()) ? 1 : -1;
                             double v = (Math.sqrt(1 + k * k));
                             double w = Math.sqrt(1 + (-1 / k) * (-1 / k));
                             double ajoutX = (r / 2 * sens / v);
                             double ajoutY = (r / 2 * sens * k / v);
-                            int xT[] = {(int) (2 * r * sens / v + ajoutX) + x, x - (int) (r / w - ajoutX), x + (int) (r / w + ajoutX)};
-                            int yT[] = {(int) (2 * r * k * sens / v + ajoutY) + y, y - (int) (r * (-1 / k) / w - ajoutY), y + (int) (r * (-1 / k) / w + ajoutY)};
+                            int xT[] = {(int) (2 * r * sens / v + ajoutX) + x,
+                                x - (int) (r / w - ajoutX), x + (int) (r / w + ajoutX)};
+                            int yT[] = {(int) (2 * r * k * sens / v + ajoutY)
+                                + y, y - (int) (r * (-1 / k) / w - ajoutY),
+                                y + (int) (r * (-1 / k) / w + ajoutY)};
                             Polygon p = new Polygon(xT, yT, 3);
                             g.setColor(Color.RED);
                             g.fillPolygon(p);
@@ -429,7 +537,7 @@ public class JCarte extends JPanel {
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVuePIs().getLignePISelect();
             int ligneTabDep = this.fenetre.getVuePIs().getLignePIDepSelect();
-            //Si une ligne du tableau des etapes de la tournee a ete selectionnee
+            //Si une ligne du tableau des etapes de tournee a ete selectionnee
             if (ligneTab != -1 && ligneTabDep != -1) {
                 int xPI = 0;
                 int yPI = 0;
@@ -438,7 +546,8 @@ public class JCarte extends JPanel {
                 boolean select = false;
                 boolean piDep = false;
                 if (ligneTab < this.listeCoordPtI.size()) {
-                    //Recuperer les coordonnes du point d interet associe a la ligne du tableau
+                    //Recuperer les coordonnes du point d interet associe 
+                    //a la ligne du tableau
                     xPI = this.listeCoordPtI.get(ligneTab).getPoint().getX();
                     yPI = this.listeCoordPtI.get(ligneTab).getPoint().getY();
                     select = true;
@@ -471,8 +580,10 @@ public class JCarte extends JPanel {
                 }
 
                 if (ligneTabDep < this.listeCoordPtI.size() && ligneTabDep != 0) {
-                    xPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint().getX();
-                    yPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint().getY();
+                    xPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint()
+                            .getX();
+                    yPIDep = this.listeCoordPtI.get(ligneTabDep).getPoint()
+                            .getY();
                     piDep = true;
                 }
 
@@ -483,10 +594,14 @@ public class JCarte extends JPanel {
                     g2.setColor(Color.ORANGE);
 
                     //Faire un carre orange autour du point d interet dependant
-                    g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep + 13);
-                    g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep + 13);
-                    g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep - 4);
-                    g2.drawLine(xPIDep + 13, yPIDep - 4, xPIDep - 4, yPIDep - 4);
+                    g2.drawLine(xPIDep - 4, yPIDep - 4, xPIDep - 4, yPIDep
+                            + 13);
+                    g2.drawLine(xPIDep - 4, yPIDep + 13, xPIDep + 13, yPIDep
+                            + 13);
+                    g2.drawLine(xPIDep + 13, yPIDep + 13, xPIDep + 13, yPIDep
+                            - 4);
+                    g2.drawLine(xPIDep + 13, yPIDep - 4, xPIDep - 4, yPIDep
+                            - 4);
 
                 }
 
