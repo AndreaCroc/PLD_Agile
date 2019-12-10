@@ -25,39 +25,69 @@ public class Troncon {
         this.origine = origine;
         this.destination = destination;
     }
-
     
+    /**
+     * Obtention du nom de la rue correspondant au troncon
+     * @return Nom de la rue
+     */
     public String getNomRue() {
         return nomRue;
     }
 
+    /**
+     * Modifie le nom de la rue du troncon
+     * @param nomRue nouveau nom de la rue
+     */
     public void setNomRue(String nomRue) {
         this.nomRue = nomRue;
     }
 
+    /**
+     * Obtention de la longueur du troncon
+     * @return longueur du troncon
+     */
     public Double getLongueur() {
         return longueur;
     }
 
+    /**
+     * Modifie la longueur du troncon
+     * @param longueur nouvelle longueur du troncon
+     */
     public void setLongueur(Double longueur) {
         this.longueur = longueur;
     }
 
+    /**
+     * Obtention de l intersection d origine du troncon
+     * @return Nouvelle intersection d origine
+     */
     public Intersection getOrigine() {
         return origine;
     }
 
+    /**
+     * Modifie l intersection d origine
+     * @param origine 
+     */
     public void setOrigine(Intersection origine) {
         this.origine = origine;
     }
 
+    /**
+     * Obtention de l intersection de destination de troncon
+     * @return Nouvelle intersection de destination de troncon
+     */
     public Intersection getDestination() {
         return destination;
     }
 
+    /**
+     * Modifie la destination du troncon
+     * @param destination nouvelle destination
+     */
     public void setDestination(Intersection destination) {
         this.destination = destination;
     }
-    
     
 }

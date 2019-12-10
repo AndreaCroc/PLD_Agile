@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class JCarte extends JPanel {
     //liste des point dinerets de la carte
     private ArrayList<CoordPointInteret> listeCoordPtI;
     private Map<Intersection, Point> intersectionsMap;
+    private ArrayList<Troncon> tronconsNomsRues;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
     private ArrayList<Point> coorIntersections = new ArrayList<>();
@@ -49,6 +51,7 @@ public class JCarte extends JPanel {
         this.tournee = tournee;
         this.listeCoordPtI = new ArrayList<>();
         this.intersectionsMap = new HashMap<>();
+        this.tronconsNomsRues = new ArrayList<>();
         this.fenetre = fenetre;
         this.palette = this.fenetre.getPalette();
         this.coorIntersections = new ArrayList<>();
@@ -113,6 +116,14 @@ public class JCarte extends JPanel {
      */
     public ArrayList<CoordPointInteret> getCoordPtInterets() {
         return this.listeCoordPtI;
+    }
+    
+    /**
+     * Modifier la liste des troncons dont on veut afficher le nom de la rue
+     * @param lTroncons liste de troncons
+     */
+    public void setTronconsNomsRues(ArrayList<Troncon> lTroncons) {
+        this.tronconsNomsRues = lTroncons;
     }
 
     /*Recupère la latitude maximale présente sur la carte*/
@@ -374,6 +385,40 @@ public class JCarte extends JPanel {
                     (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);*/
         }
 
+        for (Troncon tRues : tronconsNomsRues) {
+            System.out.println(tRues.getNomRue());
+            Graphics2D g2 = (Graphics2D)g.create();
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+            g2.setColor(new Color(0,0,0));
+
+            //rotation du texte selon l'angle de la rue affichée
+            //k est la pente
+            //System.out.println(((double) (this.getProportionalY(tRues.getDestination(), intersections)) + "-"  +this.getProportionalY(tRues.getOrigine(), intersections) + " / " + this.getProportionalX(tRues.getDestination(), intersections) + "-"+this.getProportionalX(tRues.getOrigine(), intersections)));
+            double xDest = this.getProportionalX(tRues.getDestination(), intersections);
+            double yDest = this.getProportionalY(tRues.getDestination(), intersections);
+            double xOrig = this.getProportionalX(tRues.getOrigine(), intersections);
+            double yOrig = this.getProportionalY(tRues.getOrigine(), intersections);
+
+            double numerateur = (yDest - yOrig);
+            double denom = (xDest - xOrig);
+            double k;
+            if(denom != 0) {
+                k = numerateur / denom;
+            } else {
+                k = numerateur / 0.001;
+            }
+
+            int nvX = (this.getProportionalX(tRues.getDestination(), intersections) + this.getProportionalX(tRues.getOrigine(), intersections))/2;
+            int nvY = (this.getProportionalY(tRues.getDestination(), intersections) + this.getProportionalY(tRues.getOrigine(), intersections))/2;
+
+            double radian = Math.atan(k);
+            System.out.println(radian);
+
+            g2.rotate(radian,nvX, nvY); //mieux avec x et y précisees
+            g2.drawString(tRues.getNomRue(), nvX,nvY);// S, left, BOTTOM
+            g2.dispose();
+        }
+        
         if (carte.getDemandesLivraisons() != null) {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
