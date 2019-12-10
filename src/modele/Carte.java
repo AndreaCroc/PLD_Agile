@@ -445,6 +445,7 @@ public class Carte {
             calculerHeuresTournee();
         }
 
+        System.out.println("tournee apres suppr : "+uneTournee);
         return true;
     }
     
@@ -525,7 +526,9 @@ public class Carte {
         //Mise à jour des heures
         calculerHeuresTournee();
         
+        System.out.println("tournee apres modif : "+uneTournee);
         return contraintePrec;
+        
     }
 
    /**
@@ -587,6 +590,7 @@ public class Carte {
         //Mise à jour des heures de départ et d'arrivée
         this.calculerHeuresTournee();
 
+        System.out.println("tournee apres ajout : "+uneTournee);
         return true;
     }
 
@@ -728,6 +732,8 @@ public class Carte {
      * @return la tournée mise à jour
      */
     public boolean calculerHeuresTournee() {
+        int dureeTrajet;
+        int nbSommets = uneTournee.getSuccessionPointsInteret().size();
         //Recuperation de l'entrepot
         PointInteret pointCourant = uneTournee.getSuccessionPointsInteret().get(0);
         PointInteret pointPrec = pointCourant;
@@ -739,13 +745,16 @@ public class Carte {
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
-        int dureeTrajet;
-        int nbSommets = uneTournee.getSuccessionPointsInteret().size();
+        
         for (int i = 1; i < nbSommets; i++) {
             pointCourant = uneTournee.getSuccessionPointsInteret().get(i);
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
+                System.out.println("point precedent : "+pointPrec.getIntersection().getId());
+                System.out.println("chemin : "+pointPrec.getCheminDepart());
+                System.out.println("duree : "+pointPrec.getDuree());
                 dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
+                System.out.println("apres ligne");
                 heureArriveeCour = heureDepartPrec + dureeTrajet;
                 pointCourant.setHeureArrivee(intToHeure(heureArriveeCour));
 
