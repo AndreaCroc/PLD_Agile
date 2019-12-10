@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.JPanel;
 import modele.Carte;
@@ -28,18 +30,12 @@ public class JCarte extends JPanel {
 
     private Carte carte; //Carte possedant les points dinteret
     private Tournee tournee; //les points dinteret faisant partie de la tournee
-<<<<<<< HEAD
-    private ArrayList<CoordPointInteret> listeCoordPtI; //liste des point dinerets de la carte
-    private Fenetre fenetre; //fenetre de lapplication
-    private double zoom; //zoom a appliquer sur la carte
-=======
     //liste des point dinerets de la carte
     private ArrayList<CoordPointInteret> listeCoordPtI;
     private Map<Intersection, Point> intersectionsMap;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
     private ArrayList<Point> coorIntersections = new ArrayList<>();
->>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
 
     /**
      * Constructeur de la classe JCarte
@@ -52,6 +48,7 @@ public class JCarte extends JPanel {
         this.carte = carte;
         this.tournee = tournee;
         this.listeCoordPtI = new ArrayList<>();
+        this.intersectionsMap = new HashMap<>();
         this.fenetre = fenetre;
         this.palette = this.fenetre.getPalette();
         this.coorIntersections = new ArrayList<>();
@@ -96,8 +93,6 @@ public class JCarte extends JPanel {
     public void ajouterCoordPtI(CoordPointInteret p) {
         this.listeCoordPtI.add(p);
     }
-<<<<<<< HEAD
-=======
 
     public void ajouterPointToIntersectionsMap(Intersection i, Point p) {
         this.intersectionsMap.put(i, p);
@@ -106,7 +101,6 @@ public class JCarte extends JPanel {
     public Map<Intersection, Point> getIntersectionsMap() {
         return this.intersectionsMap;
     }
->>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
 
     public ArrayList<Point> getCoorIntersections() {
         return coorIntersections;
@@ -367,8 +361,6 @@ public class JCarte extends JPanel {
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
-<<<<<<< HEAD
-=======
             //ajout de l'intersection et de ses coordonnees correspondantes dans la map
             this.ajouterPointToIntersectionsMap(i, new Point(this
                     .getProportionalX(i,
@@ -376,7 +368,6 @@ public class JCarte extends JPanel {
                     this.getProportionalY(i,
                             intersections)));
 
->>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
             g.setColor(Color.BLACK);
 
             g.fillOval(this.getProportionalX(i, intersections), this

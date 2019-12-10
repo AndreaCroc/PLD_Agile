@@ -4,7 +4,9 @@ import controleur.Controleur;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Map;
 import modele.Carte;
+import modele.Intersection;
 import modele.PointInteret;
 import javax.swing.JOptionPane;
 import controleur.EtatAjouter;
@@ -53,10 +55,6 @@ public class EcouteurSouris extends MouseAdapter {
             int yPanneauLegende = this.fenetre.getHeightPanneauLegende();
 
             if (this.vueCarte != null) {
-<<<<<<< HEAD
-                //Recuperer les coordonnees de tous les points d interets qui sont sur la carte
-                ArrayList<CoordPointInteret> listeCoordPtI = vueCarte.getCoordPtInterets();
-=======
                 //Recuperer les coordonnees points interets qui sont sur carte
                 ArrayList<CoordPointInteret> listeCoordPtI 
                                             = vueCarte.getCoordPtInterets();
@@ -64,7 +62,6 @@ public class EcouteurSouris extends MouseAdapter {
                 ArrayList<Point> coordI = vueCarte.getCoorIntersections();
                 Map<Intersection, Point> mesCoordIntersections 
                                             = vueCarte.getIntersectionsMap();
->>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
                 Carte carte = fenetre.getCarte();
                 if (carte != null) {
                     ArrayList<PointInteret> listePtI 
@@ -130,8 +127,6 @@ public class EcouteurSouris extends MouseAdapter {
                         }
 
                     }
-<<<<<<< HEAD
-=======
 
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
@@ -181,7 +176,6 @@ public class EcouteurSouris extends MouseAdapter {
 
                         }
                     }
->>>>>>> 07953ff2605bfd1977b1a0cee6185751b16f5af3
                 }
 
             }

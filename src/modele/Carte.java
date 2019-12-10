@@ -1023,14 +1023,18 @@ public class Carte {
                 
             } else {
                 ok = false;
-                this.setDemandesLivraisons(sauvegardeDL);
-                this.listePointsInteretActuelle = sauvegardeDL.getPis();
+                if(sauvegardeDL!=null && demandesLivraisons!=null && !listeIntersections.isEmpty()) {
+                    this.setDemandesLivraisons(sauvegardeDL);
+                    this.listePointsInteretActuelle = sauvegardeDL.getPis();
+                }
             }
 
         } else {
             ok = false;
-            this.setDemandesLivraisons(sauvegardeDL);
-            this.listePointsInteretActuelle = sauvegardeDL.getPis();
+            if(sauvegardeDL!=null && demandesLivraisons!=null && !listeIntersections.isEmpty()) {
+                this.setDemandesLivraisons(sauvegardeDL);
+                this.listePointsInteretActuelle = sauvegardeDL.getPis();
+            }
         }
 
         return ok;
