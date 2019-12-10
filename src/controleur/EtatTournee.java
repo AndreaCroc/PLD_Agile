@@ -157,12 +157,11 @@ public class EtatTournee implements Etat {
      * @param tournee
      */
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
-        controleur.setEtat(controleur.etatAjouter);
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
+        controleur.setEtat(controleur.etatAjouterPtEnlevement);
         fenetre.griserBoutonsSupprimer();
-                //controleur.ajouter();
         fenetre.clearAllPointsAjoutes();
-        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point d'enlevement");
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un emplacement pour l'enlèvement");
     }
 
     /**

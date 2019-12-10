@@ -1,7 +1,8 @@
-
 package controleur;
 
 import Vue.Fenetre;
+import Vue.JCarte;
+import java.util.ArrayList;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -11,41 +12,80 @@ import modele.Tournee;
  *
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
-public class CdeAjout implements CommandeTournee{
+public class CdeAjout implements CommandeTournee {
 
-    private Double latitudeEnlvt; // latitude du point d'enlèvement
-    private Double longitudeEnlvt; // longitude du point d'enlèvement
-    private Double latitudeLivr; // latitude du point de livraison
-    private Double longitudeLivr; // latitude du point de livraison
+    private PointInteret pointEnlevement;
+    private PointInteret pointLivraison;
     private PointInteret pointAvantLivr; // point d'intérêt après lequel on 
     // souhaite placer le point de livraison
     private PointInteret pointAvantEnlvt; // point d'intérêt après lequel 
     //on souhaite placer le point d'enlèvement
-    private int dureeEnlevement; // durée d'enlèvement
-    private int dureeLivraison; // durée de livraison
 
-    public CdeAjout(Double latitudeEnlvt, Double longitudeEnlvt, Double latitudeLivr, Double longitudeLivr, PointInteret pointAvantLivr, PointInteret pointAvantEnlvt, int dureeEnlevement, int dureeLivraison) {
-        this.latitudeEnlvt = latitudeEnlvt;
-        this.longitudeEnlvt = longitudeEnlvt;
-        this.latitudeLivr = latitudeLivr;
-        this.longitudeLivr = longitudeLivr;
+    public CdeAjout(PointInteret pointEnlevement, PointInteret pointLivraison, PointInteret pointAvantLivr, PointInteret pointAvantEnlvt) {
+        this.pointEnlevement = pointEnlevement;
+        this.pointLivraison = pointLivraison;
         this.pointAvantLivr = pointAvantLivr;
         this.pointAvantEnlvt = pointAvantEnlvt;
-        this.dureeEnlevement = dureeEnlevement;
-        this.dureeLivraison = dureeLivraison;
     }
-    
+
     @Override
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
-        
+        carte.ajouterLivraison(pointEnlevement, pointLivraison, pointAvantLivr, pointAvantEnlvt);
+        tournee = carte.getTournee();
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
+        fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
+        fenetre.afficherBoutonSupprimer();
+        fenetre.repaint();
+        fenetre.afficherEtapesTour(true);
+        fenetre.afficherPanneauPI(true);
+        fenetre.repaint();
+        fenetre.afficherBoutonSupprimer();
+        controleur.setEtat(controleur.etatTournee);
     }
 
     @Override
     public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+        boolean suppOk = carte.supprimerPointInteret(pointEnlevement);
+        tournee = carte.getTournee();
+        ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
+
+        if (listePIs.size() == 1 && suppOk) {
+            tournee = null;
+            carte.setUneTournee(null);
+        }
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
+        fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
+        fenetre.afficherBoutonSupprimer();
+        fenetre.repaint();
+
+        //Plus que l entrepot dans la liste des points d interets de la carte
+        if (listePIs.size() == 1 && suppOk) {
+            fenetre.cacherPanneauEtapesEtTour();
+            fenetre.cacherPanneauPI();
+            //Afficher popup plus d elements liste
+            fenetre.afficherPopSuppressionVide();
+            controleur.setEtat(controleur.etatDeBase);
+        } else {
+            fenetre.afficherEtapesTour(true);
+            fenetre.afficherPanneauPI(true);
+            controleur.setEtat(controleur.etatTournee);
+            //Si suppression pas effectuee a cause d une erreur
+            if (!suppOk) {
+                //Afficher popup suppression annulee
+                fenetre.afficherPopSuppressionAnnulee();
+            }
+
+        }
     }
-    
+
 }

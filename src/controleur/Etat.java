@@ -27,8 +27,10 @@ public interface Etat {
     public default void modifier(Controleur controleur, Fenetre fenetre,Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes){};
     public default void supprimer(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes){};
     public default void annuler (Controleur controleur,Fenetre fenetre){};
-    public default void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes){};
     public default void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interE){};
+    public default void ajouterPointAvantEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, int index){};
+    public default void ajouterPointAvantLivraison(Controleur controleur, Fenetre fenetre, Carte carte, int index){};
     public default void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){}; 
     public default void surbrillerTables(Fenetre fenetre, PointInteret ptI){};
     public default void surbrillerPI(Fenetre fenetre, PointInteret p) {};
