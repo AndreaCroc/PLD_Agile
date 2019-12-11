@@ -14,7 +14,6 @@ import controleur.EtatAjouterPointAvantEnlvt;
 import controleur.EtatAjouterPointAvantLivr;
 import controleur.EtatAjouterPtEnlevement;
 import controleur.EtatAjouterPtLivraison;
-import modele.Troncon;
 
 /**
  * EcouteurSouris permet de recuperer et de gerer les evenements lies a la
@@ -87,9 +86,8 @@ public class EcouteurSouris extends MouseAdapter {
                                     + 25;
                             PointInteret pi = p.getPtI();
                             //Si le clic se trouve sur une figure d un point d interet
-
-                            if ((x >= nvXpt - 6) && (x <= nvXpt + 6)
-                                    && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
+                            if ((x >= nvXpt - 5) && (x <= nvXpt + 5)
+                                    && (y >= nvYpt - 5) && (y <= nvYpt + 5)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() && index != -1) {
@@ -143,10 +141,7 @@ public class EcouteurSouris extends MouseAdapter {
                                 //les coordonnées correspondent
 
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
-                                ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
-                                //System.out.println(key.getTronconsDepart().size());
-                                vueCarte.setTronconsNomsRues(listeTroncons);
-                                vueCarte.repaint();
+                                //key.getTronconsDepart();
                             }
 
                         }
