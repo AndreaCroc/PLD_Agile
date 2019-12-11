@@ -29,10 +29,13 @@ public class EtatModifier implements Etat {
      * @param tournee
      * @param carte
      * @param index
+     * @param listeCommandes
      */
     @Override
     public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
+        System.out.println("Etat modifier");
         if (index != 0) {
+            System.out.println("Etat modifier");
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut deplacer
             int option = 1; //choix de valider ou non le deplacement 
@@ -48,10 +51,17 @@ public class EtatModifier implements Etat {
             //Si l index est inferieur a la taille de la liste de la carte
             if (index < listePIs.size()) {
                 ptI = listePIs.get(index);
+                System.out.println("PtI : "+ptI);
+                System.out.println("enelvement pti : "+ptI.isEnlevement());
+                System.out.println("entrepot pti : "+ptI.isEntrepot());
                 listeTournee = tournee.getSuccessionPointsInteret();
+                System.out.println("listeTournee : "+listeTournee);
                 pos = listeTournee.indexOf(ptI);
+                System.out.println("pos : "+pos);
                 min = (-1) * (pos - 1);
+                System.out.println("min : "+min);
                 max = listeTournee.size() - pos - 1;
+                System.out.println("max : "+max);
                 
                 //Afficher une popup de modification
                 choix = fenetre.afficherPopModification(min, max);

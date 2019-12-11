@@ -36,6 +36,7 @@ public class EtatSupprimer implements Etat {
         System.out.println("Etat supprimer");
         //Si ce n est pas l entrepot
         if (index != 0) {
+            System.out.println("Etat supprimer");
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut supprimer
             int option = 1; //choix de valider ou non la suppression

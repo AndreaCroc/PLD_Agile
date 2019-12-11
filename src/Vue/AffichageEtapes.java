@@ -211,6 +211,7 @@ public class AffichageEtapes extends AbstractTableModel {
      * @param afficher savoir si il faut afficher le tableau ou le label
      */
     public void afficherEtapes(boolean afficher) {
+        System.out.println("Afficher Etapes");
         if (afficher) {
             //Liste des points d interets de la tournee
             ArrayList<PointInteret> successionPointsInteret
@@ -230,6 +231,7 @@ public class AffichageEtapes extends AbstractTableModel {
             //S assurer que la liste contient des points d'interet
             if ((successionPointsInteret != null)
                     && (successionPointsInteret.size() > 1)) {
+                System.out.println("tournee : "+successionPointsInteret);
                 for (PointInteret pt : successionPointsInteret) {
                     //Recuperer le numero de l etape
                     ordre = successionPointsInteret.indexOf(pt);
@@ -255,7 +257,8 @@ public class AffichageEtapes extends AbstractTableModel {
                                 nomRueEntrepot,
                                 heureDeb);
                     } else {
-                        numDemande = pt.getNumeroDemande();
+                        System.out.println("num demande : "+pt.getNumeroDemande());
+                        //numDemande = pt.getNumeroDemande();
                         if (pt.isEnlevement()) {
                             type = "Enlèvement";
                         } else {

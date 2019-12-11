@@ -985,11 +985,13 @@ public class Fenetre extends JFrame {
      * @param ptI
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
+        System.out.println("surbrillerEtapes");
         if (tournee != null) {
             ArrayList<PointInteret> listePtEtapes = tournee
                                     .getSuccessionPointsInteret();
             if (listePtEtapes != null && !listePtEtapes.isEmpty()) {
                 int indexPI = listePtEtapes.indexOf(ptI);
+                System.out.println("idexPI : "+indexPI);
                 if (indexPI != -1 && tableauEtapes.getRowCount() != 0) {
                     PointInteret ptIDep = new PointInteret();
                     int indexPIDep = 0;
