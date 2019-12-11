@@ -6,10 +6,12 @@ import modele.Carte;
 import modele.PointInteret;
 
 /**
- * EtatAjouterPointAvantEnlvt quand on veut selectionner le point précédent
- * du point d'enlèvement
+ * EtatAjouterPointAvantEnlvt permettant d ajouter un point de la tournee avant
+ * le nouveau point d'enlevement
+ * Code inspire de l application PlaCo
  *
  * @version Version 1
+ *
  *
  * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
  * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
@@ -18,13 +20,11 @@ import modele.PointInteret;
 public class EtatAjouterPointAvantEnlvt implements Etat {
 
     /**
-     * Enregistrer le point précédent du point d'enlèvement sélectioné et passe à
-     * l'état EtatAjouterPtLivraison
-     * 
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param index
+     * Ajouter un point d'enlevement a la tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param index  indice du point precedent le nouveau point d'enlevement
      */
     @Override
     public void ajouterPointAvantEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, int index) {
@@ -40,11 +40,9 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
     }
 
     /**
-     * Annuler le mode ajout des points d interet On repasse dans l etat
-     * EtatTournee
-     *
+     * Annuler l'ajout du point d'enlevement et revenir a l'etatTournee
      * @param controleur
-     * @param fenetre
+     * @param fenetre 
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {

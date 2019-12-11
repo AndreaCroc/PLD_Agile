@@ -8,8 +8,9 @@ import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatAjouter permettant d ajouter un point dinteret a la tournee Code inspire
- * de l application PlaCo
+ * EtatAjouter permettant d ajouter un nouveau couple de points d'interets
+ * a la tournee 
+ * Code inspire de l application PlaCo
  *
  * @version Version 1
  *
@@ -20,6 +21,15 @@ import modele.Tournee;
  */
 public class EtatAjouter implements Etat {
 
+    /**
+     * Ajouter les nouveaux points de livraison et d'enlevement a la tournee
+     * 
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param tournee tournee
+     * @param listeCommandes listeCommandes pour undo/redo
+     */
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
         System.out.println("Etat ajouter");
@@ -49,6 +59,11 @@ public class EtatAjouter implements Etat {
         controleur.setEtat(controleur.etatTournee);
     }
 
+    /**
+     * Annuler l'ajout dun nouveau couple de points d'interets
+     * @param controleur controleur
+     * @param fenetre fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();
@@ -59,7 +74,7 @@ public class EtatAjouter implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre
      * @param ptI point d interet selectionne
      */
     @Override
@@ -72,7 +87,7 @@ public class EtatAjouter implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre
      * @param p point d interet selectionne
      */
     @Override

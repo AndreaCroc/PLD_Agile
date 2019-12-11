@@ -1,18 +1,16 @@
 package controleur;
 
 import Vue.Fenetre;
-import Vue.JCarte;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
-import modele.Tournee;
 import modele.Troncon;
 
 /**
- * EtatAjouterPtEnlevement permettant d'ajouter un point d'enlevement à la
- * tournee Code inspiré de l application PlaCo
+ * EtatAjouterPtEnlevement permettant d ajouter un point d enlevement a la
+ * tournee Code inspire de l application PlaCo
  *
  * @version Version 1
  *
@@ -22,15 +20,13 @@ import modele.Troncon;
  *
  */
 public class EtatAjouterPtEnlevement implements Etat {
-    
+
     /**
-     * Enregistrer le point d'enlèvement sélectioné et passe à
-     * l état EtatAjoterPointAvantEnlvt
-     * 
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param interE
+     * Ajouter un point d'enlevement a la tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param interE intersection sur laquelle ajouter le point d'enlevement
      */
     @Override
     public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, Intersection interE) {
@@ -98,11 +94,9 @@ public class EtatAjouterPtEnlevement implements Etat {
     }
 
     /**
-     * Annuler le mode ajout des points d interet On repasse dans l etat
-     * EtatTournee
-     *
-     * @param controleur
-     * @param fenetre
+     * Annuler tous les ajouts deja effectues et retourenr a l'etat tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
