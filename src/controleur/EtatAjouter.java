@@ -21,23 +21,29 @@ import modele.Tournee;
 public class EtatAjouter implements Etat {
 
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
         System.out.println("Etat ajouter");
+        CdeAjout commande;
         if (carte.ajouterLivraison(fenetre.getPE(), fenetre.getPL(), fenetre.getAvantPE(), fenetre.getAvantPL())) {
             tournee = carte.getTournee();
             fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
-            fenetre.setTournee(tournee);
-            controleur.setTournee(tournee);
-            fenetre.viderPanneauEtapes();
-            fenetre.viderPanneauPIs();
-            fenetre.afficherEtapesTour(true);
-            fenetre.afficherPanneauPI(true);
+                    fenetre.setTournee(tournee);
+                    controleur.setTournee(tournee);
+                    fenetre.viderPanneauEtapes();
+                    fenetre.viderPanneauPIs();
+                    fenetre.afficherBoutonSupprimer();
+                    fenetre.repaint();
+                    fenetre.afficherEtapesTour(true);
+                    fenetre.afficherPanneauPI(true);
+                    commande = new CdeAjout(fenetre.getPE(), fenetre.getPL(), fenetre.getAvantPE(), fenetre.getAvantPL());
+                    listeCommandes.ajouterCommande(commande);
 
         } else {
             JOptionPane.showMessageDialog(fenetre, " La contrainte de "
                     + "précédence n'est pas respectée.\n Les points n'ont "
                     + "pas été ajoutés à la tournée.");
         }
+        
         fenetre.repaint();
         fenetre.afficherBoutonSupprimer();
         fenetre.griserBoutonCalcul();

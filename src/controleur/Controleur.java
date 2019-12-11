@@ -102,7 +102,7 @@ public class Controleur {
      * Ajouter un point dinteret a la tournee
      */
     public void ajouter() {
-        etatCourant.ajouter(this, fenetre, carte, tournee);
+        etatCourant.ajouter(this, fenetre, carte, tournee, listeCommandes);
     }
 
     /**

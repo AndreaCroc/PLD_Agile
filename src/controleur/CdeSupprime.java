@@ -78,30 +78,37 @@ public class CdeSupprime implements CommandeTournee {
 
     @Override
     public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
-        Double latitudeEnlvt;
-        Double longitudeEnlvt;
-        Double latitudeLivr;
-        Double longitudeLivr;
+        PointInteret pointEnlevement;
+        PointInteret pointLivraison;
         int dureeEnlevement;
         int dureeLivraison;
         
         if (pi.isEnlevement()) {
-            latitudeEnlvt = pi.getIntersection().getLatitude();
-            longitudeEnlvt = pi.getIntersection().getLongitude();
-            latitudeLivr = pD.getIntersection().getLatitude();
-            longitudeLivr = pD.getIntersection().getLongitude();
             dureeEnlevement = pi.getDuree();
             dureeLivraison = pD.getDuree();
+            pointEnlevement = new PointInteret(pi.getIntersection(), dureeEnlevement);
+            pointLivraison = new PointInteret(pD.getIntersection(), dureeLivraison);
         } else {
-            latitudeEnlvt = pD.getIntersection().getLatitude();
-            longitudeEnlvt = pD.getIntersection().getLongitude();
-            latitudeLivr = pi.getIntersection().getLatitude();
-            longitudeLivr = pi.getIntersection().getLongitude();
             dureeEnlevement = pD.getDuree();
             dureeLivraison = pi.getDuree();
+            pointEnlevement = new PointInteret(pD.getIntersection(), dureeEnlevement);
+            pointLivraison = new PointInteret(pi.getIntersection(), dureeLivraison);
         }
         
-        
+        carte.ajouterLivraison(pointEnlevement, pointLivraison, pAvantEnlevement, pAvantLivraison);
+        tournee = carte.getTournee();
+        fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
+        fenetre.setTournee(tournee);
+        controleur.setTournee(tournee);
+        fenetre.viderPanneauEtapes();
+        fenetre.viderPanneauPIs();
+        fenetre.afficherBoutonSupprimer();
+        fenetre.repaint();
+        fenetre.afficherEtapesTour(true);
+        fenetre.afficherPanneauPI(true);
+        fenetre.repaint();
+        fenetre.afficherBoutonSupprimer();
+        controleur.setEtat(controleur.etatTournee);
         
         
     }

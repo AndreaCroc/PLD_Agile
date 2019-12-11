@@ -157,7 +157,7 @@ public class EtatTournee implements Etat {
      * @param tournee
      */
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
         controleur.setEtat(controleur.etatAjouterPtEnlevement);
         fenetre.griserBoutonsSupprimer();
         fenetre.clearAllPointsAjoutes();
