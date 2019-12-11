@@ -144,7 +144,7 @@ public class EcouteurSouris extends MouseAdapter {
 
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
                                 ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
-                                System.out.println(key.getTronconsDepart().size());
+                                //System.out.println(key.getTronconsDepart().size());
                                 vueCarte.setTronconsNomsRues(listeTroncons);
                                 vueCarte.repaint();
                             }
