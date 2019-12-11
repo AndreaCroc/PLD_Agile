@@ -40,10 +40,8 @@ public class CdeSupprime implements CommandeTournee {
     @Override
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
         
-        //recherche du point a supprimer
-        PointInteret ptASupprimer = carte.getListePointsInteretActuelle().get(index);
         //On supprime le point
-        boolean suppOk = carte.supprimerPointInteret(ptASupprimer);
+        boolean suppOk = carte.supprimerPointInteret(pi);
         
         //On met a jour la fenetre
         tournee = carte.getTournee();
@@ -90,25 +88,27 @@ public class CdeSupprime implements CommandeTournee {
         int dureeLivraison;
         
         if (pi.isEnlevement()) {
-            dureeEnlevement = pi.getDuree();
-            dureeLivraison = pD.getDuree();
-            pointEnlevement = new PointInteret(pi.getIntersection(), dureeEnlevement);
-            pointLivraison = new PointInteret(pD.getIntersection(), dureeLivraison);
+            carte.ajouterLivraison(pi, pD, pAvantEnlevement, pAvantLivraison);
+//            dureeEnlevement = pi.getDuree();
+//            dureeLivraison = pD.getDuree();
+//            pointEnlevement = new PointInteret(pi.getIntersection(), dureeEnlevement);
+//            pointLivraison = new PointInteret(pD.getIntersection(), dureeLivraison);
             
         } else {
-            dureeEnlevement = pD.getDuree();
-            dureeLivraison = pi.getDuree();
-            pointEnlevement = new PointInteret(pD.getIntersection(), dureeEnlevement);
-            pointLivraison = new PointInteret(pi.getIntersection(), dureeLivraison);
+            carte.ajouterLivraison(pD, pi, pAvantEnlevement, pAvantLivraison);
+//            dureeEnlevement = pD.getDuree();
+//            dureeLivraison = pi.getDuree();
+//            pointEnlevement = new PointInteret(pD.getIntersection(), dureeEnlevement);
+//            pointLivraison = new PointInteret(pi.getIntersection(), dureeLivraison);
         }
-        pointEnlevement.setEnlevement(true);
-        pointEnlevement.setEntrepot(false);
-        pointEnlevement.setNumeroDemande(pi.getNumeroDemande());
-        pointLivraison.setEnlevement(false);
-        pointLivraison.setEntrepot(false);
-        pointLivraison.setNumeroDemande(pD.getNumeroDemande());
-        
-        carte.ajouterLivraison(pointEnlevement, pointLivraison, pAvantEnlevement, pAvantLivraison);
+//        pointEnlevement.setEnlevement(true);
+//        pointEnlevement.setEntrepot(false);
+//        pointEnlevement.setNumeroDemande(pi.getNumeroDemande());
+//        pointLivraison.setEnlevement(false);
+//        pointLivraison.setEntrepot(false);
+//        pointLivraison.setNumeroDemande(pD.getNumeroDemande());
+//        
+//        carte.ajouterLivraison(pointEnlevement, pointLivraison, pAvantEnlevement, pAvantLivraison);
         tournee = carte.getTournee();
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
