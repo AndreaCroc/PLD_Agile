@@ -11,8 +11,8 @@ import modele.Tournee;
  *
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class Controleur {
@@ -22,7 +22,7 @@ public class Controleur {
     private Tournee tournee; //Tournee realisee
     private Etat etatCourant = new EtatInit(); //Etat du controleur
     private ListeCdesTournee listeCommandes;
-
+    
     // Instances associees a chaque etat possible du controleur
     protected final EtatInit etatInit = new EtatInit();
     protected final EtatDeBase etatDeBase = new EtatDeBase();
@@ -31,7 +31,14 @@ public class Controleur {
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
     protected final EtatAjouter etatAjouter = new EtatAjouter();
     protected final EtatModifier etatModifier = new EtatModifier();
-
+    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement = new 
+                                                     EtatAjouterPtEnlevement();
+    protected final EtatAjouterPtLivraison etatAjouterPtLivraison = new 
+                                                     EtatAjouterPtLivraison();
+    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt = new 
+                                                   EtatAjouterPointAvantEnlvt();
+    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr = new 
+                                                   EtatAjouterPointAvantLivr();
     /**
      * Constructeur de la classe du Controleur
      */
@@ -39,7 +46,7 @@ public class Controleur {
         carte = new Carte();
         tournee = new Tournee();
         fenetre = new Fenetre(this, carte, tournee); //lui passer this
-        listeCommandes = new ListeCdesTournee(carte, tournee,fenetre, this);
+        listeCommandes = new ListeCdesTournee(carte, tournee, fenetre, this);
     }
 
     /**
@@ -95,12 +102,12 @@ public class Controleur {
      * Ajouter un point dinteret a la tournee
      */
     public void ajouter() {
-        etatCourant.ajouter(this, fenetre, carte, tournee);
+        etatCourant.ajouter(this, fenetre, carte, tournee, listeCommandes);
     }
 
     /**
      * Modifier l etat courant du controleur
-     * 
+     *
      * @param etat
      */
     public void setEtat(Etat etat) {
@@ -109,21 +116,20 @@ public class Controleur {
 
     /**
      * Methode appelee par la fenetre quand l'utilisateur clique sur le bouton
-     * "Undo"
-     * Code source : PlaCo
+     * "Undo" Code source : PlaCo
      */
     public void undo() {
         etatCourant.undo(listeCommandes, fenetre);
     }
 
     /**
-     * Methode appelee par fenetre apres un clic sur le bouton "Redo"
-     * Code source : PlaCo
+     * Methode appelee par fenetre apres un clic sur le bouton "Redo" Code
+     * source : PlaCo
      */
     public void redo() {
         etatCourant.redo(listeCommandes, fenetre);
     }
-    
+
     /**
      * Permet d annuler les commandes stockees precedemment
      */
@@ -167,7 +173,6 @@ public class Controleur {
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }
-    
 
     /**
      * Effectue un zoom sur une zone de la carte
@@ -178,31 +183,27 @@ public class Controleur {
         fenetre.repaint();
         fenetre.montreBoutonsZoom();
     }
-    
+
     /**
      * Effectue un dezoome sur la zone de la carte qui etait zoomee
      */
-    public void deZoomer(){
-        if(this.fenetre.getZoom()-0.5>=1){
+    public void deZoomer() {
+        if (this.fenetre.getZoom() - 0.5 >= 1) {
             fenetre.cacheBoutonsZoom();
-            this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
+            this.fenetre.setZoom(this.fenetre.getZoom() - 0.5);
             //if((this.fenetre.getDeplY()+20)>=0 &&
             //(this.fenetre.getDeplY()+20)<=(this.fenetre.getHeight()*0.85)){
-                //this.fenetre.setDeplY(this.fenetre.getDeplY()+20*1/fenetre.getZoom());//test
-                //this.fenetre.setDeplX(this.fenetre.getDeplX()+20*1/fenetre.getZoom());//test
-           // }
-            
+            //this.fenetre.setDeplY(this.fenetre.getDeplY()+20*1/fenetre.getZoom());//test
+            //this.fenetre.setDeplX(this.fenetre.getDeplX()+20*1/fenetre.getZoom());//test
+            // }
             fenetre.repaint();
             fenetre.montreBoutonsZoom();
         }
     }
-    
 
-
-    public void decalage(int decalage){
+    public void decalage(int decalage) {
         System.out.println(this.fenetre.getWidth());
-        if(decalage==1 || decalage==-1){
-
+        if (decalage == 1 || decalage == -1) {
             if((this.fenetre.getDeplX()+decalage*50)>=0 &&
             (this.fenetre.getDeplX()+decalage*50)<=this.fenetre.getWidth()*0.30){
                 fenetre.cacheBoutonsZoom();
@@ -221,7 +222,7 @@ public class Controleur {
 
         }
     }
-    
+
     public void ajouterPointEnlevement(Intersection interE) {
         etatCourant.ajouterPointEnlevement(this, fenetre, carte, interE);
     }
@@ -230,11 +231,19 @@ public class Controleur {
         etatCourant.ajouterPointLivraison(this, fenetre, carte, interL);
     }
 
-     public Intersection getIntersectionByIndex(int index){
+    public void ajouterPointAvantEnlevement(int index) {
+        etatCourant.ajouterPointAvantEnlevement(this, fenetre, carte, index);
+    }
+
+    public void ajouterPointAvantLivraison(int index) {
+        etatCourant.ajouterPointAvantLivraison(this, fenetre, carte, index);
+    }
+
+    public Intersection getIntersectionByIndex(int index) {
         return carte.getListeIntersections().get(index);
     }
-    
-    public Etat getEtatCourant(){
+
+    public Etat getEtatCourant() {
         return this.etatCourant;
     }
 }

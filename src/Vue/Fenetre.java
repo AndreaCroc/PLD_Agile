@@ -159,7 +159,13 @@ public class Fenetre extends JFrame {
     private ListSelectionModel listSelectModelEtapes;
     
     //Permettre de reprendre le point d'enlevement
-    private PointInteret pE,avantPE,pL,avantPL;
+    private PointInteret pE;
+    private PointInteret avantPE;
+    private PointInteret pL;
+    private PointInteret avantPL;
+    
+    //Savoir si on a bine clique sur une intersection
+    private boolean clicAjoutAvantEnlvt;
 
     public Fenetre(Controleur controleur, Carte carte, Tournee tournee) {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit()
@@ -1582,6 +1588,7 @@ public class Fenetre extends JFrame {
     public PointInteret getAvantPL(){
         return this.avantPL;
     }
+
     
     /**
      * Pour attendre le chargement du zoom avant de faire
@@ -1607,4 +1614,13 @@ public class Fenetre extends JFrame {
         boutonDirHaut.setEnabled(true);
         boutonDirBas.setEnabled(true);
     }
+
+    public boolean isClicAjoutAvantEnlvt() {
+        return clicAjoutAvantEnlvt;
+    }
+
+    public void setClicAjoutAvantEnlvt(boolean clicAjoutAvantEnlvt) {
+        this.clicAjoutAvantEnlvt = clicAjoutAvantEnlvt;
+    }
+
 }

@@ -498,8 +498,7 @@ public class CarteTest {
         
         
         //Ajout des points
-        carte.ajouterLivraison(pointEnlevement, pointLivraison, pointAvantEnlevement, pointAvantLivraison, 
-                dureeEnlevement, dureeLivraison);
+        carte.ajouterLivraison(pointEnlevement, pointLivraison, pointAvantEnlevement, pointAvantLivraison);
         Tournee nouvTournee = carte.getTournee();
         ArrayList<PointInteret> nouvListePointsInteret = carte.getDemandesLivraisons().getListePointsInteret();
         ArrayList<PointInteret> nouvSuccessionPointsInteret = nouvTournee.getSuccessionPointsInteret();
@@ -587,20 +586,15 @@ public class CarteTest {
         
         //Ajout des points
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2, 
-                dureeEnlevement, dureeLivraison);
+                pointAvantEnlevement2, pointAvantLivraison2);
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2, 
-                dureeEnlevement, dureeLivraison);
+                pointAvantEnlevement2, pointAvantLivraison2);
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2, 
-                dureeEnlevement, dureeLivraison);
+                pointAvantEnlevement2, pointAvantLivraison2);
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2, 
-                dureeEnlevement, dureeLivraison);
+                pointAvantEnlevement2, pointAvantLivraison2);
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2, 
-                dureeEnlevement, dureeLivraison);
+                pointAvantEnlevement2, pointAvantLivraison2);
         nouvTournee2 = carte2.getTournee();
         nouvSuccessionPointsInteret2 = nouvTournee2.getSuccessionPointsInteret();
         nouvListePointsInteret2 = carte.getDemandesLivraisons().getListePointsInteret();
