@@ -36,9 +36,16 @@ public class CdeSupprime implements CommandeTournee {
     }
     
     
-
+    /**
+     * Revient à supprimer le point
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le controleur courant
+     */
     @Override
-    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                      Controleur controleur) {
         
         //On supprime le point
         boolean suppOk = carte.supprimerPointInteret(pi);
@@ -80,8 +87,16 @@ public class CdeSupprime implements CommandeTournee {
         }
     }
 
+    /**
+     * Revient à ajouter le point
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le contrôleur courant
+     */
     @Override
-    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                        Controleur controleur) {
         PointInteret pointEnlevement;
         PointInteret pointLivraison;
         int dureeEnlevement;
