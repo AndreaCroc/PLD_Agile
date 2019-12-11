@@ -29,14 +29,12 @@ public class EtatSupprimer implements Etat {
      * @param carte
      * @param tournee
      * @param index
-     * @param listeCommandes
      */
     @Override
     public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
-        System.out.println("Etat supprimer");
+
         //Si ce n est pas l entrepot
         if (index != 0) {
-            System.out.println("Etat supprimer");
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut supprimer
             int option = 1; //choix de valider ou non la suppression
@@ -54,31 +52,21 @@ public class EtatSupprimer implements Etat {
            
             
             //Si l index est inferieur a la taille de la liste
-            if (index < listePIs.size()&& index >=1) {
+            if (index < listePIs.size()) {
                 ptI = listePIs.get(index);
-                System.out.println("ptI : "+ptI);
+                
                 //Enregistrement des informations de la commande
                 ptD = ptI.getPointDependance();
-                System.out.println("ptD : "+ptD);
                 //indice du point interet dans la tournee
                 int indPtITournee = tournee.getSuccessionPointsInteret().indexOf(ptI);
-                System.out.println("indPiTOurnee : "+indPtITournee);
                 //indice du point de dépendance dans la tournee
                 int indPtDTournee = tournee.getSuccessionPointsInteret().indexOf(ptD);
-                 System.out.println("indPDTOurnee : "+indPtDTournee);
                 if (ptI.isEnlevement()) {
-                    System.out.println("if");
                     ptAvantEnlevement = tournee.getSuccessionPointsInteret().get(indPtITournee-1);
                     ptAvantLivraison = tournee.getSuccessionPointsInteret().get(indPtDTournee-1);
-                    System.out.println("ptAvantEnl : "+ptAvantEnlevement);
-                    System.out.println("ptAvantLiv : "+ptAvantLivraison);
-
                 } else {
-                    System.out.println("else");
                     ptAvantEnlevement = tournee.getSuccessionPointsInteret().get(indPtDTournee-1);
                     ptAvantLivraison = tournee.getSuccessionPointsInteret().get(indPtITournee-1);
-                    System.out.println("ptAvantEnl : "+ptAvantEnlevement);
-                    System.out.println("ptAvantLiv : "+ptAvantLivraison);
                 }
                 
                 //Afficher un popup de confirmation de suppression
@@ -87,11 +75,7 @@ public class EtatSupprimer implements Etat {
                 //Si on confirme la suppression
                 if (option == JOptionPane.OK_OPTION) {
 
-                    System.out.println("tournee : "+tournee.getSuccessionPointsInteret());
                     suppOk = carte.supprimerPointInteret(ptI);
-                    System.out.println("tournee : "+tournee.getSuccessionPointsInteret());
-                    
-                    System.out.println("suppOk : "+suppOk);
                     tournee = carte.getTournee();
                     listePIs = carte.getListePointsInteretActuelle();
 
