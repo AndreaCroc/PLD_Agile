@@ -30,7 +30,7 @@ public class Carte {
 
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
-    private TSP2 unTSP;
+    private TSP3 unTSP;
     private Tournee uneTournee;
     public static final Double INFINI = 1000000.0; //Valeur max 
     public static final Double NON_DEFINI = -1000.0;
@@ -46,7 +46,7 @@ public class Carte {
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.listePointsInteretActuelle = new ArrayList<PointInteret>();
-        this.unTSP = new TSP2();
+        this.unTSP = new TSP3();
         this.uneTournee = new Tournee();
     }
 
@@ -326,14 +326,20 @@ public class Carte {
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
+        double nbPheromone=15;
         
-        
+        Double[][] matricePheromone = new Double[nbSommets + 5][nbSommets + 5];
         //Creation de la tournée
+        for (int i=0; i<nbSommets;i++){
+             for (int j=0; j<nbSommets;j++){
+                matricePheromone[i][j]=nbPheromone;
+             }
+        }
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         Integer indPointPrec;
         Chemin chemin;
-        unTSP = new TSP2();
+        unTSP = new TSP3();
         
         creerGraphePCC();
         
@@ -350,13 +356,14 @@ public class Carte {
             }
 
             //Execution du TSP
-            unTSP.chercheSolution2(1000000, nbSommets, cout, duree,this.mapPredecesseur);
+            unTSP.chercheSolution3(1000000, nbSommets, cout, duree,this.mapPredecesseur,matricePheromone);
 
             indPointPrec = unTSP.getMeilleureSolution(0);
 
             PointInteret pointCourant = new PointInteret();
             for (int i = 1; i < nbSommets; i++) {
                 indPointCourant = unTSP.getMeilleureSolution(i);
+                System.out.println("l 366");
                 chemin = chemins[indPointPrec][indPointCourant];
                 pointCourant = listePointsInteret.get(indPointPrec);
                 pointCourant.setCheminDepart(chemin);
@@ -489,8 +496,6 @@ public class Carte {
         } else {
             if (positionPointDep >= nouvPosition) {
                 contraintePrec = false;
-                pointADeplacer.setEnlevement(true);
-                pointDependance.setEnlevement(false);
             }
         }
        
@@ -641,8 +646,7 @@ public class Carte {
         int indPointPrecT; //Indice du point précédent dans la tournée
         Chemin cheminPointPrec; //Chemin allant du point précédent au point d'intérêt
         Chemin cheminPointCourant; //Chemin allant du point d'intérêt ajouté au point d'intérêt suivant
-        Chemin nouvChemin;
-        int indPI;//indice d'un point d'intérêt dans la liste des points d'intérêts
+
         //Récupération de l'indice du point précédent dans la tournée
         indPointPrecT = successionPointsInteret.indexOf(pointPrecedent);
 
@@ -678,19 +682,10 @@ public class Carte {
 
         //Calcul du chemin allant du point ajouté au point suivant
         dijkstra(pointInteret.getIntersection());
-        //Calcul des tous les plus courts chemins vers le point ajouté
-        for (PointInteret pI : successionPointsInteret) {
-            if (pI != pointPrecedent) {
-                nouvChemin = plusCourtChemin(pointInteret.getIntersection(), pI.getIntersection());
-                indPI = listePointsInteret.indexOf(pI);
-                //Ajout a la matrice des couts
-                ajouterCoutEtChemin(nouvChemin, indPointListeP, indPI);
-            }
-        }
         cheminPointCourant = plusCourtChemin(pointInteret.getIntersection(), pointSuivant.getIntersection());
         System.out.println("chemin point courant " + cheminPointCourant);
         //Ajout à la matrice des chemins et celle des couts
-        //ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
+        ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
 
         pointPrecedent.setCheminDepart(cheminPointPrec);
         pointInteret.setCheminDepart(cheminPointCourant);
@@ -714,7 +709,7 @@ public class Carte {
         ArrayList<Troncon> successionTroncons = new ArrayList<Troncon>();
         Chemin cheminInverse; //chemin allant de la destination a l origine
         
-        //Inversion du chemin inverse pour avoir le chemin inverse
+        //Inversion du chemin pour avoir le chemin inverse
         for (int i = chemin.getSuccessionTroncons().size() - 1; i > -1; i--) {
             successionTroncons.add(chemin.getSuccessionTroncons().get(i));
         }
@@ -781,30 +776,26 @@ public class Carte {
      * Méthode permettant de calculer les heures d'arrivées et de départ des
      * points d'intérêt d'une tournée
      *
+     * @param tournee
      * @return la tournée mise à jour
      */
     public boolean calculerHeuresTournee() {
         int dureeTrajet;
         int nbSommets = uneTournee.getSuccessionPointsInteret().size();
         //Recuperation de l'entrepot
-        System.out.println("calculer heure ");
         PointInteret pointCourant = uneTournee.getSuccessionPointsInteret().get(0);
-        System.out.println("point courant : "+pointCourant);
         PointInteret pointPrec = pointCourant;
 
         //Recuperation de l'heure de départ de l'entrepôt
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
-        System.out.println("heuredepart : "+heureDepartPrec);
         pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
 
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
-        System.out.println("nbsommets : "+nbSommets);
-
+        
         for (int i = 1; i < nbSommets; i++) {
             pointCourant = uneTournee.getSuccessionPointsInteret().get(i);
-            System.out.println("pi : "+pointCourant);
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
                 System.out.println("point precedent : "+pointPrec.getIntersection().getId());

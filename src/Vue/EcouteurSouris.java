@@ -8,12 +8,11 @@ import java.util.Map;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
-import javax.swing.JOptionPane;
-import controleur.EtatAjouter;
 import controleur.EtatAjouterPointAvantEnlvt;
 import controleur.EtatAjouterPointAvantLivr;
 import controleur.EtatAjouterPtEnlevement;
 import controleur.EtatAjouterPtLivraison;
+import modele.Troncon;
 
 /**
  * EcouteurSouris permet de recuperer et de gerer les evenements lies a la
@@ -86,7 +85,6 @@ public class EcouteurSouris extends MouseAdapter {
                                     + 25;
                             PointInteret pi = p.getPtI();
                             //Si le clic se trouve sur une figure d un point d interet
-
                             if ((x >= nvXpt - 6) && (x <= nvXpt + 6)
                                     && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
@@ -129,20 +127,26 @@ public class EcouteurSouris extends MouseAdapter {
 
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
+                        System.out.println("if rue 1");
                         //test x y sont sur pt intersect coord 
                         for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
+                            System.out.println("for rue ");
                             //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
-
+                            System.out.println("x :" + x);
+                            System.out.println("y :" + y);
                             //coordonnées adaptees des points d'intersections
-                            int nvXpt2 = value.getX() + xPanneauGauche + 5;
-                            int nvYpt2 = value.getY() + yPanneauLegende + 45;
+
+                            int nvXpt2 = value.getX() + xPanneauGauche;
+                            int nvYpt2 = value.getY() + yPanneauLegende + 24;
                             if (x >= nvXpt2 && x <= nvXpt2 + 5 && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
                                 //les coordonnées correspondent
 
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
-                                //key.getTronconsDepart();
+                                ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
+                                vueCarte.setTronconsNomsRues(listeTroncons);
+                                vueCarte.repaint();
                             }
 
                         }
