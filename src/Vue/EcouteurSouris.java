@@ -88,6 +88,8 @@ public class EcouteurSouris extends MouseAdapter {
 
                             if ((x >= nvXpt - 6) && (x <= nvXpt + 6)
                                     && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
+                            if ((x >= nvXpt - 5) && (x <= nvXpt + 5)
+                                    && (y >= nvYpt - 5) && (y <= nvYpt + 5)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() && index != -1) {
