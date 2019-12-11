@@ -1,3 +1,4 @@
+
 package controleur;
 
 import Vue.Fenetre;
@@ -64,7 +65,7 @@ public class EtatAjouterPtEnlevement implements Etat {
         nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
         int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point d'enlèvement:"
                 + "\nRue(s): " + nomRue
-                + "\nduree: " + duree);
+                + "\nDurée: " + duree +" min");
 
         if (value == JOptionPane.NO_OPTION || value == JOptionPane.CANCEL_OPTION) {
             return;

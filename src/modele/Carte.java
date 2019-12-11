@@ -490,10 +490,14 @@ public class Carte {
         if (pointADeplacer.isEnlevement()) {
             if (positionPointDep <= nouvPosition) {
                 contraintePrec = false;
+                pointADeplacer.setEnlevement(false);
+                pointDependance.setEnlevement(true);
             }
         } else {
             if (positionPointDep >= nouvPosition) {
                 contraintePrec = false;
+                pointADeplacer.setEnlevement(true);
+                pointDependance.setEnlevement(false);
             }
         }
        
@@ -532,8 +536,8 @@ public class Carte {
         
         //Mise à jour des heures
         calculerHeuresTournee();
+
         
-        System.out.println("tournee apres modif : "+uneTournee);
         return contraintePrec;
         
     }
@@ -620,7 +624,8 @@ public class Carte {
         int indPointPrecT; //Indice du point précédent dans la tournée
         Chemin cheminPointPrec; //Chemin allant du point précédent au point d'intérêt
         Chemin cheminPointCourant; //Chemin allant du point d'intérêt ajouté au point d'intérêt suivant
-
+        Chemin nouvChemin;
+        int indPI;//indice d'un point d'intérêt dans la liste des points d'intérêts
         //Récupération de l'indice du point précédent dans la tournée
         indPointPrecT = successionPointsInteret.indexOf(pointPrecedent);
 
@@ -656,10 +661,19 @@ public class Carte {
 
         //Calcul du chemin allant du point ajouté au point suivant
         dijkstra(pointInteret.getIntersection());
+        //Calcul des tous les plus courts chemins vers le point ajouté
+        for (PointInteret pI : successionPointsInteret) {
+            if (pI != pointPrecedent) {
+                nouvChemin = plusCourtChemin(pointInteret.getIntersection(), pI.getIntersection());
+                indPI = listePointsInteret.indexOf(pI);
+                //Ajout a la matrice des couts
+                ajouterCoutEtChemin(nouvChemin, indPointListeP, indPI);
+            }
+        }
         cheminPointCourant = plusCourtChemin(pointInteret.getIntersection(), pointSuivant.getIntersection());
         System.out.println("chemin point courant " + cheminPointCourant);
         //Ajout à la matrice des chemins et celle des couts
-        ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
+        //ajouterCoutEtChemin(cheminPointCourant, indPointListeP, indSuivListeP);
 
         pointPrecedent.setCheminDepart(cheminPointPrec);
         pointInteret.setCheminDepart(cheminPointCourant);
@@ -686,6 +700,7 @@ public class Carte {
             System.out.println("indOrigine : "+ indOrigine);
             System.out.println("indDestination : "+ indDestination);
             chemins[indOrigine][indDestination] = chemin;
+            chemins[indDestination][indOrigine] = chemin;
         } else {
             //On crée une nouvelle matrice
             //Initialisation de la matrice des plus courts chemins (avec des colonnes
@@ -702,6 +717,7 @@ public class Carte {
                 }
             }
             nouvChemins[indOrigine][indDestination] = chemin;
+            nouvChemins[indDestination][indOrigine] = chemin;
             this.setChemins(nouvChemins);
         }
         //Même chose pour la matrice des couts
@@ -710,6 +726,7 @@ public class Carte {
             System.out.println("indOrigine : "+ indOrigine);
             System.out.println("indDestination : "+ indDestination);
             cout[indOrigine][indDestination] = chemin.getLongueur();
+            cout[indDestination][indOrigine] = chemin.getLongueur();
         } else {
             //On crée une nouvelle matrice
             //Initialisation de la matrice des plus courts chemins (avec des colonnes
@@ -726,6 +743,7 @@ public class Carte {
                 }
             }
             nouvCouts[indOrigine][indDestination] = chemin.getLongueur();
+            nouvCouts[indDestination][indOrigine] = chemin.getLongueur();
             this.setCout(nouvCouts);
         }
         return true;
@@ -735,26 +753,30 @@ public class Carte {
      * Méthode permettant de calculer les heures d'arrivées et de départ des
      * points d'intérêt d'une tournée
      *
-     * @param tournee
      * @return la tournée mise à jour
      */
     public boolean calculerHeuresTournee() {
         int dureeTrajet;
         int nbSommets = uneTournee.getSuccessionPointsInteret().size();
         //Recuperation de l'entrepot
+        System.out.println("calculer heure ");
         PointInteret pointCourant = uneTournee.getSuccessionPointsInteret().get(0);
+        System.out.println("point courant : "+pointCourant);
         PointInteret pointPrec = pointCourant;
 
         //Recuperation de l'heure de départ de l'entrepôt
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
+        System.out.println("heuredepart : "+heureDepartPrec);
         pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
 
         Integer heureArriveeCour;
         Integer heureDepartCour;
 
-        
+        System.out.println("nbsommets : "+nbSommets);
+
         for (int i = 1; i < nbSommets; i++) {
             pointCourant = uneTournee.getSuccessionPointsInteret().get(i);
+            System.out.println("pi : "+pointCourant);
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
                 System.out.println("point precedent : "+pointPrec.getIntersection().getId());
@@ -788,6 +810,7 @@ public class Carte {
         Integer dureeTournee = heureArr - heureDep;
 
         uneTournee.setDuree(intToHeure(dureeTournee));
+        System.out.println("tournee "+uneTournee);
         return true;
 
     }

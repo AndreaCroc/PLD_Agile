@@ -985,11 +985,13 @@ public class Fenetre extends JFrame {
      * @param ptI
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
+        System.out.println("surbrillerEtapes");
         if (tournee != null) {
             ArrayList<PointInteret> listePtEtapes = tournee
                                     .getSuccessionPointsInteret();
             if (listePtEtapes != null && !listePtEtapes.isEmpty()) {
                 int indexPI = listePtEtapes.indexOf(ptI);
+                System.out.println("idexPI : "+indexPI);
                 if (indexPI != -1 && tableauEtapes.getRowCount() != 0) {
                     PointInteret ptIDep = new PointInteret();
                     int indexPIDep = 0;
@@ -1587,6 +1589,32 @@ public class Fenetre extends JFrame {
     
     public PointInteret getAvantPL(){
         return this.avantPL;
+    }
+
+    
+    /**
+     * Pour attendre le chargement du zoom avant de faire
+     * de nouvelles actions
+     */
+    public void cacheBoutonsZoom () {
+        boutonZoomer.setEnabled(false);
+        boutonDezoomer.setEnabled(false);
+        boutonDirDroite.setEnabled(false);
+        boutonDirGauche.setEnabled(false);
+        boutonDirHaut.setEnabled(false);
+        boutonDirBas.setEnabled(false);
+    }
+    
+    /**
+     * Pour afficher a nouveau les boutons du zoom
+     */
+    public void montreBoutonsZoom() {
+        boutonZoomer.setEnabled(true);
+        boutonDezoomer.setEnabled(true);
+        boutonDirDroite.setEnabled(true);
+        boutonDirGauche.setEnabled(true);
+        boutonDirHaut.setEnabled(true);
+        boutonDirBas.setEnabled(true);
     }
 
     public boolean isClicAjoutAvantEnlvt() {
