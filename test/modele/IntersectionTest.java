@@ -42,6 +42,15 @@ public class IntersectionTest {
     }
     
     /**
+     * Test of constructor
+     */
+    @Test
+    public void testConstructeur() {
+        System.out.println("Intersection");
+        assertNotNull("Constructeur", intersection);
+    }
+    
+    /**
      * Test of setId method, of class Intersection.
      */
     @Test
