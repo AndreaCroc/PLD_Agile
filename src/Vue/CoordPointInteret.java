@@ -3,8 +3,8 @@ package Vue;
 import modele.PointInteret;
 
 /**
- * CoordPointInteret represente un point d interet et ses coordonnes a l echelle
- * de la fenetre
+ * CoordPointInteret represente un point d interet et ses coordonnes 
+ * a l echelle de la fenetre
  *
  * @version Version 1
  *
@@ -13,8 +13,8 @@ import modele.PointInteret;
  *
  */
 public class CoordPointInteret {
+   
     //coordonnees du point d interet a l echelle de la fenetre
-
     private Point point;
     private PointInteret ptI; //point d interet
 

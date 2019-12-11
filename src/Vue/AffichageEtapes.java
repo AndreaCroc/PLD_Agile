@@ -20,8 +20,8 @@ import modele.Troncon;
  */
 public class AffichageEtapes extends AbstractTableModel {
 
-    private final ArrayList<LigneEtapes> steps; //Lisste des etapes de tournee
-    private final String header[]; //En tete du tableau
+    private final ArrayList<LigneEtapes> steps; //Liste des etapes de tournee
+    private final String header[]; //En-tete du tableau
     private int lignePISelect; //numero de la ligne selectionnee
     private int lignePIDepSelect; //numero de la ligne du point dependant
     private FormatCellRenderer formatcell; //style a appliquer au tableau
@@ -176,7 +176,7 @@ public class AffichageEtapes extends AbstractTableModel {
     /**
      * Ajouter une ligne au tableau
      *
-     * @param step : ligne a ajouter
+     * @param step ligne a ajouter
      */
     public void addStep(LigneEtapes step) {
         this.steps.add(step);
@@ -189,7 +189,7 @@ public class AffichageEtapes extends AbstractTableModel {
     /**
      * Supprimer une ligne du tableau
      *
-     * @param rowIndex : numero de la ligne a supprimer
+     * @param rowIndex numero de la ligne a supprimer
      */
     public void removeStep(int rowIndex) {
         this.steps.remove(rowIndex);
@@ -216,7 +216,8 @@ public class AffichageEtapes extends AbstractTableModel {
                 //Liste des points d interets de la tournee
                 ArrayList<PointInteret> successionPointsInteret
                         = tournee.getSuccessionPointsInteret();
-                String nomRue = ""; //Nom de la rue ou se trouve un point d interet
+                //Nom de la rue ou se trouve un point d interet
+                String nomRue = ""; 
                 String heureArrivee = ""; //Heure d arrivee au point d interet
                 String heureDepart = ""; //Heure de depart du point d interet
                 String heureDeb = ""; //Heure de debut de la tournee
@@ -239,7 +240,7 @@ public class AffichageEtapes extends AbstractTableModel {
                         //Recuperer l adresse
                         nomRue = t.getNomRue();
 
-                        //Recuperer le point d'interet correspondant a l'entrepot
+                        //Recuperer le point d'interet correspondant a entrepot
                         if (ordre == 0) {
                             nomRueEntrepot = nomRue;
                             numDemande = 0;
@@ -285,8 +286,8 @@ public class AffichageEtapes extends AbstractTableModel {
                         }
                     }
                     //Afficher le retour a l'entrepot
-                    fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, nomRueEntrepot,
-                            heureFin);
+                    fenetre.setPanneauEtapesEntrepot(ordre + 1, 0, 
+                                                     nomRueEntrepot,heureFin);
 
                 } else {
                     fenetre.cacherPanneauEtapesEtTour();

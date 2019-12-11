@@ -21,10 +21,10 @@ public class LignePI {
 
     /**
      * Constructeur de la classe LignePI
-     * @param numero
-     * @param type
-     * @param rue
-     * @param duree 
+     * @param numero numero de la demande
+     * @param type type du point
+     * @param rue rue ou se trouve le point
+     * @param duree duree une fois au point
      */
     public LignePI(int numero, String type, String rue, String duree) {
         this.numeroDemande = numero;
@@ -104,10 +104,5 @@ public class LignePI {
     public void setDuree(String duree) {
         this.duree = duree;
     }
-    
-    
-
-
-    
 
 }

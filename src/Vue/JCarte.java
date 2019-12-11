@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import javax.swing.JPanel;
 import modele.Carte;
 import modele.Chemin;
@@ -33,18 +32,22 @@ public class JCarte extends JPanel {
     private Tournee tournee; //les points dinteret faisant partie de la tournee
     //liste des point dinerets de la carte
     private ArrayList<CoordPointInteret> listeCoordPtI;
+    //Liste des intersections de la carte
     private Map<Intersection, Point> intersectionsMap;
+    //Liste des troncons de la carte
     private ArrayList<Troncon> tronconsNomsRues;
     private Fenetre fenetre; //fenetre de l application
+    //Liste des couleurs possibles des points d'interet
     private ArrayList<Color> palette;
-    private ArrayList<Point> coorIntersections = new ArrayList<Point>();    //listes des coordonnées des intersections dans la carte
+    //listes des coordonnées des intersections dans la carte
+    private ArrayList<Point> coorIntersections = new ArrayList<Point>();
 
     /**
      * Constructeur de la classe JCarte
      *
-     * @param carte
-     * @param tournee
-     * @param fenetre
+     * @param carte carte
+     * @param tournee tournee
+     * @param fenetre fenetre
      */
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
@@ -99,10 +102,20 @@ public class JCarte extends JPanel {
         this.listeCoordPtI.add(p);
     }
 
+    /**
+     * Ajouter une intersection a la liste des intersections de la carte
+     * @param i intersection a ajouter
+     * @param p coordonnees de l'intersection
+     */
     public void ajouterPointToIntersectionsMap(Intersection i, Point p) {
         this.intersectionsMap.put(i, p);
     }
 
+    /**
+     * Recuperer la liste des intersections et de leurs coordonnees 
+     * sur la carte
+     * @return liste des intersections de la carte
+     */
     public Map<Intersection, Point> getIntersectionsMap() {
         return this.intersectionsMap;
     }
@@ -133,7 +146,11 @@ public class JCarte extends JPanel {
         this.tronconsNomsRues = lTroncons;
     }
 
-    /*Recupère la latitude maximale présente sur la carte*/
+    /**
+     * Recupère la latitude maximale présente sur la carte
+     * @param intersections liste des intersections de la carte
+     * @return latitude max
+     */
     public Double maxLatitude(ArrayList<Intersection> intersections) {
 
         Double res = intersections.get(0).getLatitude();
@@ -145,6 +162,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
+    /**
+     * Recupere la latitude max presente sur la carte pour les points d'interet
+     * @param PIs liste des points d'interet de la carte
+     * @return latitude max
+     */
     public Double maxLatitudePIs(ArrayList<PointInteret> PIs) {
 
         Double res = PIs.get(0).getIntersection().getLatitude();
@@ -156,6 +178,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
+    /**
+     * Recupere la longitude max presente sur la carte
+     * @param intersections liste des intersections de la carte
+     * @return longitude max
+     */
     public Double maxLongitude(ArrayList<Intersection> intersections) {
 
         Double res = intersections.get(0).getLongitude();
@@ -167,6 +194,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
+    /**
+     * Recupere la longitude max presente sur la carte pour les points d'interet
+     * @param PIs liste des points d'interet de la carte
+     * @return longitude max
+     */
     public Double maxLongitudePIs(ArrayList<PointInteret> PIs) {
 
         Double res = PIs.get(0).getIntersection().getLongitude();
@@ -178,7 +210,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
-    /*Recupère la latitude minimale présente sur la carte*/
+    /**
+     * Recupère la latitude minimale présente sur la carte
+     * @param intersections liste des intersections de la carte
+     * @return latitude min
+     */
     public Double minLatitude(ArrayList<Intersection> intersections) {
         Double res = intersections.get(0).getLatitude();
         for (Intersection i : intersections) {
@@ -189,6 +225,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
+    /**
+     * Recupere la latitude minimale sur la carte pour les points d'interet
+     * @param PIs liste des points d'interet de la carte
+     * @return latitude min
+     */
     public Double minLatitudePIs(ArrayList<PointInteret> PIs) {
         Double res = PIs.get(0).getIntersection().getLatitude();
         for (PointInteret i : PIs) {
@@ -199,7 +240,11 @@ public class JCarte extends JPanel {
         return res;
     }
 
-    /*Recupère la longitude minimale présente sur la carte*/
+    /**
+     * Recupère la longitude minimale présente sur la carte
+     * @param intersections liste des intersections de la carte
+     * @return longitude min
+     */
     public Double minLongitude(ArrayList<Intersection> intersections) {
         Double res = intersections.get(0).getLongitude();
         for (Intersection i : intersections) {
@@ -210,6 +255,12 @@ public class JCarte extends JPanel {
         return res;
     }
 
+    /**
+     * Recupère la longitude minimale présente sur la carte pour
+     * les points d'interets
+     * @param PIs liste de spoints d'interet de la carte
+     * @return longitude min
+     */
     public Double minLongitudePIs(ArrayList<PointInteret> PIs) {
         Double res = PIs.get(0).getIntersection().getLongitude();
         for (PointInteret i : PIs) {
@@ -220,7 +271,12 @@ public class JCarte extends JPanel {
         return res;
     }
 
-    /*Recupère la position en Y de l'intersection sur le panel */
+    /**
+     * Recupère la position en Y de l'intersection sur le panel
+     * @param i intersection
+     * @param intersections liste des intersections
+     * @return position Y
+     */
     public int getProportionalY(Intersection i, ArrayList<Intersection> intersections) {
 
         Double maxLatitude = this.maxLatitude(intersections);
@@ -247,14 +303,19 @@ public class JCarte extends JPanel {
             proportionalY = hauteurPanel - 12;
         }
 
-        //System.out.println("deplacement y " +fenetre.getDeplY());
         proportionalY *= fenetre.getZoom();
         proportionalY -= (fenetre.getDeplY());
-        //System.out.println("nouveau Y " +proportionalY);
 
         return proportionalY;
     }
 
+    /**
+     * Recupère la position en Y de l'intersection sur le panel
+     * @param i intersection
+     * @param PIs liste des points d'interet
+     * @param intersections liste des intersections
+     * @return position en Y
+     */
     public int getProportionalYPIs(Intersection i, ArrayList<PointInteret> PIs,
             ArrayList<Intersection> intersections) {
 
@@ -287,7 +348,12 @@ public class JCarte extends JPanel {
         return proportionalY;
     }
 
-    /*Recupère la position en X de l'intersection sur le panel */
+    /**
+     * Recupère la position en X de l'intersection sur le panel
+     * @param i intersection
+     * @param intersections liste des intersections
+     * @return position en X
+     */
     public int getProportionalX(Intersection i,
             ArrayList<Intersection> intersections) {
 
@@ -319,6 +385,13 @@ public class JCarte extends JPanel {
         return proportionalX;
     }
 
+    /**
+     * Recupère la position en X de l'intersection sur le panel
+     * @param i intersection 
+     * @param PIs liste des points d'interet
+     * @param intersections liste des intersections
+     * @return position en X
+     */
     public int getProportionalXPIs(Intersection i, ArrayList<PointInteret> PIs,
             ArrayList<Intersection> intersections) {
 
@@ -350,6 +423,10 @@ public class JCarte extends JPanel {
         return proportionalX;
     }
 
+    /**
+     * Dessiner les elements de la carte sur la fenetre
+     * @param g graphic 
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -357,7 +434,8 @@ public class JCarte extends JPanel {
         ArrayList<Intersection> intersections = carte.getListeIntersections();
 
         for (Intersection i : intersections) {
-            //ajout de l'intersection et de ses coordonnees correspondantes dans la map
+            //ajout de l'intersection et de ses coordonnees 
+            //correspondantes dans la map
             this.ajouterPointToIntersectionsMap(i, new Point(this
                     .getProportionalX(i,
                             intersections),
@@ -369,7 +447,8 @@ public class JCarte extends JPanel {
             g.fillOval(this.getProportionalX(i, intersections), this
                     .getProportionalY(i, intersections), 2, 2);
 
-            this.coorIntersections.add(new Point(getProportionalX(i, intersections),
+            this.coorIntersections.add(new Point(getProportionalX(i, 
+                                                                 intersections),
                     getProportionalY(i, intersections)));
 
             ArrayList<Troncon> iTroncons = i.getTronconsDepart();
@@ -393,14 +472,13 @@ public class JCarte extends JPanel {
         }
 
         for (Troncon tRues : tronconsNomsRues) {
-            System.out.println(tRues.getNomRue());
             Graphics2D g2 = (Graphics2D)g.create();
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
             g2.setColor(new Color(0,0,0));
 
             //rotation du texte selon l'angle de la rue affichée
             //k est la pente
-            //System.out.println(((double) (this.getProportionalY(tRues.getDestination(), intersections)) + "-"  +this.getProportionalY(tRues.getOrigine(), intersections) + " / " + this.getProportionalX(tRues.getDestination(), intersections) + "-"+this.getProportionalX(tRues.getOrigine(), intersections)));
             double xDest = this.getProportionalX(tRues.getDestination(), intersections);
             double yDest = this.getProportionalY(tRues.getDestination(), intersections);
             double xOrig = this.getProportionalX(tRues.getOrigine(), intersections);
@@ -415,8 +493,12 @@ public class JCarte extends JPanel {
                 k = numerateur / 0.001;
             }
 
-            int nvX = (3*this.getProportionalX(tRues.getDestination(), intersections) + 2*this.getProportionalX(tRues.getOrigine(), intersections))/5;
-            int nvY = (3*this.getProportionalY(tRues.getDestination(), intersections) + 2*this.getProportionalY(tRues.getOrigine(), intersections))/5;
+            int nvX = (3*this.getProportionalX(tRues.getDestination(), 
+                    intersections) + 2*this.getProportionalX(tRues.getOrigine(),
+                            intersections))/5;
+            int nvY = (3*this.getProportionalY(tRues.getDestination(), 
+                    intersections) + 2*this.getProportionalY(tRues.getOrigine(), 
+                            intersections))/5;
 
             double radian = Math.atan(k);
             System.out.println(radian);
@@ -430,7 +512,8 @@ public class JCarte extends JPanel {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
 
-            PointInteret depot = carte.getDemandesLivraisons().getAdresseDepart();
+            PointInteret depot = carte.getDemandesLivraisons()
+                    .getAdresseDepart();
             int xDepot = this.getProportionalXPIs(depot.getIntersection(), PIs,
                     intersections) - 2;
             int yDepot = this.getProportionalYPIs(depot.getIntersection(), PIs,
@@ -476,8 +559,10 @@ public class JCarte extends JPanel {
 
                         //Ajout des points a la liste stockant 
                         //les coordonnees des points d interets
-                        CoordPointInteret cdPtIRect = new CoordPointInteret(ptRect, i);
-                        CoordPointInteret cdPtIOval = new CoordPointInteret(ptOval, i.getPointDependance());
+                        CoordPointInteret cdPtIRect = new CoordPointInteret(
+                                                                    ptRect, i);
+                        CoordPointInteret cdPtIOval = new CoordPointInteret(
+                                                ptOval, i.getPointDependance());
                         this.ajouterCoordPtI(cdPtIRect);
                         this.ajouterCoordPtI(cdPtIOval);
 
@@ -524,7 +609,9 @@ public class JCarte extends JPanel {
                             double k = ((double) (this.getProportionalY(
                                     t.getDestination(), intersections)
                                     - this.getProportionalY(t.getOrigine(),
-                                            intersections))) / ((double) (this.getProportionalX(t.getDestination(),
+                                            intersections))) / ((double) (this.
+                                                    getProportionalX(t.
+                                                            getDestination(),
                                             intersections)
                                     - this.getProportionalX(t.getOrigine(),
                                             intersections)));
@@ -537,7 +624,8 @@ public class JCarte extends JPanel {
                             double ajoutX = (r / 2 * sens / v);
                             double ajoutY = (r / 2 * sens * k / v);
                             int xT[] = {(int) (2 * r * sens / v + ajoutX) + x,
-                                x - (int) (r / w - ajoutX), x + (int) (r / w + ajoutX)};
+                                x - (int) (r / w - ajoutX), x + (int) (r / w 
+                                                                    + ajoutX)};
                             int yT[] = {(int) (2 * r * k * sens / v + ajoutY)
                                 + y, y - (int) (r * (-1 / k) / w - ajoutY),
                                 y + (int) (r * (-1 / k) / w + ajoutY)};

@@ -27,7 +27,7 @@ public class TypeCellRenderer extends DefaultTableCellRenderer {
      * @param hasFocus vrai si la souris est focalisee sur la cellule
      * @param row ligne ou se trouve la cellule
      * @param column colonne ou se trouve la cellule
-     * @return composant avec ,ouveau format
+     * @return composant avec nouveau format
      */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,

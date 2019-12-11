@@ -81,24 +81,24 @@ public class LigneEtapes {
     }
 
     /**
-     * Recuperer lheure de depart du point dinteret
-     * @return 
+     * Recuperer l'heure de depart du point dinteret
+     * @return heure de depart
      */
     public String getDepart() {
         return depart;
     }
 
     /**
-     * Recuperer l heure darrivee au point d interet
-     * @return 
+     * Recuperer l'heure darrivee au point d interet
+     * @return l'heure d'arrivee
      */
     public String getArrivee() {
         return arrivee;
     }
 
     /**
-     * Recuperer la duree de letape
-     * @return 
+     * Recuperer la duree de l'etape
+     * @return duree de l'etape
      */
     public String getDuree() {
         return duree;

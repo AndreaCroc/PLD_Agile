@@ -17,8 +17,8 @@ public class Point {
     
     /**
      * Constructeur de la classe Point
-     * @param x
-     * @param y 
+     * @param x valeur sur axe des abscisses du point
+     * @param y valeur sur axe des ordonnees du point
      */
     public Point(int x, int y){
         this.x = x;

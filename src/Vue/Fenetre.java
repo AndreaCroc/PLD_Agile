@@ -155,7 +155,6 @@ public class Fenetre extends JFrame {
     private EcouteurBoutons ecouteurBoutons;
     private EcouteurSouris ecouteurSouris;
     private EcouteurListSelection ecouteurListSelect;
-    private EcouteurClavier ecouteurClavier;
 
     private ListSelectionModel listSelectModelPI;
     private ListSelectionModel listSelectModelEtapes;
@@ -194,11 +193,9 @@ public class Fenetre extends JFrame {
         this.vueTournee = new AffichageTournee(tournee, this);
 
         this.ecouteurBoutons = new EcouteurBoutons(this.controleur,this);
-        this.ecouteurClavier = new EcouteurClavier(this.controleur,this);
 
         this.ecouteurListSelect = new EcouteurListSelection(this.controleur, 
                                                             this);
-        this.addKeyListener(ecouteurClavier);
 
         //Panneau gauche : contient panneauLivraison, panneauTournee
         panneauGauche = new JPanel();
@@ -280,7 +277,8 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauLivraisons);
 
         /* Fin PanneauLivraison */
- /* PanneauPIs (haut gauche) */
+        
+        /* PanneauPIs (haut gauche) */
         //Vue sur les details des points d interets d une demande de livraison
         vuePIs = new AffichagePIs(new FormatCellRenderer(-1, -1, 1), this.carte, 
                                   this);
@@ -344,7 +342,8 @@ public class Fenetre extends JFrame {
         panneauGauche.add(panneauTournee);
 
         /* Fin PanneauTournee*/
- /* PanneauEtape (bas gauche)*/
+        
+        /* PanneauEtape (bas gauche)*/
         //Titre de panneauEtape
         etapesTitre = new JLabel("Etapes");
         etapesTitre.setFont(new Font("Arial", Font.BOLD, 18));
@@ -570,13 +569,10 @@ public class Fenetre extends JFrame {
 
         ecouteurSouris = new EcouteurSouris(controleur, panneauCarte, this);
         this.addMouseListener(ecouteurSouris);
-        
-
-        
         /* Fin panneauCarte */
- /* Fin panneauDroite */
+        /* Fin panneauDroite */
 
- /* PanneauGlobal2 : pour la deuxieme fenetre */
+        /* PanneauGlobal2 : pour la deuxieme fenetre */
         panneauGlobal2 = new JPanel();
         panneauGlobal2.setLayout(null);
         panneauGlobal2.setBackground(COULEUR_FOND);
@@ -585,7 +581,7 @@ public class Fenetre extends JFrame {
 
         /* Fin PanneauGlobal2 */
 
- /* PanneauGlobal1 : pour la premiere fenetre*/
+        /* PanneauGlobal1 : pour la premiere fenetre*/
         //Pour afficher le titre de l application
         titreAppli = new JLabel("Bienvenue sur Opt'IFmodLyon");
         titreAppli.setFont(new Font("Arial", Font.BOLD, 50));
@@ -950,14 +946,6 @@ public class Fenetre extends JFrame {
         this.panneauTournee.setVisible(false);
     }
 
-    public void cacherTablePI() {
-        this.tableauPIs.setVisible(false);
-    }
-
-    public void cacherTableEtapes() {
-        this.tableauEtapes.setVisible(false);
-    }
-
     /**
      * Pour cacher le panneauPI
      */
@@ -1016,7 +1004,7 @@ public class Fenetre extends JFrame {
      * Mettre en surbrillance la ligne du tableau correspondant au point d
      * interet clique
      *
-     * @param ptI
+     * @param ptI point d'interet a mettre en surbrillance
      */
     public void surbrillerLigneTabEtapes(PointInteret ptI) {
         if (tournee != null) {
@@ -1050,7 +1038,7 @@ public class Fenetre extends JFrame {
      * Entourer le point d interet correspondant a la ligne du tableau
      * selectionnee
      *
-     * @param pi
+     * @param pi point d'interet a surbriller
      */
     public void surbrillerPI(PointInteret pi) {
         ArrayList<PointInteret> listePtI = carte
@@ -1123,16 +1111,17 @@ public class Fenetre extends JFrame {
 
     }
     /**
-     * 
-     * @param z 
+     * Modifier la valeur du zoom de la carte
+     * @param z  nouveau zoom
      */
     public void setZoom(double z){
         this.zoom=z;
     }
     
     /**
+     * Recuperer la valeur du zoom appliquee a la carte
      * 
-     * @return 
+     * @return zoom actuel
      */
     public double getZoom(){
         return zoom;
@@ -1140,37 +1129,43 @@ public class Fenetre extends JFrame {
     }
     
     /**
-     * 
-     * @param dx 
+     * Modifier la valeur du deplacement sur l'axe des x 
+     * appliquee a la vue de la carte
+     * @param dx nouvelle valeur de x
      */
     public void setDeplX(double dx){
         this.deplacementX=dx;
     }
     
     /**
-     * 
-     * @return 
+     * Recuperer la valeur du deplacement sur x appliquee a la vue de la carte
+     * @return deplacement sur x
      */
     public double getDeplX(){
         return this.deplacementX;
     }
     
     /**
-     * 
-     * @param dy 
+     * Modifier la valeur du decalagae sur l'axe des y appliquee a la vue 
+     * de la carte
+     * @param dy nouveau decalage sur y
      */
     public void setDeplY(double dy){
         this.deplacementY=dy;
     }
     
     /**
-     * 
-     * @return 
+     * Recuperer la valeur du decalage sur y appliquee a la vue de la carte
+     * @return decalage actuel sur y
      */
     public double getDeplY(){
         return this.deplacementY;
     }
     
+    /**
+     * Faire un tableau de 50 couleurs differentes pour les couleurs
+     * des points d'interet sur l'affichage de la carte
+     */
     public void makePalette(){
         for (int c=0;c<50;c++) {
                 Random rand = new Random();
@@ -1182,17 +1177,12 @@ public class Fenetre extends JFrame {
             }
     }
     
+    /**
+     * Recuperer la liste crée des couleurs de spoints d'intéret
+     * @return liste de couleurs
+     */
     public ArrayList<Color> getPalette(){
         return this.palette;
-    }
-
-    /**
-     * Recuperer l ecouteur de boutons
-     *
-     * @return ecouteur boutons
-     */
-    public EcouteurBoutons getEcouteurBoutons() {
-        return this.ecouteurBoutons;
     }
 
     /**
@@ -1211,7 +1201,8 @@ public class Fenetre extends JFrame {
      * @param heureFin heure de fin de la tournee
      * @param duree duree de la tournee
      */
-    public void setPanneauTournee(String heureDeb, String heureFin, String duree) {
+    public void setPanneauTournee(String heureDeb, String heureFin, 
+                                  String duree) {
         this.labelTournee.setText("   " + HEURE_DEBUT + heureDeb + "      " 
                                   + HEURE_FIN + heureFin + "      " 
                                   + DUREE + duree);
@@ -1315,7 +1306,7 @@ public class Fenetre extends JFrame {
     /**
      * Recuperer la largeur du panneau gauche
      *
-     * @return largeur
+     * @return largeur panneau de gauche
      */
     public int getWidthPanneauGauche() {
         return this.panneauGauche.getWidth();
@@ -1324,7 +1315,7 @@ public class Fenetre extends JFrame {
     /**
      * Recuperer la hauteur du panneau de legende
      *
-     * @return hauteur
+     * @return hauteur panneau legende
      */
     public int getHeightPanneauLegende() {
         return this.panneauLegende.getHeight();
@@ -1580,25 +1571,47 @@ public class Fenetre extends JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
     }
     
+    /**
+     * Modifier le point d'enlevement que l'utilisateur veut ajouter
+     * @param pE nouveau point d'interet
+     */
     public void setPE(PointInteret pE){
         this.pE = pE;
     }
     
+    /**
+     * Modifier le point d'interet que l'utilisateur a choisi avant son point
+     * d'enlevement
+     * @param index indice du point d'intéret place avant le point d'enlevement
+     */
     public void setAvantPEParIndex(int index){
         this.avantPE = carte.getListePointsInteretActuelle().get(index);
         System.out.println("pAE dans setter:"+avantPE.getIntersection()
                                                      .getId());
     }    
     
+    /**
+     * Modifier le point de livraison que l'utilisateur veut ajouter
+     * a la tournee
+     * @param pL nouveau point de livraison
+     */
     public void setPL(PointInteret pL){
         this.pL = pL;
     }
     
+    /**
+     * Modifier le point d'intéret qui est avant le point de livraison a 
+     * ajouter a la tournee
+     * @param index indice du point d'interetplace avant le point de livraison
+     * dans la tournee
+     */
     public void setAvantPLParIndex(int index){
         this.avantPL = carte.getListePointsInteretActuelle().get(index);
-        System.out.println("pAL dans setter:"+avantPL.getIntersection().getId());
     }
     
+    /**
+     * Remettre tous les points a ajoutes a la tournee a null
+     */
     public void clearAllPointsAjoutes(){
         this.pE = null;
         this.pL = null;
@@ -1642,10 +1655,20 @@ public class Fenetre extends JFrame {
         return this.avantPL;
     }
 
+    /**
+     * Savoir si un point d'interet avant l'enlevement a ete selectionne
+     * sur la carte
+     * @return booleean si un point a ete clique
+     */
     public boolean isClicAjoutAvantEnlvt() {
         return clicAjoutAvantEnlvt;
     }
 
+    /**
+     * Modifier la valeur du boolean pour savoir si un point a ete clique
+     * avant de passer a l'etat d'ajout d'apres
+     * @param clicAjoutAvantEnlvt valeur du booleen du clic actuel
+     */
     public void setClicAjoutAvantEnlvt(boolean clicAjoutAvantEnlvt) {
         this.clicAjoutAvantEnlvt = clicAjoutAvantEnlvt;
     }
