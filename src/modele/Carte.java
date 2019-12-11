@@ -724,16 +724,18 @@ public class Carte {
      * Méthode permettant de calculer les heures d'arrivées et de départ des
      * points d'intérêt d'une tournée
      *
-     * @param tournee
      * @return la tournée mise à jour
      */
     public boolean calculerHeuresTournee() {
         //Recuperation de l'entrepot
+        System.out.println("calculer heure ");
         PointInteret pointCourant = uneTournee.getSuccessionPointsInteret().get(0);
+        System.out.println("point courant : "+pointCourant);
         PointInteret pointPrec = pointCourant;
 
         //Recuperation de l'heure de départ de l'entrepôt
         Integer heureDepartPrec = heureToInt(demandesLivraisons.getHeureDepart());
+        System.out.println("heuredepart : "+heureDepartPrec);
         pointCourant.setHeureDepart(intToHeure(heureDepartPrec));
 
         Integer heureArriveeCour;
@@ -741,8 +743,10 @@ public class Carte {
 
         int dureeTrajet;
         int nbSommets = uneTournee.getSuccessionPointsInteret().size();
+        System.out.println("nbsommets : "+nbSommets);
         for (int i = 1; i < nbSommets; i++) {
             pointCourant = uneTournee.getSuccessionPointsInteret().get(i);
+            System.out.println("pi : "+pointCourant);
             if (!pointCourant.isEntrepot()) {
                 //Mise a jour de l'heure d'arrivee
                 dureeTrajet = pointPrec.getCheminDepart().getDureeTrajet();
@@ -772,6 +776,7 @@ public class Carte {
         Integer dureeTournee = heureArr - heureDep;
 
         uneTournee.setDuree(intToHeure(dureeTournee));
+        System.out.println("tournee "+uneTournee);
         return true;
 
     }
