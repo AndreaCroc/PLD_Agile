@@ -173,9 +173,10 @@ public class Controleur {
      * Effectue un zoom sur une zone de la carte
      */
     public void zoomer(){
+        fenetre.cacheBoutonsZoom();
         this.fenetre.setZoom(this.fenetre.getZoom()+0.5);
         fenetre.repaint();
- 
+        fenetre.montreBoutonsZoom();
     }
     
     /**
@@ -183,13 +184,16 @@ public class Controleur {
      */
     public void deZoomer(){
         if(this.fenetre.getZoom()-0.5>=1){
+            fenetre.cacheBoutonsZoom();
             this.fenetre.setZoom(this.fenetre.getZoom()-0.5);
             //if((this.fenetre.getDeplY()+20)>=0 &&
             //(this.fenetre.getDeplY()+20)<=(this.fenetre.getHeight()*0.85)){
                 //this.fenetre.setDeplY(this.fenetre.getDeplY()+20*1/fenetre.getZoom());//test
                 //this.fenetre.setDeplX(this.fenetre.getDeplX()+20*1/fenetre.getZoom());//test
            // }
+            
             fenetre.repaint();
+            fenetre.montreBoutonsZoom();
         }
     }
     
@@ -201,14 +205,18 @@ public class Controleur {
 
             if((this.fenetre.getDeplX()+decalage*50)>=0 &&
             (this.fenetre.getDeplX()+decalage*50)<=this.fenetre.getWidth()*0.30){
+                fenetre.cacheBoutonsZoom();
                 this.fenetre.setDeplX(this.fenetre.getDeplX()+decalage*50);//test
                 this.fenetre.repaint();
+                fenetre.montreBoutonsZoom();
             }
         }else{
             if((this.fenetre.getDeplY()+((int)(decalage/2))*50)>=0 &&
             (this.fenetre.getDeplY()+((int)(decalage/2))*50)<=(this.fenetre.getHeight()*0.78)){
+                fenetre.cacheBoutonsZoom();
                 this.fenetre.setDeplY(this.fenetre.getDeplY()+((int)(decalage/2))*50);//test
                 this.fenetre.repaint();
+                fenetre.montreBoutonsZoom();
             }
 
         }

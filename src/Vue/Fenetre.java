@@ -1582,4 +1582,29 @@ public class Fenetre extends JFrame {
     public PointInteret getAvantPL(){
         return this.avantPL;
     }
+    
+    /**
+     * Pour attendre le chargement du zoom avant de faire
+     * de nouvelles actions
+     */
+    public void cacheBoutonsZoom () {
+        boutonZoomer.setEnabled(false);
+        boutonDezoomer.setEnabled(false);
+        boutonDirDroite.setEnabled(false);
+        boutonDirGauche.setEnabled(false);
+        boutonDirHaut.setEnabled(false);
+        boutonDirBas.setEnabled(false);
+    }
+    
+    /**
+     * Pour afficher a nouveau les boutons du zoom
+     */
+    public void montreBoutonsZoom() {
+        boutonZoomer.setEnabled(true);
+        boutonDezoomer.setEnabled(true);
+        boutonDirDroite.setEnabled(true);
+        boutonDirGauche.setEnabled(true);
+        boutonDirHaut.setEnabled(true);
+        boutonDirBas.setEnabled(true);
+    }
 }
