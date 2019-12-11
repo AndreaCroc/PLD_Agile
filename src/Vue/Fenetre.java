@@ -160,7 +160,7 @@ public class Fenetre extends JFrame {
     private ListSelectionModel listSelectModelPI;
     private ListSelectionModel listSelectModelEtapes;
     
-    //Permettre de reprendre le point d'enlevement
+    //Permettre de reprendre les points à ajouter
     private PointInteret pE;
     private PointInteret avantPE;
     private PointInteret pL;
@@ -1606,18 +1606,38 @@ public class Fenetre extends JFrame {
         this.avantPL = null;
     }
     
+    /**
+     * Récupérer le point d'enlèvement sélectionné
+     *
+     * @return point d'enlèvement
+     */
     public PointInteret getPE(){
         return this.pE;
     }
     
+    /**
+     * Récupérer le point d'avant-enlèvement sélectionné
+     *
+     * @return point d'avant-enlèvement
+     */
     public PointInteret getAvantPE(){
         return this.avantPE;
     }
     
+    /**
+     * Récupérer le point de livraison
+     *
+     * @return point de livraison
+     */    
     public PointInteret getPL(){
         return this.pL;
     }
     
+    /**
+     * Récupérer le point d'avant-livraison sélectionné
+     *
+     * @return point d'avant-livraison
+     */    
     public PointInteret getAvantPL(){
         return this.avantPL;
     }

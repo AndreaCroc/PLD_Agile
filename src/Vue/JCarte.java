@@ -37,7 +37,7 @@ public class JCarte extends JPanel {
     private ArrayList<Troncon> tronconsNomsRues;
     private Fenetre fenetre; //fenetre de l application
     private ArrayList<Color> palette;
-    private ArrayList<Point> coorIntersections = new ArrayList<Point>();
+    private ArrayList<Point> coorIntersections = new ArrayList<Point>();    //listes des coordonnées des intersections dans la carte
 
     /**
      * Constructeur de la classe JCarte
@@ -107,6 +107,11 @@ public class JCarte extends JPanel {
         return this.intersectionsMap;
     }
 
+    /**
+     * Recuperer la liste des coordonnées des intersections
+     *
+     * @return liste de coordonnées des intersections
+     */
     public ArrayList<Point> getCoorIntersections() {
         return coorIntersections;
     }

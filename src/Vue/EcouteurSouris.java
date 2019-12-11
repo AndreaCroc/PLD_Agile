@@ -149,12 +149,12 @@ public class EcouteurSouris extends MouseAdapter {
                         }
 
                     }
-
+                    // Si la liste des intersections est non vide et non nulle
                     if (coordI != null && !coordI.isEmpty()) {
                         int index = 0;
                         for (Point p : coordI) {
                             index = coordI.indexOf(p);
-                            //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
+                            //Point(nxXpt,nvYpt) correspond au centre des figures des intersections
                             int nvXpt = p.getX() + xPanneauGauche + 5;
                             int nvYpt = p.getY() + yPanneauLegende + 25;
 

@@ -11,7 +11,7 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * EtatAjouterPtLivraison permettant d ajouter un point d enlevement a la 
+ * EtatAjouterPtLivraison permettant d'ajouter un point de livraison a la 
  * tournee
  * Code inspire de l application PlaCo
  *
@@ -24,6 +24,15 @@ import modele.Troncon;
  */
 public class EtatAjouterPtLivraison implements Etat {
 
+    /**
+     * Enregistrer le point de livraison sélectioné et passe à
+     * l état EtatAjoterPointAvantLivr
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param interL
+     */
     @Override
     public void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){
         System.out.println("etat ajouter pt livraison");
@@ -89,6 +98,13 @@ public class EtatAjouterPtLivraison implements Etat {
         JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent la livraison dans la tournee");
     }
     
+    /**
+     * Annuler le mode ajout des points d interet On repasse dans l etat
+     * EtatTournee
+     *
+     * @param controleur
+     * @param fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();

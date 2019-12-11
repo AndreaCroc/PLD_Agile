@@ -11,8 +11,8 @@ import modele.Tournee;
 import modele.Troncon;
 
 /**
- * EtatAjouterPtEnlevement permettant d ajouter un point d enlevement a la
- * tournee Code inspire de l application PlaCo
+ * EtatAjouterPtEnlevement permettant d'ajouter un point d'enlevement à la
+ * tournee Code inspiré de l application PlaCo
  *
  * @version Version 1
  *
@@ -22,7 +22,16 @@ import modele.Troncon;
  *
  */
 public class EtatAjouterPtEnlevement implements Etat {
-
+    
+    /**
+     * Enregistrer le point d'enlèvement sélectioné et passe à
+     * l état EtatAjoterPointAvantEnlvt
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param interE
+     */
     @Override
     public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, Intersection interE) {
         System.out.println("Etat Ajouter Pt Enlevement");
@@ -88,6 +97,13 @@ public class EtatAjouterPtEnlevement implements Etat {
         JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent l'enlèvement dans la tournée");
     }
 
+    /**
+     * Annuler le mode ajout des points d interet On repasse dans l etat
+     * EtatTournee
+     *
+     * @param controleur
+     * @param fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();

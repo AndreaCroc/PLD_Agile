@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controleur;
 
 import Vue.Fenetre;
@@ -11,10 +6,26 @@ import modele.Carte;
 import modele.PointInteret;
 
 /**
+ * EtatAjouterPointAvantLivr quand on veut sélectionner le point précédent
+ * du point de livraison
  *
- * @author DELL
+ * @version Version 1
+ *
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 public class EtatAjouterPointAvantLivr implements Etat {
+    
+    /**
+     * Enregistrer le point précédent du point de livraison sélectioné et passe à
+     * l état EtatAjouter
+     * 
+     * @param controleur
+     * @param fenetre
+     * @param carte
+     * @param index
+     */
     @Override
     public void ajouterPointAvantLivraison(Controleur controleur, Fenetre fenetre, Carte carte, int index){
         System.out.println("Etat Ajout Pt Avant Livr");
@@ -27,6 +38,13 @@ public class EtatAjouterPointAvantLivr implements Etat {
         } 
     };
     
+    /**
+     * Annuler le mode ajout des points d interet On repasse dans l etat
+     * EtatTournee
+     *
+     * @param controleur
+     * @param fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();
