@@ -28,9 +28,11 @@ public class EtatAjouterPointAvantLivr implements Etat {
      * @param index indice du point precedent le nouveau point de livraison
      */
     @Override
-    public void ajouterPointAvantLivraison(Controleur controleur, Fenetre fenetre, Carte carte, int index){
+    public void ajouterPointAvantLivraison(Controleur controleur, 
+            Fenetre fenetre, Carte carte, int index){
         System.out.println("Etat Ajout Pt Avant Livr");
-     int value = JOptionPane.showConfirmDialog(fenetre, "Confirmer le choix du point ?");
+     int value = JOptionPane.showConfirmDialog(fenetre, 
+             "Confirmer le choix du point ?");
         if (value == JOptionPane.YES_OPTION) {
             // Enregistrer le point precedent l enlevement dans la Fenetre
             fenetre.setAvantPLParIndex(index);
@@ -54,7 +56,7 @@ public class EtatAjouterPointAvantLivr implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre
      * @param ptI point d interet selectionne
      */
     @Override
@@ -67,7 +69,7 @@ public class EtatAjouterPointAvantLivr implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre
      * @param p point d interet selectionne
      */
     @Override

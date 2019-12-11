@@ -17,13 +17,21 @@ import modele.Tournee;
  */
 public class ListeCdesTournee {
 
-    private ArrayList<CommandeTournee> listeCommandes;
-    private int indiceActuel;
-    private Controleur controleur;
-    private Carte carte;
-    private Tournee tournee;
-    private Fenetre fenetre;
+    private ArrayList<CommandeTournee> listeCommandes; //Liste des commandes 
+    //deja effectuees
+    private int indiceActuel; //indice de la commande actuelle
+    private Controleur controleur; //Controleur
+    private Carte carte; //carte courante
+    private Tournee tournee; //Tournee courante
+    private Fenetre fenetre; //Fenetre courante
 
+    /**
+     * Constructeur de la classe ListeCdesTournee
+     * @param carte carte courante
+     * @param tournee tournee courante
+     * @param fenetre fenetre courante
+     * @param controleur controleur
+     */
     public ListeCdesTournee(Carte carte, Tournee tournee, Fenetre fenetre, 
                             Controleur controleur) {
         listeCommandes = new ArrayList<CommandeTournee>();
@@ -36,8 +44,9 @@ public class ListeCdesTournee {
 
     /**
      * Ajout de la commande a la liste
-     *
-     * @param commande la commande a ajouter Source : PlaCo
+     * Source : PlaCo
+     * @param commande la commande a ajouter 
+     * 
      */
     public void ajouterCommande(CommandeTournee commande) {
         int i = indiceActuel + 1;
@@ -50,7 +59,8 @@ public class ListeCdesTournee {
     }
 
     /**
-     * Annule temporairement la derniere commande ajoutee Source : PlaCo
+     * Annule temporairement la derniere commande ajoutee 
+     * Source : PlaCo
      */
     public void undo() {
         if (indiceActuel >= 0) {
@@ -61,7 +71,8 @@ public class ListeCdesTournee {
     }
 
     /**
-     * Remet dans la liste la derniere commande annulee avec undo Source : PlaCo
+     * Remet dans la liste la derniere commande annulee avec undo 
+     * Source : PlaCo
      */
     public void redo() {
         if (indiceActuel < listeCommandes.size() - 1) {

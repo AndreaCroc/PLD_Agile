@@ -1,9 +1,6 @@
 package controleur;
 
 import Vue.Fenetre;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
@@ -20,7 +17,8 @@ import modele.Tournee;
  */
 public class Controleur {
 
-    private Fenetre fenetre; //Fenetre qui traite actions recuperees par controleur
+    //Fenetre qui traite actions recuperees par controleur
+    private Fenetre fenetre; 
     private Carte carte; //Carte
     private Tournee tournee; //Tournee realisee
     private Etat etatCourant = new EtatInit(); //Etat du controleur
@@ -34,10 +32,14 @@ public class Controleur {
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
     protected final EtatAjouter etatAjouter = new EtatAjouter();
     protected final EtatModifier etatModifier = new EtatModifier();
-    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement = new EtatAjouterPtEnlevement();
-    protected final EtatAjouterPtLivraison etatAjouterPtLivraison = new EtatAjouterPtLivraison();
-    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt = new EtatAjouterPointAvantEnlvt();
-    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr = new EtatAjouterPointAvantLivr();
+    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement 
+            = new EtatAjouterPtEnlevement();
+    protected final EtatAjouterPtLivraison etatAjouterPtLivraison 
+            = new EtatAjouterPtLivraison();
+    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt 
+            = new EtatAjouterPointAvantEnlvt();
+    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr
+            = new EtatAjouterPointAvantLivr();
 
     /**
      * Constructeur de la classe du Controleur

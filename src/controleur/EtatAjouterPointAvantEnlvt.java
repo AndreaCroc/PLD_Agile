@@ -27,14 +27,16 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
      * @param index  indice du point precedent le nouveau point d'enlevement
      */
     @Override
-    public void ajouterPointAvantEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, int index) {
-        System.out.println("Etat Ajout point avant enlevement");
-        int value = JOptionPane.showConfirmDialog(fenetre, "Confirmer le choix du point ?");
+    public void ajouterPointAvantEnlevement(Controleur controleur, 
+            Fenetre fenetre, Carte carte, int index) {
+        int value = JOptionPane.showConfirmDialog(fenetre, 
+                "Confirmer le choix du point ?");
         if (value == JOptionPane.YES_OPTION) {
             // Enregistrer le point precedent l enlevement dans la Fenetre
             fenetre.setAvantPEParIndex(index);
             controleur.setEtat(controleur.etatAjouterPtLivraison);
-            JOptionPane.showMessageDialog(fenetre, "Merci de choisir un emplacement pour la livraison");
+            JOptionPane.showMessageDialog(fenetre, "Merci de choisir un "
+                    + "emplacement pour la livraison");
         } 
 
     }

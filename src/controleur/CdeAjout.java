@@ -18,13 +18,22 @@ import modele.Tournee;
  */
 public class CdeAjout implements CommandeTournee {
 
+    //Point d'enlevement ajoute
     private PointInteret pointEnlevement;
+    //Point de livraison ajoute
     private PointInteret pointLivraison;
     private PointInteret pointAvantLivr; // point d'intérêt après lequel on 
     // souhaite placer le point de livraison
     private PointInteret pointAvantEnlvt; // point d'intérêt après lequel 
     //on souhaite placer le point d'enlèvement
 
+    /**
+     * Constructeur de la classe CdeAjout
+     * @param pointEnlevement point d'enlevement
+     * @param pointLivraison point de livraison
+     * @param pointAvantLivr point avant la livraison
+     * @param pointAvantEnlvt point avant l'enlevement
+     */
     public CdeAjout(PointInteret pointEnlevement, PointInteret pointLivraison, 
                     PointInteret pointAvantLivr, PointInteret pointAvantEnlvt) {
         this.pointEnlevement = pointEnlevement;

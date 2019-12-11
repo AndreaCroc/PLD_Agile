@@ -2,9 +2,6 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
@@ -34,13 +31,14 @@ public class EtatLivraison implements Etat {
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param tournee
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
+     * @param tournee tournee courante
      */
     @Override
-    public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void calculerTournee(Controleur controleur, Fenetre fenetre, 
+                                Carte carte, Tournee tournee) {
 
         fenetre.viderPanneauEtapes();
         fenetre.viderPanneauPIs();
@@ -68,7 +66,8 @@ public class EtatLivraison implements Etat {
      * @param tournee tournee
      */
     @Override
-    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, 
+                                     Carte carte, Tournee tournee) {
         System.out.println("arreter calcul tournee etat livraison");
         controleur.setEtat(controleur.etatTournee);
     }
@@ -77,12 +76,13 @@ public class EtatLivraison implements Etat {
      * Charger un fichier de livraisons Dans tous les cas, on reste dans cet
      * etat
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
-    public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void chargerLivraison(Controleur controleur, Fenetre fenetre, 
+                                 Carte carte) {
         
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
@@ -111,12 +111,15 @@ public class EtatLivraison implements Etat {
                 
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur2("Erreur lors du "
+                                                + "chargement du fichier");
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            //En cas d erreur lie a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur2("Erreur lors de la "
+                                           + "sélection du fichier");
         }
     }
 
@@ -158,7 +161,8 @@ public class EtatLivraison implements Etat {
 
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur3("Erreur lors du "
+                                                + "chargement du fichier");
                 carte.setDemandesLivraisons(null);
                 fenetre.viderPanneauEtapes();
                 fenetre.viderPanneauPIs();
@@ -174,8 +178,10 @@ public class EtatLivraison implements Etat {
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            //En cas d erreur lie a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur3("Erreur lors de la "
+                                            + "sélection du fichier");
         }
 
     }
@@ -184,7 +190,7 @@ public class EtatLivraison implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -196,7 +202,7 @@ public class EtatLivraison implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

@@ -31,10 +31,11 @@ public class EtatAjouter implements Etat {
      * @param listeCommandes listeCommandes pour undo/redo
      */
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
-        System.out.println("Etat ajouter");
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, 
+            Tournee tournee, ListeCdesTournee listeCommandes) {
         CdeAjout commande;
-        if (carte.ajouterLivraison(fenetre.getPE(), fenetre.getPL(), fenetre.getAvantPE(), fenetre.getAvantPL())) {
+        if (carte.ajouterLivraison(fenetre.getPE(), fenetre.getPL(), 
+                fenetre.getAvantPE(), fenetre.getAvantPL())) {
             tournee = carte.getTournee();
             fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
                     fenetre.setTournee(tournee);
@@ -45,7 +46,8 @@ public class EtatAjouter implements Etat {
                     fenetre.repaint();
                     fenetre.afficherEtapesTour(true);
                     fenetre.afficherPanneauPI(true);
-                    commande = new CdeAjout(fenetre.getPE(), fenetre.getPL(), fenetre.getAvantPE(), fenetre.getAvantPL());
+                    commande = new CdeAjout(fenetre.getPE(), fenetre.getPL(), 
+                            fenetre.getAvantPE(), fenetre.getAvantPL());
                     listeCommandes.ajouterCommande(commande);
 
         } else {

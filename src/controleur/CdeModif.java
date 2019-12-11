@@ -17,9 +17,14 @@ import modele.Tournee;
  */
 public class CdeModif implements CommandeTournee {
 
-    private PointInteret ptI;
-    private int decalage;
+    private PointInteret ptI; //Point d'interet a modifier
+    private int decalage; //Valeur de decalage dans la tournee
 
+    /**
+     * Constructeur de la classe CdeModif
+     * @param ptI point d'interet modifie
+     * @param decalage //valeur du decalage dans la tournee
+     */
     public CdeModif(PointInteret ptI, int decalage) {
         this.ptI = ptI;
         this.decalage = decalage;

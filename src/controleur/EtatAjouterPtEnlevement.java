@@ -29,14 +29,16 @@ public class EtatAjouterPtEnlevement implements Etat {
      * @param interE intersection sur laquelle ajouter le point d'enlevement
      */
     @Override
-    public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, Intersection interE) {
+    public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, 
+                                       Carte carte, Intersection interE) {
         System.out.println("Etat Ajouter Pt Enlevement");
         int duree = 0;
         ArrayList<Troncon> listeT = interE.getTronconsDepart();
         String nomRue = "";
          //Numéro de la demande de livraison
         int numeroDemande;
-        int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret().size();
+        int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
+                                                      .size();
         // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
@@ -45,19 +47,25 @@ public class EtatAjouterPtEnlevement implements Etat {
             }
         }
         if (!dansLaListe) {
-            JOptionPane.showMessageDialog(fenetre, "L'endroit choisi n'est pas une intersection");
+            JOptionPane.showMessageDialog(fenetre, "L'endroit choisi "
+                    + "n'est pas une intersection");
             return;
         }
 
         // Saisir la duree
         while (duree <= 0) {
             try {
-                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la durée d'enlèvement en minute"));
+                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci "
+                        + "de saisir la durée d'enlèvement en minute"));
                 if (duree <= 0) {
-                    JOptionPane.showMessageDialog(fenetre, "La durée doit être supérieure à 0.\nMerci de saisir une durée valide");
+                    JOptionPane.showMessageDialog(fenetre, "La durée doit être "
+                            + "supérieure à 0.\nMerci de saisir "
+                            + "une durée valide");
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(fenetre, "Le format de la durée n'est pas correct.\nMerci de saisir une durée valide");
+                JOptionPane.showMessageDialog(fenetre, "Le format de la durée "
+                        + "n'est pas correct.\nMerci de saisir "
+                        + "une durée valide");
                 duree = 0;
             }
         }
@@ -70,7 +78,8 @@ public class EtatAjouterPtEnlevement implements Etat {
             }
         }
         nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
-        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point d'enlèvement:"
+        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer "
+                + "les informations du point d'enlèvement:"
                 + "\nRue(s): " + nomRue
                 + "\nduree: " + duree);
 
@@ -90,7 +99,8 @@ public class EtatAjouterPtEnlevement implements Etat {
         }
         fenetre.getPE().setNumeroDemande(numeroDemande);
         controleur.setEtat(controleur.etatAjouterPointAvantEnlvt);
-        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent l'enlèvement dans la tournée");
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point "
+                + "précédent l'enlèvement dans la tournée");
     }
 
     /**
@@ -108,7 +118,7 @@ public class EtatAjouterPtEnlevement implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -121,7 +131,7 @@ public class EtatAjouterPtEnlevement implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

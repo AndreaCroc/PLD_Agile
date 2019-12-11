@@ -30,14 +30,16 @@ public class EtatAjouterPtLivraison implements Etat {
      * @param interL intersection sur laquelle ajouter le point de livraison
      */
     @Override
-    public void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){
-        System.out.println("etat ajouter pt livraison");
+    public void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, 
+                                      Carte carte,Intersection interL){
         int duree = 0;
-        ArrayList<Troncon> listeT = interL.getTronconsDepart();;
+        ArrayList<Troncon> listeT = interL.getTronconsDepart();
         String nomRue = ""; //Numéro de la demande de livraison
         int numeroDemande;
-        int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret().size();
-        // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
+        int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
+                                                      .size();
+        // Si le point choisi n'existe pas dans la liste d'intersection, 
+        //normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
             if (i == interL) {
@@ -45,12 +47,15 @@ public class EtatAjouterPtLivraison implements Etat {
             }
         }
         if (!dansLaListe) {
-            JOptionPane.showMessageDialog(fenetre, "L'endroit choisi n'est pas une intersection");
+            JOptionPane.showMessageDialog(fenetre, "L'endroit choisi "
+                    + "n'est pas une intersection");
             return;
         }
         // Si c'est le meme point que le point d'enlevement
         if(interL == fenetre.getPE().getIntersection()){
-            JOptionPane.showMessageDialog(fenetre, "Le point de livraison ne peut pas etre le même que celui d'enlèvement.\nMerci de choisir un autre point");
+            JOptionPane.showMessageDialog(fenetre, "Le point de livraison ne "
+                    + "peut pas etre le même que celui d'enlèvement.\n"
+                    + "Merci de choisir un autre point");
             return;
         }
         
@@ -59,9 +64,11 @@ public class EtatAjouterPtLivraison implements Etat {
         // Saisir la duree
         while(duree <= 0){
             try{
-                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree en minute du point de livraison"));
+                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de "
+                        + "saisir la duree en minute du point de livraison"));
             }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(fenetre, "le format du chiffre n'est pas bon, merci de resaisir une duree valide");
+                JOptionPane.showMessageDialog(fenetre, "le format du chiffre "
+                        + "n'est pas bon, merci de resaisir une duree valide");
                 duree = 0;
             }
         }
@@ -73,7 +80,8 @@ public class EtatAjouterPtLivraison implements Etat {
             }
         }
         nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
-        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point de livraison :"
+        int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer "
+                + "les informations du point de livraison :"
                 + "\nRue(s): " + nomRue
                 + "\nduree: " + duree);
 
@@ -91,7 +99,8 @@ public class EtatAjouterPtLivraison implements Etat {
         }
         fenetre.getPL().setNumeroDemande(numeroDemande);
         controleur.setEtat(controleur.etatAjouterPointAvantLivr);
-        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent la livraison dans la tournee");
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point "
+                + "précédent la livraison dans la tournee");
     }
     
     /**
@@ -109,7 +118,7 @@ public class EtatAjouterPtLivraison implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -122,7 +131,7 @@ public class EtatAjouterPtLivraison implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

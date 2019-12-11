@@ -15,35 +15,42 @@ import modele.Tournee;
  *
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatModifier implements Etat {
 
     /**
-     * 
+     * Modifier l'ordre de passage des points d'interet de la tournee
      *
-     * @param controleur
-     * @param fenetre
-     * @param tournee
-     * @param carte
-     * @param index
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param tournee tournee courante
+     * @param carte carte courante
+     * @param index index du point d'interet a modifier
+     * @param listeCommandes liste des commandes effectuees 
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
+    public void modifier(Controleur controleur, Fenetre fenetre, 
+                         Tournee tournee, Carte carte, int index, 
+                         ListeCdesTournee listeCommandes) {
         if (index != 0) {
-            ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
+            ArrayList<PointInteret> listePIs = carte
+                                            .getListePointsInteretActuelle();
             //Recuperer le point d interet que l utilisateur veut deplacer
             int option = 1; //choix de valider ou non le deplacement 
             int decalage = 0; //de combien a ete deplace le point d interet
             boolean modifOk = false; //si le deplacement s'est bien passee
-            PointInteret ptI = new PointInteret(); //point d interet qu on veut deplacer
+            //point d interet qu on veut deplacer
+            PointInteret ptI = new PointInteret(); 
             int pos = 0; //Position du point d interet dan sla tournee
             int min = 0; //deplacement max au plus tot
             int max = 0; //deplacement max au plus tard
-            ArrayList<Integer>choix = new ArrayList<Integer>(); //Retour methode classe Fenetre
-            ArrayList<PointInteret> listeTournee = new ArrayList<PointInteret>(); //liste de la classe Tournee
+             //Retour methode classe Fenetre
+            ArrayList<Integer>choix = new ArrayList<Integer>();
+            //liste de la classe Tournee
+            ArrayList<PointInteret> listeTournee = new ArrayList<PointInteret>(); 
             CdeModif commande;
             //Si l index est inferieur a la taille de la liste de la carte
             if (index < listePIs.size()) {
@@ -75,7 +82,8 @@ public class EtatModifier implements Etat {
 
                     //Si modification effectuee mais non respect contrainte
                     if (!modifOk) {
-                        //Afficher popup pour prevenir modification ne respecte pas contrainte
+                        //Afficher popup pour prevenir modification ne 
+                        //respecte pas contrainte
                         fenetre.afficherPopPrevenirModification();
                     }
                     commande = new CdeModif(ptI, decalage);
@@ -103,7 +111,7 @@ public class EtatModifier implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -116,7 +124,7 @@ public class EtatModifier implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override
@@ -129,8 +137,8 @@ public class EtatModifier implements Etat {
      * Annuler le mode modification d un point d interet On repasse dans l etat
      * EtatTournee
      *
-     * @param controleur
-     * @param fenetre
+     * @param controleur controleur
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
