@@ -217,6 +217,10 @@ public class Controleur {
         }
     }
 
+    public void arreterCalculTournee(){
+        System.out.println("Arret Calcul tournee");
+    }
+    
     public void ajouterPointEnlevement(Intersection interE) {
         etatCourant.ajouterPointEnlevement(this, fenetre, carte, interE);
     }

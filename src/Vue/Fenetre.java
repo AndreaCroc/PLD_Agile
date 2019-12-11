@@ -79,6 +79,7 @@ public class Fenetre extends JFrame {
     protected final static String GAUCHE = "←";
     protected final static String HAUT = "↑";
     protected final static String BAS = "↓";
+    protected final static String ARRET = "■";
     
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -106,6 +107,7 @@ public class Fenetre extends JFrame {
     private JButton boutonDirGauche;
     private JButton boutonDirHaut;
     private JButton boutonDirBas;
+    private JButton boutonArretCalcul;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -253,6 +255,13 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setBackground(COULEUR_BOUTON);
         boutonCalculerTournee.setEnabled(false);
         boutonCalculerTournee.addActionListener(ecouteurBoutons);
+        
+        //Bouton pour arreter le calcul de la tournee
+        boutonArretCalcul = new JButton(ARRET);
+        boutonArretCalcul.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonArretCalcul.setForeground(Color.red);
+        boutonArretCalcul.setBackground(COULEUR_BOUTON);
+        boutonArretCalcul.addActionListener(ecouteurBoutons);
 
         livraisons = new JLabel("Livraisons");
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
@@ -265,6 +274,7 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(boutonCalculerTournee);
         panneauLivraisons.add(boutonUndo);
         panneauLivraisons.add(boutonRedo);
+        panneauLivraisons.add(boutonArretCalcul);
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
@@ -388,7 +398,6 @@ public class Fenetre extends JFrame {
         boutonAjouterPoints.setFont(new Font("Arial", Font.BOLD, 14));
         boutonAjouterPoints.setForeground(COULEUR_ECRITURE);
         boutonAjouterPoints.setBackground(COULEUR_BOUTON);
-        //boutonAjouterPoints.setEnabled(false);
         boutonAjouterPoints.addActionListener(ecouteurBoutons);
 
         //Ajout des elements a panneauEtapes et ajout de ce dernier 
@@ -685,7 +694,7 @@ public class Fenetre extends JFrame {
         boutonChangerCarte.setBounds((int) 4 * panneauLegende.getWidth() / 10, 
                                      (int) panneauLegende.getHeight() / 4, 
                                      (int) panneauLegende.getWidth() / 4, 4 * 
-                                             (int) panneauLegende.getHeight() / 10);
+                                     (int) panneauLegende.getHeight() / 10);
         
         boutonDirGauche.setBounds((int) 69 * panneauLegende.getWidth() / 100, 
                                   7*(int) panneauLegende.getHeight() / 10, 
@@ -772,17 +781,24 @@ public class Fenetre extends JFrame {
                                         / 4, 1 * (int) panneauLivraisons
                                                         .getHeight() / 3);
         
+         boutonArretCalcul.setBounds(73 * ((int) panneauLivraisons.getWidth() 
+                                    / 100), 
+                                    6 * (int) panneauLivraisons.getHeight() / 10, 
+                                    1 * (int) panneauLivraisons.getWidth()/13, 
+                                    1 * (int) panneauLivraisons.getHeight() 
+                                    / 3);
+         
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 
                                1 * (int) panneauLivraisons.getHeight() / 2, 
                                1 * (int) panneauLivraisons.getWidth(), 
-                               1 * (int) panneauLivraisons.getHeight() / 4);
+                               1 * (int) panneauLivraisons.getHeight() / 3);
         
-        boutonUndo.setBounds(80 * ((int) panneauLivraisons.getWidth() / 100),
+        boutonUndo.setBounds(90 * ((int) panneauLivraisons.getWidth() / 100),
                              6 * (int) panneauLivraisons.getHeight() / 10,
                              1 * (int) panneauLivraisons.getWidth() / 15,
                              1 * (int) panneauLivraisons.getHeight() / 3);
         
-        boutonRedo.setBounds(90 * ((int) panneauLivraisons.getWidth() / 100),
+        boutonRedo.setBounds(98 * ((int) panneauLivraisons.getWidth() / 100),
                              6 * (int) panneauLivraisons.getHeight() / 10,
                              1 * (int) panneauLivraisons.getWidth() / 15,
                              1 * (int) panneauLivraisons.getHeight() / 3);
