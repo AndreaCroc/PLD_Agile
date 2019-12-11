@@ -1611,5 +1611,13 @@ public class Fenetre extends JFrame {
     public void setClicAjoutAvantEnlvt(boolean clicAjoutAvantEnlvt) {
         this.clicAjoutAvantEnlvt = clicAjoutAvantEnlvt;
     }
+    
+    /**
+     * Pour rendre les boutons unod / redo non cliquables 
+     */
+    public void griserBoutonsUndoRedo() {
+        this.boutonUndo.setVisible(false);
+        this.boutonRedo.setVisible(false);
+    }
 
 }

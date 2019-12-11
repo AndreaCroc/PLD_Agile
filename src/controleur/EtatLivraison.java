@@ -56,7 +56,7 @@ public class EtatLivraison implements Etat {
      */
     @Override
     public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
-
+        
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
 
@@ -80,6 +80,8 @@ public class EtatLivraison implements Etat {
 
                 fenetre.afficherPanneauPI(true);
                 fenetre.repaint();
+                
+                
             } else {
                 //Sinon, on affiche un message d erreur
                 fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
@@ -102,7 +104,7 @@ public class EtatLivraison implements Etat {
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
         boolean changerCarte = false;
-
+        
         try {
             //Choix du fichier XML
             changerCarte = carte.chargerCarte(true, "");
@@ -125,6 +127,7 @@ public class EtatLivraison implements Etat {
                 fenetre.retireMessageErreur3();
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
+                
 
             } else {
                 //Sinon, on affiche un message d erreur
