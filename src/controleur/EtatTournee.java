@@ -35,7 +35,7 @@ public class EtatTournee implements Etat {
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
 
         boolean changerCarte = false;
-
+        
         try {
             //Choix du fichier XML
             changerCarte = carte.chargerCarte(true, "");
@@ -59,6 +59,7 @@ public class EtatTournee implements Etat {
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
                 controleur.annulerAnciennesCommandes();
+                fenetre.griserBoutonsUndoRedo();
 
             } else {
                 //Sinon, on affiche un message d erreur
@@ -74,6 +75,7 @@ public class EtatTournee implements Etat {
                 fenetre.setPanneauCarte(new JCarte(carte, null, fenetre));
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatDeBase);
+                fenetre.griserBoutonsUndoRedo();
 
             }
 
@@ -96,7 +98,7 @@ public class EtatTournee implements Etat {
 
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
-
+        
         fenetre.afficherMessageErreur3("");
 
         try {
@@ -120,6 +122,8 @@ public class EtatTournee implements Etat {
                 fenetre.repaint();
                 controleur.setEtat(controleur.etatLivraison);
                 controleur.annulerAnciennesCommandes();
+                
+                fenetre.griserBoutonsUndoRedo();
                 
             } else {
                 //Sinon, on affiche un message d erreur

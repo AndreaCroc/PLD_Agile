@@ -521,7 +521,7 @@ public class CarteTest {
                 nouvSuccessionPointsInteret.get(0).getIntersection());
 
         
-        //Cas d'un ajout en milieu de tournée et où il faut agrandir les matrices de coûts
+        //Cas d'un ajout en milieu de tournée 
         Carte carte2 = new Carte();
         carte2.construireCarteAPartirDeDOMXML(racine2);
         carte2.construireLivraisonAPartirDeDOMXML(racine);
@@ -554,7 +554,7 @@ public class CarteTest {
         
         Intersection intersectionEnlvt2 = null;
         Intersection intersectionLivr2 = null;
-        //Recherche des interesections correspondants aux coordonnées 
+        //Recherche des intersections correspondants aux coordonnées 
         for (Intersection i : listeIntersections2) {
             if (i.getLatitude().equals(latitudeEnlvt2) && i.getLongitude().equals(longitudeEnlvt2)) {
                 intersectionEnlvt2 = i;
@@ -587,14 +587,6 @@ public class CarteTest {
         //Ajout des points
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
                 pointAvantEnlevement2, pointAvantLivraison2);
-        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2);
-        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2);
-        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2);
-        carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
-                pointAvantEnlevement2, pointAvantLivraison2);
         nouvTournee2 = carte2.getTournee();
         nouvSuccessionPointsInteret2 = nouvTournee2.getSuccessionPointsInteret();
         nouvListePointsInteret2 = carte.getDemandesLivraisons().getListePointsInteret();
@@ -602,7 +594,7 @@ public class CarteTest {
         
         System.out.println("nouv tournee 2 "+ nouvTournee2);
         //Assertions
-        assertEquals(nouvTaille2, tailleInitiale2+10);
+        assertEquals(nouvTaille2, tailleInitiale2+2);
         
         //Vérifications des chemins
         for (int i=0; i < nouvTaille-1;i++) {

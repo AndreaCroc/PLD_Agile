@@ -410,8 +410,8 @@ public class JCarte extends JPanel {
                 k = numerateur / 0.001;
             }
 
-            int nvX = (this.getProportionalX(tRues.getDestination(), intersections) + this.getProportionalX(tRues.getOrigine(), intersections))/2;
-            int nvY = (this.getProportionalY(tRues.getDestination(), intersections) + this.getProportionalY(tRues.getOrigine(), intersections))/2;
+            int nvX = (3*this.getProportionalX(tRues.getDestination(), intersections) + 2*this.getProportionalX(tRues.getOrigine(), intersections))/5;
+            int nvY = (3*this.getProportionalY(tRues.getDestination(), intersections) + 2*this.getProportionalY(tRues.getOrigine(), intersections))/5;
 
             double radian = Math.atan(k);
             System.out.println(radian);
@@ -508,11 +508,11 @@ public class JCarte extends JPanel {
                                                 intersections) );
 
                         if (t.getLongueur() > 120) {
-                            int x = (int) (Math.abs((this.getProportionalX(
+                            int x = (int) (((this.getProportionalX(
                                     t.getDestination(), intersections)
                                     + this.getProportionalX(t.getOrigine(),
                                             intersections))) / 2);
-                            int y = (int) (Math.abs((this.getProportionalY(
+                            int y = (int) (((this.getProportionalY(
                                     t.getDestination(), intersections)
                                     + this.getProportionalY(t.getOrigine(),
                                             intersections))) / 2);

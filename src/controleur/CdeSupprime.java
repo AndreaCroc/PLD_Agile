@@ -22,13 +22,17 @@ public class CdeSupprime implements CommandeTournee {
     private PointInteret pD;
     private PointInteret pAvantEnlevement;
     private PointInteret pAvantLivraison;
+    private int index;
 
 
-    public CdeSupprime(PointInteret pi, PointInteret pD, PointInteret pAvantEnlevement, PointInteret pAvantLivraison) {
+    public CdeSupprime(PointInteret pi, PointInteret pD, 
+                       PointInteret pAvantEnlevement,
+                       PointInteret pAvantLivraison, int index) {
         this.pi = pi;
         this.pD = pD;
         this.pAvantEnlevement = pAvantEnlevement;
         this.pAvantLivraison = pAvantLivraison;
+        this.index = index;
     }
     
     
@@ -36,8 +40,10 @@ public class CdeSupprime implements CommandeTournee {
     @Override
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
         
+        //recherche du point a supprimer
+        PointInteret ptASupprimer = carte.getListePointsInteretActuelle().get(index);
         //On supprime le point
-        boolean suppOk = carte.supprimerPointInteret(pi);
+        boolean suppOk = carte.supprimerPointInteret(ptASupprimer);
         
         //On met a jour la fenetre
         tournee = carte.getTournee();
@@ -88,12 +94,19 @@ public class CdeSupprime implements CommandeTournee {
             dureeLivraison = pD.getDuree();
             pointEnlevement = new PointInteret(pi.getIntersection(), dureeEnlevement);
             pointLivraison = new PointInteret(pD.getIntersection(), dureeLivraison);
+            
         } else {
             dureeEnlevement = pD.getDuree();
             dureeLivraison = pi.getDuree();
             pointEnlevement = new PointInteret(pD.getIntersection(), dureeEnlevement);
             pointLivraison = new PointInteret(pi.getIntersection(), dureeLivraison);
         }
+        pointEnlevement.setEnlevement(true);
+        pointEnlevement.setEntrepot(false);
+        pointEnlevement.setNumeroDemande(pi.getNumeroDemande());
+        pointLivraison.setEnlevement(false);
+        pointLivraison.setEntrepot(false);
+        pointLivraison.setNumeroDemande(pD.getNumeroDemande());
         
         carte.ajouterLivraison(pointEnlevement, pointLivraison, pAvantEnlevement, pAvantLivraison);
         tournee = carte.getTournee();

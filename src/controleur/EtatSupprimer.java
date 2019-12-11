@@ -36,6 +36,7 @@ public class EtatSupprimer implements Etat {
         //Si ce n est pas l entrepot
         if (index != 0) {
             ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
+
             //Recuperer le point d interet que l utilisateur veut supprimer
             int option = 1; //choix de valider ou non la suppression
             boolean suppOk = false; //si la suppression s'est bien passee
@@ -112,7 +113,7 @@ public class EtatSupprimer implements Etat {
                       
                     }
                     
-                    commande = new CdeSupprime(ptI, ptD, ptAvantEnlevement, ptAvantLivraison);
+                    commande = new CdeSupprime(ptI, ptD, ptAvantEnlevement, ptAvantLivraison,index);
                     listeCommandes.ajouterCommande(commande);
                     //Si on annule la suppression
                 } else {
