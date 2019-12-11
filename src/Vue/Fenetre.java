@@ -261,6 +261,7 @@ public class Fenetre extends JFrame {
         boutonArretCalcul.setFont(new Font("Arial", Font.BOLD, 16));
         boutonArretCalcul.setForeground(Color.red);
         boutonArretCalcul.setBackground(COULEUR_BOUTON);
+        boutonArretCalcul.setEnabled(false);
         boutonArretCalcul.addActionListener(ecouteurBoutons);
 
         livraisons = new JLabel("Livraisons");
@@ -431,6 +432,7 @@ public class Fenetre extends JFrame {
 
         labelRond = new JLabel(rond);
 
+        //Legende du rond
         legendeRond = new JLabel(": Point de livraison");
         legendeRond.setFont(new Font("Arial", Font.BOLD, 14));
         legendeRond.setForeground(COULEUR_ECRITURE);
@@ -443,6 +445,7 @@ public class Fenetre extends JFrame {
 
         labelCarre = new JLabel(carre);
 
+        //Legende du carre
         legendeCarre = new JLabel(": Point d'enlèvement");
         legendeCarre.setFont(new Font("Arial", Font.BOLD, 14));
         legendeCarre.setForeground(COULEUR_ECRITURE);
@@ -453,8 +456,9 @@ public class Fenetre extends JFrame {
         Image newimgT = imgT.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         triangle = new ImageIcon(newimgT);
 
+        
         labelTriangle = new JLabel(triangle);
-
+        //Legende du triangle
         legendeTriangle = new JLabel(": Dépôt des vélos, point de départ de "
                                      + "tous les livreurs");
         legendeTriangle.setFont(new Font("Arial", Font.BOLD, 14));
@@ -865,7 +869,13 @@ public class Fenetre extends JFrame {
      */
     public void afficherBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(true);
-        this.boutonAjouterPoints.setEnabled(true);
+    }
+    
+    /**
+     * Pour afficher le bouton pour arreter le calcul d'une tournee
+     */
+    public void afficherBoutonArretCalcul() {
+        this.boutonArretCalcul.setEnabled(true);
     }
 
     /**
@@ -873,6 +883,14 @@ public class Fenetre extends JFrame {
      */
     public void griserBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(false);
+        this.boutonArretCalcul.setEnabled(false);
+    }
+    
+    /**
+     * Pour rendre non cliquable le bouton pour arreter le calcul d'une tournee
+     */
+    public void griserBoutonArretCalcul() {
+        this.boutonArretCalcul.setEnabled(false);
     }
 
     /**

@@ -36,5 +36,7 @@ public interface Etat {
     public default void surbrillerPI(Fenetre fenetre, PointInteret p) {};
     public default void undo(ListeCdesTournee liste, Fenetre fenetre){};
     public default void redo(ListeCdesTournee liste, Fenetre fenetre){};
+    public default void arreterCalculTournee(Controleur controleur,Fenetre fenetre, Carte carte, Tournee tournee){};
+    public default void attendreCalcul (Fenetre fenetre) {};
     
 }

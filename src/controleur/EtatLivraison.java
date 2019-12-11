@@ -2,22 +2,34 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modele.Carte;
 import modele.PointInteret;
 import modele.Tournee;
 
 /**
- * EtatLivraison qui correspond a laffichage des points d interets
- * dune livraison sur la carte
- * Code inspire de l application PlaCo
+ * EtatLivraison qui correspond a laffichage des points d interets dune
+ * livraison sur la carte Code inspire de l application PlaCo
  *
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne MAGNIEN,
- * Grazia RIBBENI, Fatoumata WADE
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 public class EtatLivraison implements Etat {
+
+    /**
+     * Afficher le bouton arreter la tournee avant de faire le calcul
+     *
+     * @param fenetre fenetre
+     */
+    @Override
+    public void attendreCalcul(Fenetre fenetre) {
+        fenetre.afficherBoutonArretCalcul();
+    }
 
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
@@ -42,8 +54,22 @@ public class EtatLivraison implements Etat {
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
         //fenetre.griserBoutonCalcul();
+        //fenetre.griserBoutonArretCalcul();
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
+    }
+
+    /**
+     * Arreter le calcul de la tournee en cours
+     *
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param tournee tournee
+     */
+    @Override
+    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+        System.out.println("arreter calcul tournee etat livraison");
     }
 
     /**
@@ -151,9 +177,9 @@ public class EtatLivraison implements Etat {
     }
 
     /**
-     * Mettre en surbrillance une ligne du tableau d etapes de la tournee
-     * et du tableau d informations generales sur un point d interet
-     * 
+     * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
+     * tableau d informations generales sur un point d interet
+     *
      * @param fenetre
      * @param ptI point d interet selectionne
      */
@@ -162,15 +188,15 @@ public class EtatLivraison implements Etat {
         fenetre.surbrillerLigneTabPI(ptI);
         fenetre.repaint();
     }
-    
+
     /**
      * Encadrer un point d interet present sur la carte
-     * 
+     *
      * @param fenetre
      * @param p point d interet selectionne
      */
     @Override
-        public void surbrillerPI(Fenetre fenetre, PointInteret p) {
+    public void surbrillerPI(Fenetre fenetre, PointInteret p) {
         fenetre.surbrillerPI(p);
         fenetre.repaint();
     }

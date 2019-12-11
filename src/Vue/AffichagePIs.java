@@ -239,7 +239,7 @@ public class AffichagePIs extends AbstractTableModel {
             ArrayList<Troncon> listeT; //Liste des troncons de l intersection
 
             //Si la carte possede au moins deux points
-            if (listePIs.size() > 1) {
+            if (listePIs.size() >= 1) {
                 for (PointInteret pt : listePIs) {
                     nomRue = "";
 

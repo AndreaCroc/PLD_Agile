@@ -95,6 +95,8 @@ public class EtatSupprimer implements Etat {
                     if (listePIs.size() == 1 && suppOk) {
                         fenetre.cacherPanneauEtapesEtTour();
                         fenetre.cacherPanneauPI();
+                        fenetre.griserBoutonArretCalcul();
+                        fenetre.griserBoutonCalcul();
                         //Afficher popup plus d elements liste
                         fenetre.afficherPopSuppressionVide();
                         controleur.setEtat(controleur.etatDeBase);

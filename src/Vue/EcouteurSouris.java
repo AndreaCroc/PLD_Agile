@@ -90,6 +90,7 @@ public class EcouteurSouris extends MouseAdapter {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() && index != -1) {
+                                        System.out.println("if point interet clique");
                                         //Mettre en surbrillance la ligne du 
                                         //tableau correspondante
                                         this.controleur.surbrillerTables(pi);
@@ -127,15 +128,11 @@ public class EcouteurSouris extends MouseAdapter {
 
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
-                        System.out.println("if rue 1");
                         //test x y sont sur pt intersect coord 
                         for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
-                            System.out.println("for rue ");
                             //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
-                            System.out.println("x :" + x);
-                            System.out.println("y :" + y);
                             //coordonnées adaptees des points d'intersections
 
                             int nvXpt2 = value.getX() + xPanneauGauche;

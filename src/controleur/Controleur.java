@@ -1,6 +1,9 @@
 package controleur;
 
 import Vue.Fenetre;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
@@ -22,7 +25,7 @@ public class Controleur {
     private Tournee tournee; //Tournee realisee
     private Etat etatCourant = new EtatInit(); //Etat du controleur
     private ListeCdesTournee listeCommandes;
-    
+
     // Instances associees a chaque etat possible du controleur
     protected final EtatInit etatInit = new EtatInit();
     protected final EtatDeBase etatDeBase = new EtatDeBase();
@@ -31,14 +34,11 @@ public class Controleur {
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
     protected final EtatAjouter etatAjouter = new EtatAjouter();
     protected final EtatModifier etatModifier = new EtatModifier();
-    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement = new 
-                                                     EtatAjouterPtEnlevement();
-    protected final EtatAjouterPtLivraison etatAjouterPtLivraison = new 
-                                                     EtatAjouterPtLivraison();
-    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt = new 
-                                                   EtatAjouterPointAvantEnlvt();
-    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr = new 
-                                                   EtatAjouterPointAvantLivr();
+    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement = new EtatAjouterPtEnlevement();
+    protected final EtatAjouterPtLivraison etatAjouterPtLivraison = new EtatAjouterPtLivraison();
+    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt = new EtatAjouterPointAvantEnlvt();
+    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr = new EtatAjouterPointAvantLivr();
+
     /**
      * Constructeur de la classe du Controleur
      */
@@ -75,10 +75,17 @@ public class Controleur {
      * Calculer une tournee
      */
     public void calculerTournee() {
+        etatCourant.attendreCalcul(fenetre);
+        try {
+            sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
+        }
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
 
     public void modifier(int index) {
+        System.out.println("controleur modifier");
         etatCourant.modifier(this, fenetre, tournee, carte, index, listeCommandes);
     }
 
@@ -217,10 +224,11 @@ public class Controleur {
         }
     }
 
-    public void arreterCalculTournee(){
+    public void arreterCalculTournee() {
         System.out.println("Arret Calcul tournee");
+        etatCourant.arreterCalculTournee(this, fenetre, carte, tournee);
     }
-    
+
     public void ajouterPointEnlevement(Intersection interE) {
         etatCourant.ajouterPointEnlevement(this, fenetre, carte, interE);
     }

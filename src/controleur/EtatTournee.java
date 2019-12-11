@@ -2,6 +2,9 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;
@@ -155,6 +158,7 @@ public class EtatTournee implements Etat {
      * @param fenetre
      * @param carte
      * @param tournee
+     * @param listeCommandes
      */
     @Override
     public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
@@ -211,6 +215,7 @@ public class EtatTournee implements Etat {
     /**
      * Retourner a l action precedente
      * @param liste 
+     * @param fenetre 
      */
     @Override
     public void undo(ListeCdesTournee liste, Fenetre fenetre){
@@ -221,6 +226,7 @@ public class EtatTournee implements Etat {
     /**
      * Refaire l action
      * @param liste 
+     * @param fenetre 
      */
     @Override
     public void redo(ListeCdesTournee liste, Fenetre fenetre){
@@ -239,6 +245,12 @@ public class EtatTournee implements Etat {
     @Override
     public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
 
+        fenetre.afficherBoutonArretCalcul();
+        try {
+            sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EtatTournee.class.getName()).log(Level.SEVERE, null, ex);
+        }
         fenetre.viderPanneauEtapes();
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
@@ -250,9 +262,24 @@ public class EtatTournee implements Etat {
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
+        //fenetre.griserBoutonArretCalcul();
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
         controleur.annulerAnciennesCommandes();
     }
+    
+    /**
+     * Arreter le calcul de la tournee en cours
+     *
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param tournee tournee
+     */
+    @Override
+    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+        System.out.println("arreter calcul tournee etat livraison");
+    }
+
 
 }
