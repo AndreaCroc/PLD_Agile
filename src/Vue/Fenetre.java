@@ -1551,8 +1551,7 @@ public class Fenetre extends JFrame {
     }
     
     public void setAvantPEParIndex(int index){
-        this.avantPE = carte.getDemandesLivraisons().getListePointsInteret()
-                                                    .get(index);
+        this.avantPE = carte.getListePointsInteretActuelle().get(index);
         System.out.println("pAE dans setter:"+avantPE.getIntersection()
                                                      .getId());
     }    
@@ -1562,7 +1561,7 @@ public class Fenetre extends JFrame {
     }
     
     public void setAvantPLParIndex(int index){
-        this.avantPL = carte.getDemandesLivraisons().getListePointsInteret().get(index);
+        this.avantPL = carte.getListePointsInteretActuelle().get(index);
         System.out.println("pAL dans setter:"+avantPL.getIntersection().getId());
     }
     

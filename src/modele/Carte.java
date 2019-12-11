@@ -478,7 +478,7 @@ public class Carte {
         if (decalage == 0) {
             return true;
         }
-        
+        System.out.println("tournee avant modif : "+uneTournee);
         //Vérification de la contrainte de dépendance
         if (pointADeplacer.isEnlevement()) {
             if (positionPointDep <= nouvPosition) {
@@ -504,15 +504,26 @@ public class Carte {
             ancienPointSuivant = successionPointsInteret.get(positionInitiale+1);
         }
         indAncienPointSuiv = listePointsInteret.indexOf(ancienPointSuivant);
+        System.out.println("position initiale "+positionInitiale);
+        System.out.println("decalage "+decalage);
+        System.out.println("nouvelle position "+nouvPosition);
         
-
         if (nouvPosition == successionPointsInteret.size()-1) {
+            System.out.println("cas fin tournee");
             nouvPointPrecedent = successionPointsInteret.get(nouvPosition);
             //Le point suivant est l'entrepôt
             nouvPointSuivant = successionPointsInteret.get(0);
         } else {
-            nouvPointPrecedent = successionPointsInteret.get(nouvPosition-1);
-            nouvPointSuivant = successionPointsInteret.get(nouvPosition);
+            //Si on avance dans la tournee
+            if (decalage>0) {
+                System.out.println("cas pas fin tournee");
+                nouvPointPrecedent = successionPointsInteret.get(nouvPosition);
+                nouvPointSuivant = successionPointsInteret.get(nouvPosition+1);  
+            } else {
+                nouvPointPrecedent = successionPointsInteret.get(nouvPosition-1);
+                nouvPointSuivant = successionPointsInteret.get(nouvPosition);  
+            }
+            
             
         }
         indNouvPointPrec = listePointsInteret.indexOf(nouvPointPrecedent);
@@ -523,6 +534,12 @@ public class Carte {
         successionPointsInteret.add(nouvPosition, pointADeplacer);
         
         //Mise à jour des chemins
+        System.out.println("nouv point prec : "+nouvPointPrecedent.getIntersection().getId());
+        System.out.println("nouv point suivant :"+nouvPointSuivant.getIntersection().getId());
+        System.out.println("point a deplacer : "+pointADeplacer.getIntersection().getId());
+        System.out.println("ancien point prec : "+ancienPointPrecedent.getIntersection().getId());
+        System.out.println("ancien point suivant :"+ancienPointSuivant.getIntersection().getId());
+
         nouvPointPrecedent.setCheminDepart(chemins[indNouvPointPrec][indPointADeplacer]);
         pointADeplacer.setCheminDepart(chemins[indPointADeplacer][indNouvPointSuiv]);
         ancienPointPrecedent.setCheminDepart(chemins[indAncienPointPrec][indAncienPointSuiv]);
@@ -530,7 +547,7 @@ public class Carte {
         //Mise à jour des heures
         calculerHeuresTournee();
 
-        
+        System.out.println("tournee apres modif : "+uneTournee);
         return contraintePrec;
         
     }
@@ -557,11 +574,18 @@ public class Carte {
         //Indice du point précédant la livraison dans la tournee
         int indPointAvantLivr = successionPointsInteret.indexOf(pointAvantLivraison);
         //Numéro de la demande de livraison
-        int numeroDemande = (listePointsInteret.size() - 1) / 2 + 1;
+        int numeroDemande;
+        //S'il ne reste que l'entrepot :
+        if (listePointsInteret.size()==1) {
+            numeroDemande = 1;
+        } else {
+            numeroDemande = (listePointsInteret.size() - 1) / 2 +1;
+        }
+        
         pointEnlevement.setNumeroDemande(numeroDemande);
         pointLivraison.setNumeroDemande(numeroDemande);
 
-        //
+        
         pointEnlevement.setEnlevement(true);
         pointLivraison.setEnlevement(false);
         pointEnlevement.setPointDependance(pointLivraison);
@@ -687,13 +711,23 @@ public class Carte {
         Chemin[][] nouvChemins;
         Double[][] nouvCouts;
         int nbSommets = demandesLivraisons.getListePointsInteret().size();
+        ArrayList<Troncon> successionTroncons = new ArrayList<Troncon>();
+        Chemin cheminInverse; //chemin allant de la destination a l origine
+        
+        //Inversion du chemin inverse pour avoir le chemin inverse
+        for (int i = chemin.getSuccessionTroncons().size() - 1; i > -1; i--) {
+            successionTroncons.add(chemin.getSuccessionTroncons().get(i));
+        }
+        //Creation du chemin correspondant
+        cheminInverse = new Chemin(chemin.getArrivee(), chemin.getDepart(), successionTroncons);
+
         //Si la matrice des chemins n'est pas encore pleine
         System.out.println("length chemins : "+chemins[0].length);
         if (chemins[0].length >= nbSommets) {
             System.out.println("indOrigine : "+ indOrigine);
             System.out.println("indDestination : "+ indDestination);
             chemins[indOrigine][indDestination] = chemin;
-            chemins[indDestination][indOrigine] = chemin;
+            chemins[indDestination][indOrigine] = cheminInverse;
         } else {
             //On crée une nouvelle matrice
             //Initialisation de la matrice des plus courts chemins (avec des colonnes
@@ -709,8 +743,9 @@ public class Carte {
                     nouvChemins[i][j] = chemins[i][j];
                 }
             }
+            
             nouvChemins[indOrigine][indDestination] = chemin;
-            nouvChemins[indDestination][indOrigine] = chemin;
+            nouvChemins[indDestination][indOrigine] = cheminInverse;
             this.setChemins(nouvChemins);
         }
         //Même chose pour la matrice des couts
@@ -719,7 +754,7 @@ public class Carte {
             System.out.println("indOrigine : "+ indOrigine);
             System.out.println("indDestination : "+ indDestination);
             cout[indOrigine][indDestination] = chemin.getLongueur();
-            cout[indDestination][indOrigine] = chemin.getLongueur();
+            cout[indDestination][indOrigine] = cheminInverse.getLongueur();
         } else {
             //On crée une nouvelle matrice
             //Initialisation de la matrice des plus courts chemins (avec des colonnes
@@ -736,7 +771,7 @@ public class Carte {
                 }
             }
             nouvCouts[indOrigine][indDestination] = chemin.getLongueur();
-            nouvCouts[indDestination][indOrigine] = chemin.getLongueur();
+            nouvCouts[indDestination][indOrigine] = cheminInverse.getLongueur();
             this.setCout(nouvCouts);
         }
         return true;
@@ -803,7 +838,6 @@ public class Carte {
         Integer dureeTournee = heureArr - heureDep;
 
         uneTournee.setDuree(intToHeure(dureeTournee));
-        System.out.println("tournee "+uneTournee);
         return true;
 
     }
