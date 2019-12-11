@@ -70,6 +70,7 @@ public class EtatLivraison implements Etat {
     @Override
     public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         System.out.println("arreter calcul tournee etat livraison");
+        controleur.setEtat(controleur.etatTournee);
     }
 
     /**

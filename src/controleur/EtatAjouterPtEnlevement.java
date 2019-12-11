@@ -1,13 +1,11 @@
 package controleur;
 
 import Vue.Fenetre;
-import Vue.JCarte;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
-import modele.Tournee;
 import modele.Troncon;
 
 /**
@@ -23,6 +21,13 @@ import modele.Troncon;
  */
 public class EtatAjouterPtEnlevement implements Etat {
 
+    /**
+     * Ajouter un point d'enlevement a la tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param interE intersection sur laquelle ajouter le point d'enlevement
+     */
     @Override
     public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, Intersection interE) {
         System.out.println("Etat Ajouter Pt Enlevement");
@@ -88,6 +93,11 @@ public class EtatAjouterPtEnlevement implements Etat {
         JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent l'enlèvement dans la tournée");
     }
 
+    /**
+     * Annuler tous les ajouts deja effectues et retourenr a l'etat tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();

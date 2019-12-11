@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controleur;
 
 import Vue.Fenetre;
@@ -11,11 +7,26 @@ import modele.Carte;
 import modele.PointInteret;
 
 /**
+ * EtatAjouterPointAvantEnlvt permettant d ajouter un point de la tournee avant
+ * le nouveau point d'enlevement
+ * Code inspire de l application PlaCo
  *
- * @author DELL
+ * @version Version 1
+ *
+ *
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, Alexanne
+ * MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
  */
 public class EtatAjouterPointAvantEnlvt implements Etat {
 
+    /**
+     * Ajouter un point d'enlevement a la tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param index  indice du point precedent le nouveau point d'enlevement
+     */
     @Override
     public void ajouterPointAvantEnlevement(Controleur controleur, Fenetre fenetre, Carte carte, int index) {
         System.out.println("Etat Ajout point avant enlevement");
@@ -29,7 +40,11 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
 
     }
 
-    
+    /**
+     * Annuler l'ajout du point d'enlevement et revenir a l'etatTournee
+     * @param controleur
+     * @param fenetre 
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();

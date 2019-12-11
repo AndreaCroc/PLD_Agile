@@ -1,17 +1,15 @@
 package controleur;
 
 import Vue.Fenetre;
-import Vue.JCarte;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
-import modele.Tournee;
 import modele.Troncon;
 
 /**
- * EtatAjouterPtLivraison permettant d ajouter un point d enlevement a la 
+ * EtatAjouterPtLivraison permettant d ajouter un point de livraison a la 
  * tournee
  * Code inspire de l application PlaCo
  *
@@ -24,6 +22,13 @@ import modele.Troncon;
  */
 public class EtatAjouterPtLivraison implements Etat {
 
+    /**
+     * Ajouter un point de livraison a la tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     * @param carte carte
+     * @param interL intersection sur laquelle ajouter le point de livraison
+     */
     @Override
     public void ajouterPointLivraison(Controleur controleur, Fenetre fenetre, Carte carte,Intersection interL){
         System.out.println("etat ajouter pt livraison");
@@ -89,6 +94,11 @@ public class EtatAjouterPtLivraison implements Etat {
         JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent la livraison dans la tournee");
     }
     
+    /**
+     * Annuler tous les ajouts deja effectues et retourner a l'etat tournee
+     * @param controleur controleur
+     * @param fenetre fenetre
+     */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
         fenetre.afficherBoutonSupprimer();
