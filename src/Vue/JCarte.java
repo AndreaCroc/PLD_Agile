@@ -508,11 +508,11 @@ public class JCarte extends JPanel {
                                                 intersections) );
 
                         if (t.getLongueur() > 120) {
-                            int x = (int) (Math.abs((this.getProportionalX(
+                            int x = (int) (((this.getProportionalX(
                                     t.getDestination(), intersections)
                                     + this.getProportionalX(t.getOrigine(),
                                             intersections))) / 2);
-                            int y = (int) (Math.abs((this.getProportionalY(
+                            int y = (int) (((this.getProportionalY(
                                     t.getDestination(), intersections)
                                     + this.getProportionalY(t.getOrigine(),
                                             intersections))) / 2);

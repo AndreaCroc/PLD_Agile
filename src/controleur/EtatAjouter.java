@@ -46,7 +46,6 @@ public class EtatAjouter implements Etat {
         
         fenetre.repaint();
         fenetre.afficherBoutonSupprimer();
-        fenetre.griserBoutonCalcul();
         controleur.setEtat(controleur.etatTournee);
     }
 

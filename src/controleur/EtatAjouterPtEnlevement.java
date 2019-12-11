@@ -29,6 +29,9 @@ public class EtatAjouterPtEnlevement implements Etat {
         int duree = 0;
         ArrayList<Troncon> listeT = interE.getTronconsDepart();
         String nomRue = "";
+         //Numéro de la demande de livraison
+        int numeroDemande;
+        int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret().size();
         // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
@@ -73,6 +76,14 @@ public class EtatAjouterPtEnlevement implements Etat {
         // Enregistrer le point d'enlevement dans le Fenetre
         duree=duree*60;
         fenetre.setPE(new PointInteret(interE, duree));
+        
+        //S'il ne reste que l'entrepot :
+        if (carte.getDemandesLivraisons().getListePointsInteret().size() == 1) {
+            numeroDemande = 1;
+        } else {
+            numeroDemande = (nbDemandes - 1) / 2 + 1;
+        }
+        fenetre.getPE().setNumeroDemande(numeroDemande);
         controleur.setEtat(controleur.etatAjouterPointAvantEnlvt);
         JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent l'enlèvement dans la tournée");
     }
