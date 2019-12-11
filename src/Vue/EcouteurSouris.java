@@ -8,8 +8,6 @@ import java.util.Map;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
-import javax.swing.JOptionPane;
-import controleur.EtatAjouter;
 import controleur.EtatAjouterPointAvantEnlvt;
 import controleur.EtatAjouterPointAvantLivr;
 import controleur.EtatAjouterPtEnlevement;
@@ -130,18 +128,23 @@ public class EcouteurSouris extends MouseAdapter {
 
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
+                        System.out.println("if rue 1");
                         //test x y sont sur pt intersect coord 
                         for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
+                            System.out.println("for rue ");
                             //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
-
+                            System.out.println("x :" + x);
+                            System.out.println("y :" + y);
                             //coordonnées adaptees des points d'intersections
                             int nvXpt2 = value.getX() + xPanneauGauche + 5;
                             int nvYpt2 = value.getY() + yPanneauLegende + 45;
-                            if (x >= nvXpt2 && x <= nvXpt2 + 5 && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
+                            System.out.println("nx :" + nvXpt2);
+                            System.out.println("ny :" + nvYpt2);
+                            if (x >= nvXpt2 - 5 && x <= nvXpt2 + 5 && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
                                 //les coordonnées correspondent
-
+                                System.out.println("if clique rue");
                                 //On recupere la liste des troncons dans le but d'afficher leur noms
                                 ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
                                 //System.out.println(key.getTronconsDepart().size());

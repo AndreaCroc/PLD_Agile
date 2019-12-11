@@ -335,7 +335,7 @@ public class PointInteretTest {
         PointInteret result = pointInteret.getPointDependance();
         assertEquals("Le point de dependance est incorrect",expResult, result);
         
-        //Test 2 : le point de dependance est nonnull
+        //Test 2 : le point de dependance est non null
         expResult = new PointInteret();
         pointInteret.setPointDependance(expResult);
         result = pointInteret.getPointDependance();
