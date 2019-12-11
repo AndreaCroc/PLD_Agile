@@ -1,4 +1,3 @@
-
 package controleur;
 
 import Vue.Fenetre;
@@ -44,7 +43,7 @@ public class EtatAjouterPtLivraison implements Etat {
         }
         // Si c'est le meme point que le point d'enlevement
         if(interL == fenetre.getPE().getIntersection()){
-            JOptionPane.showMessageDialog(fenetre, "Le point de livraison ne peut pas être le même que celui d'enlèvement.\nMerci de choisir un autre point");
+            JOptionPane.showMessageDialog(fenetre, "Le point de livraison ne peut pas etre le même que celui d'enlèvement.\nMerci de choisir un autre point");
             return;
         }
         
@@ -53,9 +52,9 @@ public class EtatAjouterPtLivraison implements Etat {
         // Saisir la duree
         while(duree <= 0){
             try{
-                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la durée en minute du point de livraison"));
+                duree = Integer.parseInt(JOptionPane.showInputDialog("Merci de saisir la duree en minute du point de livraison"));
             }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(fenetre, "le format de la durée n'est pas correct.\n Merci de saisir une durée valide");
+                JOptionPane.showMessageDialog(fenetre, "le format du chiffre n'est pas bon, merci de resaisir une duree valide");
                 duree = 0;
             }
         }
@@ -69,7 +68,7 @@ public class EtatAjouterPtLivraison implements Etat {
         nomRue = nomRue.substring(0, nomRue.lastIndexOf(", "));
         int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer les informations du point de livraison :"
                 + "\nRue(s): " + nomRue
-                + "\nDurée: " + duree + " min");
+                + "\nduree: " + duree);
 
         if (value == JOptionPane.NO_OPTION || value == JOptionPane.CANCEL_OPTION) {
             return;
@@ -78,7 +77,7 @@ public class EtatAjouterPtLivraison implements Etat {
         duree*=60; 
         fenetre.setPL(new PointInteret(interL,duree));
         controleur.setEtat(controleur.etatAjouterPointAvantLivr);
-        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent la livraison dans la tournée");
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un point précédent la livraison dans la tournee");
     }
     
     @Override
