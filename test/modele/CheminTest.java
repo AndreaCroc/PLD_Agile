@@ -53,6 +53,15 @@ public class CheminTest {
     @After
     public void tearDown() {
     }
+    
+    /**
+     * Test of constructor
+     */
+    @Test
+    public void testConstructeur() {
+        System.out.println("Constructeur Chemin");
+        assertNotNull("Constructeur", c);
+    }
 
     /**
      * Test of getDepart method, of class Chemin.

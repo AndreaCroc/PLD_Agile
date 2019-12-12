@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class TronconTest {
     
     Troncon t, t2;
-    Intersection i, i2, i3;
+    Intersection i, i2;
     
     public TronconTest() {
         i = new Intersection("123", 12.3, 13.4);
@@ -43,6 +43,15 @@ public class TronconTest {
     
     @After
     public void tearDown() {
+    }
+    
+    /**
+     * Test of constructor
+     */
+    @Test
+    public void testConstructeur() {
+        System.out.println("Constructeur Troncon");
+        assertNotNull("Constructeur", t);
     }
 
     /**

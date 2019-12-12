@@ -984,10 +984,20 @@ public class Carte {
         return ok;
     }
 
-    // lancer l ouvreur de fichier et choisir la bonne methode pour charger les donnees
+    /**
+     * Lance l'ouvreur de fichier et choisit la bonne methode pour 
+     * charger les données
+     * @param estUnChangement Vrai si une carte a déjà été chargée auparavant
+     * Faux sinon
+     * @param fichier Chemin d'accès au fichier à ouvrir
+     * @return 
+     * @throws Exception Peut etre n'importe quel type d'exception
+     * @throws ParserConfigurationException Indique une erreur de configuration
+     * @throws SAXException Simple API for XML Exception
+     * @throws IOException Exception d'entrée ou sortie
+     */
     public boolean chargerCarte(boolean estUnChangement, String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        //File xml = choisirFichierXML(true);;
         File xml = null;
         if ("".equals(fichier)) {
             xml = choisirFichierXML(true);
@@ -1019,9 +1029,18 @@ public class Carte {
         return result;
     }
 
+    /**
+     * 
+     * @param fichier Chemin d'accès au fichier à ouvrir
+     * @return Booléen de resultat du chargement : true si le fchier
+     * a bien pu être chargé, false sinon.
+     * @throws Exception Peut etre n'importe quel type d'exception
+     * @throws ParserConfigurationException Indique une erreur de configuration
+     * @throws SAXException Simple API for XML Exception
+     * @throws IOException Exception d'entrée ou sortie
+     */
     public boolean chargerLivraison(String fichier) throws Exception, ParserConfigurationException, SAXException, IOException {
         boolean result = false;
-        //File xml = choisirFichierXML(true);
         File xml = null;
         if ("".equals(fichier)) {
             xml = choisirFichierXML(true);
