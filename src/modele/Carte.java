@@ -318,6 +318,7 @@ public class Carte {
      */
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        //ArrayList<PointInteret> listePointsInteret = this.listePointsInteretActuelle;
         int nbSommets = listePointsInteret.size();
         double nbPheromone = 15;
 
