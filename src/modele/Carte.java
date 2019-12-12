@@ -14,7 +14,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.swing.JOptionPane;
 
 /*
  * Carte
@@ -32,17 +31,19 @@ public class Carte {
     private DemandesLivraisons demandesLivraisons;
     private TSP3 unTSP;
     private Tournee uneTournee;
-    public static final Double INFINI = 1000000.0; //Valeur max 
-    public static final Double NON_DEFINI = -1000.0;
-
-    //Pour le graphe de plus courts chemins
+    
+    //Pour les calculs et le graphe de plus courts chemins 
     Double[][] cout;
     Chemin[][] chemins;
     TreeMap<Integer, Integer> mapPredecesseur;
+    public static final Double INFINI = 1000000.0; //Valeur max d un double
 
     //Pour l affichage des points d interet a tout moment sur la carte
     ArrayList<PointInteret> listePointsInteretActuelle;
 
+    /**
+     * Constructeur par defaut d une carte
+     */
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.listePointsInteretActuelle = new ArrayList<PointInteret>();
