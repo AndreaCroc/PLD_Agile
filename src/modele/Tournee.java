@@ -63,7 +63,8 @@ public class Tournee {
     }
 
     /**
-     * Afficher les attributs d une tournee
+     * Permet de retourner les attributs d une tournee en chaine de caracteres
+     * (utilisee pour les tests)
      * @return la chaine de caracteres a afficher
      */
     @Override

@@ -19,8 +19,8 @@ public class DemandesLivraisons {
     private ArrayList<PointInteret> listePointsInteret;
 
     /**
-     * Constructeur d une demande de livraison a partir d un point d interet
-     * @param aD le point d interet
+     * Constructeur d une demande de livraison a partir d une adresse de depart
+     * @param pI l adresse de depart (un point d interet)
      */
     public DemandesLivraisons(PointInteret aD) {
         this.adresseDepart = aD;

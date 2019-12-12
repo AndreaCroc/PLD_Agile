@@ -23,10 +23,20 @@ public class Intersection {
     private Intersection predecesseur;
     private Double distance;
 
+    /**
+     * Constructeur par defaut d une intersection
+     */
     public Intersection() {
         tronconsDepart = new ArrayList<Troncon>();
     }
 
+    /**
+     * Constructeur d une intersection a partir d un identifiant, et de 
+     * sa position
+     * @param id l identifiant de l intersection
+     * @param latitude la latitude de l intersection
+     * @param longitude la longitude de l intersection
+     */
     public Intersection(String id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
