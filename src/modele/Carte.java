@@ -317,7 +317,13 @@ public class Carte {
      * @return la tournee creee
      */
     public Tournee calculerTournee() {
-        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
+        ArrayList<PointInteret> listePointsInteret;
+        //Recuperation des demandes actuelles
+        demandesLivraisons.getListePointsInteret().clear();
+        for (PointInteret pI : listePointsInteretActuelle) {
+            demandesLivraisons.ajouterPointInteret(pI);
+        }
+        listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
         double nbPheromone = 15;
 
