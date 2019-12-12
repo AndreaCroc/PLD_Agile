@@ -472,39 +472,70 @@ public class JCarte extends JPanel {
         }
 
         for (Troncon tRues : tronconsNomsRues) {
+            
+            double xOrig, yOrig;        //coordonnees depart du troncon
+            double xDest, yDest;        //coordonnees arrivees du troncon
+            double k;                   //pente du vecteur troncon
+            double numerateur, denom;   //calcul de k
+            double nvX, nvY;            //coordonnees du nom de rue
+            double longueurString;      //longueur de la rue affichee
+            double longueurTroncon;     //longueur du troncon
+            double xVect, yVect;        //coordonnees du vecteur troncon
+            double facteur;             //facteur de multiplication servant a 
+                                        //connaitre le nombre de fois par 
+                                        //lequel on multiplie le vecteur pour
+                                        //avoir la longueur du nom de rue 
+                                        //(cas ou le nom de rue est plus long 
+                                        //que le vecteur troncon
+            double radian;              //angle d inclinaison du nom de rue
+            
+            
             Graphics2D g2 = (Graphics2D)g.create();
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+            g2.setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
             g2.setColor(new Color(0,0,0));
 
-            //rotation du texte selon l'angle de la rue affichée
-            //k est la pente
-            double xDest = this.getProportionalX(tRues.getDestination(), intersections);
-            double yDest = this.getProportionalY(tRues.getDestination(), intersections);
-            double xOrig = this.getProportionalX(tRues.getOrigine(), intersections);
-            double yOrig = this.getProportionalY(tRues.getOrigine(), intersections);
+            //traitement pour les coordonnes d affichage
+            xDest = this.getProportionalX(tRues.getDestination(), intersections);
+            yDest = this.getProportionalY(tRues.getDestination(), intersections);
+            xOrig = this.getProportionalX(tRues.getOrigine(), intersections);
+            yOrig = this.getProportionalY(tRues.getOrigine(), intersections);
 
-            double numerateur = (yDest - yOrig);
-            double denom = (xDest - xOrig);
-            double k;
+            //calcul de la pente k du vecteur
+            numerateur = (yDest - yOrig);
+            denom = (xDest - xOrig);
             if(denom != 0) {
                 k = numerateur / denom;
             } else {
                 k = numerateur / 0.001;
             }
-
-            int nvX = (3*this.getProportionalX(tRues.getDestination(), 
-                    intersections) + 2*this.getProportionalX(tRues.getOrigine(),
-                            intersections))/5;
-            int nvY = (3*this.getProportionalY(tRues.getDestination(), 
-                    intersections) + 2*this.getProportionalY(tRues.getOrigine(), 
-                            intersections))/5;
-
-            double radian = Math.atan(k);
-            System.out.println(radian);
-
+            
+            //calcul des longueurs du troncon et du label de la rue
+            longueurString = g2.getFontMetrics().stringWidth(tRues.getNomRue());
+            longueurTroncon = Math.sqrt(Math.pow((xDest-xOrig), 2) 
+                              + Math.pow((yDest-yOrig), 2));
+            
+            //calcul des coordonnees du vecteur troncon
+            xVect = xDest - xOrig;
+            yVect = yDest - yOrig;
+            
+            //traitement affichage des noms de rues a gauche par rapport
+            //a l intersection cliquee 
+            if((xVect < 0) && (longueurString >= 3/5 * longueurTroncon)) {
+                facteur = longueurString / longueurTroncon;
+                nvX = xOrig + (facteur + 0.2) * xVect;
+                nvY = yOrig + (facteur + 0.2) * yVect;
+            } else {
+                nvX = (3 * this.getProportionalX(tRues.getDestination(), intersections) 
+                       + 2 * this.getProportionalX(tRues.getOrigine(), intersections)) / 5;
+                nvY = (3 * this.getProportionalY(tRues.getDestination(), intersections) 
+                       + 2 * this.getProportionalY(tRues.getOrigine(), intersections)) / 5;
+            }
+            
+            radian = Math.atan(k);
             g2.rotate(radian,nvX, nvY); //mieux avec x et y précisees
-            g2.drawString(tRues.getNomRue(), nvX,nvY);// S, left, BOTTOM
+            g2.drawString(tRues.getNomRue(), (int) nvX,(int) nvY);
             g2.dispose();
         }
         
