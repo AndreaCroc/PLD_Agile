@@ -606,7 +606,7 @@ public class CarteTest {
     public void testDeplacerPointInteret() throws ParserConfigurationException, SAXException, IOException, Exception {
         System.out.println("deplacerPointInteret");
         
-        //Cas d'une suppression en milieu de tournée
+        //Cas d'un déplacement en milieu de tournée
         File xml = new File(cheminAcces+"demandeMoyen3.xml");
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);
