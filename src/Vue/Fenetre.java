@@ -478,8 +478,8 @@ public class Fenetre extends JFrame {
         boutonDezoomer.setForeground(COULEUR_ECRITURE);
         boutonDezoomer.setBackground(COULEUR_BOUTON);
         boutonDezoomer.addActionListener(ecouteurBoutons);
-        
-                 //Bouton pour decaler la carte vers la droite
+
+        //Bouton pour decaler la carte vers la droite
         boutonDirDroite = new JButton(DROITE);
         boutonDirDroite.setFont(new Font("Arial", Font.BOLD, 14));
         boutonDirDroite.setForeground(COULEUR_ECRITURE);
@@ -1666,7 +1666,7 @@ public class Fenetre extends JFrame {
     }
     
     /**
-     * Pour rendre les boutons unod / redo non cliquables 
+     * Pour rendre les boutons undo / redo non cliquables 
      */
     public void griserBoutonsUndoRedo() {
         this.boutonUndo.setVisible(false);

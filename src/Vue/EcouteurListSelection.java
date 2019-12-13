@@ -48,15 +48,19 @@ public class EcouteurListSelection implements ListSelectionListener {
         if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
             //Trouver le premier index selectionne
             int minIndex = lsm.getMinSelectionIndex();
+            
             //Trouver le dernier index selectionne
             int maxIndex = lsm.getMaxSelectionIndex();
             for (int i = minIndex; i <= maxIndex; i++) {
+                
                 //Trouver l unique ligne qui a ete selectionnee
                 if (lsm.isSelectedIndex(i)) {
+                    
                     //Si on a clique sur tableauPI
                     if (lsm == fenetre.getListSelectModelPI()) {
                         Carte carte = fenetre.getCarte();
                         if (carte != null) {
+                            
                             //Recuperer la liste des points dinteret actuelle
                             ArrayList<PointInteret> listePiCarte
                                     = carte.getListePointsInteretActuelle();
@@ -64,6 +68,7 @@ public class EcouteurListSelection implements ListSelectionListener {
                                     && (!listePiCarte.isEmpty())) {
                                 if (i < listePiCarte.size()) {
                                     PointInteret pi = listePiCarte.get(i);
+                                    
                                     //Afficher la point d interet correspondant 
                                     //a la ligne en surbrillance
                                     this.controleur.surbrillerPI(pi);
@@ -77,6 +82,7 @@ public class EcouteurListSelection implements ListSelectionListener {
                     } else {
                         Tournee tournee = fenetre.getTournee();
                         if (tournee != null) {
+                            
                             //Recuperer les points dinteret de la tournee
                             ArrayList<PointInteret> listePiTournee
                                     = tournee.getSuccessionPointsInteret();
@@ -86,11 +92,13 @@ public class EcouteurListSelection implements ListSelectionListener {
                                 if (i < listePiTournee.size()) {
                                     pi = listePiTournee.get(i);
                                 }
+                                
                                 //Si la derniere ligne du tableau est cliquee
                                 if (i == listePiTournee.size()) {
                                     //Prendre point d interet de l entrepot
                                     pi = listePiTournee.get(0);
                                 }
+                                
                                 //Afficher la point d interet correspond 
                                 //a la ligne en surbrillance
                                 this.controleur.surbrillerPI(pi);

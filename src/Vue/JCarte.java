@@ -437,6 +437,7 @@ public class JCarte extends JPanel {
         ArrayList<Intersection> intersections = carte.getListeIntersections();
         //Affichage de la carte
         for (Intersection i : intersections) {
+            
             //ajout de l'intersection et de ses coordonnees 
             //correspondantes dans la map
             this.ajouterPointToIntersectionsMap(i, new Point(this
@@ -479,12 +480,12 @@ public class JCarte extends JPanel {
             double longueurString;      //longueur de la rue affichee
             double longueurTroncon;     //longueur graphique du troncon
             double xVect, yVect;        //coordonnees du vecteur troncon
-            double facteur;             //facteur de multiplication servant a 
-                                        //connaitre le nombre de fois par 
-                                        //lequel on multiplie le vecteur pour
-                                        //avoir la longueur du nom de rue 
-                                        //(cas ou le nom de rue est plus long 
-                                        //que le vecteur troncon)
+            
+            //facteur de multiplication servant a connaitre le nombre de fois 
+            //par lequel on multiplie le vecteur pour avoir la longueur du 
+            //nom de rue (cas ou le nom de rue est plus long que le vecteur 
+            //troncon)
+            double facteur;
             double radian;              //angle d inclinaison du nom de rue
             
             

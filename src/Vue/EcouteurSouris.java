@@ -59,9 +59,11 @@ public class EcouteurSouris extends MouseAdapter {
 
             fenetre.setClicAjoutAvantEnlvt(true);
             if (this.vueCarte != null) {
+                
                 //Recuperer les coordonnees points interets qui sont sur carte
                 ArrayList<CoordPointInteret> listeCoordPtI
                         = vueCarte.getCoordPtInterets();
+                
                 //Recuperer les coordonnees de toutes les intersections 
                 //qui sont sur la carte
                 ArrayList<Point> coordI = vueCarte.getCoorIntersections();
@@ -71,13 +73,16 @@ public class EcouteurSouris extends MouseAdapter {
                 if (carte != null) {
                     ArrayList<PointInteret> listePtI
                             = carte.getListePointsInteretActuelle();
+                    
                     //Recuperer les coordonnees de la souris lors du clic
                     int x = evt.getX() - 8;
                     int y = evt.getY() - 8;
+                    
                     //Si il y a bien des points d interets sur la carte
                     if (listeCoordPtI != null && !listeCoordPtI.isEmpty()) {
                         int index = 0;
                         for (CoordPointInteret p : listeCoordPtI) {
+                            
                             //Point(nxXpt,nvYpt) correspond au centre des 
                             //figures des points d interets
                             int nvXpt = p.getPoint().getX() + xPanneauGauche
@@ -85,6 +90,7 @@ public class EcouteurSouris extends MouseAdapter {
                             int nvYpt = p.getPoint().getY() + yPanneauLegende
                                     + 25;
                             PointInteret pi = p.getPtI();
+                            
                             //Si le clic se trouve sur une figure 
                             //d un point d interet
                             if ((x >= nvXpt - 6) && (x <= nvXpt + 6)
@@ -93,9 +99,11 @@ public class EcouteurSouris extends MouseAdapter {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() 
                                         && index != -1) {
+                                        
                                         //Mettre en surbrillance la ligne du 
                                         //tableau correspondante
                                         this.controleur.surbrillerTables(pi);
+                                        
                                         //Surbriller le point sur lequel 
                                         //on vient de cliquer
                                         this.controleur.surbrillerPI(pi);
@@ -134,22 +142,24 @@ public class EcouteurSouris extends MouseAdapter {
 
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
+                        
                         //test x y sont sur pt intersect coord 
                         for (Map.Entry<Intersection, Point> iEntry 
                                 : mesCoordIntersections.entrySet()) {
-                            //parcourir la map pour trouver me point qui 
+                            
+                            //parcourir la map pour trouver le point qui 
                             //correspond aux var x et y cliquées 
                             //par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
+                            
                             //coordonnées adaptees des points d'intersections
-
                             int nvXpt2 = value.getX() + xPanneauGauche;
                             int nvYpt2 = value.getY() + yPanneauLegende + 24;
-                            if (x >= nvXpt2 && x <= nvXpt2 + 5 
+                            
+                            if (x >= nvXpt2 -5 && x <= nvXpt2 + 5 
                                     && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
                                 //les coordonnées correspondent
-
                                 //On recupere la liste des troncons dans 
                                 //le but d'afficher leur noms
                                 ArrayList<Troncon> listeTroncons 
@@ -166,6 +176,7 @@ public class EcouteurSouris extends MouseAdapter {
                         int index = 0;
                         for (Point p : coordI) {
                             index = coordI.indexOf(p);
+                            
                             //Point(nxXpt,nvYpt) correspond au centre 
                             //des figures des intersections
                             int nvXpt = p.getX() + xPanneauGauche + 5;
