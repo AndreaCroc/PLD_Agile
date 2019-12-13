@@ -19,16 +19,6 @@ import modele.Tournee;
 public class EtatLivraison implements Etat {
 
     /**
-     * Afficher le bouton arreter la tournee avant de faire le calcul
-     *
-     * @param fenetre fenetre
-     */
-    @Override
-    public void attendreCalcul(Fenetre fenetre) {
-        fenetre.afficherBoutonArretCalcul();
-    }
-
-    /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
      *
      * @param controleur controleur
@@ -51,26 +41,11 @@ public class EtatLivraison implements Etat {
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
-        //fenetre.griserBoutonCalcul();
-        //fenetre.griserBoutonArretCalcul();
+
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
     }
 
-    /**
-     * Arreter le calcul de la tournee en cours
-     *
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
-     * @param tournee tournee
-     */
-    @Override
-    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, 
-                                     Carte carte, Tournee tournee) {
-        System.out.println("arreter calcul tournee etat livraison");
-        controleur.setEtat(controleur.etatTournee);
-    }
 
     /**
      * Charger un fichier de livraisons Dans tous les cas, on reste dans cet

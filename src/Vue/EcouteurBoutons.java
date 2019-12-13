@@ -95,10 +95,6 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.BAS:
                 controleur.decalage(2);
                 break;
-            //Si on veut arreter le calcul de la tournee
-            case Fenetre.ARRET:
-                controleur.arreterCalculTournee();
-                break;
         }
 
         //Recuperer un clic sur le bouton redo

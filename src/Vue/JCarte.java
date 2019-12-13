@@ -549,8 +549,8 @@ public class JCarte extends JPanel {
                     intersections) - 2;
             int yDepot = this.getProportionalYPIs(depot.getIntersection(), PIs,
                     intersections) - 2;
-            int x[] = {xDepot, xDepot + 6, xDepot + 12};
-            int y[] = {yDepot, yDepot + 12, yDepot};
+            int x[] = {xDepot, xDepot + 8, xDepot + 18};
+            int y[] = {yDepot, yDepot + 18, yDepot};
             Polygon p = new Polygon(x, y, 3);
             g.setColor(Color.BLACK);
             g.fillPolygon(p);
@@ -700,10 +700,10 @@ public class JCarte extends JPanel {
                     g2.setColor(Color.blue);
                     if (ligneTab == 0) {
                         //Faire un carre bleu autour entrepot
-                        g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 14);
-                        g2.drawLine(xPI - 3, yPI + 14, xPI + 14, yPI + 14);
-                        g2.drawLine(xPI + 14, yPI + 14, xPI + 14, yPI - 3);
-                        g2.drawLine(xPI + 14, yPI - 3, xPI - 3, yPI - 3);
+                        g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 18);
+                        g2.drawLine(xPI - 3, yPI + 18, xPI + 18, yPI + 18);
+                        g2.drawLine(xPI + 18, yPI + 18, xPI + 18, yPI - 3);
+                        g2.drawLine(xPI + 18, yPI - 3, xPI - 3, yPI - 3);
 
                     } else {
                         //Faire un carre bleu autour du point d interet

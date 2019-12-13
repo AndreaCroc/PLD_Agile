@@ -77,14 +77,6 @@ public class Controleur {
      * Calculer une tournee
      */
     public void calculerTournee() {
-        etatCourant.attendreCalcul(fenetre);
-
-        /*try {
-            sleep(2000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
 
@@ -231,14 +223,6 @@ public class Controleur {
             }
 
         }
-    }
-
-    /**
-     * Arreter le calcul de la tournee
-     */
-    public void arreterCalculTournee() {
-        System.out.println("Arret Calcul tournee");
-        etatCourant.arreterCalculTournee(this, fenetre, carte, tournee);
     }
 
     /**
