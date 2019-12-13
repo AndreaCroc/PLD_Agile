@@ -330,6 +330,7 @@ public class Carte {
             demandesLivraisons.ajouterPointInteret(pI);
         }
         listePointsInteret = demandesLivraisons.getListePointsInteret();
+
         int nbSommets = listePointsInteret.size();
         
         //Creation de la tournee
