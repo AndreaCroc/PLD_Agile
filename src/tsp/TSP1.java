@@ -28,7 +28,8 @@ public class TSP1 extends TemplateTSP implements TSP {
 
     
     /**
-     * 
+     * Calcule l'heuristique de la solution courante pour déterminer
+     * si on doit poursuivre la recherche sur cette branche
      *
      * @param sommetCourant
      * @param nonVus : tableau des sommets restant a visiter
@@ -36,7 +37,8 @@ public class TSP1 extends TemplateTSP implements TSP {
      * nbSommets et 0 <= j < nbSommets @param
      * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
      * nbSommets
-	 * @retur
+     *      *  mapPredecesseur : contraintes de precedences entre les sommets
+	 * @return
      * n une borne inferieure du cout des permutations commencant par
      * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
      * terminant par le sommet 0
@@ -48,6 +50,7 @@ public class TSP1 extends TemplateTSP implements TSP {
         return 0;
     }
 
+    
     protected Iterator<Integer> iterator(Integer sommetCrt,
             ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, 
             TreeMap<Integer,Integer> mapPredecesseur) {
@@ -66,6 +69,7 @@ public class TSP1 extends TemplateTSP implements TSP {
          * avec 0 <= i < nbSommets et 0 <= j < nbSommets
 	 * @param duree : duree[i] = duree pour visiter le sommet i, 
          * avec 0 <= i < nbSommets
+         * mapPredecesseur : contraintes de precedences entre les sommets
 	 */
      @Override
      public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
@@ -92,6 +96,23 @@ public class TSP1 extends TemplateTSP implements TSP {
         System.out.print("]");
     }
     
+         /**
+     * Methode definissant la résolution par separation
+     * et evaluation du TSP1
+     *
+     * @param sommetCrt le dernier sommet visite
+     * @param nonVus la liste des sommets qui n'ont pas encore ete visites
+     * @param vus la liste des sommets visites (y compris sommetCrt)
+     * @param coutVus la somme des couts des arcs du chemin passant par tous les
+     * sommets de vus + la somme des duree des sommets de vus
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets @param
+     * tpsDebut : moment ou la resolution a commence
+     * @param tpsLimite : limite de temps pour la resolution
+     * mapPredecesseur : contraintes de precedences entre les sommets
+     */
     @Override
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, 
             ArrayList<Integer> vus, Double coutVus, Double[][] cout, 

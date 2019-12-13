@@ -23,15 +23,42 @@ public abstract class TemplateTSP implements TSP {
     private Double coutMeilleureSolution = 0.0;
     private Boolean tempsLimiteAtteint;
     
+    
+        /**
+     * Retourne si le temps limite a été atteint
+     * @return tempsLimiteAtteint
+     */
     public Boolean getTempsLimiteAtteint() {
         return tempsLimiteAtteint;
     }
     
-    
+     /**
+
+     * Cherche Solution: Initialise la recherche du chemin
+     * par le TSP
+     *
+     * @param tpsLimite
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     *  mapPredecesseur : contraintes de precedences entre les sommets
+     */
+ 
     public void chercheSolution(Integer tpsLimite, int nbSommets, 
             Double[][] cout, Integer[] duree)
     {};
     
+    
+        /**
+     * Cherche Solution Predecesseur : Initialise la recherche du chemin
+     * par le TSP
+     *
+     * @param tpsLimite
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     *  mapPredecesseur : contraintes de precedences entre les sommets
+     */
     
     public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
             Double[][] cout, Integer[] duree,
@@ -56,6 +83,11 @@ public abstract class TemplateTSP implements TSP {
 
     }
 
+    /**
+     * Retourne l'émément i de la meilleure solution
+     * @param i indice
+     * @return meilleureSolution[i]
+     */
     public Integer getMeilleureSolution(int i) {
         if ((meilleureSolution == null) || (i < 0) || 
                 (i >= meilleureSolution.length)) {
@@ -64,14 +96,27 @@ public abstract class TemplateTSP implements TSP {
         return meilleureSolution[i];
     }
     
+    /**
+     * Donne une valeur à la variable meilleureSolution
+     * @param solution La solution du TSP
+     */
     protected void setMeilleureSolution(Integer [] solution){
         meilleureSolution=solution;
     }
     
+    /**
+     * Récupère la solution
+     * @param meilleureSolution
+     */
     public Integer[] getSolution(){
         return meilleureSolution;
     }
     
+    
+    /**
+     * Renvoie le coût de la meilleure Solution
+     * @return coutMeilleureSolution
+     */
     public Double getCoutMeilleureSolution() {
         return coutMeilleureSolution;
     }
