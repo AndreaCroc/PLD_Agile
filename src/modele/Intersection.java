@@ -143,6 +143,7 @@ public class Intersection {
     /** Méthode permettant de trouver tous les successeurs de l'intersection 
      * intersection donc toutes les intersections qu'on peut visiter à partir 
      * de celle-ci
+     * @return la liste des intersections correspondant aux successeurs
     */
     public ArrayList<Intersection> retrouverSuccesseurs() {
         ArrayList<Intersection> listeSuccesseurs = new ArrayList<Intersection>();

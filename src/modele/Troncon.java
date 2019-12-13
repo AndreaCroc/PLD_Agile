@@ -78,7 +78,7 @@ public class Troncon {
 
     /**
      * Modifie l intersection d origine
-     * @param origine 
+     * @param origine origine du troncon
      */
     public void setOrigine(Intersection origine) {
         this.origine = origine;

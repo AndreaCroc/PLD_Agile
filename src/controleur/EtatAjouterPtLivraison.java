@@ -87,7 +87,7 @@ public class EtatAjouterPtLivraison implements Etat {
         int value = JOptionPane.showConfirmDialog(fenetre, "Merci de confirmer "
                 + "les informations du point de livraison :"
                 + "\nRue(s): " + nomRue
-                + "\nDurée: " + duree);
+                + "\nDurée: " + duree +" min");
 
         if (value == JOptionPane.NO_OPTION 
             || value == JOptionPane.CANCEL_OPTION) {

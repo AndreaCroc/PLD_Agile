@@ -20,7 +20,7 @@ public class DemandesLivraisons {
 
     /**
      * Constructeur d une demande de livraison a partir d une adresse de depart
-     * @param pI l adresse de depart (un point d interet)
+     * @param aD l adresse de depart (un point d interet)
      */
     public DemandesLivraisons(PointInteret aD) {
         this.adresseDepart = aD;
