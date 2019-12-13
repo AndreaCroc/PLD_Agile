@@ -317,10 +317,6 @@ public class Carte {
      * @return la tournee creee
      */
     public Tournee calculerTournee() {
-<<<<<<< HEAD
-        ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
-        //ArrayList<PointInteret> listePointsInteret = this.listePointsInteretActuelle;
-=======
         ArrayList<PointInteret> listePointsInteret;
         //Recuperation des demandes actuelles
         demandesLivraisons.getListePointsInteret().clear();
@@ -328,7 +324,7 @@ public class Carte {
             demandesLivraisons.ajouterPointInteret(pI);
         }
         listePointsInteret = demandesLivraisons.getListePointsInteret();
->>>>>>> 76521a3d1e3014c5adc4d6a1fda21e29e69a80b0
+
         int nbSommets = listePointsInteret.size();
         double nbPheromone = 15;
 
