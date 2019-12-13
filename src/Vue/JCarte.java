@@ -433,6 +433,7 @@ public class JCarte extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        this.coorIntersections.clear();
         ArrayList<Intersection> intersections = carte.getListeIntersections();
         //Affichage de la carte
         for (Intersection i : intersections) {
