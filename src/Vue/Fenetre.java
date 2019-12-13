@@ -507,7 +507,8 @@ public class Fenetre extends JFrame {
         boutonDirBas.setBackground(COULEUR_BOUTON);
         boutonDirBas.addActionListener(ecouteurBoutons);
 
-        //Ajout des elements a panneauLegende et ajout de ce dernier a panneauDroit
+        //Ajout des elements a panneauLegende et ajout de 
+        //ce dernier a panneauDroit
         panneauLegende = new JPanel();
         panneauLegende.setLayout(null);
         panneauLegende.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, 
@@ -535,9 +536,8 @@ public class Fenetre extends JFrame {
         panneauDroite.add(panneauLegende);
 
         /* Fin PanneauLegende */
- /* PanneauCarte (bas droit) */
-
-
+        
+        /* PanneauCarte (bas droit) */
         this.setZoom(1.0);
         this.setDeplX(0);
         this.setDeplY(0);
@@ -939,7 +939,7 @@ public class Fenetre extends JFrame {
      * Mettre en surbrillance la ligne du tableau correspondant au point d
      * interet clique
      *
-     * @param ptI
+     * @param ptI point d'interet a mettre en surbrillance dans le tableau
      */
     public void surbrillerLigneTabPI(PointInteret ptI) {
         if (carte != null) {
@@ -1324,8 +1324,8 @@ public class Fenetre extends JFrame {
     }
 
     /**
-     * Cacher le message d erreur si tout s est bien passe lors du changement de
-     * la carte
+     * Cacher le message d erreur si tout s est bien passe lors 
+     * du changement de la carte
      */
     public void retireMessageErreur3() {
         repChangeCarte.setVisible(false);

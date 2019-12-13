@@ -27,8 +27,8 @@ public class EcouteurListSelection implements ListSelectionListener {
     /**
      * Constructeur de la classe EcouteurListSelection
      *
-     * @param controleur //Controleur pour traier les actions
-     * @param fenetre //Fenetre de l application
+     * @param controleur Controleur pour traier les actions
+     * @param fenetre Fenetre de l application
      */
     public EcouteurListSelection(Controleur controleur, Fenetre fenetre) {
         this.controleur = controleur;
