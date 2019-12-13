@@ -24,12 +24,13 @@ public class EtatDeBase implements Etat {
      * Changer la carte deja chargee Dans tous les cas (succes ou echec) on
      * reste dans cet EtatDeBase
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
-    public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void changerCarte(Controleur controleur, Fenetre fenetre, 
+                             Carte carte) {
 
         boolean changerCarte = false;
         try {
@@ -57,12 +58,15 @@ public class EtatDeBase implements Etat {
 
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur3("Erreur lors du chargement "
+                                                + "du fichier");
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            //En cas d erreur lie a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur3("Erreur lors de la "
+                                            + "sélection du fichier");
         }
 
     }
@@ -71,12 +75,13 @@ public class EtatDeBase implements Etat {
      * Charger une livraison lorsqu une carte est chargee En cas de succes, on
      * passe a l etat EtatLivraison En cas d echec, on reste dans cet etat
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
-    public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void chargerLivraison(Controleur controleur, Fenetre fenetre, 
+                                 Carte carte) {
 
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
@@ -101,15 +106,15 @@ public class EtatDeBase implements Etat {
                 controleur.setEtat(controleur.etatLivraison);
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur2("Erreur lors du "
+                                                + "chargement du fichier");
             }
 
         } catch (Exception e) {
-            //En cas d erreur liee a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
-            //Throwable t = e.getCause();
-            //StackTraceElement[] ste = t.getStackTrace();
-            //int line = ste[0].getLineNumber();
+            //En cas d erreur liee a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur2("Erreur lors de la "
+                                            + "sélection du fichier");
         }
     }
 

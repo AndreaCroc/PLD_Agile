@@ -17,16 +17,29 @@ import modele.Tournee;
  */
 public class CdeModif implements CommandeTournee {
 
-    private PointInteret ptI;
-    private int decalage;
+    private PointInteret ptI; //Point d'interet a modifier
+    private int decalage; //Valeur de decalage dans la tournee
 
+    /**
+     * Constructeur de la classe CdeModif
+     * @param ptI point d'interet modifie
+     * @param decalage //valeur du decalage dans la tournee
+     */
     public CdeModif(PointInteret ptI, int decalage) {
         this.ptI = ptI;
         this.decalage = decalage;
     }
 
+    /**
+     * Revient à modifier les points
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le contrôleur courant
+     */
     @Override
-    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                      Controleur controleur) {
         //On deplace le point
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage);
         tournee = carte.getTournee();
@@ -51,8 +64,16 @@ public class CdeModif implements CommandeTournee {
 
     }
 
+    /**
+     * Revient à modifier les points
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le contrôleur courant
+     */
     @Override
-    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                        Controleur controleur) {
         //On deplace le point
         boolean modifOk = carte.deplacerPointInteret(ptI, decalage*(-1));
         tournee = carte.getTournee();

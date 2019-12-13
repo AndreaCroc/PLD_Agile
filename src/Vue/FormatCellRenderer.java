@@ -137,7 +137,8 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
         } else {
             if (indexPI != -1) {
                 int nbLignes = table.getRowCount() - 1;
-                //Encadrer chaque cellule de la ligne associee au point d interet
+                //Encadrer chaque cellule de la ligne a
+                //ssociee au point d interet
                 if (row == this.indexPI || row - nbLignes == indexPI 
                         || row == indexPI - nbLignes) {
                     if (column == 0) {

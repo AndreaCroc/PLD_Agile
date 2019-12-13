@@ -16,9 +16,20 @@ public class Troncon {
     private Intersection origine;
     private Intersection destination;
 
+    /**
+     * Constructeur par defaut d un troncon
+     */
     public Troncon() {
     }
 
+    /**
+     * Constructeur d un troncon a partir du nom de la rue, de la longueur du 
+     * troncon, de son origine et de sa destination
+     * @param nomRue nom de la rue correspondante
+     * @param longueur longueur du troncon
+     * @param origine intersection d origine du troncon
+     * @param destination intersection de destination du troncon
+     */
     public Troncon(String nomRue, Double longueur, Intersection origine, Intersection destination) {
         this.nomRue = nomRue;
         this.longueur = longueur;

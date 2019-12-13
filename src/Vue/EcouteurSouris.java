@@ -33,9 +33,9 @@ public class EcouteurSouris extends MouseAdapter {
     /**
      * Constructeur de la classe EcouteurSouris
      *
-     * @param controleur
-     * @param vueCarte
-     * @param fenetre
+     * @param controleur controleur
+     * @param vueCarte panneau de la carte
+     * @param fenetre fenetre
      */
     public EcouteurSouris(Controleur controleur, JCarte vueCarte,
             Fenetre fenetre) {
@@ -56,13 +56,14 @@ public class EcouteurSouris extends MouseAdapter {
             int xPanneauGauche = this.fenetre.getWidthPanneauGauche();
             //Recuperer la hauteur du panneau legende situee au dessus carte
             int yPanneauLegende = this.fenetre.getHeightPanneauLegende();
-             
+
             fenetre.setClicAjoutAvantEnlvt(true);
             if (this.vueCarte != null) {
                 //Recuperer les coordonnees points interets qui sont sur carte
                 ArrayList<CoordPointInteret> listeCoordPtI
                         = vueCarte.getCoordPtInterets();
-                //Recuperer les coordonnees de toutes les intersections qui sont sur la carte
+                //Recuperer les coordonnees de toutes les intersections 
+                //qui sont sur la carte
                 ArrayList<Point> coordI = vueCarte.getCoorIntersections();
                 Map<Intersection, Point> mesCoordIntersections
                         = vueCarte.getIntersectionsMap();
@@ -84,13 +85,13 @@ public class EcouteurSouris extends MouseAdapter {
                             int nvYpt = p.getPoint().getY() + yPanneauLegende
                                     + 25;
                             PointInteret pi = p.getPtI();
-                            //Si le clic se trouve sur une figure d un point d interet
+                            //Si le clic se trouve sur une figure 
+                            //d un point d interet
                             if ((x >= nvXpt - 6) && (x <= nvXpt + 6)
                                     && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
                                     if (index < listePtI.size() && index != -1) {
-                                        System.out.println("if point interet clique");
                                         //Mettre en surbrillance la ligne du 
                                         //tableau correspondante
                                         this.controleur.surbrillerTables(pi);
@@ -100,22 +101,26 @@ public class EcouteurSouris extends MouseAdapter {
                                         if (this.fenetre.isClicSupp()) {
                                             this.controleur.supprimer(index);
                                         } else if (this.fenetre.isClicModif()) {
-                                            System.out.println("index du point a modifier : "+index);
                                             this.controleur.modifier(index);
                                         }
 
-                                        if (controleur.getEtatCourant() instanceof EtatAjouterPointAvantEnlvt) {
-                                                this.controleur.ajouterPointAvantEnlevement(index);
-                                                fenetre.setClicAjoutAvantEnlvt(false);
-                                                break;
-                                        } else if (controleur.getEtatCourant() instanceof EtatAjouterPointAvantLivr) {
+                                        if (controleur.getEtatCourant() 
+                                        instanceof EtatAjouterPointAvantEnlvt) {
+                                            this.controleur
+                                                    .ajouterPointAvantEnlevement(index);
+                                            fenetre
+                                                    .setClicAjoutAvantEnlvt(false);
+                                            break;
+                                        } else if (controleur.getEtatCourant() 
+                                        instanceof EtatAjouterPointAvantLivr) {
                                             if (fenetre.isClicAjoutAvantEnlvt()) {
-                                                this.controleur.ajouterPointAvantLivraison(index);
-                                                fenetre.setClicAjoutAvantEnlvt(false);
+                                                this.controleur
+                                             .ajouterPointAvantLivraison(index);
+                                                fenetre
+                                                .setClicAjoutAvantEnlvt(false);
                                                 break;
                                             }
-                                                
-                                            
+
                                         }
                                     }
                                     break;
@@ -129,19 +134,24 @@ public class EcouteurSouris extends MouseAdapter {
                     // si tableau des intersections non vide et non null
                     if (!mesCoordIntersections.isEmpty()) {
                         //test x y sont sur pt intersect coord 
-                        for (Map.Entry<Intersection, Point> iEntry : mesCoordIntersections.entrySet()) {
-                            //parcourir la map pour trouver me point qui correspond aux var x et y cliquées par l'utilisateur
+                        for (Map.Entry<Intersection, Point> iEntry 
+                                : mesCoordIntersections.entrySet()) {
+                            //parcourir la map pour trouver me point qui 
+                            //correspond aux var x et y cliquées par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
                             //coordonnées adaptees des points d'intersections
 
                             int nvXpt2 = value.getX() + xPanneauGauche;
                             int nvYpt2 = value.getY() + yPanneauLegende + 24;
-                            if (x >= nvXpt2 && x <= nvXpt2 + 5 && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
+                            if (x >= nvXpt2 && x <= nvXpt2 + 5 
+                                    && y >= nvYpt2 - 5 && y <= nvYpt2 + 5) {
                                 //les coordonnées correspondent
 
-                                //On recupere la liste des troncons dans le but d'afficher leur noms
-                                ArrayList<Troncon> listeTroncons = key.getTronconsDepart();
+                                //On recupere la liste des troncons dans 
+                                //le but d'afficher leur noms
+                                ArrayList<Troncon> listeTroncons 
+                                        = key.getTronconsDepart();
                                 vueCarte.setTronconsNomsRues(listeTroncons);
                                 vueCarte.repaint();
                             }
@@ -149,28 +159,34 @@ public class EcouteurSouris extends MouseAdapter {
                         }
 
                     }
-
+                    // Si la liste des intersections est non vide et non nulle
                     if (coordI != null && !coordI.isEmpty()) {
                         int index = 0;
                         for (Point p : coordI) {
                             index = coordI.indexOf(p);
-                            //Point(nxXpt,nvYpt) correspond au centre des figures des points d interets
+                            //Point(nxXpt,nvYpt) correspond au centre 
+                            //des figures des intersections
                             int nvXpt = p.getX() + xPanneauGauche + 5;
                             int nvYpt = p.getY() + yPanneauLegende + 25;
 
                             //Si le clic se trouve sur une intersection
-                            if (x >= nvXpt - 5 && x <= nvXpt + 5 && y >= nvYpt - 5 && y <= nvYpt + 5) {
-                                if (controleur.getEtatCourant() instanceof EtatAjouterPtEnlevement) {
-                                        this.controleur.ajouterPointEnlevement(controleur.getIntersectionByIndex(index));
-                                        fenetre.setClicAjoutAvantEnlvt(false);
-                                        break;
-                                    
-                                } else if (controleur.getEtatCourant() instanceof EtatAjouterPtLivraison) {
+                            if (x >= nvXpt - 5 && x <= nvXpt + 5 
+                                    && y >= nvYpt - 5 && y <= nvYpt + 5) {
+                                if (controleur.getEtatCourant() 
+                                        instanceof EtatAjouterPtEnlevement) {
+                                    this.controleur.ajouterPointEnlevement(
+                                      controleur.getIntersectionByIndex(index));
+                                    fenetre.setClicAjoutAvantEnlvt(false);
+                                    break;
+
+                                } else if (controleur.getEtatCourant() 
+                                        instanceof EtatAjouterPtLivraison) {
                                     if (fenetre.isClicAjoutAvantEnlvt()) {
-                                        this.controleur.ajouterPointLivraison(controleur.getIntersectionByIndex(index));
+                                        this.controleur.ajouterPointLivraison(
+                                      controleur.getIntersectionByIndex(index));
                                         fenetre.setClicAjoutAvantEnlvt(false);
                                         break;
-                                    } 
+                                    }
 
                                 }
                                 break;

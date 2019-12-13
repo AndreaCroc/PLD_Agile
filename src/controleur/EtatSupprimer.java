@@ -24,18 +24,22 @@ public class EtatSupprimer implements Etat {
      * Supprimer un point d interet de la tournee et son point correspondant On
      * repasse soit a l etat tournee soit a l etat de base
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param tournee
-     * @param index
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
+     * @param tournee tournee courante
+     * @param index index du point d'interet a supprimer
+     * @param listeCommandes liste des commandes deja effectuees
      */
     @Override
-    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, 
+                          Tournee tournee, int index, 
+                          ListeCdesTournee listeCommandes) {
 
         //Si ce n est pas l entrepot
         if (index != 0) {
-            ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();
+            ArrayList<PointInteret> listePIs = carte
+                                               .getListePointsInteretActuelle();
 
             //Recuperer le point d interet que l utilisateur veut supprimer
             int option = 1; //choix de valider ou non la suppression
@@ -59,15 +63,21 @@ public class EtatSupprimer implements Etat {
                 //Enregistrement des informations de la commande
                 ptD = ptI.getPointDependance();
                 //indice du point interet dans la tournee
-                int indPtITournee = tournee.getSuccessionPointsInteret().indexOf(ptI);
+                int indPtITournee = tournee.getSuccessionPointsInteret()
+                                            .indexOf(ptI);
                 //indice du point de dépendance dans la tournee
-                int indPtDTournee = tournee.getSuccessionPointsInteret().indexOf(ptD);
+                int indPtDTournee = tournee.getSuccessionPointsInteret()
+                                            .indexOf(ptD);
                 if (ptI.isEnlevement()) {
-                    ptAvantEnlevement = tournee.getSuccessionPointsInteret().get(indPtITournee-1);
-                    ptAvantLivraison = tournee.getSuccessionPointsInteret().get(indPtDTournee-1);
+                    ptAvantEnlevement = tournee.getSuccessionPointsInteret()
+                                                .get(indPtITournee-1);
+                    ptAvantLivraison = tournee.getSuccessionPointsInteret()
+                                               .get(indPtDTournee-1);
                 } else {
-                    ptAvantEnlevement = tournee.getSuccessionPointsInteret().get(indPtDTournee-1);
-                    ptAvantLivraison = tournee.getSuccessionPointsInteret().get(indPtITournee-1);
+                    ptAvantEnlevement = tournee.getSuccessionPointsInteret()
+                                                .get(indPtDTournee-1);
+                    ptAvantLivraison = tournee.getSuccessionPointsInteret()
+                                               .get(indPtITournee-1);
                 }
                 
                 //Afficher un popup de confirmation de suppression
@@ -92,7 +102,8 @@ public class EtatSupprimer implements Etat {
                     fenetre.afficherBoutonSupprimer();
                     fenetre.repaint();
 
-                    //Plus que l entrepot dans la liste des points d interets de la carte
+                    //Plus que l entrepot dans la liste des points 
+                    //d interets de la carte
                     if (listePIs.size() == 1 && suppOk) {
                         fenetre.cacherPanneauEtapesEtTour();
                         fenetre.cacherPanneauPI();
@@ -113,7 +124,8 @@ public class EtatSupprimer implements Etat {
                       
                     }
                     
-                    commande = new CdeSupprime(ptI, ptD, ptAvantEnlevement, ptAvantLivraison,index);
+                    commande = new CdeSupprime(ptI, ptD, ptAvantEnlevement, 
+                                               ptAvantLivraison);
                     listeCommandes.ajouterCommande(commande);
                     //Si on annule la suppression
                 } else {
@@ -140,8 +152,8 @@ public class EtatSupprimer implements Etat {
      * Annuler le mode suppression d un point d interet On repasse dans l etat
      * EtatTournee
      *
-     * @param controleur
-     * @param fenetre
+     * @param controleur controleur
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre
@@ -154,7 +166,7 @@ public class EtatSupprimer implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -167,7 +179,7 @@ public class EtatSupprimer implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p poitn d interet selectionne
      */
     @Override

@@ -22,8 +22,8 @@ public class EcouteurBoutons implements ActionListener {
     /**
      * Constructeur de la classe EcouteurBoutons
      *
-     * @param controleur
-     * @param fenetre
+     * @param controleur controleur
+     * @param fenetre fenetre
      */
     public EcouteurBoutons(Controleur controleur, Fenetre fenetre) {
         this.controleur = controleur;
@@ -71,30 +71,31 @@ public class EcouteurBoutons implements ActionListener {
             case Fenetre.MODIFIER:
                 controleur.modifier(-1);
                 break;
-            //Si on veut modifier l ordre d un point d interet
+            //Si on veut zoomer sur la carte
             case Fenetre.ZOOMER:
                 controleur.zoomer();
                 break;
-            //Si on veut modifier l ordre d un point d interet
+            //Si on veut dezoomer sur la carte
             case Fenetre.DEZOOMER:
                 controleur.deZoomer();
                 break;
-            //Si on veut ajouter un point dinteret
+            //Si on veut decaler la carte vers la droite
             case Fenetre.DROITE:
                 controleur.decalage(1);
                 break;
-            //Si on veut modifier l ordre d un point d interet
+            //Si on veut decaler la carte vers la gauche
             case Fenetre.GAUCHE:
                 controleur.decalage(-1);
                 break;
-            //Si on veut modifier l ordre d un point d interet
+            //Si on veut decaler la carte vers le haut
             case Fenetre.HAUT:
                 controleur.decalage(-2);
                 break;
-            //Si on veut modifier l ordre d un point d interet
+            //Si on veut decaler la carte vers le bas
             case Fenetre.BAS:
                 controleur.decalage(2);
                 break;
+            //Si on veut arreter le calcul de la tournee
             case Fenetre.ARRET:
                 controleur.arreterCalculTournee();
                 break;

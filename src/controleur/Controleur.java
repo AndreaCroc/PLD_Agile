@@ -1,9 +1,6 @@
 package controleur;
 
 import Vue.Fenetre;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
@@ -20,7 +17,8 @@ import modele.Tournee;
  */
 public class Controleur {
 
-    private Fenetre fenetre; //Fenetre qui traite actions recuperees par controleur
+    //Fenetre qui traite actions recuperees par controleur
+    private Fenetre fenetre; 
     private Carte carte; //Carte
     private Tournee tournee; //Tournee realisee
     private Etat etatCourant = new EtatInit(); //Etat du controleur
@@ -34,10 +32,14 @@ public class Controleur {
     protected final EtatSupprimer etatSupprimer = new EtatSupprimer();
     protected final EtatAjouter etatAjouter = new EtatAjouter();
     protected final EtatModifier etatModifier = new EtatModifier();
-    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement = new EtatAjouterPtEnlevement();
-    protected final EtatAjouterPtLivraison etatAjouterPtLivraison = new EtatAjouterPtLivraison();
-    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt = new EtatAjouterPointAvantEnlvt();
-    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr = new EtatAjouterPointAvantLivr();
+    protected final EtatAjouterPtEnlevement etatAjouterPtEnlevement 
+            = new EtatAjouterPtEnlevement();
+    protected final EtatAjouterPtLivraison etatAjouterPtLivraison 
+            = new EtatAjouterPtLivraison();
+    protected final EtatAjouterPointAvantEnlvt etatAjouterPointAvantEnlvt 
+            = new EtatAjouterPointAvantEnlvt();
+    protected final EtatAjouterPointAvantLivr etatAjouterPointAvantLivr
+            = new EtatAjouterPointAvantLivr();
 
     /**
      * Constructeur de la classe du Controleur
@@ -76,11 +78,13 @@ public class Controleur {
      */
     public void calculerTournee() {
         etatCourant.attendreCalcul(fenetre);
-//        try {
-//            sleep(2000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
+        /*try {
+            sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
 
@@ -205,6 +209,11 @@ public class Controleur {
         }
     }
 
+    /**
+     * Effectue un decalage vers la gauche, drotie, haut ou bas sur
+     * la vue de la carte dans l'application
+     * @param decalage orientation du decalage souhaite
+     */
     public void decalage(int decalage) {
         System.out.println(this.fenetre.getWidth());
         if (decalage == 1 || decalage == -1) {
@@ -224,31 +233,63 @@ public class Controleur {
         }
     }
 
+    /**
+     * Arreter le calcul de la tournee
+     */
     public void arreterCalculTournee() {
         System.out.println("Arret Calcul tournee");
         etatCourant.arreterCalculTournee(this, fenetre, carte, tournee);
     }
 
+    /**
+     * Ajouter un point d'enlevement a la tournee
+     * @param interE intersection ou sera le point d'enlevement
+     */
     public void ajouterPointEnlevement(Intersection interE) {
         etatCourant.ajouterPointEnlevement(this, fenetre, carte, interE);
     }
 
+    /**
+     * Ajouter un point de livraison a la tournee
+     * @param interL intersection ou sera la point de livraison
+     */
     public void ajouterPointLivraison(Intersection interL) {
         etatCourant.ajouterPointLivraison(this, fenetre, carte, interL);
     }
 
+    /**
+     * Choisir un point de la tournee qui sera avant le
+     * nouveau point d'enlevement
+     * @param index indice du point d'interet de la tournee qui sera 
+     * avant le point d'enlevement
+     */
     public void ajouterPointAvantEnlevement(int index) {
         etatCourant.ajouterPointAvantEnlevement(this, fenetre, carte, index);
     }
 
+     /**
+     * Choisir un point de la tournee qui sera avant le
+     * nouveau point de livraison
+     * @param index indice du point d'interet de la tournee qui sera 
+     * avant le point de livraison
+     */
     public void ajouterPointAvantLivraison(int index) {
         etatCourant.ajouterPointAvantLivraison(this, fenetre, carte, index);
     }
 
+    /**
+     * Recuperer une intersection du plan a partir de son indice
+     * @param index indice de l'intersection dans la liste
+     * @return intersection trouvee dan sla liste
+     */
     public Intersection getIntersectionByIndex(int index) {
         return carte.getListeIntersections().get(index);
     }
 
+    /**
+     * Recuperer l'etat courant du controleur
+     * @return etatcourant du controleur
+     */
     public Etat getEtatCourant() {
         return this.etatCourant;
     }

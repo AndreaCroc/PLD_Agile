@@ -18,27 +18,39 @@ import modele.Tournee;
  */
 public class CdeSupprime implements CommandeTournee {
 
-    private PointInteret pi;
-    private PointInteret pD;
-    private PointInteret pAvantEnlevement;
-    private PointInteret pAvantLivraison;
-    private int index;
+    private PointInteret pi; //Point d'interet supprime
+    private PointInteret pD; //Point d'interet dependant supprime
+    private PointInteret pAvantEnlevement; //Point avant le point d'enlevement
+    private PointInteret pAvantLivraison; //Point avant le point de livraison
 
 
+    /**
+     * Constructeur de la classe CdeSupprime
+     * @param pi point d'interet ajoute
+     * @param pD point dependant du point d'interet
+     * @param pAvantEnlevement point avant le point d'enlevement
+     * @param pAvantLivraison point avant le point de livraison
+     */
     public CdeSupprime(PointInteret pi, PointInteret pD, 
                        PointInteret pAvantEnlevement,
-                       PointInteret pAvantLivraison, int index) {
+                       PointInteret pAvantLivraison) {
         this.pi = pi;
         this.pD = pD;
         this.pAvantEnlevement = pAvantEnlevement;
         this.pAvantLivraison = pAvantLivraison;
-        this.index = index;
     }
     
     
-
+    /**
+     * Revient à supprimer le point
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le controleur courant
+     */
     @Override
-    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                      Controleur controleur) {
         
         //On supprime le point
         boolean suppOk = carte.supprimerPointInteret(pi);
@@ -80,8 +92,16 @@ public class CdeSupprime implements CommandeTournee {
         }
     }
 
+    /**
+     * Revient à ajouter le point
+     * @param carte la carte courante
+     * @param tournee la tournée courante
+     * @param fenetre la fenêtre courante
+     * @param controleur le contrôleur courant
+     */
     @Override
-    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                        Controleur controleur) {
         PointInteret pointEnlevement;
         PointInteret pointLivraison;
         int dureeEnlevement;

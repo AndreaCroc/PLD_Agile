@@ -148,7 +148,8 @@ public class Chemin {
     }
 
     /**
-     * Retourne une chaine de carcteres definissant le chemin
+     * permet de retourner les attributs d'un chemin en chaine de caracteres
+     * (utilisee pour les tests)
      * @return chaine de carcteres definissant le chemin
      */
     @Override

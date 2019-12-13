@@ -145,7 +145,6 @@ public class CarteTest {
         
         Carte carte = new Carte();
         carte.construireCarteAPartirDeDOMXML(racine2);
-//        System.out.println(carte.getListeIntersections());
         carte.construireLivraisonAPartirDeDOMXML(racine);
         
         //Assertions
@@ -176,11 +175,9 @@ public class CarteTest {
         DocumentBuilder docBuilder3 = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document3 = docBuilder3.parse(xml3);
         Element racine3 = document3.getDocumentElement();
-        //System.out.println(racine.toString());
         Carte carte3 = new Carte();
         
         carte3.construireCarteAPartirDeDOMXML(racine2);
-//        System.out.println(carte3.getListeIntersections());
         
         assertEquals(false, carte3.construireLivraisonAPartirDeDOMXML(racine3));
         assertEquals(null, carte3.getDemandesLivraisons());
@@ -190,7 +187,6 @@ public class CarteTest {
         docBuilder3 = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         document3 = docBuilder3.parse(xml3);
         racine3 = document3.getDocumentElement();
-        //System.out.println(racine.toString());
         carte3 = new Carte();
         
         carte3.construireCarteAPartirDeDOMXML(racine2);
@@ -207,7 +203,6 @@ public class CarteTest {
         carte3 = new Carte();
 
         carte3.construireCarteAPartirDeDOMXML(racine2);
-//        System.out.println(carte3.getListeIntersections());
 
         assertEquals(false, carte3.construireLivraisonAPartirDeDOMXML(racine3));
         assertEquals(1, carte3.getDemandesLivraisons().getListePointsInteret().size());
@@ -451,7 +446,6 @@ public class CarteTest {
         
         DemandesLivraisons dl = carte.getDemandesLivraisons();
         Tournee tournee = carte.getTournee();
-        System.out.println("tournee : "+tournee);
         ArrayList<PointInteret> listePointsInteretInitiale = dl.getListePointsInteret();
         ArrayList<PointInteret> successionPointsInteretInitiale = tournee.getSuccessionPointsInteret();
         ArrayList<Intersection> listeIntersections = carte.getListeIntersections();
@@ -469,7 +463,6 @@ public class CarteTest {
         Intersection intersectionLivr = null;
         //Recherche des interesections correspondants aux coordonnées 
         for (Intersection i : listeIntersections) {
-            System.out.println("boucle for");
             if (i.getLatitude().equals(latitudeEnlvt) && i.getLongitude().equals(longitudeEnlvt)) {
                 intersectionEnlvt = i;
             } else if (i.getLatitude().equals(latitudeLivr) && i.getLongitude().equals(longitudeLivr)) {
@@ -530,14 +523,12 @@ public class CarteTest {
         DemandesLivraisons dl2 = carte2.getDemandesLivraisons();
         Tournee tournee2 = carte2.getTournee();
         Tournee nouvTournee2;
-        System.out.println("tournee 2 : "+ tournee2);
         ArrayList<PointInteret> successionPointsInteretInitiale2 = tournee2.getSuccessionPointsInteret();
         ArrayList<PointInteret> listePointsInteretInitiale2=dl2.getListePointsInteret();
         ArrayList<Intersection> listeIntersections2=carte2.getListeIntersections();
         ArrayList<PointInteret> nouvSuccessionPointsInteret2;
         ArrayList<PointInteret> nouvListePointsInteret2;
         int tailleInitiale2 = successionPointsInteretInitiale2.size();
-        System.out.println("tailleInitiale2 : "+tailleInitiale2);
         int numeroDemande2;
         PointInteret pointEnlevement2;
         PointInteret pointLivraison2;
@@ -581,9 +572,6 @@ public class CarteTest {
         pointAvantEnlevement2 = listePointsInteretInitiale2.get(0);
         pointAvantLivraison2 = listePointsInteretInitiale2.get(1);
         
-        
-        System.out.println("first tournee "+ tournee2);
-        
         //Ajout des points
         carte2.ajouterLivraison(pointEnlevement2, pointLivraison2,
                 pointAvantEnlevement2, pointAvantLivraison2);
@@ -592,7 +580,6 @@ public class CarteTest {
         nouvListePointsInteret2 = carte.getDemandesLivraisons().getListePointsInteret();
         int nouvTaille2 = nouvSuccessionPointsInteret2.size();
         
-        System.out.println("nouv tournee 2 "+ nouvTournee2);
         //Assertions
         assertEquals(nouvTaille2, tailleInitiale2+2);
         
@@ -638,7 +625,6 @@ public class CarteTest {
         
         DemandesLivraisons dl = carte.getDemandesLivraisons();
         Tournee tournee = carte.getTournee();
-        System.out.println("tournee : "+ tournee);
         ArrayList<PointInteret> successionPointsInteretInitiale = tournee.getSuccessionPointsInteret();
        
         PointInteret pointADeplacer = successionPointsInteretInitiale.get(4);
@@ -656,7 +642,6 @@ public class CarteTest {
         carte.deplacerPointInteret(pointADeplacer, decalage);
         Tournee nouvTournee = carte.getTournee();
         ArrayList<PointInteret> nouvSuccessionPointsInteret = nouvTournee.getSuccessionPointsInteret();
-        System.out.println("nouv tournee : "+ nouvTournee);
         
         //Assertions
         for (int i = 0; i<nouvSuccessionPointsInteret.size(); i++) {
@@ -680,7 +665,6 @@ public class CarteTest {
         
         DemandesLivraisons dl2 = carte2.getDemandesLivraisons();
         Tournee tournee2 = carte2.getTournee();
-        System.out.println("tournee 2 : "+ tournee2);
         ArrayList<PointInteret> successionPointsInteretInitiale2 = tournee2.getSuccessionPointsInteret();
        
         PointInteret pointADeplacer2 = successionPointsInteretInitiale2.get(2);
@@ -690,7 +674,6 @@ public class CarteTest {
         boolean retour = carte2.deplacerPointInteret(pointADeplacer2, decalage2);
         Tournee nouvTournee2 = carte2.getTournee();
         ArrayList<PointInteret> nouvSuccessionPointsInteret2 = nouvTournee2.getSuccessionPointsInteret();
-        System.out.println("nouv tournee 2 : "+ nouvTournee2);
         
         //Assertions
         assertEquals(false, retour);
@@ -698,7 +681,6 @@ public class CarteTest {
         
         //Cas d'un déplacement en fin de tournée
         Tournee tournee3 = carte2.getTournee();
-        System.out.println("tournee : "+ tournee3);
        
         PointInteret pointADeplacer3 = nouvSuccessionPointsInteret2.get(4);
         int decalage3 = 2;
@@ -716,7 +698,6 @@ public class CarteTest {
         carte2.deplacerPointInteret(pointADeplacer3, decalage3);
         Tournee nouvTournee3 = carte2.getTournee();
         ArrayList<PointInteret> nouvSuccessionPointsInteret3 = nouvTournee3.getSuccessionPointsInteret();
-        System.out.println("nouv tournee 3 : "+ nouvTournee3);
         
         //Assertions
         for (int i = 0; i<nouvSuccessionPointsInteret3.size(); i++) {

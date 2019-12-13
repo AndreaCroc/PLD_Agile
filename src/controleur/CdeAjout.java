@@ -18,23 +18,42 @@ import modele.Tournee;
  */
 public class CdeAjout implements CommandeTournee {
 
+    //Point d'enlevement ajoute
     private PointInteret pointEnlevement;
+    //Point de livraison ajoute
     private PointInteret pointLivraison;
     private PointInteret pointAvantLivr; // point d'intérêt après lequel on 
     // souhaite placer le point de livraison
     private PointInteret pointAvantEnlvt; // point d'intérêt après lequel 
     //on souhaite placer le point d'enlèvement
 
-    public CdeAjout(PointInteret pointEnlevement, PointInteret pointLivraison, PointInteret pointAvantLivr, PointInteret pointAvantEnlvt) {
+    /**
+     * Constructeur de la classe CdeAjout
+     * @param pointEnlevement point d'enlevement
+     * @param pointLivraison point de livraison
+     * @param pointAvantLivr point avant la livraison
+     * @param pointAvantEnlvt point avant l'enlevement
+     */
+    public CdeAjout(PointInteret pointEnlevement, PointInteret pointLivraison, 
+                    PointInteret pointAvantLivr, PointInteret pointAvantEnlvt) {
         this.pointEnlevement = pointEnlevement;
         this.pointLivraison = pointLivraison;
         this.pointAvantLivr = pointAvantLivr;
         this.pointAvantEnlvt = pointAvantEnlvt;
     }
 
+    /**
+     * Revient à ajouter le point
+     * @param carte est la carte courante
+     * @param tournee est la tourneée courante
+     * @param fenetre est la fenêtre courante
+     * @param controleur est le controleur courant
+     */
     @Override
-    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
-        carte.ajouterLivraison(pointEnlevement, pointLivraison, pointAvantLivr, pointAvantEnlvt);
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                      Controleur controleur) {
+        carte.ajouterLivraison(pointEnlevement, pointLivraison, 
+                               pointAvantLivr, pointAvantEnlvt);
         tournee = carte.getTournee();
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);
@@ -50,8 +69,16 @@ public class CdeAjout implements CommandeTournee {
         controleur.setEtat(controleur.etatTournee);
     }
 
+    /**
+     * Le undo revient a supprimer le point ajouter
+     * @param carte est la carte courante
+     * @param tournee est la tournée courante
+     * @param fenetre est la fenêtre courante
+     * @param controleur est le controleur courant
+     */
     @Override
-    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur) {
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                        Controleur controleur) {
         boolean suppOk = carte.supprimerPointInteret(pointEnlevement);
         tournee = carte.getTournee();
         ArrayList<PointInteret> listePIs = carte.getListePointsInteretActuelle();

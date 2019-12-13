@@ -22,7 +22,7 @@ import modele.Troncon;
 public class AffichagePIs extends AbstractTableModel {
 
     private final ArrayList<LignePI> lignePIs; //Liste des points d interet 
-    private final String header[]; //En tete du tableau
+    private final String header[]; //En-tete du tableau
     private int lignePISelect; //Numero de la ligne selectionnee
     //Numero de la ligne du point dependant de la ligne selectionnee
     private int lignePIDepSelect;
@@ -71,8 +71,8 @@ public class AffichagePIs extends AbstractTableModel {
     /**
      * Recuperer la valeur d une cellue du tableau
      *
-     * @param rowIndex : numero de la ligne
-     * @param columnIndex : numero de la colonne
+     * @param rowIndex numero de la ligne
+     * @param columnIndex numero de la colonne
      * @return : Objet qui est dans la cellule de coordonnees
      * [rowIndex,columnIndex]
      */
@@ -95,8 +95,8 @@ public class AffichagePIs extends AbstractTableModel {
     /**
      * Recuperer le nom de la colonne
      *
-     * @param columnIndex : numero de la colonne
-     * @return : nom de la colonne
+     * @param columnIndex numero de la colonne
+     * @return nom de la colonne
      */
     @Override
     public String getColumnName(int columnIndex) {
@@ -106,9 +106,9 @@ public class AffichagePIs extends AbstractTableModel {
     /**
      * Recuperer la classe d un element du tableau
      *
-     * @param columnIndex : indice de la colonne dont on veut recuperer la
+     * @param columnIndex indice de la colonne dont on veut recuperer la
      * classe
-     * @return : classe de la colonne
+     * @return classe de la colonne
      */
     @Override
     public Class getColumnClass(int columnIndex) {

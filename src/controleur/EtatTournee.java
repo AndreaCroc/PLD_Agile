@@ -27,12 +27,13 @@ public class EtatTournee implements Etat {
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l
      * EtatDeBase
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
-    public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void changerCarte(Controleur controleur, Fenetre fenetre, 
+                             Carte carte) {
 
         boolean changerCarte = false;
         
@@ -63,7 +64,8 @@ public class EtatTournee implements Etat {
 
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur3("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur3("Erreur lors du chargement "
+                                                + "du fichier");
                 carte.setDemandesLivraisons(null);
                 fenetre.viderPanneauEtapes();
                 fenetre.viderPanneauPIs();
@@ -80,8 +82,10 @@ public class EtatTournee implements Etat {
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur3("Erreur lors de la sélection du fichier");
+            //En cas d erreur lie a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur3("Erreur lors de la sélection "
+                                            + "du fichier");
         }
     }
 
@@ -89,12 +93,13 @@ public class EtatTournee implements Etat {
      * Charger des livraisons depuis un fichier XML En cas de succes on retourne
      * a l etat EtatLivraison En cas d echec, on reste dans cet etat
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
-    public void chargerLivraison(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void chargerLivraison(Controleur controleur, Fenetre fenetre, 
+                                 Carte carte) {
 
         boolean chargerLivraison = false;
         String cheminFichier = fenetre.getInputChargeLiv();
@@ -127,12 +132,15 @@ public class EtatTournee implements Etat {
                 
             } else {
                 //Sinon, on affiche un message d erreur
-                fenetre.afficherMessageErreur2("Erreur lors du chargement du fichier");
+                fenetre.afficherMessageErreur2("Erreur lors du chargement "
+                                                + "du fichier");
             }
 
         } catch (Exception e) {
-            //En cas d erreur lie a la selection d un fichier, on affiche un message
-            fenetre.afficherMessageErreur2("Erreur lors de la sélection du fichier");
+            //En cas d erreur lie a la selection d un fichier, 
+            //on affiche un message
+            fenetre.afficherMessageErreur2("Erreur lors de la sélection "
+                                            + "du fichier");
         }
     }
 
@@ -140,15 +148,17 @@ public class EtatTournee implements Etat {
      * Supprimer un point d interet de la tournee Dans tous les cas, on passe
      * dans l etat EtatSupprimer
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param tournee
-     * @param index
-     * @param listeCommandes
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte crate courante
+     * @param tournee tournee courante
+     * @param index indice du point d'interet a supprimer
+     * @param listeCommandes liste des commandes deja effectuees
      */
     @Override
-    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, int index, ListeCdesTournee listeCommandes) {
+    public void supprimer(Controleur controleur, Fenetre fenetre, Carte carte, 
+                          Tournee tournee, int index, 
+                          ListeCdesTournee listeCommandes) {
         fenetre.setClicSupp(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatSupprimer);
@@ -158,33 +168,37 @@ public class EtatTournee implements Etat {
      * Supprimer un point d interet de la tournee Dans tous les cas, on passe
      * dans l etat EtatSupprimer
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param tournee
-     * @param listeCommandes
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
+     * @param tournee tournee courante
+     * @param listeCommandes liste des commandes deja effectuees
      */
     @Override
-    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee, ListeCdesTournee listeCommandes) {
+    public void ajouter(Controleur controleur, Fenetre fenetre, Carte carte, 
+                        Tournee tournee, ListeCdesTournee listeCommandes) {
         controleur.setEtat(controleur.etatAjouterPtEnlevement);
         fenetre.griserBoutonsSupprimer();
         fenetre.clearAllPointsAjoutes();
-        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un emplacement pour l'enlèvement");
+        JOptionPane.showMessageDialog(fenetre, "Merci de choisir un emplacement"
+                                       + " pour l'enlèvement");
     }
 
     /**
-     * Modifier l ordre de passage d un point d interet dans la tournee On passe
-     * dans l etat EtatModifier
+     * Modifier l ordre de passage d un point d interet dans la tournee 
+     * On passe dans l etat EtatModifier
      *
-     * @param controleur
-     * @param fenetre
-     * @param tournee
-     * @param carte
-     * @param index
-     * @param listeCommandes
+     * @param controleur controleur
+     * @param fenetre fenetre courahnte
+     * @param tournee tournee courante
+     * @param carte carte courante
+     * @param index indice du point a modifier
+     * @param listeCommandes liste des commandes deja effectuees
      */
     @Override
-    public void modifier(Controleur controleur, Fenetre fenetre, Tournee tournee, Carte carte, int index, ListeCdesTournee listeCommandes) {
+    public void modifier(Controleur controleur, Fenetre fenetre, 
+                         Tournee tournee, Carte carte, int index, 
+                         ListeCdesTournee listeCommandes) {
         fenetre.setClicModif(true);
         fenetre.griserBoutonsSupprimer();
         controleur.setEtat(controleur.etatModifier);
@@ -194,7 +208,7 @@ public class EtatTournee implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -207,7 +221,7 @@ public class EtatTournee implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override
@@ -218,8 +232,8 @@ public class EtatTournee implements Etat {
     
     /**
      * Retourner a l action precedente
-     * @param liste 
-     * @param fenetre 
+     * @param liste liste des commandes
+     * @param fenetre fenetre courante
      */
     @Override
     public void undo(ListeCdesTournee liste, Fenetre fenetre){
@@ -229,8 +243,8 @@ public class EtatTournee implements Etat {
     
     /**
      * Refaire l action
-     * @param liste 
-     * @param fenetre 
+     * @param liste liste des commandes
+     * @param fenetre fenetre courante
      */
     @Override
     public void redo(ListeCdesTournee liste, Fenetre fenetre){
@@ -241,21 +255,22 @@ public class EtatTournee implements Etat {
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
-     * @param tournee
+     * @param controleur controleur
+     * @param fenetre fenetre courante
+     * @param carte carte courante
+     * @param tournee tournee courante
      */
     @Override
-    public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void calculerTournee(Controleur controleur, Fenetre fenetre, 
+                                Carte carte, Tournee tournee) {
 
         fenetre.afficherBoutonArretCalcul();
-//        fenetre.repaint();
-//        try {
-//            sleep(2000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(EtatTournee.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EtatTournee.class.getName())
+                   .log(Level.SEVERE, null, ex);
+        }
         fenetre.viderPanneauEtapes();
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
@@ -282,7 +297,8 @@ public class EtatTournee implements Etat {
      * @param tournee tournee
      */
     @Override
-    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
+    public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, 
+                                      Carte carte, Tournee tournee) {
         System.out.println("arreter calcul tournee etat livraison");
         carte.arretDemande();
         try {

@@ -17,19 +17,21 @@ public interface CommandeTournee {
     
     /**
      * Realiser la commande
-     * @param carte
-     * @param tournee
-     * @param fenetre
-     * @param controleur
+     * @param carte carte courante
+     * @param tournee tournee courante
+     * @param fenetre fenetre courante
+     * @param controleur controleur
      */
-    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur);
+    public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                      Controleur controleur);
     
     /**
      * Realiser la commande inverse
-     * @param carte
-     * @param tournee
-     * @param fenetre
-     * @param controleur
+     * @param carte carte courante
+     * @param tournee tournee courantet
+     * @param fenetre fenetre courante
+     * @param controleur controleur
      */
-    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, Controleur controleur);
+    public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
+                        Controleur controleur);
 }
