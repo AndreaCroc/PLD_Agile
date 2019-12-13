@@ -250,8 +250,8 @@ public class EtatTournee implements Etat {
     }
     
     /**
-     * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
-     *
+     * Calculer une tournee 
+     * Dans tous les cas, on passe a l etat EtatTournee
      * @param controleur controleur
      * @param fenetre fenetre courante
      * @param carte carte courante

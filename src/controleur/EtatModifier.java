@@ -36,22 +36,27 @@ public class EtatModifier implements Etat {
                          Tournee tournee, Carte carte, int index, 
                          ListeCdesTournee listeCommandes) {
         if (index != 0) {
+            //Recuperer le point d interet que l utilisateur veut deplacer
             ArrayList<PointInteret> listePIs = carte
                                             .getListePointsInteretActuelle();
-            //Recuperer le point d interet que l utilisateur veut deplacer
-            int option = 1; //choix de valider ou non le deplacement 
-            int decalage = 0; //de combien a ete deplace le point d interet
-            boolean modifOk = false; //si le deplacement s'est bien passee
+            
+            int option = 1;             //choix de valider ou non le deplacement 
+            int decalage = 0;           //de combien a ete deplace le point d interet
+            boolean modifOk = false;    //si le deplacement s'est bien passee
+            
             //point d interet qu on veut deplacer
             PointInteret ptI = new PointInteret(); 
             int pos = 0; //Position du point d interet dan sla tournee
             int min = 0; //deplacement max au plus tot
             int max = 0; //deplacement max au plus tard
+            
              //Retour methode classe Fenetre
             ArrayList<Integer>choix = new ArrayList<Integer>();
+            
             //liste de la classe Tournee
             ArrayList<PointInteret> listeTournee = new ArrayList<PointInteret>(); 
             CdeModif commande;
+            
             //Si l index est inferieur a la taille de la liste de la carte
             if (index < listePIs.size()) {
                 ptI = listePIs.get(index);
@@ -64,6 +69,7 @@ public class EtatModifier implements Etat {
                 choix = fenetre.afficherPopModification(min, max);
                 option = choix.get(0);
                 decalage = choix.get(1);
+                
                 //Si on confirme la modification
                 if (option == JOptionPane.OK_OPTION) {
                     modifOk = carte.deplacerPointInteret(ptI,decalage);
@@ -82,12 +88,14 @@ public class EtatModifier implements Etat {
 
                     //Si modification effectuee mais non respect contrainte
                     if (!modifOk) {
+                        
                         //Afficher popup pour prevenir modification ne 
                         //respecte pas contrainte
                         fenetre.afficherPopPrevenirModification();
                     }
                     commande = new CdeModif(ptI, decalage);
                     listeCommandes.ajouterCommande(commande);
+                    
                     //Si on annule la modification via la popup
                 } else {
                     fenetre.afficherBoutonSupprimer();
@@ -137,7 +145,7 @@ public class EtatModifier implements Etat {
      * Annuler le mode modification d un point d interet On repasse dans l etat
      * EtatTournee
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      */
     @Override

@@ -24,7 +24,7 @@ public class EtatSupprimer implements Etat {
      * Supprimer un point d interet de la tournee et son point correspondant On
      * repasse soit a l etat tournee soit a l etat de base
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      * @param tournee tournee courante
@@ -42,16 +42,21 @@ public class EtatSupprimer implements Etat {
                                                .getListePointsInteretActuelle();
 
             //Recuperer le point d interet que l utilisateur veut supprimer
-            int option = 1; //choix de valider ou non la suppression
+            int option = 1;         //choix de valider ou non la suppression
             boolean suppOk = false; //si la suppression s'est bien passee
+            
             //point d interet qu on veut supprimer
             PointInteret ptI = new PointInteret();
+            
             //point de dependance du point a supprimer
             PointInteret ptD = new PointInteret(); 
+            
             //point interet apres lequel se trouve l'enlevement
             PointInteret ptAvantEnlevement = new PointInteret(); 
+                    
             //point interet apres lequel se trouve la livraison 
             PointInteret ptAvantLivraison = new PointInteret(); 
+            
             //Commande de suppression
             CdeSupprime commande;
            

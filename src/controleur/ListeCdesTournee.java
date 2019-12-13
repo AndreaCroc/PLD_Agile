@@ -17,13 +17,13 @@ import modele.Tournee;
  */
 public class ListeCdesTournee {
 
-    private ArrayList<CommandeTournee> listeCommandes; //Liste des commandes 
-    //deja effectuees
-    private int indiceActuel; //indice de la commande actuelle
-    private Controleur controleur; //Controleur
-    private Carte carte; //carte courante
-    private Tournee tournee; //Tournee courante
-    private Fenetre fenetre; //Fenetre courante
+    //Liste des commandes deja effectuees
+    private ArrayList<CommandeTournee> listeCommandes;  
+    private int indiceActuel;       //indice de la commande actuelle
+    private Controleur controleur;  //Controleur
+    private Carte carte;            //carte courante
+    private Tournee tournee;        //Tournee courante
+    private Fenetre fenetre;        //Fenetre courante
 
     /**
      * Constructeur de la classe ListeCdesTournee
@@ -55,7 +55,6 @@ public class ListeCdesTournee {
         }
         indiceActuel++;
         listeCommandes.add(indiceActuel, commande);
-        //commande.doCde(carte, tournee, fenetre, controleur);
     }
 
     /**
