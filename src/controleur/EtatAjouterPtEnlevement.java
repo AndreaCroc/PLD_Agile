@@ -41,7 +41,7 @@ public class EtatAjouterPtEnlevement implements Etat {
         int numeroDemande;
         int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
                                                       .size();
-
+        
         // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
@@ -97,7 +97,7 @@ public class EtatAjouterPtEnlevement implements Etat {
         fenetre.setPE(new PointInteret(interE, duree));
         
         //S'il ne reste que l'entrepot :
-        if (carte.getDemandesLivraisons().getListePointsInteret().size() == 1) {
+        if (nbDemandes == 1) {
             numeroDemande = 1;
         } else {
             numeroDemande = (nbDemandes - 1) / 2 + 1;

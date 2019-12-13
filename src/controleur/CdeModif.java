@@ -17,13 +17,13 @@ import modele.Tournee;
  */
 public class CdeModif implements CommandeTournee {
 
-    private PointInteret ptI; //Point d'interet a modifier
-    private int decalage; //Valeur de decalage dans la tournee
+    private PointInteret ptI;   //Point d'interet a modifier
+    private int decalage;       //Valeur de decalage dans la tournee
 
     /**
      * Constructeur de la classe CdeModif
-     * @param ptI point d'interet modifie
-     * @param decalage //valeur du decalage dans la tournee
+     * @param ptI Point d'interet modifie
+     * @param decalage Valeur du decalage dans la tournee
      */
     public CdeModif(PointInteret ptI, int decalage) {
         this.ptI = ptI;
@@ -89,13 +89,6 @@ public class CdeModif implements CommandeTournee {
 
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
-
-        //Si modification effectuee mais non respect contrainte
-        if (!modifOk) {
-            //Afficher popup pour prevenir modification ne respecte pas contrainte
-            fenetre.afficherPopPrevenirModification();
-        }
-        
     }
 
 }

@@ -7,7 +7,7 @@ import modele.Tournee;
 
 /**
  * CommandeTournee regroupe les commandes possibles
- * Inspirer de l application PlaCo
+ * Inspire de l application PlaCo
  *
  * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
@@ -20,7 +20,7 @@ public interface CommandeTournee {
      * @param carte carte courante
      * @param tournee tournee courante
      * @param fenetre fenetre courante
-     * @param controleur controleur
+     * @param controleur controleur courant
      */
     public void doCde(Carte carte, Tournee tournee, Fenetre fenetre, 
                       Controleur controleur);
@@ -30,7 +30,7 @@ public interface CommandeTournee {
      * @param carte carte courante
      * @param tournee tournee courantet
      * @param fenetre fenetre courante
-     * @param controleur controleur
+     * @param controleur controleur courant
      */
     public void undoCde(Carte carte, Tournee tournee, Fenetre fenetre, 
                         Controleur controleur);

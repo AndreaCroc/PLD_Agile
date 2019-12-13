@@ -74,51 +74,54 @@ public class Controleur {
     }
 
     /**
-     * Calculer une tournee
+     * Calculer une tournée
      */
     public void calculerTournee() {
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
-
+    
+    /**
+     * Modifier l'ordre de passage dans une tournée
+     * @param index indice du point d'intéret à modifier
+     */
     public void modifier(int index) {
-        System.out.println("controleur modifier");
         etatCourant.modifier(this, fenetre, tournee, carte, index, listeCommandes);
     }
 
     /**
-     * Supprimer un point d interet de la tournee
+     * Supprimer un point d'intéret de la tournée
      *
-     * @param index : numero du point d interet a supprimer
+     * @param index numero du point d'intéret à supprimer
      */
     public void supprimer(int index) {
         etatCourant.supprimer(this, fenetre, carte, tournee, index, listeCommandes);
     }
 
     /**
-     * Annuler la suppression d un point d interet
+     * Annuler la suppression d'un point d'intéret
      */
     public void annuler() {
         etatCourant.annuler(this, fenetre);
     }
 
     /**
-     * Ajouter un point dinteret a la tournee
+     * Ajouter un point d'intéret à la tournee
      */
     public void ajouter() {
         etatCourant.ajouter(this, fenetre, carte, tournee, listeCommandes);
     }
 
     /**
-     * Modifier l etat courant du controleur
+     * Modifier l'état courant du controleur
      *
-     * @param etat
+     * @param etat état dans lequel on souhaite passer
      */
     public void setEtat(Etat etat) {
         etatCourant = etat;
     }
 
     /**
-     * Methode appelee par la fenetre quand l'utilisateur clique sur le bouton
+     * Méthode appelée par la fenetre quand l'utilisateur clique sur le bouton
      * "Undo" Code source : PlaCo
      */
     public void undo() {
@@ -126,7 +129,7 @@ public class Controleur {
     }
 
     /**
-     * Methode appelee par fenetre apres un clic sur le bouton "Redo" Code
+     * Methode appelée par fenetre après un clic sur le bouton "Redo" Code
      * source : PlaCo
      */
     public void redo() {
@@ -134,7 +137,7 @@ public class Controleur {
     }
 
     /**
-     * Permet d annuler les commandes stockees precedemment
+     * Permet d'annuler les commandes stockées précédemment
      */
     public void annulerAnciennesCommandes() {
         listeCommandes.annulerAnciennesCommandes();
@@ -144,7 +147,7 @@ public class Controleur {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param ptI point d interet clique
+     * @param ptI point d'interet cliqué
      */
     public void surbrillerTables(PointInteret ptI) {
         etatCourant.surbrillerTables(fenetre, ptI);
@@ -202,7 +205,6 @@ public class Controleur {
      * @param decalage orientation du decalage souhaite
      */
     public void decalage(int decalage) {
-        System.out.println(this.fenetre.getWidth());
         if (decalage == 1 || decalage == -1) {
 
             if ((this.fenetre.getDeplX() + decalage * 50) >= 0
