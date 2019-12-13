@@ -3,6 +3,7 @@ package tsp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.TreeMap;
 
 public abstract class TemplateTSP implements TSP {
 
@@ -16,7 +17,13 @@ public abstract class TemplateTSP implements TSP {
         return tempsLimiteAtteint;
     }
     
-    public void chercheSolution(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree) {
+    public void chercheSolution(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree)
+    {
+        
+    };
+    
+    
+    public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur) {
         System.out.println("cherche solution");
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Double.MAX_VALUE;
@@ -30,7 +37,7 @@ public abstract class TemplateTSP implements TSP {
         vus.add(0); // le premier sommet visite est 0
         //while(meilleureSolution)
         while(!nouvelleSolution){
-            branchAndBound(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite);
+            branchAndBound(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite,mapPredecesseur);
         }
         System.out.print("Meilleure Solution : [");
         for (int i = 0; i < meilleureSolution.length; i++) {
@@ -88,7 +95,7 @@ public abstract class TemplateTSP implements TSP {
      * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
      * terminant par le sommet 0
      */
-    protected abstract int bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree);
+    protected abstract float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, TreeMap<Integer,Integer> mapPredecesseur);
 
     /**
      * Methode devant etre redefinie par les sous-classes de TemplateTSP
@@ -102,7 +109,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus
      */
-    protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree);
+    protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur);
 
     /**
      * Methode definissant le patron (template) d'une resolution par separation
@@ -120,7 +127,7 @@ public abstract class TemplateTSP implements TSP {
      * tpsDebut : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
      */
-    public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite) {
+    public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite, TreeMap<Integer,Integer> mapPredecesseur) {
         
         //while(stop==false){
             if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
@@ -134,20 +141,20 @@ public abstract class TemplateTSP implements TSP {
                     vus.toArray(meilleureSolution);
                     coutMeilleureSolution = coutVus;
                     //System.out.println("TemplateTSP ligne 100, nouvelle meilleure solution de cout : "+coutMeilleureSolution);
-                    System.out.println("TemplateTSP ligne 101, nouvelle meilleure solution  : "+vus.toString());
+                    //System.out.println("TemplateTSP ligne 101, nouvelle meilleure solution  : "+vus.toString());
                     nouvelleSolution=true;
                     
                     setMeilleureSolution(meilleureSolution);
                     //return meilleureSolution;
                 }
    
-            } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
-                Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree);
+            } else if (coutVus + bound(sommetCrt, nonVus, cout, duree, mapPredecesseur) < coutMeilleureSolution) {
+                Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree, mapPredecesseur);
                 while (it.hasNext()) {
                     Integer prochainSommet = it.next();
                     vus.add(prochainSommet);
                     nonVus.remove(prochainSommet);
-                    branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite);
+                    branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, mapPredecesseur);
                     vus.remove(prochainSommet);
                     nonVus.add(prochainSommet);
                 }

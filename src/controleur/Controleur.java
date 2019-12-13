@@ -76,11 +76,11 @@ public class Controleur {
      */
     public void calculerTournee() {
         etatCourant.attendreCalcul(fenetre);
-        try {
-            sleep(2000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            sleep(2000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(EtatLivraison.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         etatCourant.calculerTournee(this, fenetre, carte, tournee);
     }
 

@@ -250,11 +250,12 @@ public class EtatTournee implements Etat {
     public void calculerTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
 
         fenetre.afficherBoutonArretCalcul();
-        try {
-            sleep(2000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(EtatTournee.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        fenetre.repaint();
+//        try {
+//            sleep(2000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(EtatTournee.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         fenetre.viderPanneauEtapes();
         fenetre.viderPanneauPIs();
         fenetre.afficherMessageErreur3("");
@@ -266,7 +267,7 @@ public class EtatTournee implements Etat {
         fenetre.afficherEtapesTour(true);
         fenetre.afficherPanneauPI(true);
         fenetre.afficherBoutonSupprimer();
-        //fenetre.griserBoutonArretCalcul();
+        fenetre.griserBoutonArretCalcul();
         fenetre.repaint();
         controleur.setEtat(controleur.etatTournee);
         controleur.annulerAnciennesCommandes();
@@ -283,6 +284,12 @@ public class EtatTournee implements Etat {
     @Override
     public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, Carte carte, Tournee tournee) {
         System.out.println("arreter calcul tournee etat livraison");
+        carte.arretDemande();
+        try {
+            sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EtatTournee.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

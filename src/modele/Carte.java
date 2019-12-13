@@ -312,6 +312,13 @@ public class Carte {
 
     }
 
+    
+     public void arretDemande()
+    {
+        //unTSP.arretDemande();
+    }
+    
+    
     /**
      * Méthode permettant de calculer une tournée pour répondre aux demandes de
      * livraison
@@ -321,15 +328,6 @@ public class Carte {
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
-        double nbPheromone = 15;
-
-        Double[][] matricePheromone = new Double[nbSommets + 5][nbSommets + 5];
-        //Creation de la tournée
-        for (int i = 0; i < nbSommets; i++) {
-            for (int j = 0; j < nbSommets; j++) {
-                matricePheromone[i][j] = nbPheromone;
-            }
-        }
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         Integer indPointPrec;
@@ -349,10 +347,13 @@ public class Carte {
             for (int i = 0; i < nbSommets; i++) {
                 duree[i] = listePointsInteret.get(i).getDuree();
             }
-
+            long debut = System.currentTimeMillis();
             //Execution du TSP
-            unTSP.chercheSolution3(1000000, nbSommets, cout, duree, this.mapPredecesseur, matricePheromone);
-
+            //unTSP.chercheSolution2(1000000, nbSommets, cout, duree, this.mapPredecesseur);
+            unTSP.chercheSolutionPredecesseur(15000, nbSommets, cout, duree, this.mapPredecesseur);
+            long fin = System.currentTimeMillis()- debut;
+            System.out.println("Temps TSP");
+            System.out.println(fin);
             indPointPrec = unTSP.getMeilleureSolution(0);
 
             PointInteret pointCourant = new PointInteret();

@@ -12,11 +12,11 @@ public class TSP2 extends TSP1 implements TSP {
     private boolean nouvelleSolution2=false;
 
     @Override
-    protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree) {
+    protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur ) {
         return 0;
     }
 
-    protected Iterator<Integer> iterator2(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, TreeMap<Integer,Integer> mapPredecesseur) {
+    protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, TreeMap<Integer,Integer> mapPredecesseur) {
         
         return new IteratorSeq2(nonVus, sommetCrt, mapPredecesseur);
     }
@@ -31,8 +31,8 @@ public class TSP2 extends TSP1 implements TSP {
         nouvelleSolution2=b;
     }
     
- 
-     public void chercheSolution2(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur) {
+     @Override
+     public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur) {
         System.out.println("cherche solution");
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Double.MAX_VALUE;
@@ -46,19 +46,19 @@ public class TSP2 extends TSP1 implements TSP {
         vus.add(0); // le premier sommet visite est 0
         //while(meilleureSolution)
  
-        branchAndBound2(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite, mapPredecesseur);
+        branchAndBound(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite, mapPredecesseur);
         
-        System.out.print("Meilleure Solution : [");
-        for (int i = 0; i < meilleureSolution.length; i++) {
-            System.out.print(meilleureSolution[i]+", ");
-        }
-        System.out.print("]");
+//        System.out.print("Meilleure Solution : [");
+//        for (int i = 0; i < meilleureSolution.length; i++) {
+//            System.out.print(meilleureSolution[i]+", ");
+//        }
+//        System.out.print("]");
             //System.out.println("SOLUTION "+meilleureSolution.toString());
             //System.out.println("STOP1 "+stop);
     }
     
-    
-    void branchAndBound2(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite,TreeMap<Integer,Integer> mapPredecesseur) {
+    @Override
+    public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite,TreeMap<Integer,Integer> mapPredecesseur) {
 
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
@@ -68,18 +68,18 @@ public class TSP2 extends TSP1 implements TSP {
             coutVus += cout[sommetCrt][0];
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 
-                System.out.println("TemplateTSP ligne 101, nouvelle meilleure solution  : "+vus.toString());
+                //System.out.println("TemplateTSP ligne 101, nouvelle meilleure solution  : "+vus.toString());
                 vus.toArray(meilleureSolution);
                 coutMeilleureSolution = coutVus;
                 setMeilleureSolution(meilleureSolution);
             }
-        } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
-            Iterator<Integer> it = iterator2(sommetCrt, nonVus, cout, duree, mapPredecesseur);
+        } else if (coutVus + bound(sommetCrt, nonVus, cout, duree, mapPredecesseur) < coutMeilleureSolution) {
+            Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree, mapPredecesseur);
             while (it.hasNext()) {
                 Integer prochainSommet = it.next();
                 vus.add(prochainSommet);
                 nonVus.remove(prochainSommet);
-                branchAndBound2(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, mapPredecesseur);
+                branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, mapPredecesseur);
                 vus.remove(prochainSommet);
                 nonVus.add(prochainSommet);
             }
