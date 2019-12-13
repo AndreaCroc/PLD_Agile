@@ -799,7 +799,13 @@ public class Carte {
         }
     };
 
-    // Permettant de selectionner un fichier XML dans une fenetre
+    /**
+     * Méthode permettant de selectionner un fichier XML dans une fenetre
+     * @param lecture Vrai si l'opération a effectuer est une lecture de fichier
+     * False sinon
+     * @return Fichier sur lequel on a effectué l'opération
+     * @throws Exception Peut être n'importe quelle erreur rencontrée
+     */
     public File choisirFichierXML(boolean lecture) throws Exception {
         int returnVal;
         JFileChooser jFileChooserXML = new JFileChooser();
