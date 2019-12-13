@@ -84,7 +84,7 @@ public abstract class TemplateTSP implements TSP {
     }
 
     /**
-     * Retourne l'émément i de la meilleure solution
+     * Retourne l émément i de la meilleure solution
      * @param i indice
      * @return meilleureSolution[i]
      */

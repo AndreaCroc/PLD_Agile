@@ -14,8 +14,12 @@ public class IteratorProbaTransition implements Iterator<Integer> {
         private double beta =0.5;
         private Double[] probaCandidats;
         private double[][] cout;
+        
 	/**
 	 * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
+         * ainsi que leur probabilité selon une variante de l'algorithme 
+         * de colonie des fourmis
+         * 
 	 * @param nonVus
 	 * @param sommetCrt
 	 */

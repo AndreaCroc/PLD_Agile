@@ -50,7 +50,21 @@ public class TSP1 extends TemplateTSP implements TSP {
         return 0;
     }
 
-    
+      /**
+     * Methode permettant d'itérer sur les sommets nonVus
+     *en prenant en compte les prédécesseurs
+     * 
+     * @param sommetCrt
+     * @param nonVus : tableau des sommets restant a visiter
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets
+     *  mapPredecesseur : contraintes de precedences entre les sommets
+	 * @return
+     * un iterateur permettant d'iterer sur tous les sommets de nonVus dont
+     * les predecesseurs ont déja été vus
+     */
     protected Iterator<Integer> iterator(Integer sommetCrt,
             ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, 
             TreeMap<Integer,Integer> mapPredecesseur) {

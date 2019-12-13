@@ -6,7 +6,8 @@ import java.util.TreeMap;
 
 /**
  *TSP 2 , implémentation du TSP avec contraintes de  precedences
- * et algorithme 
+ * et algorithme avec une heuristique d'optimisation inspiré des algorithmes
+ * de colonies de fourmi
  *
  * Inspire du code TSP
  * inspiré de https://github.com/maaouiah/Java_Algo-Colonies-fourmis
@@ -29,12 +30,31 @@ public class TSP2 extends TSP1 implements TSP {
     private int i =0;
     private Double[][] matricePheromone;
 
-    
+    /**
+     * Retourne la matrice des Pheromone
+     * @return matricePheromone
+     */
     public Double[][] getMatricePheromone()
     {
         return (matricePheromone);
     }
     
+    /**
+     * Calcule l'heuristique de la solution courante pour déterminer
+     * si on doit poursuivre la recherche sur cette branche
+     *
+     * @param sommetCourant
+     * @param nonVus : tableau des sommets restant a visiter
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets
+     *      *  mapPredecesseur : contraintes de precedences entre les sommets
+	 * @return
+     * n une borne inferieure du cout des permutations commencant par
+     * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
+     * terminant par le sommet 0
+     */
     @Override
     protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, TreeMap<Integer,Integer> mapPredecesseur) {
 
@@ -51,6 +71,21 @@ public class TSP2 extends TSP1 implements TSP {
         return foundValueRandom;
     }
     
+    
+     /**
+     * Ajoute les phéromone à la matrice des pheromones pour le chemin courant
+     * trouvé,
+     * i.e. 
+     *
+     * @param coutVus cout du chemin courant trouvé
+     * @param Vus : tableau des sommets visité
+     * @param matricePheromone : matrice des pheromones contenus entre
+     * les sommets du graphe
+	 * @return
+     * n une borne inferieure du cout des permutations commencant par
+     * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
+     * terminant par le sommet 0
+     */
     public void AjoutPheromone(ArrayList<Integer> Vus, Double[][] matricePheromone, Double coutVus)
     {
         Double delta=0.0;
@@ -65,7 +100,6 @@ public class TSP2 extends TSP1 implements TSP {
             }
         }
         
-        
         for ( int i = 0 ;
         i < Vus.size() - 1 ;
         i++)
@@ -74,6 +108,13 @@ public class TSP2 extends TSP1 implements TSP {
         }
     }
 
+    
+    /**
+     * Créer le tableau des phéromone à partir du nombre de 
+     * pheromone en attribut
+     *
+     * @param nbSommets nombre de Sommets du graphe
+     */
     public void createPheromone(int nbSommets)
     {
         
@@ -87,7 +128,14 @@ public class TSP2 extends TSP1 implements TSP {
         
 
     }
-        
+       
+    
+    /**
+     * Vaporise les phéromone de matricePheromone
+     * i.e. évite que le nombre de pheromone sur une arête devienne
+     * trop grand
+     * @param nbSommets nombre de Sommets du graphe
+     */
     public void vaporisationPheromone(int nbSommets)
     {
         
@@ -100,6 +148,23 @@ public class TSP2 extends TSP1 implements TSP {
         }    
     }
     
+    /**
+     * Methode permettant d'itérer sur les sommets nonVus
+     *en prenant en compte les prédécesseurs
+     * et une variante de la probabilité des algorithmes de 
+     * de colonies de fourmi
+     * 
+     * @param sommetCrt
+     * @param nonVus : tableau des sommets restant a visiter
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets
+     *  mapPredecesseur : contraintes de precedences entre les sommets
+	 * @return
+     * un iterateur permettant d'iterer sur tous les sommets de nonVus dont
+     * les predecesseurs ont déja été vus
+     */
     @Override
     protected Iterator<Integer> iterator(Integer sommetCrt, 
             ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, 
@@ -110,6 +175,19 @@ public class TSP2 extends TSP1 implements TSP {
     }
     
     
+     /**
+	 * Cherche un circuit de duree minimale passant par chaque sommet 
+         * (compris entre 0 et nbSommets-1) en utilisant les contraintes de
+         * precedences
+	 * @param tpsLimite : limite (en millisecondes) sur le temps 
+         * d'execution de chercheSolution
+	 * @param nbSommets : nombre de sommets du graphe
+	 * @param cout : cout[i][j] = duree pour aller de i a j, 
+         * avec 0 <= i < nbSommets et 0 <= j < nbSommets
+	 * @param duree : duree[i] = duree pour visiter le sommet i, 
+         * avec 0 <= i < nbSommets
+         * mapPredecesseur : contraintes de precedences entre les sommets
+	 */
     @Override
      public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
              Double[][] cout, Integer[] duree,
@@ -121,13 +199,11 @@ public class TSP2 extends TSP1 implements TSP {
         createPheromone(nbSommets);
         ArrayList<Integer> nonVus = new ArrayList<Integer>();
         for (int i = 1; i < nbSommets; i++) {
-            //System.out.println("ajout elt dans nonVus"+i);
             nonVus.add(i);
         }
         
         ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
         vus.add(0); // le premier sommet visite est 0
-        //while(meilleureSolution)
        
         branchAndBound(0, nonVus, vus, 0.0, cout, duree, 
                 System.currentTimeMillis(), tpsLimite, mapPredecesseur);

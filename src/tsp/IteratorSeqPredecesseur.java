@@ -11,28 +11,23 @@ public class IteratorSeqPredecesseur implements Iterator<Integer> {
 
 	/**
 	 * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
+         * dont les predecesseurs ne sont pas dans nonVus
 	 * @param nonVus
 	 * @param sommetCrt
+         * @param mapPredecesseur : contraintes de precedences entre les sommets
 	 */
 	public IteratorSeqPredecesseur(Collection<Integer> nonVus, int sommetCrt, TreeMap<Integer, Integer> mapPredecesseur){
 		Integer[] candidatsBis = new Integer[nonVus.size()];
 		nbCandidats = 0;
                 int num = 0;
 		for (Integer s : nonVus){
-                        //System.out.println(mapPredecesseur.containsKey(s));
-                        //System.out.println(mapPredecesseur.get(s));
                         Boolean estPresent=mapPredecesseur.containsKey(s);
                         if (estPresent)
                         {
-//                            System.out.println("est present");
-//                            System.out.println(s);
                             Integer predecesseur = mapPredecesseur.get(s);
-//                            System.out.println("predecesseur");
-//                            System.out.println(predecesseur);
-                            //System.out.println(nonVus);
+
                             if (!nonVus.contains(predecesseur))
                             {
-//                                System.out.println("il n'y est pas");
                                 candidatsBis[num++] = s;
                             }
                         }
@@ -44,7 +39,6 @@ public class IteratorSeqPredecesseur implements Iterator<Integer> {
 
                 
                 this.candidats = new Integer[num];
-                //System.out.println(num);
                 for (int j = 0; j < num; j++)
                 {
 			candidats[nbCandidats++] = candidatsBis[j];
@@ -52,28 +46,22 @@ public class IteratorSeqPredecesseur implements Iterator<Integer> {
                 
 	}
         
-        private boolean  containsDouble(Collection<Integer> nonVus, double predecesseurs)
-        {
-            int intPredecesseurs = (int) Math.floor(predecesseurs);
-            boolean appartient = false;
-            for (Integer PI : nonVus)
-            {
-                int pis= (int) PI;
-               
-                if (intPredecesseurs==pis)
-                {
-                    appartient=true;
-                }
-            }
-            
-            return(appartient);
-        }
-	
+	 /**
+	 * Renvoie si il y a un élément suivant dans l itérateur
+	 * @return 
+         * un booléen pour savoir s il y un élément suivant dans l'itérateur
+	 */
 	@Override
 	public boolean hasNext() {
 		return nbCandidats > 0;
 	}
 
+        
+        /**
+	 * Renvoie élément suivant dans itérateur
+	 * @return 
+         * élément suivant dans l'itérateur
+	 */
 	@Override
 	public Integer next() {
 		return candidats[--nbCandidats];
