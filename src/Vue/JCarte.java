@@ -45,9 +45,9 @@ public class JCarte extends JPanel {
     /**
      * Constructeur de la classe JCarte
      *
-     * @param carte carte
-     * @param tournee tournee
-     * @param fenetre fenetre
+     * @param carte carte courante
+     * @param tournee tournee courante
+     * @param fenetre fenetre courante
      */
     public JCarte(Carte carte, Tournee tournee, Fenetre fenetre) {
         this.carte = carte;
@@ -132,7 +132,7 @@ public class JCarte extends JPanel {
     /**
      * Recuperer la liste des points dinteret et leurs coordonnees sur la carte
      *
-     * @return liste
+     * @return liste des coordonnees des points d'interet
      */
     public ArrayList<CoordPointInteret> getCoordPtInterets() {
         return this.listeCoordPtI;

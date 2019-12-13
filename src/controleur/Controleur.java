@@ -85,7 +85,8 @@ public class Controleur {
      * @param index indice du point d'intéret à modifier
      */
     public void modifier(int index) {
-        etatCourant.modifier(this, fenetre, tournee, carte, index, listeCommandes);
+        etatCourant.modifier(this, fenetre, tournee, carte, index, 
+                             listeCommandes);
     }
 
     /**
@@ -94,7 +95,8 @@ public class Controleur {
      * @param index numero du point d'intéret à supprimer
      */
     public void supprimer(int index) {
-        etatCourant.supprimer(this, fenetre, carte, tournee, index, listeCommandes);
+        etatCourant.supprimer(this, fenetre, carte, tournee, index, 
+                              listeCommandes);
     }
 
     /**
@@ -208,14 +210,17 @@ public class Controleur {
         if (decalage == 1 || decalage == -1) {
 
             if ((this.fenetre.getDeplX() + decalage * 50) >= 0
-                    && (this.fenetre.getDeplX() + decalage * 50) <= this.fenetre.getWidth()* 0.31) {
+                    && (this.fenetre.getDeplX() + decalage * 50) 
+                    <= this.fenetre.getWidth()* 0.31) {
                 this.fenetre.setDeplX(this.fenetre.getDeplX() + decalage * 50);
                 this.fenetre.repaint();
             }
         } else {
             if ((this.fenetre.getDeplY() + ((int) (decalage / 2)) * 50) >= 0
-                    && (this.fenetre.getDeplY() + ((int) (decalage / 2)) * 50) <= (this.fenetre.getHeight() * 0.78)) {
-                this.fenetre.setDeplY(this.fenetre.getDeplY() + ((int) (decalage / 2)) * 50);
+                    && (this.fenetre.getDeplY() + ((int) (decalage / 2)) * 50) 
+                    <= (this.fenetre.getHeight() * 0.78)) {
+                this.fenetre.setDeplY(this.fenetre.getDeplY() 
+                        + ((int) (decalage / 2)) * 50);
                 this.fenetre.repaint();
             }
 

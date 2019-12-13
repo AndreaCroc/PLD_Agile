@@ -2,9 +2,6 @@ package controleur;
 
 import Vue.Fenetre;
 import Vue.JCarte;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.PointInteret;

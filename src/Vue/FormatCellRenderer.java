@@ -100,11 +100,11 @@ public class FormatCellRenderer extends DefaultTableCellRenderer {
                     } else if (value instanceof JTextArea) {
                         JTextArea textArea = (JTextArea) value;
                         textArea.setBorder(BorderFactory.createMatteBorder(2, 0, 
-                                                              2, 2, Color.blue));
+                                                             2, 2, Color.blue));
                         return textArea;
                     } else {
                         this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 
-                                                                 0, Color.blue));
+                                                                0, Color.blue));
                     }
                 }
             }

@@ -35,7 +35,7 @@ public class EcouteurSouris extends MouseAdapter {
      *
      * @param controleur controleur
      * @param vueCarte panneau de la carte
-     * @param fenetre fenetre
+     * @param fenetre fenetre courante
      */
     public EcouteurSouris(Controleur controleur, JCarte vueCarte,
             Fenetre fenetre) {
@@ -91,7 +91,8 @@ public class EcouteurSouris extends MouseAdapter {
                                     && (y >= nvYpt - 6) && (y <= nvYpt + 6)) {
                                 if (listePtI != null && !listePtI.isEmpty()) {
                                     index = listePtI.indexOf(pi);
-                                    if (index < listePtI.size() && index != -1) {
+                                    if (index < listePtI.size() 
+                                        && index != -1) {
                                         //Mettre en surbrillance la ligne du 
                                         //tableau correspondante
                                         this.controleur.surbrillerTables(pi);
@@ -107,9 +108,9 @@ public class EcouteurSouris extends MouseAdapter {
                                         if (controleur.getEtatCourant() 
                                         instanceof EtatAjouterPointAvantEnlvt) {
                                             this.controleur
-                                                    .ajouterPointAvantEnlevement(index);
+                                            .ajouterPointAvantEnlevement(index);
                                             fenetre
-                                                    .setClicAjoutAvantEnlvt(false);
+                                            .setClicAjoutAvantEnlvt(false);
                                             break;
                                         } else if (controleur.getEtatCourant() 
                                         instanceof EtatAjouterPointAvantLivr) {
@@ -137,7 +138,8 @@ public class EcouteurSouris extends MouseAdapter {
                         for (Map.Entry<Intersection, Point> iEntry 
                                 : mesCoordIntersections.entrySet()) {
                             //parcourir la map pour trouver me point qui 
-                            //correspond aux var x et y cliquées par l'utilisateur
+                            //correspond aux var x et y cliquées 
+                            //par l'utilisateur
                             Intersection key = iEntry.getKey();
                             Point value = iEntry.getValue();
                             //coordonnées adaptees des points d'intersections
