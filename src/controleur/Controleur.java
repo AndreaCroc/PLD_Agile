@@ -202,7 +202,7 @@ public class Controleur {
     }
 
     /**
-     * Effectue un decalage vers la gauche, drotie, haut ou bas sur
+     * Effectue un decalage vers la gauche, droite, haut ou bas sur
      * la vue de la carte dans l'application
      * @param decalage orientation du decalage souhaite
      */
