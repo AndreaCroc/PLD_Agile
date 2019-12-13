@@ -22,6 +22,7 @@ public class IteratorProbaTransition implements Iterator<Integer> {
          * 
 	 * @param nonVus
 	 * @param sommetCrt
+         * @param mapPredecesseur : contraintes de precedences entre les sommets
 	 */
 	public IteratorProbaTransition(Collection<Integer> nonVus, 
             int sommetCrt, TreeMap<Integer, Integer> mapPredecesseur,
@@ -73,12 +74,21 @@ public class IteratorProbaTransition implements Iterator<Integer> {
                 
 	}
         
-	
+	/**
+	 * Renvoie si il y a un élément suivant dans l itérateur
+	 * @return 
+         * un booléen pour savoir s il y un élément suivant dans l'itérateur
+	 */
 	@Override
 	public boolean hasNext() {
 		return nbCandidats > 0;
 	}
 
+        /**
+	 * Renvoie élément suivant dans itérateur selon sa probabilité
+	 * @return 
+         * élément suivant dans l'itérateur
+	 */
 	@Override
 	public Integer next() {
             Integer pointPMax=0;
