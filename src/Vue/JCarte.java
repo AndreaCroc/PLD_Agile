@@ -66,7 +66,7 @@ public class JCarte extends JPanel {
     /**
      * Modifier la tournee de la carte
      *
-     * @param nouvelleTournee
+     * @param nouvelleTournee nouvelle tournee
      */
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;

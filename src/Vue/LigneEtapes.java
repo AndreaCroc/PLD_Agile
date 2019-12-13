@@ -23,13 +23,13 @@ public class LigneEtapes {
 
     /**
      * Constructeur de la classe LigneEtapes
-     * @param ordre
-     * @param numero
-     * @param type
-     * @param rue
-     * @param depart
-     * @param arrivee
-     * @param duree 
+     * @param ordre numero de l etape dans la tournee
+     * @param numero numero de demande associe au point dinteret
+     * @param type type de point d interet
+     * @param rue rue correspondant a l intersection
+     * @param depart heure de depart du point dinteret
+     * @param arrivee heure d arrivee au point dinteret
+     * @param duree duree au point dinteret
      */
     public LigneEtapes(int ordre,int numero, String type, String rue, 
                        String depart, String arrivee, String duree) {

@@ -661,7 +661,6 @@ public class Carte {
      * Methode permettant de calculer les heures d arrivee et de depart des
      * points d interet d une tournee
      *
-     * @param tournee la tournee pour lesquelles nous souhaitons calculer les heures
      * @return la tournee mise a jour
      */
     public boolean calculerHeuresTournee() {
@@ -738,7 +737,7 @@ public class Carte {
      * Utilisee pour les calculs des heures de depart et d arrivee lors du calcul
      * de la tournee
      *
-     * @param heureStr l heure en int
+     * @param heureInt l heure en int
      *
      * @return l heure en string
      */
@@ -825,7 +824,7 @@ public class Carte {
      * @param noeudDOMRacine Noeud racine du fichier xml a lire
      * @return true si la lecture s est correctement passee false s il manque un
      * element dans le fichier xml
-     * @throws NumberFormatException
+     * @throws NumberFormatException NumberFormatException
      */
     public boolean construireCarteAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException {
         this.setListeIntersections(new ArrayList<Intersection>());
@@ -893,8 +892,8 @@ public class Carte {
      * @return true si la lecture s est correctement passee false s il manque un
      * element dans le fichier xml
      *
-     * @throws NumberFormatException
-     * @throws Exception
+     * @throws NumberFormatException NumberFormatException
+     * @throws Exception exception
      */
     public boolean construireLivraisonAPartirDeDOMXML(Element noeudDOMRacine) throws NumberFormatException, Exception {
         DemandesLivraisons sauvegardeDL = this.demandesLivraisons;
@@ -992,7 +991,7 @@ public class Carte {
      * @param estUnChangement Vrai si une carte a déjà été chargée auparavant
      * Faux sinon
      * @param fichier Chemin d'accès au fichier à ouvrir
-     * @return 
+     * @return vrai si le chargement s est bien effectue, faux sinon
      * @throws Exception Peut etre n'importe quel type d'exception
      * @throws ParserConfigurationException Indique une erreur de configuration
      * @throws SAXException Simple API for XML Exception

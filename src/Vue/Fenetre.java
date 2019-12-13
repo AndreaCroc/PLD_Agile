@@ -939,7 +939,7 @@ public class Fenetre extends JFrame {
      * Mettre en surbrillance la ligne du tableau correspondant au point d
      * interet clique
      *
-     * @param ptI
+     * @param ptI point interet a surbriller
      */
     public void surbrillerLigneTabPI(PointInteret ptI) {
         if (carte != null) {
@@ -1530,9 +1530,9 @@ public class Fenetre extends JFrame {
     /**
      * Afficher une popup pour savoir de combien deplacer le point d interet
      *
-     * @param min
-     * @param max
-     * @return
+     * @param min indice minimal dont on peut deplacer le point
+     * @param max indice maximal dont on peut deplacer le point
+     * @return la liste d'indices possibles
      */
     public ArrayList<Integer> afficherPopModification(int min, int max) {
         SpinnerNumberModel sModel = new SpinnerNumberModel(0, min, max, 1);
