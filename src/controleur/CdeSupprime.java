@@ -18,10 +18,10 @@ import modele.Tournee;
  */
 public class CdeSupprime implements CommandeTournee {
 
-    private PointInteret pi; //Point d'interet supprime
-    private PointInteret pD; //Point d'interet dependant supprime
-    private PointInteret pAvantEnlevement; //Point avant le point d'enlevement
-    private PointInteret pAvantLivraison; //Point avant le point de livraison
+    private PointInteret pi;                //Point d'interet supprime
+    private PointInteret pD;                //Point d'interet dependant supprime
+    private PointInteret pAvantEnlevement;  //Point avant le point d'enlevement
+    private PointInteret pAvantLivraison;   //Point avant le point de livraison
 
 
     /**
@@ -108,27 +108,11 @@ public class CdeSupprime implements CommandeTournee {
         int dureeLivraison;
         
         if (pi.isEnlevement()) {
-            carte.ajouterLivraison(pi, pD, pAvantEnlevement, pAvantLivraison);
-//            dureeEnlevement = pi.getDuree();
-//            dureeLivraison = pD.getDuree();
-//            pointEnlevement = new PointInteret(pi.getIntersection(), dureeEnlevement);
-//            pointLivraison = new PointInteret(pD.getIntersection(), dureeLivraison);
-            
+            carte.ajouterLivraison(pi, pD, pAvantEnlevement, pAvantLivraison);            
         } else {
             carte.ajouterLivraison(pD, pi, pAvantEnlevement, pAvantLivraison);
-//            dureeEnlevement = pD.getDuree();
-//            dureeLivraison = pi.getDuree();
-//            pointEnlevement = new PointInteret(pD.getIntersection(), dureeEnlevement);
-//            pointLivraison = new PointInteret(pi.getIntersection(), dureeLivraison);
         }
-//        pointEnlevement.setEnlevement(true);
-//        pointEnlevement.setEntrepot(false);
-//        pointEnlevement.setNumeroDemande(pi.getNumeroDemande());
-//        pointLivraison.setEnlevement(false);
-//        pointLivraison.setEntrepot(false);
-//        pointLivraison.setNumeroDemande(pD.getNumeroDemande());
-//        
-//        carte.ajouterLivraison(pointEnlevement, pointLivraison, pAvantEnlevement, pAvantLivraison);
+        
         tournee = carte.getTournee();
         fenetre.setPanneauCarte(new JCarte(carte, tournee, fenetre));
         fenetre.setTournee(tournee);

@@ -178,6 +178,7 @@ public class CheminTest {
         Troncon troncon = new Troncon("Rue Feyssine", 13.3, i, i2);
         Chemin instance = c;
         instance.ajouterTroncon(troncon);
+        assertEquals(troncon, c.getSuccessionTroncons().get(2));
     }
 
     /**
