@@ -228,7 +228,23 @@ public class TSP2 extends TSP1 implements TSP {
      
      
      
-     
+          /**
+     * Methode definissant la résolution par separation
+     * et evaluation du TSP2
+     *
+     * @param sommetCrt le dernier sommet visite
+     * @param nonVus la liste des sommets qui n'ont pas encore ete visites
+     * @param vus la liste des sommets visites (y compris sommetCrt)
+     * @param coutVus la somme des couts des arcs du chemin passant par tous les
+     * sommets de vus + la somme des duree des sommets de vus
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets @param
+     * tpsDebut : moment ou la resolution a commence
+     * @param tpsLimite : limite de temps pour la resolution
+     * mapPredecesseur : contraintes de precedences entre les sommets
+     */
     @Override
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, 
             ArrayList<Integer> vus, Double coutVus, Double[][] cout, 
