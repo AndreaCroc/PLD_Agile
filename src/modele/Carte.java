@@ -354,12 +354,8 @@ public class Carte {
                 duree[i] = listePointsInteret.get(i).getDuree();
             }
             
-            long debut = System.currentTimeMillis();
             //Execution du TSP
-            unTSP.chercheSolutionPredecesseur(15000, nbSommets, cout, duree, this.mapPredecesseur);
-            long fin = System.currentTimeMillis()- debut;
-            System.out.println("Temps TSP");
-            System.out.println(fin);
+            unTSP.chercheSolutionPredecesseur(55000, nbSommets, cout, duree, this.mapPredecesseur);
             indPointPrec = unTSP.getMeilleureSolution(0);
 
             PointInteret pointCourant = new PointInteret();

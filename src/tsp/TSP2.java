@@ -182,7 +182,6 @@ public class TSP2 extends TSP1 implements TSP {
      public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
              Double[][] cout, Integer[] duree,
              TreeMap<Integer,Integer> mapPredecesseur) {
-        System.out.println("cherche solution");
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Double.MAX_VALUE;
         meilleureSolution = new Integer[nbSommets];
@@ -198,19 +197,6 @@ public class TSP2 extends TSP1 implements TSP {
         branchAndBound(0, nonVus, vus, 0.0, cout, duree, 
                 System.currentTimeMillis(), tpsLimite, mapPredecesseur);
         
-        System.out.print("Meilleure Solution : [");
-        for (int i = 0; i < meilleureSolution.length; i++) {
-            System.out.print(meilleureSolution[i]+", ");
-        }
-        System.out.print("]");
-        System.out.print("coutmeilleure sol [");
-        System.out.print(coutMeilleureSolution);
-        System.out.println("");
-        
-        if(nbSommets >9)
-        {
-            System.out.println(matricePheromone[0][9]);
-        }
          
     }
     
