@@ -179,7 +179,7 @@ public class EtatSupprimer implements Etat {
      * Encadrer un point d interet present sur la carte
      *
      * @param fenetre fenetre courante
-     * @param p poitn d interet selectionne
+     * @param p point d'interet selectionne
      */
     @Override
     public void surbrillerPI(Fenetre fenetre, PointInteret p) {

@@ -107,7 +107,8 @@ public class EtatLivraison implements Etat {
      * @param carte carte courante
      */
     @Override
-    public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {
+    public void changerCarte(Controleur controleur, Fenetre fenetre, 
+                             Carte carte) {
         boolean changerCarte = false;
         
         try {
