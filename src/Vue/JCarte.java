@@ -432,7 +432,7 @@ public class JCarte extends JPanel {
         super.paintComponent(g);
 
         ArrayList<Intersection> intersections = carte.getListeIntersections();
-
+        //Affichage de la carte
         for (Intersection i : intersections) {
             //ajout de l'intersection et de ses coordonnees 
             //correspondantes dans la map
@@ -463,14 +463,9 @@ public class JCarte extends JPanel {
                                 intersections) + 1);
 
             }
-            //test zoom
-            /*g.setColor(Color.red);
-            g.fillOval((int) ((1 * fenetre.getZoom()) - fenetre.getDeplX()),
-                    (int) ((1 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);
-            g.fillOval((int) ((100 * fenetre.getZoom()) - fenetre.getDeplX()),
-                    (int) ((100 * fenetre.getZoom()) - fenetre.getDeplY()), 20, 20);*/
-        }
 
+        }
+        //Affichage des noms des rues cliquées
         for (Troncon tRues : tronconsNomsRues) {
             
             double xOrig, yOrig;        //coordonnees depart du troncon
@@ -539,6 +534,78 @@ public class JCarte extends JPanel {
             g2.dispose();
         }
         
+        //Affichage de la tournee
+        tournee = carte.getTournee();
+        if (this.tournee != null) {
+
+            ArrayList<PointInteret> PIs = this.tournee
+                    .getSuccessionPointsInteret();
+
+            for (PointInteret i : PIs) {
+                Chemin chemin = i.getCheminDepart();
+                if (chemin != null) {
+                    ArrayList<Troncon> iTroncons = chemin
+                            .getSuccessionTroncons();
+                    for (Troncon t : iTroncons) {
+                        
+                        Graphics2D g1 = (Graphics2D) g;
+                        g1.setStroke( new BasicStroke(2.5f));
+                        g1.setColor(Color.RED);
+                        g1.drawLine(this.getProportionalX(t.getOrigine(),
+                                intersections) , this.getProportionalY(
+                                        t.getOrigine(), intersections) ,
+                                this.getProportionalX(t.getDestination(),
+                                        intersections) , this
+                                        .getProportionalY(
+                                                t.getDestination(),
+                                                intersections) );
+
+                        if (t.getLongueur() > 120) {
+                            int x = (int) (((this.getProportionalX(
+                                    t.getDestination(), intersections)
+                                    + this.getProportionalX(t.getOrigine(),
+                                            intersections))) / 2);
+                            int y = (int) (((this.getProportionalY(
+                                    t.getDestination(), intersections)
+                                    + this.getProportionalY(t.getOrigine(),
+                                            intersections))) / 2);
+                            double k = ((double) (this.getProportionalY(
+                                    t.getDestination(), intersections)
+                                    - this.getProportionalY(t.getOrigine(),
+                                            intersections))) / ((double) (this.
+                                                    getProportionalX(t.
+                                                            getDestination(),
+                                            intersections)
+                                    - this.getProportionalX(t.getOrigine(),
+                                            intersections)));
+                            int r = 5;      // taille de fleche
+                            // sens de fleche
+                            int sens = (t.getDestination().getLongitude()
+                                    > t.getOrigine().getLongitude()) ? 1 : -1;
+                            double v = (Math.sqrt(1 + k * k));
+                            double w = Math.sqrt(1 + (-1 / k) * (-1 / k));
+                            double ajoutX = (r / 2 * sens / v);
+                            double ajoutY = (r / 2 * sens * k / v);
+                            int xT[] = {(int) (2 * r * sens / v + ajoutX) + x,
+                                x - (int) (r / w - ajoutX), x + (int) (r / w 
+                                                                    + ajoutX)};
+                            int yT[] = {(int) (2 * r * k * sens / v + ajoutY)
+                                + y, y - (int) (r * (-1 / k) / w - ajoutY),
+                                y + (int) (r * (-1 / k) / w + ajoutY)};
+                            Polygon p = new Polygon(xT, yT, 3);
+                            g.setColor(Color.RED);
+                            g.fillPolygon(p);
+                        }
+
+                    }
+                }
+
+            }
+        }
+        
+        
+        
+        //Affichage des points d'interet
         if (carte.getDemandesLivraisons() != null) {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
@@ -602,74 +669,9 @@ public class JCarte extends JPanel {
                 }
             }
         }
-
-        tournee = carte.getTournee();
-        if (this.tournee != null) {
-
-            ArrayList<PointInteret> PIs = this.tournee
-                    .getSuccessionPointsInteret();
-
-            for (PointInteret i : PIs) {
-                Chemin chemin = i.getCheminDepart();
-                if (chemin != null) {
-                    ArrayList<Troncon> iTroncons = chemin
-                            .getSuccessionTroncons();
-                    for (Troncon t : iTroncons) {
-                        
-                        Graphics2D g1 = (Graphics2D) g;
-                        g1.setStroke( new BasicStroke(3.0f));
-                        g1.setColor(Color.RED);
-                        g1.drawLine(this.getProportionalX(t.getOrigine(),
-                                intersections) , this.getProportionalY(
-                                        t.getOrigine(), intersections) ,
-                                this.getProportionalX(t.getDestination(),
-                                        intersections) , this
-                                        .getProportionalY(
-                                                t.getDestination(),
-                                                intersections) );
-
-                        if (t.getLongueur() > 120) {
-                            int x = (int) (((this.getProportionalX(
-                                    t.getDestination(), intersections)
-                                    + this.getProportionalX(t.getOrigine(),
-                                            intersections))) / 2);
-                            int y = (int) (((this.getProportionalY(
-                                    t.getDestination(), intersections)
-                                    + this.getProportionalY(t.getOrigine(),
-                                            intersections))) / 2);
-                            double k = ((double) (this.getProportionalY(
-                                    t.getDestination(), intersections)
-                                    - this.getProportionalY(t.getOrigine(),
-                                            intersections))) / ((double) (this.
-                                                    getProportionalX(t.
-                                                            getDestination(),
-                                            intersections)
-                                    - this.getProportionalX(t.getOrigine(),
-                                            intersections)));
-                            int r = 6;      // taille de fleche
-                            // sens de fleche
-                            int sens = (t.getDestination().getLongitude()
-                                    > t.getOrigine().getLongitude()) ? 1 : -1;
-                            double v = (Math.sqrt(1 + k * k));
-                            double w = Math.sqrt(1 + (-1 / k) * (-1 / k));
-                            double ajoutX = (r / 2 * sens / v);
-                            double ajoutY = (r / 2 * sens * k / v);
-                            int xT[] = {(int) (2 * r * sens / v + ajoutX) + x,
-                                x - (int) (r / w - ajoutX), x + (int) (r / w 
-                                                                    + ajoutX)};
-                            int yT[] = {(int) (2 * r * k * sens / v + ajoutY)
-                                + y, y - (int) (r * (-1 / k) / w - ajoutY),
-                                y + (int) (r * (-1 / k) / w + ajoutY)};
-                            Polygon p = new Polygon(xT, yT, 3);
-                            g.setColor(Color.RED);
-                            g.fillPolygon(p);
-                        }
-
-                    }
-                }
-
-            }
-        }
+        
+        
+        //Surbrillance
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVuePIs().getLignePISelect();
             int ligneTabDep = this.fenetre.getVuePIs().getLignePIDepSelect();
@@ -700,10 +702,10 @@ public class JCarte extends JPanel {
                     g2.setColor(Color.blue);
                     if (ligneTab == 0) {
                         //Faire un carre bleu autour entrepot
-                        g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 18);
-                        g2.drawLine(xPI - 3, yPI + 18, xPI + 18, yPI + 18);
-                        g2.drawLine(xPI + 18, yPI + 18, xPI + 18, yPI - 3);
-                        g2.drawLine(xPI + 18, yPI - 3, xPI - 3, yPI - 3);
+                        g2.drawLine(xPI - 3, yPI - 3, xPI - 3, yPI + 19);
+                        g2.drawLine(xPI - 3, yPI + 19, xPI + 19, yPI + 19);
+                        g2.drawLine(xPI + 19, yPI + 19, xPI + 19, yPI - 3);
+                        g2.drawLine(xPI + 19, yPI - 3, xPI - 3, yPI - 3);
 
                     } else {
                         //Faire un carre bleu autour du point d interet

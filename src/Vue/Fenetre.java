@@ -1138,14 +1138,35 @@ public class Fenetre extends JFrame {
      * des points d'interet sur l'affichage de la carte
      */
     public void makePalette(){
-        for (int c=0;c<50;c++) {
+        this.palette.add(Color.MAGENTA);
+        this.palette.add(Color.GREEN);
+        this.palette.add(Color.pink);
+        this.palette.add(new Color(108,2,119));
+        this.palette.add(new Color(250, 158, 10));
+        this.palette.add(new Color(210, 80, 20));
+        this.palette.add(new Color(1, 121, 111));
+        this.palette.add(new Color(252, 93, 93));
+        this.palette.add(new Color(128, 128, 0));
+        for (int c=8;c<50;c++) {
                 Random rand = new Random();
                 float r = rand.nextFloat();
                 float gg = rand.nextFloat();
                 float b = rand.nextFloat();
                 Color randomColor = new Color(r, gg, b);
-                this.palette.add(randomColor);
-            }
+                if( !randomColor.equals(Color.white)
+                    && !randomColor.equals(Color.black)
+                    && !randomColor.equals(Color.lightGray)
+                    && !randomColor.equals(palette.get(0))  
+                    && !randomColor.equals(palette.get(1)) 
+                    && !randomColor.equals(palette.get(2)) 
+                    && !randomColor.equals(palette.get(3)) 
+                    && !randomColor.equals(palette.get(4)) 
+                    && !randomColor.equals(palette.get(5)) 
+                    && !randomColor.equals(palette.get(6)) 
+                    && !randomColor.equals(palette.get(7)) 
+                    && !randomColor.equals(palette.get(8)))
+                        this.palette.add(randomColor);
+                }
     }
     
     /**
