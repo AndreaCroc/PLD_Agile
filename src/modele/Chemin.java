@@ -3,12 +3,12 @@ package modele;
 import java.util.ArrayList;
 
 /*
- * Chemin
+ * Chemin décrit une succession de tronçons entre deux points,
+ * un point de depart et d'arrivee
  *
- * Version 1
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */

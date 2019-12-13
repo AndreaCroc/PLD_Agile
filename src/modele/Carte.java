@@ -16,12 +16,15 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 
 /*
- * Carte
+ * Carte pemet d'effectuer des calculs sur les éléments d'un demande de 
+ *livraisons, d'ajouter, supprimer ou modifier des demandes de livraisons.
  *
  * Version 1
  * Contient des extraits du code de l application PlaCo
  * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @version Version 1
+ *
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
@@ -29,7 +32,7 @@ public class Carte {
 
     private ArrayList<Intersection> listeIntersections;
     private DemandesLivraisons demandesLivraisons;
-    private TSP3 unTSP;
+    private TSP2 unTSP;
     private Tournee uneTournee;
     
     //Pour les calculs et le graphe de plus courts chemins 
@@ -47,7 +50,7 @@ public class Carte {
     public Carte() {
         this.listeIntersections = new ArrayList<Intersection>();
         this.listePointsInteretActuelle = new ArrayList<PointInteret>();
-        this.unTSP = new TSP3();
+        this.unTSP = new TSP2();
         this.uneTournee = new Tournee();
     }
 
@@ -312,12 +315,6 @@ public class Carte {
     }
 
     
-     public void arretDemande()
-    {
-        //unTSP.arretDemande();
-    }
-    
-    
     /**
      * Methode permettant de calculer une tournee pour repondre aux demandes de
      * livraison actuellement chargees
@@ -326,6 +323,7 @@ public class Carte {
      */
     public Tournee calculerTournee() {
         ArrayList<PointInteret> listePointsInteret;
+        
         //Recuperation des demandes actuelles
         demandesLivraisons.getListePointsInteret().clear();
         for (PointInteret pI : listePointsInteretActuelle) {
@@ -333,20 +331,13 @@ public class Carte {
         }
         listePointsInteret = demandesLivraisons.getListePointsInteret();
         int nbSommets = listePointsInteret.size();
-        double nbPheromone = 15;
-
-        Double[][] matricePheromone = new Double[nbSommets + 5][nbSommets + 5];
+        
         //Creation de la tournee
-        for (int i = 0; i < nbSommets; i++) {
-            for (int j = 0; j < nbSommets; j++) {
-                matricePheromone[i][j] = nbPheromone;
-            }
-        }
         Tournee tournee = new Tournee();
         Integer indPointCourant = 0;
         Integer indPointPrec;
         Chemin chemin;
-        unTSP = new TSP3();
+        unTSP = new TSP2();
 
         creerGraphePCC();
 
@@ -361,9 +352,9 @@ public class Carte {
             for (int i = 0; i < nbSommets; i++) {
                 duree[i] = listePointsInteret.get(i).getDuree();
             }
+            
             long debut = System.currentTimeMillis();
             //Execution du TSP
-            //unTSP.chercheSolution2(1000000, nbSommets, cout, duree, this.mapPredecesseur);
             unTSP.chercheSolutionPredecesseur(15000, nbSommets, cout, duree, this.mapPredecesseur);
             long fin = System.currentTimeMillis()- debut;
             System.out.println("Temps TSP");

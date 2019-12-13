@@ -5,13 +5,25 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.TreeMap;
 
+
+/**
+ *Template TSP
+ *
+ * Inspire du code Source Template TSP
+ * (Ajout de parametres)
+ * 
+ * @version Version 1
+ *
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
+ * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
+ *
+ */
+
 public abstract class TemplateTSP implements TSP {
 
     private Integer[] meilleureSolution;
     private Double coutMeilleureSolution = 0.0;
     private Boolean tempsLimiteAtteint;
-    public boolean nouvelleSolution=false;
-    private boolean stop=false;
     
     public Boolean getTempsLimiteAtteint() {
         return tempsLimiteAtteint;
@@ -30,26 +42,19 @@ public abstract class TemplateTSP implements TSP {
         meilleureSolution = new Integer[nbSommets];
         ArrayList<Integer> nonVus = new ArrayList<Integer>();
         for (int i = 1; i < nbSommets; i++) {
-            //System.out.println("ajout elt dans nonVus"+i);
             nonVus.add(i);
         }
         ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
         vus.add(0); // le premier sommet visite est 0
-        //while(meilleureSolution)
-        while(!nouvelleSolution){
             branchAndBound(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite,mapPredecesseur);
-        }
         System.out.print("Meilleure Solution : [");
         for (int i = 0; i < meilleureSolution.length; i++) {
             System.out.print(meilleureSolution[i]+", ");
         }
         System.out.print("]");
-            //System.out.println("SOLUTION "+meilleureSolution.toString());
-            //System.out.println("STOP1 "+stop);
+
     }
-    public void setStop(boolean s){
-        stop=s;
-    }
+
     public Integer getMeilleureSolution(int i) {
         if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length)) {
             return null;
@@ -63,18 +68,6 @@ public abstract class TemplateTSP implements TSP {
     
     public Integer[] getSolution(){
         return meilleureSolution;
-    }
-    
-    public boolean getStop(){
-        return stop;
-    }
-    
-    public boolean getNouvelleSolution(){
-        return nouvelleSolution;
-    }
-    
-    public void setNouvelleSolution(boolean b){
-        nouvelleSolution=b;
     }
     
     public Double getCoutMeilleureSolution() {
@@ -106,6 +99,7 @@ public abstract class TemplateTSP implements TSP {
      * nbSommets et 0 <= j < nbSommets @param
      * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
      * nbSommets
+     *  mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus
      */
@@ -126,26 +120,21 @@ public abstract class TemplateTSP implements TSP {
      * nbSommets @param
      * tpsDebut : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
+     * mapPredecesseur : contraintes de precedences entre les sommets
      */
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite, TreeMap<Integer,Integer> mapPredecesseur) {
         
-        //while(stop==false){
             if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
                 tempsLimiteAtteint = true;
-                //return meilleureSolution;
             }
             if (nonVus.size() == 0) { // tous les sommets ont ete visites
                 coutVus += cout[sommetCrt][0];
-               // System.out.println("TemplateTSP ligne 96");
-                if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
+                
+                if (coutVus < coutMeilleureSolution) { 
+                // on a trouve une solution meilleure que meilleureSolution
                     vus.toArray(meilleureSolution);
                     coutMeilleureSolution = coutVus;
-                    //System.out.println("TemplateTSP ligne 100, nouvelle meilleure solution de cout : "+coutMeilleureSolution);
-                    //System.out.println("TemplateTSP ligne 101, nouvelle meilleure solution  : "+vus.toString());
-                    nouvelleSolution=true;
-                    
                     setMeilleureSolution(meilleureSolution);
-                    //return meilleureSolution;
                 }
    
             } else if (coutVus + bound(sommetCrt, nonVus, cout, duree, mapPredecesseur) < coutMeilleureSolution) {
@@ -157,19 +146,7 @@ public abstract class TemplateTSP implements TSP {
                     branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, mapPredecesseur);
                     vus.remove(prochainSommet);
                     nonVus.add(prochainSommet);
-                }
-                //nouvelleSolution=true;
-                    
-                //setMeilleureSolution(meilleureSolution);
-                //return meilleureSolution;
-                //System.out.println("TemplateTSP ligne 112, cout : "+coutMeilleureSolution);
-                //System.out.println("iciiiii");
-                ///stop=true; 
-            //}
-            
+                }  
         }
-            //if(vus.size()==meilleureSolution.length && nouvelleSolution==true )System.out.println("      "+vus.toString());
-            stop=true;
-            //return meilleureSolution;   
     }
 }

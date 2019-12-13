@@ -3,10 +3,9 @@ package modele;
 /*
  * Troncon
  *
- * Version 1
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */

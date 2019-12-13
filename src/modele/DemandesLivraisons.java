@@ -3,12 +3,12 @@ package modele;
 import java.util.ArrayList;
 
 /*
- * DemandesLivraisons
+ * DemandesLivraisons est l'ensemble des point d'interet d'une demande de 
+ * livraison et son adresse de départ
  *
- * Version 1
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */

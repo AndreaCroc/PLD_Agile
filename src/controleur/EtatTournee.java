@@ -300,7 +300,6 @@ public class EtatTournee implements Etat {
     public void arreterCalculTournee(Controleur controleur, Fenetre fenetre, 
                                       Carte carte, Tournee tournee) {
         System.out.println("arreter calcul tournee etat livraison");
-        carte.arretDemande();
         try {
             sleep(200);
         } catch (InterruptedException ex) {
