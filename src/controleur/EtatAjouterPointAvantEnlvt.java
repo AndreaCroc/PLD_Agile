@@ -21,9 +21,9 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
 
     /**
      * Ajouter un point d'enlevement a la tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      * @param index  indice du point precedent le nouveau point d'enlevement
      */
     @Override
@@ -43,8 +43,8 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
 
     /**
      * Annuler l'ajout du point d'enlevement et revenir a l'etatTournee
-     * @param controleur
-     * @param fenetre 
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
@@ -56,7 +56,7 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -69,7 +69,7 @@ public class EtatAjouterPointAvantEnlvt implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

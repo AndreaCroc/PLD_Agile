@@ -28,9 +28,9 @@ public class EtatAjouterPtLivraison implements Etat {
 
     /**
      * Ajouter un point de livraison a la tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      * @param interL intersection sur laquelle ajouter le point de livraison
      */
     @Override
@@ -38,7 +38,7 @@ public class EtatAjouterPtLivraison implements Etat {
                                       Carte carte,Intersection interL){
         int duree = 0;
         ArrayList<Troncon> listeT = interL.getTronconsDepart();
-        String nomRue = ""; //Numéro de la demande de livraison
+        String nomRue = "";     //Numéro de la demande de livraison
         int numeroDemande;
         int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
                                                       .size();
@@ -109,8 +109,8 @@ public class EtatAjouterPtLivraison implements Etat {
     
     /**
      * Annuler tous les ajouts deja effectues et retourner a l'etat tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
@@ -122,7 +122,6 @@ public class EtatAjouterPtLivraison implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-
      * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
@@ -136,7 +135,6 @@ public class EtatAjouterPtLivraison implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-
      * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */

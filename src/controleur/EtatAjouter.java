@@ -24,10 +24,10 @@ public class EtatAjouter implements Etat {
     /**
      * Ajouter les nouveaux points de livraison et d'enlevement a la tournee
      * 
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
-     * @param tournee tournee
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
+     * @param tournee tournee courante
      * @param listeCommandes listeCommandes pour undo/redo
      */
     @Override
@@ -63,8 +63,8 @@ public class EtatAjouter implements Etat {
 
     /**
      * Annuler l'ajout dun nouveau couple de points d'interets
-     * @param controleur controleur
-     * @param fenetre fenetre
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
@@ -76,7 +76,7 @@ public class EtatAjouter implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -89,7 +89,7 @@ public class EtatAjouter implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

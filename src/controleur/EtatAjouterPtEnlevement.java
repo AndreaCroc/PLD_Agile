@@ -24,16 +24,15 @@ public class EtatAjouterPtEnlevement implements Etat {
 
     /**
      * Ajouter un point d'enlevement a la tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      * @param interE intersection sur laquelle ajouter le point d'enlevement
      */
     @Override
     public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, 
                                        Carte carte, Intersection interE) {
 
-        System.out.println("Etat Ajouter Pt Enlevement");
         int duree = 0;
         ArrayList<Troncon> listeT = interE.getTronconsDepart();
         String nomRue = "";
@@ -42,7 +41,8 @@ public class EtatAjouterPtEnlevement implements Etat {
         int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
                                                       .size();
         
-        // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
+        // Si le point choisi n'existe pas dans la liste d'intersection, 
+        //normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
             if (i == interE) {
@@ -110,8 +110,8 @@ public class EtatAjouterPtEnlevement implements Etat {
 
     /**
      * Annuler tous les ajouts deja effectues et retourenr a l'etat tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {

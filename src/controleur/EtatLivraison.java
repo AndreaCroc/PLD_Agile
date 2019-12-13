@@ -21,7 +21,7 @@ public class EtatLivraison implements Etat {
     /**
      * Calculer une tournee Dans tous les cas, on passe a l etat EtatTournee
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      * @param tournee tournee courante
@@ -51,7 +51,7 @@ public class EtatLivraison implements Etat {
      * Charger un fichier de livraisons Dans tous les cas, on reste dans cet
      * etat
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      */
@@ -102,9 +102,9 @@ public class EtatLivraison implements Etat {
      * Changer la carte deja chargee Dans tous les cas, on retourne dans l etat
      * EtatDeBase
      *
-     * @param controleur
-     * @param fenetre
-     * @param carte
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      */
     @Override
     public void changerCarte(Controleur controleur, Fenetre fenetre, Carte carte) {

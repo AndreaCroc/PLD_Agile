@@ -24,7 +24,7 @@ public class EtatDeBase implements Etat {
      * Changer la carte deja chargee Dans tous les cas (succes ou echec) on
      * reste dans cet EtatDeBase
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      */
@@ -75,7 +75,7 @@ public class EtatDeBase implements Etat {
      * Charger une livraison lorsqu une carte est chargee En cas de succes, on
      * passe a l etat EtatLivraison En cas d echec, on reste dans cet etat
      *
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      */

@@ -22,15 +22,14 @@ public class EtatAjouterPointAvantLivr implements Etat {
 
     /**
      * Ajouter un point avant le nouveau point de livraison
-     * @param controleur controleur
-     * @param fenetre fenetre
-     * @param carte carte
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
+     * @param carte carte courante
      * @param index indice du point precedent le nouveau point de livraison
      */
     @Override
     public void ajouterPointAvantLivraison(Controleur controleur, 
             Fenetre fenetre, Carte carte, int index){
-        System.out.println("Etat Ajout Pt Avant Livr");
      int value = JOptionPane.showConfirmDialog(fenetre, 
              "Confirmer le choix du point ?");
         if (value == JOptionPane.YES_OPTION) {
@@ -43,8 +42,8 @@ public class EtatAjouterPointAvantLivr implements Etat {
     
     /**
      * Annuler tous les ajouts deja effectues et retourner a l'etat tournee
-     * @param controleur controleur
-     * @param fenetre fenetre
+     * @param controleur controleur courant
+     * @param fenetre fenetre courante
      */
     @Override
     public void annuler(Controleur controleur, Fenetre fenetre) {
@@ -56,7 +55,7 @@ public class EtatAjouterPointAvantLivr implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
-     * @param fenetre fenetre
+     * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
     @Override
@@ -69,7 +68,7 @@ public class EtatAjouterPointAvantLivr implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
-     * @param fenetre fenetre
+     * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */
     @Override

@@ -24,7 +24,7 @@ public class EtatInit implements Etat {
      * En cas de succes, on passe a l etat EtatDeBase
      * En cas d echec on reste dans cet etat
      * 
-     * @param controleur controleur
+     * @param controleur controleur courant
      * @param fenetre fenetre courante
      * @param carte carte courante
      * @param tournee tournee courante
