@@ -432,14 +432,6 @@ public class JCarte extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        Graphics2D g2d=(Graphics2D)g;
-        int wi=this.getWidth();
-        int h=this.getHeight();
-        
-        g2d.translate(wi/2,h/2);
-        g2d.scale(fenetre.getZoom(),fenetre.getZoom());
-        g2d.translate(-wi/2,-h/2);
 
         ArrayList<Intersection> intersections = carte.getListeIntersections();
         //Affichage de la carte
