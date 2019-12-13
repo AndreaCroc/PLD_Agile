@@ -43,11 +43,13 @@ public class TSP2 extends TSP1 implements TSP {
      * Calcule l'heuristique de la solution courante pour déterminer
      * si on doit poursuivre la recherche sur cette branche
      *
-     * @param sommetCourant : sommet courant
+     * @param sommetCourant
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j
-     * @param duree : duree[i] = duree pour visiter le sommet i 
-     *  @param mapPredecesseur : contraintes de precedences entre les sommets
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets
+     *      *  mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * n une borne inferieure du cout des permutations commencant par
      * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
@@ -65,8 +67,8 @@ public class TSP2 extends TSP1 implements TSP {
                 sommePheromone += matricePheromone [sommetCourant][nonVus.get(i)];
             }
         }
-        float foundValueRandom = (float) (Math.random()* (sommePheromone * 1000))/(1000);
-        return foundValueRandom;
+        float foundValue= (float) ( (sommePheromone * 1000))/(1000);
+        return foundValue;
     }
     
     
@@ -79,6 +81,10 @@ public class TSP2 extends TSP1 implements TSP {
      * @param Vus : tableau des sommets visité
      * @param matricePheromone : matrice des pheromones contenus entre
      * les sommets du graphe
+	 * @return
+     * n une borne inferieure du cout des permutations commencant par
+     * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
+     * terminant par le sommet 0
      */
     public void AjoutPheromone(ArrayList<Integer> Vus, Double[][] matricePheromone, Double coutVus)
     {
@@ -145,13 +151,16 @@ public class TSP2 extends TSP1 implements TSP {
     /**
      * Methode permettant d'itérer sur les sommets nonVus
      *en prenant en compte les prédécesseurs
+     * et une variante de la probabilité des algorithmes de 
+     * de colonies de fourmi
      * 
-     * 
-     * @param sommetCrt : sommet courant
+     * @param sommetCrt
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j
-     * @param duree : duree[i] = duree pour visiter le sommet i
-     * @param  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
+     * nbSommets et 0 <= j < nbSommets @param
+     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
+     * nbSommets
+     *  mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus dont
      * les predecesseurs ont déja été vus
@@ -172,14 +181,17 @@ public class TSP2 extends TSP1 implements TSP {
 	 * @param tpsLimite : limite (en millisecondes) sur le temps 
          * d'execution de chercheSolution
 	 * @param nbSommets : nombre de sommets du graphe
-	 * @param cout : cout[i][j] = duree pour aller de i a j
-	 * @param duree : duree[i] = duree pour visiter le sommet i
+	 * @param cout : cout[i][j] = duree pour aller de i a j, 
+         * avec 0 <= i < nbSommets et 0 <= j < nbSommets
+	 * @param duree : duree[i] = duree pour visiter le sommet i, 
+         * avec 0 <= i < nbSommets
          * mapPredecesseur : contraintes de precedences entre les sommets
 	 */
     @Override
      public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
              Double[][] cout, Integer[] duree,
              TreeMap<Integer,Integer> mapPredecesseur) {
+        System.out.println("cherche solution");
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Double.MAX_VALUE;
         meilleureSolution = new Integer[nbSommets];
@@ -195,28 +207,26 @@ public class TSP2 extends TSP1 implements TSP {
         branchAndBound(0, nonVus, vus, 0.0, cout, duree, 
                 System.currentTimeMillis(), tpsLimite, mapPredecesseur);
         
-         
+        System.out.print("Meilleure Solution : [");
+        for (int i = 0; i < meilleureSolution.length; i++) {
+            System.out.print(meilleureSolution[i]+", ");
+        }
+        System.out.print("]");
+        System.out.print("coutmeilleure sol [");
+        System.out.print(coutMeilleureSolution);
+        System.out.println("");
+        
+        for (int i=0; i<nbSommets; i++)
+        {
+            System.out.println(matricePheromone[0][i]);
+        }
     }
     
     
      
      
      
-          /**
-     * Methode definissant la résolution par separation
-     * et evaluation du TSP2
-     *
-     * @param sommetCrt le dernier sommet visite
-     * @param nonVus la liste des sommets qui n'ont pas encore ete visites
-     * @param vus la liste des sommets visites (y compris sommetCrt)
-     * @param coutVus la somme des couts des arcs du chemin passant par tous les
-     * sommets de vus + la somme des duree des sommets de vus
-     * @param cout : cout[i][j] = duree pour aller de i a j
-     * @param duree : duree[i] = duree pour visiter le sommet i
-     * @param tpsDebut : moment ou la resolution a commence
-     * @param tpsLimite : limite de temps pour la resolution
-     * @param mapPredecesseur : contraintes de precedences entre les sommets
-     */
+     
     @Override
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, 
             ArrayList<Integer> vus, Double coutVus, Double[][] cout, 
@@ -225,6 +235,7 @@ public class TSP2 extends TSP1 implements TSP {
  
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
+            System.out.print("tttiit");
             return;
         }
         else 
@@ -232,12 +243,9 @@ public class TSP2 extends TSP1 implements TSP {
             if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout[sommetCrt][0];
             AjoutPheromone(vus,matricePheromone, coutVus);
-            if (i++%3==0){
-                vaporisationPheromone(vus.size());
-            }
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 AjoutPheromone(vus,matricePheromone, coutVus);
-                System.out.println("meilleure sol" + coutMeilleureSolution.toString());
+                vaporisationPheromone(vus.size());
                 vus.toArray(meilleureSolution);
                 coutMeilleureSolution = coutVus;
                 setMeilleureSolution(meilleureSolution);
