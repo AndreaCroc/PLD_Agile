@@ -43,13 +43,11 @@ public class TSP2 extends TSP1 implements TSP {
      * Calcule l'heuristique de la solution courante pour déterminer
      * si on doit poursuivre la recherche sur cette branche
      *
-     * @param sommetCourant
+     * @param sommetCourant : sommet courant
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets
-     *      *  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i 
+     *  @param mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * n une borne inferieure du cout des permutations commencant par
      * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
@@ -81,10 +79,6 @@ public class TSP2 extends TSP1 implements TSP {
      * @param Vus : tableau des sommets visité
      * @param matricePheromone : matrice des pheromones contenus entre
      * les sommets du graphe
-	 * @return
-     * n une borne inferieure du cout des permutations commencant par
-     * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
-     * terminant par le sommet 0
      */
     public void AjoutPheromone(ArrayList<Integer> Vus, Double[][] matricePheromone, Double coutVus)
     {
@@ -154,13 +148,11 @@ public class TSP2 extends TSP1 implements TSP {
      * et une variante de la probabilité des algorithmes de 
      * de colonies de fourmi
      * 
-     * @param sommetCrt
+     * @param sommetCrt : sommet courant
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets
-     *  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     * @param  mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus dont
      * les predecesseurs ont déja été vus
@@ -182,10 +174,8 @@ public class TSP2 extends TSP1 implements TSP {
 	 * @param tpsLimite : limite (en millisecondes) sur le temps 
          * d'execution de chercheSolution
 	 * @param nbSommets : nombre de sommets du graphe
-	 * @param cout : cout[i][j] = duree pour aller de i a j, 
-         * avec 0 <= i < nbSommets et 0 <= j < nbSommets
-	 * @param duree : duree[i] = duree pour visiter le sommet i, 
-         * avec 0 <= i < nbSommets
+	 * @param cout : cout[i][j] = duree pour aller de i a j
+	 * @param duree : duree[i] = duree pour visiter le sommet i
          * mapPredecesseur : contraintes de precedences entre les sommets
 	 */
     @Override
@@ -237,13 +227,11 @@ public class TSP2 extends TSP1 implements TSP {
      * @param vus la liste des sommets visites (y compris sommetCrt)
      * @param coutVus la somme des couts des arcs du chemin passant par tous les
      * sommets de vus + la somme des duree des sommets de vus
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets @param
-     * tpsDebut : moment ou la resolution a commence
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     * @param tpsDebut : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
-     * mapPredecesseur : contraintes de precedences entre les sommets
+     * @param mapPredecesseur : contraintes de precedences entre les sommets
      */
     @Override
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, 

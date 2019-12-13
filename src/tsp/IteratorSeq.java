@@ -10,8 +10,8 @@ public class IteratorSeq implements Iterator<Integer> {
 
 	/**
 	 * Cree un iterateur pour iterer sur l ensemble des sommets de nonVus
-	 * @param nonVus
-	 * @param sommetCrt
+	 * @param nonVus: sommet non Vus
+	 * @param sommetCrt: sommet courant
 	 */
 	public IteratorSeq(Collection<Integer> nonVus, int sommetCrt){
 		this.candidats = new Integer[nonVus.size()];

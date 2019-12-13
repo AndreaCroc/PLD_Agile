@@ -12,8 +12,8 @@ public class IteratorSeqPredecesseur implements Iterator<Integer> {
 	/**
 	 * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
          * dont les predecesseurs ne sont pas dans nonVus
-	 * @param nonVus
-	 * @param sommetCrt
+	 * @param nonVus : sommets non Vus
+	 * @param sommetCrt : : sommets courant
          * @param mapPredecesseur : contraintes de precedences entre les sommets
 	 */
 	public IteratorSeqPredecesseur(Collection<Integer> nonVus, int sommetCrt, TreeMap<Integer, Integer> mapPredecesseur){

@@ -37,11 +37,10 @@ public abstract class TemplateTSP implements TSP {
      * Cherche Solution: Initialise la recherche du chemin
      * par le TSP
      *
-     * @param tpsLimite
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     *  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param tpsLimite : temps limite de déroulement de l'algorithme
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     *
      */
  
     public void chercheSolution(Integer tpsLimite, int nbSommets, 
@@ -53,11 +52,11 @@ public abstract class TemplateTSP implements TSP {
      * Cherche Solution Predecesseur : Initialise la recherche du chemin
      * par le TSP
      *
-     * @param tpsLimite
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     *  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param tpsLimite : temps limite
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     *@param duree : duree[i] = duree pour visiter le sommet i,
+     *@param mapPredecesseur : contraintes de precedences entre les sommets
+     * @param nbSommets : contraintes de precedences entre les sommets
      */
     
     public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
@@ -106,7 +105,7 @@ public abstract class TemplateTSP implements TSP {
     
     /**
      * Récupère la solution
-     * @param meilleureSolution
+     * @return meilleureSolution
      */
     public Integer[] getSolution(){
         return meilleureSolution;
@@ -124,16 +123,13 @@ public abstract class TemplateTSP implements TSP {
     /**
      * Methode devant etre redefinie par les sous-classes de TemplateTSP
      *
-     * @param sommetCourant
+     * @param sommetCourant : sommet courant
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     *  mapPredecesseur : contraintes de precedences entre les sommets
-	 * @retur
-     * n une borne inferieure du cout des permutations commencant par
-     * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
-     * terminant par le sommet 0
+     * @param cout : cout[i][j] = duree pour aller de i a j,
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     * @param mapPredecesseur : contraintes de precedences entre les sommets
+     * @return 
+     * valeur de l heuristique
      */
     protected abstract float bound(Integer sommetCourant, 
             ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,
@@ -142,13 +138,11 @@ public abstract class TemplateTSP implements TSP {
     /**
      * Methode devant etre redefinie par les sous-classes de TemplateTSP
      *
-     * @param sommetCrt
+     * @param sommetCrt : sommet courant
      * @param nonVus : tableau des sommets restant a visiter
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets
-     *  mapPredecesseur : contraintes de precedences entre les sommets
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     * @param mapPredecesseur : contraintes de precedences entre les sommets
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus
      */
@@ -165,13 +159,11 @@ public abstract class TemplateTSP implements TSP {
      * @param vus la liste des sommets visites (y compris sommetCrt)
      * @param coutVus la somme des couts des arcs du chemin passant par tous les
      * sommets de vus + la somme des duree des sommets de vus
-     * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
-     * nbSommets et 0 <= j < nbSommets @param
-     * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets @param
-     * tpsDebut : moment ou la resolution a commence
+     * @param cout : cout[i][j] = duree pour aller de i a j
+     * @param duree : duree[i] = duree pour visiter le sommet i
+     * @param tpsDebut : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
-     * mapPredecesseur : contraintes de precedences entre les sommets
+     * @param mapPredecesseur : contraintes de precedences entre les sommets
      */
     public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus,
             ArrayList<Integer> vus, Double coutVus, Double[][] cout, 

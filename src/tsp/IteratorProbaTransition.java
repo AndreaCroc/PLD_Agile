@@ -20,9 +20,11 @@ public class IteratorProbaTransition implements Iterator<Integer> {
          * ainsi que leur probabilité selon une variante de l'algorithme 
          * de colonie des fourmis
          * 
-	 * @param nonVus
-	 * @param sommetCrt
+	 * @param nonVus : sommet non Vus
+	 * @param sommetCrt : sommet courant
          * @param mapPredecesseur : contraintes de precedences entre les sommets
+         * @param matricePheromone : matrice des pheromones sur les chemins
+         * @param cout : matrice des couts
 	 */
 	public IteratorProbaTransition(Collection<Integer> nonVus, 
             int sommetCrt, TreeMap<Integer, Integer> mapPredecesseur,
@@ -87,7 +89,7 @@ public class IteratorProbaTransition implements Iterator<Integer> {
         /**
 	 * Renvoie élément suivant dans itérateur selon sa probabilité
 	 * @return 
-         * élément suivant dans l'itérateur
+         * élément suivant dans l itérateur
 	 */
 	@Override
 	public Integer next() {
