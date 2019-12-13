@@ -9,13 +9,11 @@ import java.util.TreeMap;
 /**
  *Template TSP
  *
- * Inspire du code Source Template TSP
+ * code Source Template TSP
  * (Ajout de parametres)
  * 
  * @version Version 1
  *
- * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
- * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
 
@@ -29,13 +27,15 @@ public abstract class TemplateTSP implements TSP {
         return tempsLimiteAtteint;
     }
     
-    public void chercheSolution(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree)
-    {
-        
-    };
+    
+    public void chercheSolution(Integer tpsLimite, int nbSommets, 
+            Double[][] cout, Integer[] duree)
+    {};
     
     
-    public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur) {
+    public void chercheSolutionPredecesseur(Integer tpsLimite, int nbSommets, 
+            Double[][] cout, Integer[] duree,
+            TreeMap<Integer,Integer> mapPredecesseur) {
         System.out.println("cherche solution");
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Double.MAX_VALUE;
@@ -46,7 +46,8 @@ public abstract class TemplateTSP implements TSP {
         }
         ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
         vus.add(0); // le premier sommet visite est 0
-            branchAndBound(0, nonVus, vus, 0.0, cout, duree, System.currentTimeMillis(), tpsLimite,mapPredecesseur);
+            branchAndBound(0, nonVus, vus, 0.0, cout, duree, 
+                    System.currentTimeMillis(), tpsLimite,mapPredecesseur);
         System.out.print("Meilleure Solution : [");
         for (int i = 0; i < meilleureSolution.length; i++) {
             System.out.print(meilleureSolution[i]+", ");
@@ -56,13 +57,14 @@ public abstract class TemplateTSP implements TSP {
     }
 
     public Integer getMeilleureSolution(int i) {
-        if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length)) {
+        if ((meilleureSolution == null) || (i < 0) || 
+                (i >= meilleureSolution.length)) {
             return null;
         }
         return meilleureSolution[i];
     }
     
-    public void setMeilleureSolution(Integer [] solution){
+    protected void setMeilleureSolution(Integer [] solution){
         meilleureSolution=solution;
     }
     
@@ -82,13 +84,15 @@ public abstract class TemplateTSP implements TSP {
      * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i <
      * nbSommets et 0 <= j < nbSommets @param
      * duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i <
-     * nbSommets
+     *  mapPredecesseur : contraintes de precedences entre les sommets
 	 * @retur
      * n une borne inferieure du cout des permutations commencant par
      * sommetCourant, contenant chaque sommet de nonVus exactement une fois et
      * terminant par le sommet 0
      */
-    protected abstract float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, TreeMap<Integer,Integer> mapPredecesseur);
+    protected abstract float bound(Integer sommetCourant, 
+            ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,
+            TreeMap<Integer,Integer> mapPredecesseur);
 
     /**
      * Methode devant etre redefinie par les sous-classes de TemplateTSP
@@ -103,7 +107,9 @@ public abstract class TemplateTSP implements TSP {
 	 * @return
      * un iterateur permettant d'iterer sur tous les sommets de nonVus
      */
-    protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,TreeMap<Integer,Integer> mapPredecesseur);
+    protected abstract Iterator<Integer> iterator(Integer sommetCrt, 
+            ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree,
+            TreeMap<Integer,Integer> mapPredecesseur);
 
     /**
      * Methode definissant le patron (template) d'une resolution par separation
@@ -122,7 +128,10 @@ public abstract class TemplateTSP implements TSP {
      * @param tpsLimite : limite de temps pour la resolution
      * mapPredecesseur : contraintes de precedences entre les sommets
      */
-    public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, Double coutVus, Double[][] cout, Integer[] duree, long tpsDebut, Integer tpsLimite, TreeMap<Integer,Integer> mapPredecesseur) {
+    public void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus,
+            ArrayList<Integer> vus, Double coutVus, Double[][] cout, 
+            Integer[] duree, long tpsDebut, Integer tpsLimite, 
+            TreeMap<Integer,Integer> mapPredecesseur) {
         
             if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
                 tempsLimiteAtteint = true;
@@ -137,13 +146,18 @@ public abstract class TemplateTSP implements TSP {
                     setMeilleureSolution(meilleureSolution);
                 }
    
-            } else if (coutVus + bound(sommetCrt, nonVus, cout, duree, mapPredecesseur) < coutMeilleureSolution) {
-                Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree, mapPredecesseur);
+            } else if (coutVus + bound(sommetCrt, nonVus, cout, duree,
+                    mapPredecesseur) < coutMeilleureSolution) {
+                Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, 
+                        duree, mapPredecesseur);
                 while (it.hasNext()) {
                     Integer prochainSommet = it.next();
                     vus.add(prochainSommet);
                     nonVus.remove(prochainSommet);
-                    branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, mapPredecesseur);
+                    branchAndBound(prochainSommet, nonVus, vus, coutVus + 
+                            cout[sommetCrt][prochainSommet] + 
+                            duree[prochainSommet], cout, duree, 
+                            tpsDebut, tpsLimite, mapPredecesseur);
                     vus.remove(prochainSommet);
                     nonVus.add(prochainSommet);
                 }  
