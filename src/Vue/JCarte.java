@@ -28,29 +28,19 @@ import modele.Troncon;
  */
 public class JCarte extends JPanel {
 
-    private Carte carte; //Objet de type Carte dont on recupere les informations 
-                         //utiles pour son affichage
-    
-    private Tournee tournee; //Objet de type Tournee dont on recupere les 
-                            //informations pour son affichage 
-    
-    private ArrayList<CoordPointInteret> listeCoordPtI;//Liste des point 
-                                                       //d inerets de la carte
-    
-    private Map<Intersection, Point> intersectionsMap;//Liste des intersections
-                                                      //de la carte
-    
-    private ArrayList<Point> coorIntersections = new ArrayList<Point>();//listes
-    //des coordonnées des intersections dans la carte
-    
-    private ArrayList<Troncon> tronconsNomsRues;//Liste des troncons associes 
-                                                //a la carte
-    
-    private Fenetre fenetre; //fenetre principale de l application
-    
-    private ArrayList<Color> palette;//Liste des couleurs possibles 
-                                    //des points d'interet
-
+    private Carte carte; //Carte possedant les points dinteret
+    private Tournee tournee; //les points dinteret faisant partie de la tournee
+    //liste des point dinerets de la carte
+    private ArrayList<CoordPointInteret> listeCoordPtI;
+    //Liste des intersections de la carte
+    private Map<Intersection, Point> intersectionsMap;
+    //Liste des troncons de la carte
+    private ArrayList<Troncon> tronconsNomsRues;
+    private Fenetre fenetre; //fenetre de l application
+    //Liste des couleurs possibles des points d'interet
+    private ArrayList<Color> palette;
+    //listes des coordonnées des intersections dans la carte
+    private ArrayList<Point> coorIntersections = new ArrayList<Point>();
 
     /**
      * Constructeur de la classe JCarte
@@ -70,7 +60,7 @@ public class JCarte extends JPanel {
         this.fenetre = fenetre;
         this.palette = this.fenetre.getPalette();
         this.coorIntersections = new ArrayList<Point>();
-        
+        this.repaint();
     }
 
     /**
@@ -80,6 +70,7 @@ public class JCarte extends JPanel {
      */
     public void setTournee(Tournee nouvelleTournee) {
         this.tournee = nouvelleTournee;
+        this.repaint();
     }
 
     /**
@@ -95,7 +86,7 @@ public class JCarte extends JPanel {
     /**
      * Recuperer la tournee
      *
-     * @return tournee courante
+     * @return tournee
      */
     public Tournee getTournee() {
         return this.tournee;
@@ -281,14 +272,13 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Recupère la position en Y (pixel) de l'intersection sur le panel
+     * Recupère la position en Y de l'intersection sur le panel
      * @param i intersection
      * @param intersections liste des intersections
      * @return position Y
      */
     public int getProportionalY(Intersection i, 
-        
-        ArrayList<Intersection> intersections) {
+            ArrayList<Intersection> intersections) {
 
         Double maxLatitude = this.maxLatitude(intersections);
         Double minLatitude = this.minLatitude(intersections);
@@ -296,26 +286,24 @@ public class JCarte extends JPanel {
         Double hauteurCarte = (maxLatitude - minLatitude);
 
         Double distMinLatitude = (i.getLatitude() - minLatitude);
-        
-        int hauteurPanel = this.getHeight();//hauteur de la JCarte en pixel
 
         /*A quel pourcentage de latitude se trouve l'intersection
         par rapport à la carte*/
         Double pourcentageLatitude = ((distMinLatitude * 100 / hauteurCarte));
 
-        /*Reporter ce pourcentage sur la JCarte. Attention, le sens est inversé 
+        int hauteurPanel = this.getHeight();
+
+        /*Reporter ce pourcentage sur le panel, Attention, le sens est inversé 
         en Java pour les y*/
         int proportionalY = hauteurPanel - (int) (pourcentageLatitude
                 * hauteurPanel / 100);
-        
-        /*Ajustement pour le bord de la JCarte*/
+
         if (proportionalY == 0) {
             proportionalY = 2;
         } else if (proportionalY >= hauteurPanel) {
             proportionalY = hauteurPanel - 12;
         }
 
-        /*Adaptation au zoom et decalage*/
         proportionalY *= fenetre.getZoom();
         proportionalY -= (fenetre.getDeplY());
 
@@ -323,7 +311,7 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Recupère la position en Y(en pixel) de l'intersection sur le panel
+     * Recupère la position en Y de l'intersection sur le panel
      * @param i intersection
      * @param PIs liste des points d'interet
      * @param intersections liste des intersections
@@ -338,26 +326,24 @@ public class JCarte extends JPanel {
         Double hauteurCarte = (maxLatitude - minLatitude);
 
         Double distMinLatitude = (i.getLatitude() - minLatitude);
-        
-        int hauteurPanel = this.getHeight();
 
         /*A quel pourcentage de latitude se trouve l'intersection 
         par rapport à la carte*/
         Double pourcentageLatitude = ((distMinLatitude * 100 / hauteurCarte));
 
+        int hauteurPanel = this.getHeight();
+
         /*Reporter ce pourcentage sur le panel, Attention, le sens est 
         inversé en Java pour les y*/
         int proportionalY = hauteurPanel - (int) (pourcentageLatitude * 
                 hauteurPanel / 100);
-        
-        /*Ajustement pour le bord de la JCarte*/
+
         if (proportionalY == 0) {
             proportionalY = 2;
         } else if (proportionalY >= hauteurPanel) {
             proportionalY = hauteurPanel - 12;
         }
-        
-        /*Adaptation au zoom et decalage*/
+
         proportionalY *= fenetre.getZoom();
         proportionalY -= (fenetre.getDeplY());
 
@@ -365,13 +351,13 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Recupère la position en X(en pixel) de l'intersection sur le panel
+     * Recupère la position en X de l'intersection sur le panel
      * @param i intersection
      * @param intersections liste des intersections
      * @return position en X
      */
     public int getProportionalX(Intersection i,
-        ArrayList<Intersection> intersections) {
+            ArrayList<Intersection> intersections) {
 
         Double maxLongitude = this.maxLongitude(intersections);
         Double minLongitude = this.minLongitude(intersections);
@@ -379,25 +365,22 @@ public class JCarte extends JPanel {
         Double largeurCarte = (maxLongitude - minLongitude);
 
         Double distMinLongitude = (i.getLongitude() - minLongitude);
-        
-        int largeurPanel = this.getWidth();
 
         /*A quel pourcentage de longitude se trouve l'intersection 
         par rapport à la carte*/
         int pourcentageLongitude = (int) (distMinLongitude * 100
                 / largeurCarte);
 
+        int largeurPanel = this.getWidth();
+
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
-        
-        /*Ajustement pour le bord de la JCarte*/
         if (proportionalX == 0) {
             proportionalX = 2;
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-        
-        /*Adaptation au zoom et decalage*/
+
         proportionalX *= fenetre.getZoom();
         proportionalX -= (fenetre.getDeplX());
 
@@ -405,7 +388,7 @@ public class JCarte extends JPanel {
     }
 
     /**
-     * Recupère la position en X (en pixel) de l'intersection sur le panel
+     * Recupère la position en X de l'intersection sur le panel
      * @param i intersection 
      * @param PIs liste des points d'interet
      * @param intersections liste des intersections
@@ -430,28 +413,29 @@ public class JCarte extends JPanel {
 
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
-        
-        /*Ajustement pour le bord de la JCarte*/
         if (proportionalX == 0) {
             proportionalX = 2;
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
         }
-        
-        /*Adaptation au zoom et decalage*/
+
         proportionalX *= fenetre.getZoom();
         proportionalX -= fenetre.getDeplX();
 
         return proportionalX;
     }
-    
-    /**
-     * Affichage de la carte a partir d'une liste d'intersections
-     * @param g graphics
-     * @param intersections 
-     */
-    public void affichageCarte(Graphics g, ArrayList<Intersection> intersections){
 
+    /**
+     * Dessiner les elements de la carte sur la fenetre
+     * @param g graphic 
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        this.coorIntersections.clear();
+        ArrayList<Intersection> intersections = carte.getListeIntersections();
+        //Affichage de la carte
         for (Intersection i : intersections) {
             
             //ajout de l'intersection et de ses coordonnees 
@@ -485,17 +469,7 @@ public class JCarte extends JPanel {
             }
 
         }
-    
-    }
-    
-    
-    /**
-     * Affichage des noms des rues partantes d'un PI clique
-     * @param g graphics
-     * @param intersections 
-     */
-    public void affichageNomsRues(Graphics g, ArrayList<Intersection> intersections){
-
+        //Affichage des noms des rues cliquées
         for (Troncon tRues : tronconsNomsRues) {
             
             double xOrig, yOrig;        //coordonnees depart du troncon
@@ -566,20 +540,13 @@ public class JCarte extends JPanel {
                 }
 
                 radian = Math.atan(k);
-                g2.rotate(radian,nvX, nvY); 
+                g2.rotate(radian,nvX, nvY); //mieux avec x et y précisees
                 g2.drawString(tRues.getNomRue(), (int) nvX,(int) nvY);
             }
             g2.dispose();
         }
-    }
-    
-    /**
-     * Affichage de la tournee
-     * @param g graphics
-     * @param intersections 
-     */
-    public void affichageTournee(Graphics g, ArrayList<Intersection> intersections){
-       
+        
+        //Affichage de la tournee
         tournee = carte.getTournee();
         if (this.tournee != null) {
 
@@ -647,16 +614,10 @@ public class JCarte extends JPanel {
 
             }
         }
-    
-    }
-    
-    /**
-     * Affichage des PIs avec les bonnes symboles
-     * @param g graphics
-     * @param intersections 
-     */
-    public void affichagePIs(Graphics g, ArrayList<Intersection> intersections){
-    
+        
+        
+        
+        //Affichage des points d'interet
         if (carte.getDemandesLivraisons() != null) {
             this.listeCoordPtI.clear();
             ArrayList<PointInteret> PIs = carte.getListePointsInteretActuelle();
@@ -720,15 +681,9 @@ public class JCarte extends JPanel {
                 }
             }
         }
-    
-    }
-    
-    /**
-     * Surbrillance des points selectionnes
-     * @param g graphics
-     */
-    public void surbrillance(Graphics g){
-   
+        
+        
+        //Surbrillance
         if (this.fenetre != null) {
             int ligneTab = this.fenetre.getVuePIs().getLignePISelect();
             int ligneTabDep = this.fenetre.getVuePIs().getLignePIDepSelect();
@@ -802,33 +757,6 @@ public class JCarte extends JPanel {
 
             }
         }
-    
-    }
-
-    /**
-     * Dessiner les elements de la carte et de la tournee (s'il y en a)
-     * sur la JCarte de la fenetre
-     * @param g graphic 
-     */
-    @Override
-    protected void paintComponent(Graphics g) {
-        
-        super.paintComponent(g);
-
-        this.coorIntersections.clear();//effacage de la carte
-        
-        ArrayList<Intersection> intersections = carte.getListeIntersections();
-        
-        affichageCarte(g,intersections);
-        
-        affichageNomsRues(g,intersections);
-        
-        affichageTournee(g,intersections);
-
-        affichagePIs(g,intersections);
-        
-        surbrillance(g);
-        
 
     }
 }
