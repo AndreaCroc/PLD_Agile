@@ -95,7 +95,7 @@ public class JCarte extends JPanel {
     /**
      * Recuperer la tournee
      *
-     * @return tournee
+     * @return tournee courante
      */
     public Tournee getTournee() {
         return this.tournee;
@@ -447,7 +447,7 @@ public class JCarte extends JPanel {
     
     /**
      * Affichage de la carte a partir d'une liste d'intersections
-     * @param g
+     * @param g graphics
      * @param intersections 
      */
     public void affichageCarte(Graphics g, ArrayList<Intersection> intersections){
@@ -491,7 +491,7 @@ public class JCarte extends JPanel {
     
     /**
      * Affichage des noms des rues partantes d'un PI clique
-     * @param g
+     * @param g graphics
      * @param intersections 
      */
     public void affichageNomsRues(Graphics g, ArrayList<Intersection> intersections){
@@ -575,7 +575,7 @@ public class JCarte extends JPanel {
     
     /**
      * Affichage de la tournee
-     * @param g
+     * @param g graphics
      * @param intersections 
      */
     public void affichageTournee(Graphics g, ArrayList<Intersection> intersections){
@@ -652,7 +652,7 @@ public class JCarte extends JPanel {
     
     /**
      * Affichage des PIs avec les bonnes symboles
-     * @param g
+     * @param g graphics
      * @param intersections 
      */
     public void affichagePIs(Graphics g, ArrayList<Intersection> intersections){
@@ -725,7 +725,7 @@ public class JCarte extends JPanel {
     
     /**
      * Surbrillance des points selectionnes
-     * @param g 
+     * @param g graphics
      */
     public void surbrillance(Graphics g){
    
