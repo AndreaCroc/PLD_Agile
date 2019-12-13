@@ -145,8 +145,7 @@ public class TSP2 extends TSP1 implements TSP {
     /**
      * Methode permettant d'itérer sur les sommets nonVus
      *en prenant en compte les prédécesseurs
-     * et une variante de la probabilité des algorithmes de 
-     * de colonies de fourmi
+     * 
      * 
      * @param sommetCrt : sommet courant
      * @param nonVus : tableau des sommets restant a visiter
@@ -162,8 +161,7 @@ public class TSP2 extends TSP1 implements TSP {
             ArrayList<Integer> nonVus, Double[][] cout, Integer[] duree, 
             TreeMap<Integer,Integer> mapPredecesseur) {
         
-        return new IteratorProbaTransition(nonVus, sommetCrt, mapPredecesseur, 
-                matricePheromone, cout);
+        return new IteratorSeqPredecesseur(nonVus, sommetCrt, mapPredecesseur);
     }
     
     
