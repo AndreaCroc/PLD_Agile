@@ -2,8 +2,9 @@ package tsp;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.TreeMap;
 
-public class IteratorSeq1 implements Iterator<Integer> {
+public class IteratorSeqPredecesseur implements Iterator<Integer> {
 
 	private Integer[] candidats;
 	private int nbCandidats;
@@ -13,25 +14,40 @@ public class IteratorSeq1 implements Iterator<Integer> {
 	 * @param nonVus
 	 * @param sommetCrt
 	 */
-	public IteratorSeq1(Collection<Integer> nonVus, int sommetCrt, Double[][] cout){
+	public IteratorSeqPredecesseur(Collection<Integer> nonVus, int sommetCrt, TreeMap<Integer, Integer> mapPredecesseur){
 		Integer[] candidatsBis = new Integer[nonVus.size()];
 		nbCandidats = 0;
                 int num = 0;
 		for (Integer s : nonVus){
-
-                        if (cout[s][s]==0.0 || !containsDouble(nonVus,cout[s][s]) )
+                        //System.out.println(mapPredecesseur.containsKey(s));
+                        //System.out.println(mapPredecesseur.get(s));
+                        Boolean estPresent=mapPredecesseur.containsKey(s);
+                        if (estPresent)
                         {
-
-			candidatsBis[num++] = s;
+//                            System.out.println("est present");
+//                            System.out.println(s);
+                            Integer predecesseur = mapPredecesseur.get(s);
+//                            System.out.println("predecesseur");
+//                            System.out.println(predecesseur);
+                            //System.out.println(nonVus);
+                            if (!nonVus.contains(predecesseur))
+                            {
+//                                System.out.println("il n'y est pas");
+                                candidatsBis[num++] = s;
+                            }
+                        }
+                        else
+                        {
+                             candidatsBis[num++] = s;
                         }
 		}
 
                 
                 this.candidats = new Integer[num];
+                //System.out.println(num);
                 for (int j = 0; j < num; j++)
                 {
 			candidats[nbCandidats++] = candidatsBis[j];
-                        
                 }
                 
 	}

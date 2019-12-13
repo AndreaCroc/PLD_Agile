@@ -1,12 +1,15 @@
 package controleur;
 
 import Vue.Fenetre;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modele.Carte;
 import modele.Intersection;
 import modele.PointInteret;
+
 import modele.Troncon;
+
 
 /**
  * EtatAjouterPtLivraison permettant d ajouter un point de livraison a la 
@@ -21,6 +24,7 @@ import modele.Troncon;
  *
  */
 public class EtatAjouterPtLivraison implements Etat {
+
 
     /**
      * Ajouter un point de livraison a la tournee
@@ -118,6 +122,7 @@ public class EtatAjouterPtLivraison implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
+
      * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
@@ -131,6 +136,7 @@ public class EtatAjouterPtLivraison implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
+
      * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */

@@ -21,6 +21,7 @@ import modele.Troncon;
  */
 public class EtatAjouterPtEnlevement implements Etat {
 
+
     /**
      * Ajouter un point d'enlevement a la tournee
      * @param controleur controleur
@@ -31,6 +32,7 @@ public class EtatAjouterPtEnlevement implements Etat {
     @Override
     public void ajouterPointEnlevement(Controleur controleur, Fenetre fenetre, 
                                        Carte carte, Intersection interE) {
+
         System.out.println("Etat Ajouter Pt Enlevement");
         int duree = 0;
         ArrayList<Troncon> listeT = interE.getTronconsDepart();
@@ -39,6 +41,7 @@ public class EtatAjouterPtEnlevement implements Etat {
         int numeroDemande;
         int nbDemandes = carte.getDemandesLivraisons().getListePointsInteret()
                                                       .size();
+
         // Si le point choisi n'existe pas dans la liste d'intersection, normalement cela n'arrive jamais
         boolean dansLaListe = false;
         for (Intersection i : carte.getListeIntersections()) {
@@ -47,6 +50,7 @@ public class EtatAjouterPtEnlevement implements Etat {
             }
         }
         if (!dansLaListe) {
+
             JOptionPane.showMessageDialog(fenetre, "L'endroit choisi "
                     + "n'est pas une intersection");
             return;
@@ -55,6 +59,7 @@ public class EtatAjouterPtEnlevement implements Etat {
         // Saisir la duree
         while (duree <= 0) {
             try {
+
                 duree = Integer.parseInt(JOptionPane.showInputDialog("Merci "
                         + "de saisir la durée d'enlèvement en minute"));
                 if (duree <= 0) {
@@ -118,6 +123,7 @@ public class EtatAjouterPtEnlevement implements Etat {
      * Mettre en surbrillance une ligne du tableau d etapes de la tournee et du
      * tableau d informations generales sur un point d interet
      *
+
      * @param fenetre fenetre courante
      * @param ptI point d interet selectionne
      */
@@ -131,6 +137,7 @@ public class EtatAjouterPtEnlevement implements Etat {
     /**
      * Encadrer un point d interet present sur la carte
      *
+
      * @param fenetre fenetre courante
      * @param p point d interet selectionne
      */

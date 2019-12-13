@@ -79,7 +79,6 @@ public class Fenetre extends JFrame {
     protected final static String GAUCHE = "←";
     protected final static String HAUT = "↑";
     protected final static String BAS = "↓";
-    protected final static String ARRET = "■";
     
     protected final static String HEURE_DEBUT = "Heure de début prévue : ";
     protected final static String HEURE_FIN = "Heure de fin prévue : ";
@@ -107,7 +106,6 @@ public class Fenetre extends JFrame {
     private JButton boutonDirGauche;
     private JButton boutonDirHaut;
     private JButton boutonDirBas;
-    private JButton boutonArretCalcul;
 
     //Labels pour afficher les donnees
     private JLabel livraisons;
@@ -252,14 +250,6 @@ public class Fenetre extends JFrame {
         boutonCalculerTournee.setBackground(COULEUR_BOUTON);
         boutonCalculerTournee.setEnabled(false);
         boutonCalculerTournee.addActionListener(ecouteurBoutons);
-        
-        //Bouton pour arreter le calcul de la tournee
-        boutonArretCalcul = new JButton(ARRET);
-        boutonArretCalcul.setFont(new Font("Arial", Font.BOLD, 16));
-        boutonArretCalcul.setForeground(Color.red);
-        boutonArretCalcul.setBackground(COULEUR_BOUTON);
-        boutonArretCalcul.setEnabled(false);
-        boutonArretCalcul.addActionListener(ecouteurBoutons);
 
         livraisons = new JLabel("Livraisons");
         livraisons.setFont(new Font("Arial", Font.BOLD, 18));
@@ -272,7 +262,6 @@ public class Fenetre extends JFrame {
         panneauLivraisons.add(boutonCalculerTournee);
         panneauLivraisons.add(boutonUndo);
         panneauLivraisons.add(boutonRedo);
-        panneauLivraisons.add(boutonArretCalcul);
         panneauLivraisons.add(repChargeLiv);
         panneauGauche.add(panneauLivraisons);
 
@@ -781,12 +770,6 @@ public class Fenetre extends JFrame {
                                         / 4, 1 * (int) panneauLivraisons
                                                         .getHeight() / 3);
         
-         boutonArretCalcul.setBounds(73 * ((int) panneauLivraisons.getWidth() 
-                                    / 100), 
-                                    6 * (int) panneauLivraisons.getHeight() / 10, 
-                                    1 * (int) panneauLivraisons.getWidth()/13, 
-                                    1 * (int) panneauLivraisons.getHeight() 
-                                    / 3);
          
         repChargeLiv.setBounds(1 * (int) panneauLivraisons.getWidth() / 20, 
                                1 * (int) panneauLivraisons.getHeight() / 2, 
@@ -867,27 +850,15 @@ public class Fenetre extends JFrame {
         this.boutonCalculerTournee.setEnabled(true);
     }
     
-    /**
-     * Pour afficher le bouton pour arreter le calcul d'une tournee
-     */
-    public void afficherBoutonArretCalcul() {
-        this.boutonArretCalcul.setEnabled(true);
-    }
 
     /**
      * Pour rendre non cliquable le bouton pour calculer une tournee
      */
     public void griserBoutonCalcul() {
         this.boutonCalculerTournee.setEnabled(false);
-        this.boutonArretCalcul.setEnabled(false);
+        
     }
     
-    /**
-     * Pour rendre non cliquable le bouton pour arreter le calcul d'une tournee
-     */
-    public void griserBoutonArretCalcul() {
-        this.boutonArretCalcul.setEnabled(false);
-    }
 
     /**
      * Pour rendre non cliquable le bouton pour annuler la suppression ou
@@ -1167,14 +1138,35 @@ public class Fenetre extends JFrame {
      * des points d'interet sur l'affichage de la carte
      */
     public void makePalette(){
-        for (int c=0;c<50;c++) {
+        this.palette.add(Color.MAGENTA);
+        this.palette.add(Color.GREEN);
+        this.palette.add(Color.pink);
+        this.palette.add(new Color(108,2,119));
+        this.palette.add(new Color(250, 158, 10));
+        this.palette.add(new Color(210, 80, 20));
+        this.palette.add(new Color(1, 121, 111));
+        this.palette.add(new Color(252, 93, 93));
+        this.palette.add(new Color(128, 128, 0));
+        for (int c=8;c<50;c++) {
                 Random rand = new Random();
                 float r = rand.nextFloat();
                 float gg = rand.nextFloat();
                 float b = rand.nextFloat();
                 Color randomColor = new Color(r, gg, b);
-                this.palette.add(randomColor);
-            }
+                if( !randomColor.equals(Color.white)
+                    && !randomColor.equals(Color.black)
+                    && !randomColor.equals(Color.lightGray)
+                    && !randomColor.equals(palette.get(0))  
+                    && !randomColor.equals(palette.get(1)) 
+                    && !randomColor.equals(palette.get(2)) 
+                    && !randomColor.equals(palette.get(3)) 
+                    && !randomColor.equals(palette.get(4)) 
+                    && !randomColor.equals(palette.get(5)) 
+                    && !randomColor.equals(palette.get(6)) 
+                    && !randomColor.equals(palette.get(7)) 
+                    && !randomColor.equals(palette.get(8)))
+                        this.palette.add(randomColor);
+                }
     }
     
     /**

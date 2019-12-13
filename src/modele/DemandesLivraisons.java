@@ -3,12 +3,12 @@ package modele;
 import java.util.ArrayList;
 
 /*
- * DemandesLivraisons
+ * DemandesLivraisons est l'ensemble des point d'interet d'une demande de 
+ * livraison et son adresse de départ
  *
- * Version 1
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
@@ -19,8 +19,8 @@ public class DemandesLivraisons {
     private ArrayList<PointInteret> listePointsInteret;
 
     /**
-     * Constructeur d une demande de livraison a partir d un point d interet
-     * @param aD le point d interet
+     * Constructeur d une demande de livraison a partir d une adresse de depart
+     * @param pI l adresse de depart (un point d interet)
      */
     public DemandesLivraisons(PointInteret aD) {
         this.adresseDepart = aD;

@@ -5,10 +5,9 @@ import java.util.ArrayList;
 /**
  * Tournee
  *
- * Version 1
+ * @version Version 1
  *
- * 
- * Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU,
+ * @author Lucie BOVO, Andrea CROC, Sophie LABOUCHEIX, Taoyang LIU, 
  * Alexanne MAGNIEN, Grazia RIBBENI, Fatoumata WADE
  *
  */
@@ -63,7 +62,8 @@ public class Tournee {
     }
 
     /**
-     * Afficher les attributs d une tournee
+     * Permet de retourner les attributs d une tournee en chaine de caracteres
+     * (utilisee pour les tests)
      * @return la chaine de caracteres a afficher
      */
     @Override
