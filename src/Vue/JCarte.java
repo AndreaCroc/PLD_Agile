@@ -277,7 +277,8 @@ public class JCarte extends JPanel {
      * @param intersections liste des intersections
      * @return position Y
      */
-    public int getProportionalY(Intersection i, ArrayList<Intersection> intersections) {
+    public int getProportionalY(Intersection i, 
+            ArrayList<Intersection> intersections) {
 
         Double maxLatitude = this.maxLatitude(intersections);
         Double minLatitude = this.minLatitude(intersections);
@@ -334,7 +335,8 @@ public class JCarte extends JPanel {
 
         /*Reporter ce pourcentage sur le panel, Attention, le sens est 
         inversé en Java pour les y*/
-        int proportionalY = hauteurPanel - (int) (pourcentageLatitude * hauteurPanel / 100);
+        int proportionalY = hauteurPanel - (int) (pourcentageLatitude * 
+                hauteurPanel / 100);
 
         if (proportionalY == 0) {
             proportionalY = 2;
@@ -373,11 +375,11 @@ public class JCarte extends JPanel {
 
         /*Reporter ce pourcentage sur le panel.*/
         int proportionalX = (int) (pourcentageLongitude * largeurPanel / 100);
-        /*if (proportionalX == 0) {
+        if (proportionalX == 0) {
             proportionalX = 2;
         } else if (proportionalX >= largeurPanel) {
             proportionalX = largeurPanel - 12;
-        }*/
+        }
 
         proportionalX *= fenetre.getZoom();
         proportionalX -= (fenetre.getDeplX());
@@ -430,6 +432,14 @@ public class JCarte extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        Graphics2D g2d=(Graphics2D)g;
+        int wi=this.getWidth();
+        int h=this.getHeight();
+        
+        g2d.translate(wi/2,h/2);
+        g2d.scale(fenetre.getZoom(),fenetre.getZoom());
+        g2d.translate(-wi/2,-h/2);
 
         ArrayList<Intersection> intersections = carte.getListeIntersections();
         //Affichage de la carte
@@ -443,7 +453,7 @@ public class JCarte extends JPanel {
                             intersections)));
 
             g.setColor(Color.BLACK);
-
+            
             g.fillOval(this.getProportionalX(i, intersections), this
                     .getProportionalY(i, intersections), 2, 2);
 
